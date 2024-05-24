@@ -1,0 +1,136 @@
+.area {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 30px 20px;
+}
+.bgclr {
+  background-color: #f4e4e6;
+}
+.bgclrbt {
+  background-color: #6c757d !important;
+}
+.brdrdds {
+  border: 1px solid black;
+}
+.redbrdr {
+  border: 1px solid rgb(188, 47, 47);
+}
+.cntbglcr {
+  background-color: rgb(245 245 245);
+}
+.area label input {
+  display: none;
+}
+.cit-mange {
+  display: grid;
+  grid-template-columns: repeat(2, auto) !important;
+  height: fit-content !important;
+  grid-gap: 0px;
+  cursor: pointer;
+}
+.strclr {
+  color: green;
+}
+.clrstr {
+  color: #9e0c22;
+}
+.clrstrs {
+  background-color: #9e0c22;
+}
+.clrstr2 {
+  background-color: #660411c1;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.area label input + span {
+  background: #fff;
+  border-radius: 5px;
+  color: #000;
+  padding: 8px 18px;
+  margin-right: 10px;
+  transition: 0.3s;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+}
+.btn_clr {
+  border: 1px solid #660411c1;
+  background-color: white !important;
+  border-radius: 20px;
+  color: black;
+}
+
+.brdrd {
+  border-radius: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.454);
+  height: fit-content;
+}
+.fntbold {
+  font-weight: bold;
+  font-size: 15px;
+}
+.price {
+  text-decoration-line: line-through;
+  color: rgba(128, 128, 128, 0.674);
+}
+.fnts {
+  font-size: 12px;
+}
+.fnt {
+  font-weight: bolder;
+}
+.area label input:checked + span {
+  background: #961430;
+  color: #fff;
+}
+.container_proud {
+  height: 80vh;
+
+  overflow: auto;
+}
+
+.container_proud::-webkit-scrollbar {
+  display: none;
+}
+.accordion__section {
+  border: 2px solid #961430;
+}
+.acordinss {
+  border-radius: 40px;
+}
+.accordion {
+  background-color: #f4e4e6;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  outline: none;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: rgb(171, 18, 36);
+}
+
+.accordion__title {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  margin-left: 15px;
+}
+.accordion__text {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 18px;
+}
+.accordion__content {
+  background-color: #f4e4e6;
+  overflow: hidden;
+  transition: max-height 0.6s ease;
+}
+.rotate {
+  transform: rotate(90deg);
+}
