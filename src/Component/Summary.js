@@ -501,8 +501,11 @@ function Summary() {
 
     return expiryDate;
   };
-  const servicePeriod = 1;
-  const serviceFrequency = 1;
+
+  const a = plan.pofferprice - (plan.pofferprice * couponPercentage) / 100;
+
+  const servicePeriod = plan?.servicePeriod;
+  const serviceFrequency = plan?.pservices;
   const expiryDate = calculateExpiryDate(selectedDate, servicePeriod);
 
   const sDate = moment(selectedDate, "YYYY-MM-DD");
@@ -511,12 +514,7 @@ function Summary() {
   const totalDays = Math.ceil(eDate.diff(sDate, "days"));
   const interval = Math.ceil(totalDays / serviceFrequency);
 
-  console.log("selectedDate====", selectedDate);
-
-  console.log("sDate====", sDate);
-  console.log("eDate====", eDate);
-
-  const dividedDates = [selectedDate];
+  const dividedDates = [];
 
   const sf = serviceFrequency ? serviceFrequency : "1";
   for (let i = 0; i < sf; i++) {
@@ -527,9 +525,7 @@ function Summary() {
     dividedDates.push(date);
   }
 
-  console.log("dividedDates====", dividedDates);
-
-  const dividedamtCharges = [DiscountAmount];
+  const dividedamtCharges = [];
 
   const sAmtDate = moment(selectedDate, "YYYY-MM-DD");
   const eamtDate = moment(selectedDate, "YYYY-MM-DD");
@@ -538,7 +534,7 @@ function Summary() {
   const intervalamt = Math.ceil(totalamtDays / amtFrequency);
   // const dividedamtCharge = Math.ceil(remainingAmt / amtFrequency);
 
-  const dividedamtDates = [selectedDate];
+  const dividedamtDates = [];
   // const dividedamtCharges = [];
 
   for (let i = 0; i < amtFrequency; i++) {
@@ -547,54 +543,9 @@ function Summary() {
       .add(intervalamt * i, "days")
       .format("YYYY-MM-DD");
     dividedamtDates.push(date);
+    const charge = a;
+    dividedamtCharges.push(charge);
   }
-
-  console.log("dividedamtDates====", dividedamtDates);
-  console.log("sAmtDate====", sAmtDate);
-  console.log("eamtDate====", eamtDate);
-
-  //   customerData: user,
-  //   customerName: customerName,
-  //   email: email,
-  //   dividedDates: dividedDates ? dividedDates : selectedDate,
-  //   dividedamtCharges: dividedamtCharges,
-  //   dividedamtDates: dividedamtDates,
-  //   cardNo: user?.cardNo,
-  //   category: sdata?.category,
-  //   contractType: !plan?.pservices ? "One Time" : "AMC",
-  //   service: sdata?.serviceName,
-  //   serviceID: sdata?._id,
-  //   serviceCharge: GrandTotal,
-  //   dateofService: selectedDate,
-  //   selectedSlotText: selectedSlotText,
-  //   serviceFrequency: plan?.pservices,
-  //   startDate: selectedDate,
-  //   planName: plan?.pName,
-  //   expiryDate: expiryDate,
-  //   firstserviceDate: selectedDate,
-  //   date: moment().format("YYYY-MM-DD"),
-  //   time: moment().format("LT"),
-  //   type: "userapp",
-  //   desc: joinedPlanNames,
-  //   city: savecity,
-  //   userId: user?._id,
-  //   deliveryAddress: Fulladd,
-  //   serviceImg: sdata?.serviceImg,
-  //   AddOns: MyCartItmes,
-  //   discAmt: discAmt,
-  //   markerCoordinate: markerCoordinate,
-  //   // GrandTotal: GrandTotal,
-  //   GrandTotal: total
-  //     ? total + parseInt(couponDiscount) - discountAmount
-  //     : couponDiscount - discountAmount,
-  //   paymentMode: a,
-  //   TotalAmt: total
-  //     ? parseFloat(plan.pPrice) + parseFloat(total)
-  //     : plan.pPrice,
-  //   couponCode: Coupancode,
-  //   totalSaved: discAmt
-  //     ? savedAmt + FreqensaveAmt + discAmt
-  //     : savedAmt + FreqensaveAmt,
 
   const addtreatmentdetails = async (e) => {
     e.preventDefault();
@@ -613,7 +564,7 @@ function Summary() {
             dividedamtDates: dividedamtDates,
             cardNo: user?.cardNo,
             category: sdata?.category,
-            contractType: !plan?.pservices ? "One Time" : "AMC",
+            contractType: "AMC",
             service: sdata?.serviceName,
             serviceID: sdata?._id,
             serviceCharge: a,
@@ -654,18 +605,13 @@ function Summary() {
     }
   };
 
-  console.log("responseData=====", responseData);
-
   const [selectedAddress, setSelectedAddress] = useState({});
   const [checkAddress, setCheckAddress] = useState(false);
   const [Voucher, setVoucher] = useState([]);
-  console.log(Voucher, "Voucher============");
 
   const handleSelectAddress = (selectedAddress) => {
     setSelectedAddress(selectedAddress);
   };
-
-  console.log("selectedAddress====", selectedAddress);
 
   const ProceedAddress = () => {
     if (Object.keys(selectedAddress).length === 0) {
@@ -689,10 +635,6 @@ function Summary() {
       setvoucherdata(filteredVoucherData);
     }
   };
-
-  const a = plan.pofferprice - (plan.pofferprice * couponPercentage) / 100;
-
-  console.log("aaaaaaaa", a);
 
   return (
     <div className="">

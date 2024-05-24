@@ -24,7 +24,7 @@ import {
   Marker,
   Autocomplete,
 } from "@react-google-maps/api";
-import { v4 as uuidv4 } from "uuid";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
@@ -36,7 +36,7 @@ function Cartbook() {
   const [fourDates, setFourDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [datepicker, setdatePicker] = useState(false);
-  console.log("MyCartaddonItmes=====", MyCartaddonItmes);
+
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedPlaceAddress, setSelectedPlaceAddress] = useState("");
   const autocompleteRef = useRef(null);
@@ -77,11 +77,6 @@ function Cartbook() {
 
   const [discountedTotal, setDiscountedTotal] = useState(0);
 
-  console.log(
-    voucherCodeValue,
-    "voucherCode=++++++++++++++++++++++++++++++++++++++++++++"
-  );
-
   const [SavedAmount, setSavedAmount] = useState(0);
   const [customerData, setCustomerData] = useState({
     customerName: "",
@@ -99,8 +94,6 @@ function Cartbook() {
   const storedCustomerName = localStorage.getItem("customerName");
 
   const storedEmail = localStorage.getItem("email");
-
-  console.log("sumanlocal", storedCustomerName, storedEmail);
 
   useEffect(() => {
     const newCartTotal = MyCartItmes.reduce(
@@ -289,7 +282,6 @@ function Cartbook() {
   };
 
   const addQuantity = (item) => {
-    console.log("item", item);
     dispatch(addToCartaddon(item));
   };
   const increaseQuantity = (item) => {
@@ -303,8 +295,6 @@ function Cartbook() {
   useEffect(() => {
     getaddon();
   }, []);
-
-  console.log("Fulladd====", Fulladd);
 
   const getaddon = async () => {
     let res = await axios.get(
@@ -354,8 +344,6 @@ function Cartbook() {
   const value = JSON.parse(localStorage.getItem("user"));
   const [customeraddress, setcustomerAddressdata] = useState([]);
 
-  console.log("value======", user);
-
   useEffect(() => {
     getAllServices();
     getVoucher();
@@ -370,7 +358,7 @@ function Cartbook() {
         setService(res.data.service);
       }
       let addressRes = await axios.get(
-        `http://api.vijayhomesuperadmin.in/api/getcustomeraddresswithuserid/${value?._id}`
+        `http://localhost:8080/api/getcustomeraddresswithuserid/${value?._id}`
       );
       if (addressRes) {
         setcustomerAddressdata(addressRes.data?.customerAddress);
@@ -392,7 +380,7 @@ function Cartbook() {
       const config = {
         url: "/addcustomeraddress",
         method: "post",
-        baseURL: "https://api.vijayhomesuperadmin.in/api",
+        baseURL: "http://localhost:8080/api",
         headers: { "content-type": "application/json" },
         data: {
           userId: value._id,
@@ -466,12 +454,7 @@ function Cartbook() {
     setSelectedSlotText(`${startTime}`);
     addAddress();
   };
-  console.log(
-    "selectedSlotIndex",
-    selectedSlotIndex,
-    "selectedSlotText",
-    selectedSlotText
-  );
+
   const renderSlots = () => {
     if (!selectedDate) {
       return null;
@@ -524,43 +507,21 @@ function Cartbook() {
 
   // bOOKING dETAILS
 
-  const calculateExpiryDate = (selectedDate, servicePeriod) => {
-    let monthsToAdd = 0;
-
-    // Determine the number of months to add based on service period
-    if (servicePeriod === "monthly") {
-      monthsToAdd = 1;
-    } else if (servicePeriod === "quart") {
-      monthsToAdd = 3;
-    } else if (servicePeriod === "half") {
-      monthsToAdd = 6;
-    } else if (servicePeriod === "year") {
-      monthsToAdd = 12;
-    }
-
-    // Calculate the expiryDate by adding the months
-    const expiryDate = moment(selectedDate)
-      .add(monthsToAdd, "months")
-      .format("YYYY-MM-DD");
-
-    return expiryDate;
-  };
   const servicePeriod = 1;
   const serviceFrequency = 1;
-  const expiryDate = calculateExpiryDate(selectedDate, servicePeriod);
 
   const sDate = moment(selectedDate, "YYYY-MM-DD");
-  const eDate = moment(expiryDate, "YYYY-MM-DD");
+  const eDate = moment(selectedDate, "YYYY-MM-DD");
 
   const totalDays = Math.ceil(eDate.diff(sDate, "days"));
   const interval = Math.ceil(totalDays / serviceFrequency);
 
-  console.log("selectedDate====", selectedDate);
+  // console.log("selectedDate====", selectedDate);
 
-  console.log("sDate====", sDate);
-  console.log("eDate====", eDate);
+  // console.log("sDate====", sDate);
+  // console.log("eDate====", eDate);
 
-  const dividedDates = [selectedDate];
+  const dividedDates = [];
 
   const sf = serviceFrequency ? serviceFrequency : "1";
   for (let i = 0; i < sf; i++) {
@@ -571,31 +532,24 @@ function Cartbook() {
     dividedDates.push(date);
   }
 
-  console.log("dividedDates====", dividedDates);
-
-  const dividedamtCharges = [DiscountAmount];
-
-  console.log("dividedamtCharges====", dividedamtCharges);
-
   const sAmtDate = moment(selectedDate, "YYYY-MM-DD");
   const eamtDate = moment(selectedDate, "YYYY-MM-DD");
   const amtFrequency = 1;
   const totalamtDays = Math.ceil(eamtDate.diff(sAmtDate, "days"));
   const intervalamt = Math.ceil(totalamtDays / amtFrequency);
 
-  const dividedamtDates = [selectedDate];
+  const dividedamtDates = [];
+  const dividedamtCharges = [];
 
-  for (let i = 0; i < amtFrequency; i++) {
+  for (let i = 0; i < 1; i++) {
     const date = sDate
       .clone()
       .add(intervalamt * i, "days")
       .format("YYYY-MM-DD");
     dividedamtDates.push(date);
+    const charge = DiscountAmount;
+    dividedamtCharges.push(charge);
   }
-
-  console.log("dividedamtDates====", dividedamtDates);
-  console.log("sAmtDate====", sAmtDate);
-  console.log("eamtDate====", eamtDate);
 
   const joinedNames = MyCartItmes.map((item) => {
     const serviceName = item.service?.serviceName || ""; // Get serviceName or an empty string if it's undefined
@@ -621,18 +575,26 @@ function Cartbook() {
     } else {
       try {
         const config = {
-          url: "https://api.vijayhomeservicebengaluru.in/api/addservicedetails",
+          url: "http://localhost:8080/api/addservicedetails",
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {
-            customerData: user,
+            customerData: {
+              _id: user?._id,
+              EnquiryId: user?.EnquiryId,
+              customerName: user?.customerName,
+              category: user?.category,
+              mainContact: user?.mainContact,
+              email: user?.email,
+              approach: user?.approach,
+            },
             dividedDates: dividedDates.length ? dividedDates : [selectedDate],
             customerName: storedCustomerName,
             email: storedEmail,
             dividedamtCharges: dividedamtCharges,
             dividedamtDates: dividedamtDates,
             cardNo: user?.cardNo,
-            category: MyCartItmes[0]?.category,
+            category: MyCartItmes[0]?.service?.category,
             contractType: "One Time",
             service: MyCartItmes[0]?.service?.serviceName,
             serviceID: MyCartItmes[0]?.service?._id,
@@ -641,7 +603,7 @@ function Cartbook() {
             selectedSlotText: selectedSlotText,
             serviceFrequency: 1,
             startDate: selectedDate,
-            expiryDate: expiryDate,
+            expiryDate: selectedDate,
             firstserviceDate: selectedDate,
             date: moment().format("YYYY-MM-DD"),
             time: moment().format("LT"),
@@ -655,7 +617,7 @@ function Cartbook() {
             TotalAmt: Carttotal,
             couponCode: voucherCodeValue,
             totalSaved: SavedAmount,
-            markerCoordinate: selectedAddress,
+            markerCoordinate: selectedAddress?.markerCoordinate,
             deliveryAddress: selectedAddress,
           },
         };
@@ -718,64 +680,11 @@ function Cartbook() {
     }
   };
 
-  const [showWebView, setShowWebView] = useState(false);
-
-  const [redirectUrl, setRedirectUrl] = useState("");
-
-  // const submit = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const config = {
-  //       url: "/payment/addpayment",
-  //       method: "post",
-  //       baseURL: "http://localhost:8080/api",
-  //       headers: { "content-type": "application/json" },
-  //       data: {},
-  //     };
-  //     const res = await axios(config);
-  //     console.log(res.status);
-
-  //     if (res.status === 200) {
-  //       console.log("yogi", res);
-  //       const base64ResponseData = res.data.base64;
-  //       const sha256ResponseData = res.data.sha256encode;
-  //       const merchantId = res.data.merchantId;
-  //       const merchantTransactionId = res.data.merchantTransactionId;
-  //       const redirectUrl = res.data.redirectUrl;
-  //       setTransaction(res.data.merchantTransactionId);
-  //       // setShowWebView(true);
-
-  //       initiatePayment(
-  //         base64ResponseData,
-  //         sha256ResponseData,
-  //         merchantId,
-  //         merchantTransactionId,
-  //         redirectUrl
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.log(error.response);
-  //     if (error.response) {
-  //       alert(error.response.data.error);
-  //       console.log(error.response.data.error);
-  //     }
-  //   }
-  // };
-
-  const [amount, setamount] = useState("");
-  const [transaction, setTransaction] = useState("");
-  const [paymentUrl, setPaymentUrl] = useState("");
-  const [isCheckingStatus, setIsCheckingStatus] = useState(false);
-
   const submit = async (e) => {
     e.preventDefault();
-
-    // Check if the amount is valid
-    if (isNaN(amount) || amount <= 0) {
-      alert("Invalid amount. Please provide a valid positive number.");
-      return;
-    }
+    const requestData = {
+      amount: parseFloat(1000) * 100,
+    };
 
     try {
       const config = {
@@ -783,29 +692,21 @@ function Cartbook() {
         method: "post",
         baseURL: "https://api.vijayhomeservicebengaluru.in/api",
         headers: { "content-type": "application/json" },
-        data: {
-          amount: amount,
-          // serviceId: serviceId,
-        },
+        data: requestData,
       };
       const res = await axios(config);
-      console.log(res.status);
 
       if (res.status === 200) {
-        console.log("Payment Initiated", res);
-        const { base64, sha256encode, merchantId, merchantTransactionId } =
-          res.data;
-        setTransaction(merchantTransactionId);
+        const base64ResponseData = res.data.base64;
+        const sha256ResponseData = res.data.sha256encode;
 
-        initiatePayment(
-          base64,
-          sha256encode,
-          merchantId,
-          merchantTransactionId
-        );
+        // setTransaction(res.data.merchantTransactionId);
+        console.log("sha256ResponseData", sha256ResponseData);
+        console.log("base64ResponseData", base64ResponseData);
+
+        initiatePayment(base64ResponseData, sha256ResponseData);
       }
     } catch (error) {
-      console.log(error.response);
       if (error.response) {
         alert(error.response.data.error);
         console.log(error.response.data.error);
@@ -813,79 +714,93 @@ function Cartbook() {
     }
   };
 
-  const initiatePayment = async (
-    base64Data,
-    sha256Data,
-    merchantId,
-    merchantTransactionId
-  ) => {
-    try {
-      const data = JSON.stringify({ request: base64Data });
+  // const initiatePayment = async (base64Data, sha256Data) => {
+  //   try {
+  //     const data = JSON.stringify({
+  //       request: base64Data,
+  //     });
 
-      const config = {
-        method: "post",
-        url: "https://api.phonepe.com/apis/hermes/pg/v1/pay",
-        headers: {
-          "Content-Type": "application/json",
-          "X-VERIFY": sha256Data,
-        },
-        data: data,
-      };
+  //     console.log("dattta==", data);
+  //     const config = {
+  //       method: "post",
+  //       url: "https://api.phonepe.com/apis/hermes/pg/v1/pay",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "X-VERIFY": sha256Data,
+  //       },
+  //       data: {
+  //         request: base64Data,
+  //       },
+  //     };
 
-      const response = await axios.request(config);
+  //     const response = await axios.request(config);
 
-      const { redirectInfo } = response.data.data.instrumentResponse;
-      console.log("redirectInfo===", redirectInfo);
-      setPaymentUrl(redirectInfo.url);
-      setIsCheckingStatus(true);
+  //     console.log("response", response);
+  //     const { redirectInfo } = response.data.data.instrumentResponse;
+  //     console.log("redirectInfo", redirectInfo);
 
-      // Redirect to the payment URL
-      window.location.href = redirectInfo.url;
-    } catch (error) {
-      console.error("Error initiating payment:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (isCheckingStatus) {
-      const intervalId = setInterval(() => {
-        checkTransactionStatus();
-      }, 3000);
-
-      return () => clearInterval(intervalId);
-    }
-  }, [isCheckingStatus]);
-
-  const checkTransactionStatus = async () => {
-    const merchantId = "M1PX7BZG1R4G";
-    try {
-      const config = {
-        url: `/payment/status/${merchantId}/${transaction}/${value?._id}`,
-        method: "post",
-        baseURL: "https://api.vijayhomeservicebengaluru.in/api",
-        headers: { "content-type": "application/json" },
-        data: {},
-      };
-      const res = await axios(config);
-      console.log(res.status);
-
-      if (res.status === 200) {
-        console.log("response", res.data);
-        const responseData = res.data.responseData;
-        const code = responseData.code;
-        if (code === "PAYMENT_SUCCESS") {
-          setIsCheckingStatus(false);
-          // navigate to success page
-        } else {
-          // navigate to home page
-        }
-      }
-    } catch (error) {
-      console.error("Error checking transaction status:", error);
-    }
-  };
-
+  //     // Uncomment these lines if you are using them in your application
+  //     // setPaymentUrl(redirectInfo.url);
+  //     // setShowWebView(true);
+  //     // setIsCheckingStatus(true);
+  //   } catch (error) {
+  //     console.error("Error initiating payment:", error);
+  //     if (error.response) {
+  //       // The request was made and the server responded with a status code
+  //       // that falls out of the range of 2xx
+  //       console.error("Response data:", error.response.data);
+  //       console.error("Response status:", error.response.status);
+  //       console.error("Response headers:", error.response.headers);
+  //     } else if (error.request) {
+  //       // The request was made but no response was received
+  //       console.error("Request data:", error.request);
+  //     } else {
+  //       // Something happened in setting up the request that triggered an Error
+  //       console.error("Error message:", error.message);
+  //     }
+  //     // setIsCheckingStatus(false);
+  //     // Handle the error accordingly
+  //   }
+  // };
   // console.log("selectedAddress", selectedAddress);
+
+  const initiatePayment = (base64Data, sha256Data) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("X-VERIFY", sha256Data);
+
+    const raw = JSON.stringify({
+      request: base64Data,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("https://api.phonepe.com/apis/hermes/pg/v1/pay", requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log("Success:", result);
+      })
+      .catch((error) => {
+        console.error("Error initiating payment:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+        } else if (error.request) {
+          console.error("Request data:", error.request);
+        } else {
+          console.error("Error message:", error.message);
+        }
+      });
+  };
   return (
     <div className="row" style={{ justifyContent: "center" }}>
       <NabarCompo />
@@ -1392,21 +1307,23 @@ function Cartbook() {
             Book
           </div>
         </div>
-
-        <form onSubmit={submit}>
-          <button type="submit">PAY & UPGRADE NOW</button>
-        </form>
-        <input
-          type="number"
-          style={{ border: "1px solid black" }}
-          onChange={(e) => setamount(e.target.value)}
-        />
-
-        <iframe
-          src={paymentUrl}
-          style={{ height: "100vh", width: "100%" }}
-          title="Payment"
-        ></iframe>
+        <div className="row mt-5 mb-5">
+          <div
+            onClick={submit}
+            className="col-md-8"
+            style={{
+              backgroundColor: "darkred",
+              padding: "8px",
+              color: "white",
+              fontSize: "14px",
+              textAlign: "center",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Payment
+          </div>
+        </div>
 
         {/* old address select */}
         <Modal show={show} onHide={handleClose}>
