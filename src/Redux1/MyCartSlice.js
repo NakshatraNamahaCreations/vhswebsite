@@ -1,18 +1,27 @@
+// cartSlice.js
 import { createSlice } from "@reduxjs/toolkit";
+
+const loadState = () => {
+  try {
+    const serializedState = localStorage.getItem("cart");
+    return serializedState ? JSON.parse(serializedState) : [];
+  } catch (e) {
+    console.warn("Could not load state", e);
+    return [];
+  }
+};
 
 const MyCartSlice = createSlice({
   name: "cart",
-  initialState: [],
+  initialState: loadState(),
   reducers: {
     addToCart(state, action) {
       const { _id, category, pName, pPrice, pofferprice, service, pservices } =
         action.payload;
-
       const existingItemIndex = state.findIndex((item) => item.id === _id);
       const existingItem = state[existingItemIndex];
 
       if (existingItem) {
-        // If the item exists, check if the category is the same
         if (existingItem.category === category) {
           return state.map((item, index) => {
             if (index === existingItemIndex) {
@@ -25,7 +34,6 @@ const MyCartSlice = createSlice({
             }
           });
         } else {
-          // If the categories are different, remove the existing item and add the new one
           return [
             ...state.slice(0, existingItemIndex),
             ...state.slice(existingItemIndex + 1),
@@ -42,7 +50,6 @@ const MyCartSlice = createSlice({
           ];
         }
       } else {
-        // If the item doesn't exist, add it as a new item
         return [
           ...state,
           {
@@ -58,11 +65,9 @@ const MyCartSlice = createSlice({
         ];
       }
     },
-
     addToCart1(state, action) {
       const { _id, category, pName, pPrice, pofferprice, service, pservices } =
         action.payload;
-
       const existingItemIndex = state.findIndex(
         (item) => item.id === action.payload.id
       );
@@ -112,7 +117,6 @@ const MyCartSlice = createSlice({
         ];
       }
     },
-
     removeMyCartItem(state, action) {
       let myindex = -1;
       state.map((item, index) => {
@@ -125,7 +129,6 @@ const MyCartSlice = createSlice({
         state[myindex].qty = state[myindex].qty - 1;
       }
     },
-
     deleteMyCartItem(state, action) {
       return state.filter((item) => item.id !== action.payload);
     },

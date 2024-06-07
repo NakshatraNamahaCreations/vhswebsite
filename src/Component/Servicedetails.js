@@ -6,32 +6,26 @@ import { Button, Modal } from "react-bootstrap";
 import "../Component/Servicedetails.css";
 import CheckIcon from "@mui/icons-material/Check";
 import { Link } from "react-router-dom";
-import { Form } from "react-bootstrap";
-import PeopleIcon from "@mui/icons-material/People";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+
 import AddIcon from "@mui/icons-material/Add";
 import StarIcon from "@mui/icons-material/Star";
 import { SpinnerCircular } from "spinners-react";
-import StarHalfIcon from "@mui/icons-material/StarHalf";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import Footer from "./Footer";
-import Spinner from "react-bootstrap/Spinner";
+
 import { useDispatch, useSelector } from "react-redux";
-import { SaveCartData } from "../dataStoreComponent/viewcartSlice";
-import {
-  addToCart,
-  addToCart1,
-  removeMyCartItem,
-  clearCart,
-} from "../Redux1/MyCartSlice";
-import { useHistory } from "react-router-dom";
+
+import ReactPlayer from "react-player";
+import { addToCart, clearCart } from "../Redux1/MyCartSlice";
+import Header1 from "./Header1";
+
 function Servicedetails() {
   const location = useLocation();
   const { subcategory, SelecteddCity } = location.state || {};
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const [show, setShow] = useState(false);
   const MyCartItmes = useSelector((state) => state.cart);
-  console.log("MyCartItmes", MyCartItmes);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
@@ -60,12 +54,7 @@ function Servicedetails() {
   const [Servicedata, setServicedata] = useState([]);
   const [pricesdata, setpricesdata] = useState([]);
 
-  console.log("subcategory======12345", subcategory);
-
   const localstoragecitys = localStorage.getItem("city");
-  console.log("localstoragecitys======", localstoragecitys);
-
-  console.log("SelecteddCity========", SelecteddCity);
 
   const [Bannermidledata, setBannermidledata] = useState([]);
 
@@ -83,10 +72,6 @@ function Servicedetails() {
       );
     }
   };
-
-  console.log("==========", pricesdata);
-
-  console.log("Bannermidledata=====", Bannermidledata);
 
   useEffect(() => {
     getAllServices();
@@ -118,8 +103,6 @@ function Servicedetails() {
       setIsLoading(false);
     }
   };
-
-  console.log("serviceData=====", serviceData);
 
   useEffect(() => {
     getsubcategory();
@@ -160,10 +143,6 @@ function Servicedetails() {
     }
   };
 
-  console.log("Servicedata1234======", Servicedata);
-
-  console.log("postsubdata=====", postsubdata);
-
   useEffect(() => {
     getbannerimg();
   }, []);
@@ -178,7 +157,6 @@ function Servicedetails() {
       );
     }
   };
-  console.log("offerBannerdata=====", offerBannerdata);
 
   const getCity = async () => {
     try {
@@ -288,55 +266,16 @@ function Servicedetails() {
     .flatMap((cart) => cart);
 
   const citys = useSelector((state) => state.city);
-  console.log(citys, "citys====");
+
   const [selectedData, setSelectedData] = useState([]);
 
   const handleBook = (data) => {
-    console.log(
-      "handleBook----------",
-      data?.morepriceData.filter((i) => i.pricecity === localstoragecitys)
-    );
-    // setSelectedData(data);
     setSelectedData(data);
     setShow(true);
   };
 
-  console.log("selectedData", selectedData);
-  // console.log("selectedData", selectedData);
-  const handleAddtoCart = (data) => {
-    console.log(data, "data");
-  };
-
   const [selectedItems, setSelectedItems] = useState([]);
 
-  // Function to handle adding/removing items to/from selection
-  // const handleToggleSelection = (price) => {
-  //   // console.log("serviceName", serviceName);
-  //   setSelectedItems((prevSelectedItems) => {
-  //     if (prevSelectedItems.includes(price)) {
-  //       return prevSelectedItems.filter((item) => item !== price);
-  //     } else {
-  //       return [...prevSelectedItems, price];
-  //     }
-  //   });
-  //   dispatchService(SaveCartData(selectedItems));
-  // };
-  const handleToggleSelection = (price) => {
-    // Toggle the selection
-    const updatedSelectedItems = selectedItems.includes(price)
-      ? selectedItems.filter((item) => item !== price)
-      : [...selectedItems, price];
-
-    // Update local state
-    setSelectedItems(updatedSelectedItems);
-
-    // Dispatch updated selectedItems to Redux store
-    dispatchService(SaveCartData(updatedSelectedItems));
-  };
-  // const TotalPrice = selectedItems.reduce(
-  //   (acc, cur) => Number(acc) + Number(cur.pofferprice),
-  //   0
-  // );
   const TotalPrice = MyCartItmes.reduce(
     (acc, cur) => acc + Number(cur.offerprice) * cur.qty, // Calculate total price considering quantity
     0
@@ -345,13 +284,10 @@ function Servicedetails() {
   const cartItems = useSelector((state) => state.viewCart);
 
   const navigate = useNavigate();
-  console.log(cartItems, "cartItems==============================");
 
   const handleViewCartClick = () => {
     navigate("/cart");
   };
-
-  console.log("selectedItems", selectedItems);
 
   const handleItemClick = (item, index) => {
     setSelectedItemIndex(index);
@@ -411,22 +347,77 @@ function Servicedetails() {
       ) : (
         <>
           {" "}
-          <NabarCompo />
-          <div className="row">
-            {subcategoryVideo &&
-              subcategoryVideo.map((Ele) => {
-                return (
-                  <video
-                    className="p-0"
-                    style={{ objectFit: "cover", width: "100%" }}
-                    height={400}
-                    autoPlay
-                    loop
-                    src={`https://api.vijayhomesuperadmin.in/subcat/${Ele.subcatvideo}`}
-                  ></video>
-                );
-              })}
+          {/* <NabarCompo /> */}
+          <Header1 />
+          <div className="container">
+            <div className="row ">
+              <div className="col-md-6">
+                <div>
+                  <h2
+                    style={{
+                      color: "black",
+                      fontWeight: "bold",
+                      fontSize: "18px",
+                      marginTop: "15px",
+                    }}
+                  >
+                    {subcategory}
+                  </h2>
+                </div>
+                <div
+                  className="row mt-3"
+                  style={
+                    {
+                      // border: "1px solid lightgrey",
+                      // borderRadius: "20px",
+                    }
+                  }
+                >
+                  {postsubdata.map((data) => (
+                    <div className="col-md-4 mt-4 text-center ">
+                      <img
+                        style={{
+                          width: "90px",
+                          height: "90px",
+                          borderRadius: "10px",
+                        }}
+                        className="mb-2"
+                        alt=""
+                        src={`https://api.vijayhomesuperadmin.in/resubcat/${data.resubcatimg}`}
+                      />
+                      <div
+                        className="pb-2"
+                        style={{
+                          color: "black",
+                          fontSize: "10px",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {data.sub_subcategory}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                {subcategoryVideo &&
+                  subcategoryVideo.map((Ele) => {
+                    return (
+                      <ReactPlayer
+                        url={Ele.videolink}
+                        playing={true}
+                        loop={true}
+                        width={"100%"}
+                        // height={"750px"}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
           </div>
+          <div className="row"></div>
           <div className="container">
             <div
               className="mt-3"
@@ -495,34 +486,6 @@ function Servicedetails() {
                         {data.desc}
                       </p>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="row mt-3">
-              {postsubdata.map((data) => (
-                <div className="col-md-2 mt-4 text-center">
-                  <img
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      borderRadius: "10px",
-                    }}
-                    className="mb-2"
-                    alt=""
-                    src={`https://api.vijayhomesuperadmin.in/resubcat/${data.resubcatimg}`}
-                  />
-                  <div
-                    className=""
-                    style={{
-                      color: "black",
-                      fontSize: "13px",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {data.sub_subcategory}
                   </div>
                 </div>
               ))}

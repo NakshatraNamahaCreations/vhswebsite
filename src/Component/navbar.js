@@ -38,11 +38,14 @@ export default function NabarCompo({}) {
     cartShow = true;
   }
 
+  const userDataString = localStorage.getItem("user");
+  const userData = JSON.parse(userDataString);
+
   const storedUserDataJSON = sessionStorage.getItem("userdata");
   const [openResetModal, setOpenResetModal] = useState(false);
   const [SearchSubCategory, setSearchSubCategory] = useState("");
   const [isDropdownEnabled, setIsDropdownEnabled] = useState(true);
-  let userData = null;
+  // let userData = null;
   const [city, setCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
   const [CategoryData, setCategoryData] = useState([]);
@@ -193,34 +196,34 @@ export default function NabarCompo({}) {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-end menu">
-            <Nav className=" fnt clrrd me-3  boldt">Home</Nav>
-            <Nav className=" fnt clrrd me-3  boldt">About</Nav>
-            <Nav className=" fnt clrrd me-3  boldt">Categories</Nav>
-            <Nav className=" fnt clrrd me-3  boldt">Career</Nav>
-
-            {userData !== null && userData !== undefined ? (
-              <Nav className=" fnt   p-0 bordr" onClick={handleShow}>
-                <AccountCircleIcon className="clrrd me-1" />{" "}
-                <span className="me-3 ">{userData.customerName}</span>
-              </Nav>
-            ) : (
-              <>
-                <Link
-                  className=" fnt clrrd me-3  boldt"
-                  to="/login"
-                  style={{ textDecoration: "none" }}
-                >
-                  Login
-                </Link>
-                <Link
-                  className=" fnt clrrd me-3  boldt"
-                  to="/register"
-                  style={{ textDecoration: "none" }}
-                >
-                  Register{" "}
-                </Link>
-              </>
-            )}
+            <Nav className=" fnt clrrd me-3  boldt">
+              <Link
+                className=" fnt clrrd me-3  boldt"
+                to="/"
+                style={{ textDecoration: "none" }}
+              >
+                Home
+              </Link>
+            </Nav>
+            <Nav className=" fnt clrrd me-3  boldt">
+              <Link
+                className=" fnt clrrd me-3  boldt"
+                to="/about"
+                style={{ textDecoration: "none" }}
+              >
+                About Us
+              </Link>
+            </Nav>
+            <Nav className=" fnt clrrd me-3  boldt">Blog</Nav>
+            <Nav className=" fnt clrrd me-3  boldt">
+              <Link
+                className=" fnt clrrd me-3  boldt"
+                to="/career"
+                style={{ textDecoration: "none" }}
+              >
+                Career
+              </Link>
+            </Nav>
 
             <Nav className=" fnt clrrd ">
               <div
@@ -232,11 +235,12 @@ export default function NabarCompo({}) {
               >
                 <InputBase
                   readOnly
-                  value={
-                    citys?.city === null || citys?.city === undefined
-                      ? "Select City"
-                      : citys?.city
-                  }
+                  // value={
+                  //   citys?.city === null || citys?.city === undefined
+                  //     ? "Select City"
+                  //     : citys?.city
+                  // }
+                  value={selectedCity || "Select City"}
                   style={{ fontSize: "14px", marginTop: "1px" }}
                   startAdornment={
                     <i
@@ -267,9 +271,72 @@ export default function NabarCompo({}) {
               </div>
             </Nav>
 
-            <Nav className=" fnt clrrd me-3  boldt" onClick={handleremove}>
-              Logout
-            </Nav>
+            {userData !== null && userData !== undefined ? (
+              <Nav className=" fnt   p-0 ">
+                <div className="btn-group">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="true"
+                    aria-expanded="false"
+                    style={{
+                      backgroundColor: "darkred",
+                      borderRadius: "50px",
+                      border: "white",
+                    }}
+                  >
+                    <i
+                      className="fa-solid fa-user"
+                      style={{ fontSize: "15px" }}
+                    ></i>
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a
+                        style={{ fontSize: "12px" }}
+                        className="dropdown-item"
+                        href="/mybooking"
+                      >
+                        My Bookings
+                      </a>
+                    </li>
+                    <li onClick={handleremove}>
+                      <a
+                        style={{ fontSize: "12px" }}
+                        className="dropdown-item"
+                        href="#"
+                      >
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <span
+                  className="mx-2 "
+                  style={{ fontSize: "14px", marginTop: "7px" }}
+                >
+                  {userData?.customerName}
+                </span>
+              </Nav>
+            ) : (
+              <>
+                <Link
+                  className=" fnt clrrd me-3  boldt"
+                  to="/login"
+                  style={{ textDecoration: "none" }}
+                >
+                  Login
+                </Link>
+                <Link
+                  className=" fnt clrrd me-3  boldt"
+                  to="/register"
+                  style={{ textDecoration: "none" }}
+                >
+                  Register{" "}
+                </Link>
+              </>
+            )}
 
             <Nav className="ms-5">
               {!cartShow ? (
@@ -304,12 +371,6 @@ export default function NabarCompo({}) {
             <p>Contact : {userData?.contactPerson}</p>
           </Offcanvas.Body>
         </Offcanvas>
-
-        {/* {selectedCity && (
-          <div style={{ textAlign: "center", marginTop: "10px" }}>
-            Selected City: {selectedCity}
-          </div>
-        )} */}
 
         <Modal show={openResetModal} centered onHide={handleResetModal}>
           <div className="modal_wrapper select-city-modal">

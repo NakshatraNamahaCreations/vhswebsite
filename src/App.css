@@ -561,3 +561,8 @@ a {
 .selected-item {
   background-color: red !important;
 }
+
+.active-date {
+  background-color: darkred; /* or any color you prefer */
+  color: white; /* optional, for better text visibility */
+}

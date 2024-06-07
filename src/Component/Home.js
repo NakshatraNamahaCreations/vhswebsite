@@ -31,6 +31,7 @@ export default function Home() {
   const [SelectedCategory, setSelectedCategory] = useState([]);
   const [FilterPackers, setFilterPackers] = useState([]);
   const [FilterAppliance, setFilterAppliance] = useState([]);
+  const [bannerdata, setBannerdata] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const styles = {
@@ -79,6 +80,22 @@ export default function Home() {
   useEffect(() => {
     getsubcategory();
   }, []);
+
+  useEffect(() => {
+    getbannerimg();
+  }, []);
+
+  const getbannerimg = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomesuperadmin.in/api/website/getallwebbanner"
+    );
+    if ((res.status = 200)) {
+      setBannerdata(res.data?.banner);
+      console.log(res.data?.banner);
+    }
+  };
+
+  console.log("bannerdata====", bannerdata);
 
   const getsubcategory = async () => {
     try {
@@ -364,58 +381,45 @@ export default function Home() {
           <NabarCompo />
           {/* Carousel-----------slider */}
           <div className="">
-            <div id="carouselExample" class="carousel slide">
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img
-                    src="./assests/offer.jpg"
-                    class="d-block w-100"
-                    alt="..."
-                    // style={{ height: "500px" }}
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="./assests/offer1.jpg"
-                    class="d-block w-100"
-                    alt="..."
-                    // style={{ height: "500px" }}
-                  />
-                </div>
-                <div class="carousel-item">
-                  <img
-                    src="./assests/deepcln.webp"
-                    class="d-block w-100"
-                    alt="..."
-                    // style={{ height: "500px" }}
-                  />
-                </div>
+            <div id="carouselExample" className="carousel slide">
+              <div className="carousel-inner">
+                {bannerdata.map((data, index) => (
+                  <div
+                    key={index}
+                    className={`carousel-item ${index === 0 ? "active" : ""}`}
+                  >
+                    <img
+                      src={`https://api.vijayhomesuperadmin.in/webBanner/${data?.banner}`}
+                      className="d-block w-100"
+                      alt={`Banner ${index + 1}`}
+                      style={{ height: "500px" }}
+                    />
+                  </div>
+                ))}
               </div>
               <button
                 className="carousel-control-prev"
                 type="button"
                 data-bs-target="#carouselExample"
                 data-bs-slide="prev"
-                style={styles[".carousel-control-prev"]}
               >
                 <span
-                  class="carousel-control-prev-icon"
+                  className="carousel-control-prev-icon"
                   aria-hidden="true"
                 ></span>
-                <span class="visually-hidden">Previous</span>
+                <span className="visually-hidden">Previous</span>
               </button>
               <button
                 className="carousel-control-next"
                 type="button"
                 data-bs-target="#carouselExample"
                 data-bs-slide="next"
-                style={styles[".carousel-control-next"]}
               >
                 <span
-                  class="carousel-control-next-icon"
+                  className="carousel-control-next-icon"
                   aria-hidden="true"
                 ></span>
-                <span class="visually-hidden">Next</span>
+                <span className="visually-hidden">Next</span>
               </button>
             </div>
           </div>
@@ -496,95 +500,6 @@ export default function Home() {
           </div>
 
           <div className="container">
-            {/* <div className="row mb-5">
-              <div className="col-md-6">
-                <div className="row m-auto">
-                  {FilteredCategory?.map((ele, index) => (
-                    <div className="col-md-4 ">
-                      <div className="row text-center m-auto">
-                        <Link
-                          className="linkt"
-                          onClick={() => handleShowSelectCategory(ele.category)}
-                        >
-                          <div className="col-md-10">
-                            <img
-                              className="mb-3"
-                              width={50}
-                              height={50}
-                              alt=""
-                              src={`http://localhost:8080/category/${ele?.categoryImg}`}
-                            />
-                            <p className="fnt col-md-12 boldt fnt15">
-                              {ele.category}
-                            </p>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="col-md-2 text-center">
-                    {FilteredCategory.length >= 4 && (
-                      <img
-                        className="m-auto"
-                        width={60}
-                        height={60}
-                        onClick={handleViewMoreCategory}
-                        alt=""
-                        src="..\Newimg\Untitled-1-01.png"
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-6 ">
-                <div className="row  clr2">
-                  <div
-                    className="col-md-3 m-auto"
-                    style={{ position: "absolute", top: "145px" }}
-                  ></div>
-                  <div className="col-md-3"></div>
-                  <div className="col-md-6 text-center m-auto">
-                    <div className="row  m-auto  mb-3 mt-3">
-                      <img
-                        width={30}
-                        height={40}
-                        alt=""
-                        className="col-md-3  m-auto "
-                        src="./images/vhs.png"
-                      />
-                    </div>
-                    <p className="col-md-10 fs-5 text-white m-auto mb-3 ">
-                      Diwali Special Cleaning Starting at ₹1200
-                    </p>
-                    <div className="row mb-3  m-auto">
-                      <div className="col-md-6"></div>
-                      <button className="col-md-4  fnt fnt14 p-1 boldt text-black bg-white">
-                        BOOK NOW
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="row justify-content-evenly  m-auto">
-                  {" "}
-                  <video
-                    alt=""
-                    autoPlay
-                    loop
-                    className="col-md-5   mt-4 brd border5 p-0"
-                    src="./Newimg/cln.mp4"
-                  ></video>
-                  <video
-                    alt=""
-                    autoPlay
-                    loop
-                    className="col-md-5   mt-4 brd border5 p-0"
-                    src="./Newimg/paint.mp4"
-                  ></video>
-                </div>
-              </div>
-            </div> */}
-
             <div className="c-head mt-5">Cleaning Services</div>
 
             <Slider {...settings}>
@@ -845,7 +760,7 @@ export default function Home() {
 
             {/* Best Ongoing Services */}
 
-            <div className="c-head1 mt-5 text-center">
+            {/* <div className="c-head1 mt-5 text-center">
               Best Ongoing Services
             </div>
 
@@ -974,7 +889,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Deal of The Week */}
 
@@ -1149,245 +1064,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* dynamic Data */}
-
-            {/* <div className="row mt-5 mb-5  brclr "> */}
-            {/* <div className="col-md-4 p-3 crdbor">
-                <h3 className="text-center m-auto boldt">Cleaning Services</h3>
-                <p className="text-center  m-auto grndclr fnt12 boldt">
-                  30% Less Than Market Price
-                </p>
-                <img
-                  className="row mt-2  border1 m-auto"
-                  alt=""
-                  height={400}
-                  width={300}
-                  src="./Newimg/cleanbnr.jpg"
-                />
-              </div> */}
-
-            {/* <div className="col-md-8 p-4">
-                <div className="row m-auto">
-                  {FilterCleaning?.map((ele, index) => (
-                    <div className="col-md-3 ">
-                      <div className="row  mb-4">
-                        <div className="col-md-10 ">
-                          <Link
-                            to="/servicedetails"
-                            state={{ subcategory: ele?.subcategory }}
-                            key={ele.subcategory}
-                            style={{ textDecoration: "none" }}
-                            className="text-decoration-none text-black"
-                          >
-                            <div className="row mb-2 shadow-sm  bg-white  subimg1 p-2">
-                              <img
-                                className="subimg p-0   bg-white"
-                                width={130}
-                                height={130}
-                                alt=""
-                                src={`http://localhost:8080/subcat/${ele?.subcatimg}`}
-                              />{" "}
-                            </div>
-                            <p className="row fnt12 text-center m-auto p-2 boldt">
-                              {ele.subcategory}
-                            </p>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="col-md-3 m-auto text-center ">
-                    {FilterCleaning.length >= 6 && (
-                      <button
-                        className="clr2 p-2  borderrad "
-                        onClick={() => handleViewMore(MODAL_TYPE.CLEANING)}
-                      >
-                        View All <ArrowForwardIcon />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div> */}
-            {/* </div> */}
-            {/* <div className="row mt-5 mb-5  brclr ">
-              <div className="col-md-4 p-3 crdbor">
-                <h3 className="text-center m-auto boldt">Painting Services</h3>
-                <p className="text-center  m-auto grndclr fnt12 boldt">
-                  Asian Paints Certified
-                </p>
-                <img
-                  className="row mt-2  border1 m-auto"
-                  alt=""
-                  height={400}
-                  width={300}
-                  src="./Newimg/pexels-piotr-arnoldes-6057911.jpg"
-                />
-              </div>
-
-              <div className="col-md-8 p-4">
-                <div className="row m-auto">
-                  {FilteredPaint?.map((ele, index) => (
-                    <div className="col-md-3 ">
-                      <div className="row  ">
-                        <div className="col-md-10 ">
-                          <Link
-                            to="/servicedetails"
-                            state={{ subcategory: ele?.subcategory }}
-                            key={ele.subcategory}
-                            style={{ textDecoration: "none" }}
-                            className="text-decoration-none text-black"
-                          >
-                            <div className="row mb-2 shadow-sm  bg-white  subimg1 p-2">
-                              <img
-                                className="subimg p-0 bg-white"
-                                width={130}
-                                height={130}
-                                alt=""
-                                src={`http://localhost:8080/subcat/${ele?.subcatimg}`}
-                              />{" "}
-                            </div>
-                            <p className="row fnt12 text-center m-auto p-2 boldt">
-                              {ele.subcategory}
-                            </p>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="col-md-3 m-auto text-center ">
-                    {FilteredPaint.length >= 6 && (
-                      <button
-                        className="clr2 p-2  borderrad "
-                        onClick={() => handleViewMore(MODAL_TYPE.PAINT)}
-                      >
-                        View All <ArrowForwardIcon />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row mt-5  mb-5  brclr ">
-              <div className="col-md-4 p-3 crdbor">
-                <h3 className="text-center m-auto boldt">
-                  Pest Control Services
-                </h3>
-                <p className="text-center  m-auto grndclr fnt12 boldt">
-                  Approved Government Licence
-                </p>
-                <img
-                  className="row mt-2  border1 m-auto"
-                  alt=""
-                  height={400}
-                  width={300}
-                  src="./Newimg/pestctl.jpg"
-                />
-              </div>
-
-              <div className="col-md-8 p-4">
-                <div className="row m-auto">
-                  {FilterPestControl?.map((ele, index) => (
-                    <div className="col-md-3 ">
-                      <div className="row  ">
-                        <div className="col-md-10 ">
-                          <Link
-                            to="/servicedetails"
-                            state={{ subcategory: ele?.subcategory }}
-                            key={ele.subcategory}
-                            style={{ textDecoration: "none" }}
-                            className="text-decoration-none text-black"
-                          >
-                            <div className="row mb-2 shadow-sm  bg-white  subimg1 p-2">
-                              <img
-                                className="subimg p-0   bg-white  "
-                                width={130}
-                                height={130}
-                                alt=""
-                                src={`http://localhost:8080/subcat/${ele?.subcatimg}`}
-                              />{" "}
-                            </div>
-                            <p className="row fnt12 text-center m-auto p-2 boldt">
-                              {ele.subcategory}
-                            </p>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="col-md-3 m-auto text-center ">
-                    {FilterPestControl.length >= 6 && (
-                      <button
-                        className="clr2 p-2  borderrad "
-                        onClick={() => handleViewMore(MODAL_TYPE.PEST_CONTROL)}
-                      >
-                        View All <ArrowForwardIcon />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row mt-5  mb-5  brclr ">
-              <div className="col-md-4 p-3 crdbor">
-                <h3 className="text-center m-auto boldt">Marbel Polish</h3>
-                <p className="text-center  m-auto grndclr fnt12 boldt">
-                  Trained And Expert Team
-                </p>
-                <img
-                  className="row mt-2  border1 m-auto"
-                  alt=""
-                  height={400}
-                  width={300}
-                  src=".\Newimg\marbel.jpg"
-                />
-              </div>
-
-              <div className="col-md-8 p-4">
-                <div className="row m-auto">
-                  {FilterMarbelPolish?.map((ele, index) => (
-                    <div className="col-md-3 ">
-                      <div className="row  ">
-                        <div className="col-md-10 ">
-                          <Link
-                            to="/servicedetails"
-                            state={{ subcategory: ele?.subcategory }}
-                            key={ele.subcategory}
-                            style={{ textDecoration: "none" }}
-                            className="text-decoration-none text-black"
-                          >
-                            <div className="row mb-2 shadow-sm  bg-white  subimg1 p-2">
-                              <img
-                                className="subimg p-0   bg-white  "
-                                width={130}
-                                height={130}
-                                alt=""
-                                src={`http://localhost:8080/subcat/${ele?.subcatimg}`}
-                              />{" "}
-                            </div>
-                            <p className="row fnt12 text-center m-auto p-2 boldt">
-                              {ele.subcategory}
-                            </p>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="col-md-3 m-auto text-center ">
-                    {FilterMarbelPolish.length >= 6 && (
-                      <button
-                        className="clr2 p-2  borderrad "
-                        onClick={() => handleViewMore(MODAL_TYPE.MARBEL)}
-                      >
-                        View All <ArrowForwardIcon />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
             <div className="row mt-5">
               <h2 className="row">Corporate Facility Management</h2>
             </div>
@@ -1419,59 +1095,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            {/* <h3 className="mt-5 boldt">Repairing Services</h3> */}
-            {/* <div className="row   mb-5  brclr2 ">
-              <div className="col-md-4 ">
-                <img
-                  className="row p-0  crdbor1"
-                  alt=""
-                  height={400}
-                  width={300}
-                  src=".\Newimg\marbel.jpg"
-                />
-              </div>
-
-              <div className="col-md-8 p-3">
-                <div className="row m-auto">
-                  {FilterRepairing?.map((ele, index) => (
-                    <div className="col-md-3 ">
-                      <div className="row  ">
-                        <div className="col-md-10">
-                          <Link
-                            to="/servicedetails"
-                            state={{ subcategory: ele?.subcategory }}
-                            key={ele.subcategory}
-                            style={{ textDecoration: "none" }}
-                            className="text-decoration-none text-black"
-                          >
-                            <img
-                              className=" p-0 subimg3 shadow"
-                              width={130}
-                              height={130}
-                              alt=""
-                              src={`http://localhost:8080/subcat/${ele?.subcatimg}`}
-                            />{" "}
-                            <p className="row fnt12 text-center m-auto p-2 boldt">
-                              {ele.subcategory}
-                            </p>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="col-md-3 m-auto text-center ">
-                    {FilterRepairing.length >= 6 && (
-                      <button
-                        className="clr2 p-2  borderrad "
-                        onClick={() => handleViewMore(MODAL_TYPE.REPAIRING)}
-                      >
-                        View All <ArrowForwardIcon />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
           <Footer />
         </>

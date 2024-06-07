@@ -10,9 +10,12 @@ import {
   LoadScript,
   Marker,
   Autocomplete,
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import Modal from "react-bootstrap/Modal";
 import Calendar from "react-calendar";
+import { Button } from "react-bootstrap";
+import Header2 from "./Header2";
 
 function Espage() {
   const location = useLocation();
@@ -37,6 +40,12 @@ function Espage() {
   const [voucherCodeValue, setVoucherCodeValue] = useState();
   const [Carttotal, setCarttotal] = useState(0);
   const [Fulladd, setFulladd] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [Url, setUrl] = useState("");
+  const [paymentModel, setpaymentModel] = useState(false);
+
+  const handleClose3 = () => setpaymentModel(false);
 
   // const user = JSON.parse(localStorage.getItem("user"));
 
@@ -128,29 +137,29 @@ function Espage() {
     }
   };
 
-  const handlePlaceSelect = () => {
-    const place = autocompleteRef.current.getPlace();
-    if (!place.geometry) {
-      return;
-    }
+  // const handlePlaceSelect = () => {
+  //   const place = autocompleteRef.current.getPlace();
+  //   if (!place.geometry) {
+  //     return;
+  //   }
 
-    const latitude = place.geometry.location.lat();
-    const longitude = place.geometry.location.lng();
-    const location = { latitude, longitude };
-    setSelectedLocation(location);
-    setSelectedPlaceAddress(place.formatted_address || "");
+  //   const latitude = place.geometry.location.lat();
+  //   const longitude = place.geometry.location.lng();
+  //   const location = { latitude, longitude };
+  //   setSelectedLocation(location);
+  //   setSelectedPlaceAddress(place.formatted_address || "");
 
-    // Adjust map bounds to include both the marker and the searched location
-    if (mapRef.current && mapRef.current.getMap) {
-      const map = mapRef.current.getMap();
-      const bounds = new window.google.maps.LatLngBounds();
-      bounds.extend(location);
-      if (selectedLocation) {
-        bounds.extend(selectedLocation);
-      }
-      map.fitBounds(bounds);
-    }
-  };
+  //   // Adjust map bounds to include both the marker and the searched location
+  //   if (mapRef.current && mapRef.current.getMap) {
+  //     const map = mapRef.current.getMap();
+  //     const bounds = new window.google.maps.LatLngBounds();
+  //     bounds.extend(location);
+  //     if (selectedLocation) {
+  //       bounds.extend(selectedLocation);
+  //     }
+  //     map.fitBounds(bounds);
+  //   }
+  // };
 
   const [show, setShow] = useState(false);
 
@@ -863,191 +872,353 @@ function Espage() {
     }
   };
 
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyBF48uqsKVyp9P2NlDX-heBJksvvT_8Cqk",
+    libraries: ["places"],
+  });
+
+  const handlePlaceSelect = () => {
+    const place = autocompleteRef.current.getPlace();
+    if (!place.geometry) {
+      return;
+    }
+
+    const latitude = place.geometry.location.lat();
+    const longitude = place.geometry.location.lng();
+    const location = { latitude, longitude };
+    setSelectedLocation(location);
+    setSelectedPlaceAddress(place.formatted_address || "");
+
+    if (mapRef.current && mapRef.current.getMap) {
+      const map = mapRef.current.getMap();
+      const bounds = new window.google.maps.LatLngBounds();
+      bounds.extend(new window.google.maps.LatLng(latitude, longitude));
+      map.fitBounds(bounds);
+    }
+  };
+
+  if (loadError) {
+    return <div>Error loading maps</div>;
+  }
+
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const location = { latitude, longitude };
+          setSelectedLocation(location);
+
+          const geocoder = new window.google.maps.Geocoder();
+          const latlng = new window.google.maps.LatLng(latitude, longitude);
+          geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === "OK") {
+              if (results[0]) {
+                setSelectedPlaceAddress(results[0].formatted_address);
+              } else {
+                console.log("No results found");
+              }
+            } else {
+              console.log("Geocoder failed due to: " + status);
+            }
+          });
+
+          if (mapRef.current && mapRef.current.getMap) {
+            const map = mapRef.current.getMap();
+            const bounds = new window.google.maps.LatLngBounds();
+            bounds.extend(new window.google.maps.LatLng(latitude, longitude));
+            map.fitBounds(bounds);
+          }
+        },
+        (error) => {
+          console.error("Error fetching location: ", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const updateddata = {
+    customerData: {
+      _id: user?._id,
+      EnquiryId: user?.EnquiryId,
+      customerName: user?.customerName,
+      category: user?.category,
+      mainContact: user?.mainContact,
+      email: user?.email,
+      approach: user?.approach,
+    },
+    dividedDates: dividedDates.length ? dividedDates : [selectedDate],
+    // customerName: storedCustomerName,
+    // email: storedEmail,
+    dividedamtCharges: dividedamtCharges,
+    dividedamtDates: dividedamtDates,
+    cardNo: user?.cardNo,
+    category: MyCartItmes[0]?.service?.category,
+    contractType: "One Time",
+    service: MyCartItmes[0]?.service?.serviceName,
+    serviceID: MyCartItmes[0]?.service?._id,
+    serviceCharge: DiscountAmount,
+    dateofService: selectedDate,
+    selectedSlotText: selectedSlotText,
+    serviceFrequency: 1,
+    startDate: selectedDate,
+    expiryDate: selectedDate,
+    firstserviceDate: selectedDate,
+    date: moment().format("YYYY-MM-DD"),
+    time: moment().format("LT"),
+    type: "website",
+
+    city: localstoragecitys,
+    userId: user?._id,
+    discAmt: 0,
+    GrandTotal: DiscountAmount,
+    paymentMode: "cash",
+    TotalAmt: Carttotal,
+    couponCode: voucherCodeValue,
+    totalSaved: SavedAmount,
+    markerCoordinate: selectedAddress?.markerCoordinate,
+    deliveryAddress: selectedAddress,
+    amount: DiscountAmount,
+    number: "8951592630",
+    MUID: "MUID" + Date.now(),
+    transactionId: "T" + Date.now(),
+  };
+
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/api/payment/yogipayment",
+        updateddata
+      );
+      console.log("Response:", res.data.redirectUrl);
+
+      if (res.data.redirectUrl) {
+        setpaymentModel(true);
+        setUrl(res.data.redirectUrl);
+      } else {
+        console.log("No redirect URL found in the response.");
+      }
+    } catch (error) {
+      console.error("Payment initiation failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="">
-      <NabarCompo />
+      <Header2 />
 
       <div className="container">
         <div className="row">
-          <div
-            className="mb-3 mt-3"
-            style={{
-              color: "black",
-              fontSize: "20px",
-              fontWeight: "bold",
-              textDecoration: "underline",
-            }}
-          >
-            Service Details
-          </div>
-
-          <div className="row">
-            <div className="col-md-3">
-              <img
-                src={`https://api.vijayhomesuperadmin.in/service/${sdata?.serviceImg}`}
-                alt="loading...."
-                style={{
-                  width: "100%",
-                  borderRadius: "10px",
-                  height: "185px",
-                }}
-              />
-            </div>
-            <div className="col-md-9 mt-4">
+          {!show1 && (
+            <>
               <div
+                className="mb-3 mt-3"
                 style={{
-                  fontSize: 18,
                   color: "black",
+                  fontSize: "20px",
                   fontWeight: "bold",
-                  marginTop: 5,
+                  textDecoration: "underline",
                 }}
               >
-                {sdata.serviceName}
-              </div>
-              <div
-                style={{
-                  fontSize: 14,
-                  color: "black",
-                  marginTop: 5,
-                }}
-              >
-                {sdata?.serviceDesc[0]?.text}
+                Service Details
               </div>
 
-              <div>{sdata?.serviceHours}</div>
-            </div>
-          </div>
+              <div className="row">
+                <div className="col-md-3">
+                  <img
+                    src={`https://api.vijayhomesuperadmin.in/service/${sdata?.serviceImg}`}
+                    alt="loading...."
+                    style={{
+                      width: "100%",
+                      borderRadius: "10px",
+                      height: "185px",
+                    }}
+                  />
+                </div>
+                <div className="col-md-9 mt-4">
+                  <div
+                    style={{
+                      fontSize: 18,
+                      color: "black",
+                      fontWeight: "bold",
+                      marginTop: 5,
+                    }}
+                  >
+                    {sdata.serviceName}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 14,
+                      color: "black",
+                      marginTop: 5,
+                    }}
+                  >
+                    {sdata?.serviceDesc[0]?.text}
+                  </div>
 
-          <div className="scheduleservice mb-5">
-            <div className="title">Schedule Service</div>
-            <div className="select_date">
-              <div className="text">Select the date</div>
+                  <div>{sdata?.serviceHours}</div>
+                </div>
+              </div>
 
-              <div className="date_selection">
-                {fourDates?.map((day, index) => {
-                  const isDefaultChecked = isDateSelected(day);
+              <div className="scheduleservice mb-5">
+                <div className="title">Schedule Service</div>
+                <div className="select_date">
+                  <div className="text">Select the date</div>
 
-                  return (
-                    <label htmlFor={index} key={index}>
-                      <input type="checkbox" name="" id={day?.day} />
+                  <div className="date_selection">
+                    {fourDates?.map((day, index) => {
+                      const isDefaultChecked = isDateSelected(day);
 
-                      <span
-                        className={`inpt ${isDefaultChecked ? "matching" : ""}`}
-                        onClick={() => handleCheckboxSelect(day)}
-                      >
-                        {day?.dayName}- {day?.day}
+                      return (
+                        <label htmlFor={index} key={index}>
+                          <input type="checkbox" name="" id={day?.day} />
+
+                          <span
+                            className={`inpt ${
+                              isDefaultChecked ? "matching" : ""
+                            }`}
+                            onClick={() => handleCheckboxSelect(day)}
+                          >
+                            {day?.dayName}- {day?.day}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                  <div className="date">
+                    <button onClick={DatePicker} style={{ cursor: "pointer" }}>
+                      Pick Date{" "}
+                      <span>
+                        {selectedDate && (
+                          <div
+                            className="selected_date mx-2"
+                            style={{ color: "darkred" }}
+                          >
+                            {moment(selectedDate).format("YYYY-MM-DD")}
+                          </div>
+                        )}
                       </span>
-                    </label>
-                  );
-                })}
-              </div>
-              <div className="date">
-                <button onClick={DatePicker} style={{ cursor: "pointer" }}>
-                  Pick Date{" "}
-                  <span>
-                    {selectedDate && (
-                      <div
-                        className="selected_date mx-2"
-                        style={{ color: "darkred" }}
-                      >
-                        {moment(selectedDate).format("YYYY-MM-DD")}
+                    </button>
+                    <div className="date_picker"></div>
+                  </div>
+                  {datepicker && (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100vh",
+                        zIndex: "100",
+                        marginTop: "-250px",
+                      }}
+                    >
+                      <div>
+                        <Calendar
+                          onChange={(date) => handleCalendarSelect(date)}
+                          value={selectedDate}
+                          calendarType="US"
+                          tileDisabled={tileDisabled}
+                          tileClassName={tileClassName}
+                        />
                       </div>
-                    )}
-                  </span>
-                </button>
-                <div className="date_picker"></div>
+                    </div>
+                  )}
+                </div>
+                <div className="select_date">
+                  <div className="text">Select the Slot</div>
+
+                  {renderSlots()}
+                </div>
               </div>
-              {datepicker && (
+
+              <div
+                className=""
+                style={{
+                  color: "black",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+              >
+                Select the address
+              </div>
+
+              <div
+                className="shadow-sm mt-2 mb-2"
+                style={{
+                  backgroundColor: "white",
+                  padding: "10px",
+                  borderRadius: "10px",
+                }}
+              >
+                {Object.keys(selectedAddress).length > 0 && (
+                  <>
+                    {selectedAddress.platNo},{selectedAddress.address}
+                    <p>{selectedAddress.landmark}</p>
+                  </>
+                )}
+              </div>
+
+              {sdata.serviceDirection === "Survey" ? (
                 <div
+                  onClick={addsurvey}
+                  className="col-md-8 mt-4 mb-3"
                   style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100vh",
-                    zIndex: "100",
-                    marginTop: "-250px",
+                    backgroundColor: "darkred",
+                    padding: "8px",
+                    color: "white",
+                    fontSize: "14px",
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    width: "100%",
                   }}
                 >
-                  <div>
-                    <Calendar
-                      onChange={(date) => handleCalendarSelect(date)}
-                      value={selectedDate}
-                      calendarType="US"
-                      tileDisabled={tileDisabled}
-                      tileClassName={tileClassName}
-                    />
-                  </div>
+                  Book
+                </div>
+              ) : (
+                <div
+                  onClick={addenquiry}
+                  className="col-md-8 mt-4 mb-3"
+                  style={{
+                    backgroundColor: "darkred",
+                    padding: "8px",
+                    color: "white",
+                    fontSize: "14px",
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    width: "100%",
+                  }}
+                >
+                  Book
                 </div>
               )}
-            </div>
-            <div className="select_date">
-              <div className="text">Select the Slot</div>
 
-              {renderSlots()}
-            </div>
-          </div>
-
-          <div
-            className=""
-            style={{
-              color: "black",
-              fontSize: "20px",
-              fontWeight: "bold",
-            }}
-          >
-            Select the address
-          </div>
-
-          <div
-            className="shadow-sm mt-2 mb-2"
-            style={{
-              backgroundColor: "white",
-              padding: "10px",
-              borderRadius: "10px",
-            }}
-          >
-            {Object.keys(selectedAddress).length > 0 && (
-              <>
-                {selectedAddress.platNo},{selectedAddress.address}
-                <p>{selectedAddress.landmark}</p>
-              </>
-            )}
-          </div>
-
-          {sdata.serviceDirection === "Survey" ? (
-            <div
-              onClick={addsurvey}
-              className="col-md-8 mt-4 mb-3"
-              style={{
-                backgroundColor: "darkred",
-                padding: "8px",
-                color: "white",
-                fontSize: "14px",
-                textAlign: "center",
-                borderRadius: "5px",
-                cursor: "pointer",
-                width: "100%",
-              }}
-            >
-              Book
-            </div>
-          ) : (
-            <div
-              onClick={addenquiry}
-              className="col-md-8 mt-4 mb-3"
-              style={{
-                backgroundColor: "darkred",
-                padding: "8px",
-                color: "white",
-                fontSize: "14px",
-                textAlign: "center",
-                borderRadius: "5px",
-                cursor: "pointer",
-                width: "100%",
-              }}
-            >
-              Book
-            </div>
+              <div className="row mt-5 mb-5">
+                <div
+                  onClick={handlePayment}
+                  className="col-md-8"
+                  style={{
+                    backgroundColor: "darkred",
+                    padding: "8px",
+                    color: "white",
+                    fontSize: "14px",
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Payment
+                </div>
+              </div>
+            </>
           )}
 
           {/* old address select */}
@@ -1158,199 +1329,302 @@ function Espage() {
           </Modal>
 
           {/* showing google map after add addresss=========================== */}
-          {show1 && (
-            <div className="row mb-2 p-2">
-              <div className="" style={{ width: "100%", height: "200px" }}>
-                <LoadScript
-                  googleMapsApiKey="AIzaSyBF48uqsKVyp9P2NlDX-heBJksvvT_8Cqk"
-                  libraries={["places"]}
-                >
-                  <GoogleMap
-                    ref={mapRef}
-                    center={{ lat: 12.9716, lng: 77.5946 }}
-                    zoom={10}
-                    mapContainerStyle={{
-                      height: "100%",
-                      width: "100%",
-                      zIndex: 111,
-                    }}
-                  >
-                    {selectedLocation && <Marker position={selectedLocation} />}
-
-                    <Autocomplete
-                      onLoad={(autocomplete) => {
-                        // console.log("Autocomplete loaded:", autocomplete);
-                        autocompleteRef.current = autocomplete;
-                      }}
-                      options={{
-                        fields: ["formatted_address", "geometry", "name"],
-                        types: ["geocode"],
-                        // componentRestrictions: { country: "us" },
-                      }}
-                      onPlaceChanged={handlePlaceSelect}
-                      style={{ backgroundColor: "red", zIndex: 111 }}
-                    >
-                      <input
-                        type="text"
-                        placeholder="Search for a location"
-                        style={{
-                          boxSizing: `border-box`,
-                          border: `1px solid transparent`,
-                          width: `240px`,
-                          height: `32px`,
-                          padding: `0 12px`,
-                          borderRadius: `3px`,
-                          boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                          fontSize: `14px`,
-                          outline: `none`,
-                          textOverflow: `ellipses`,
-                          position: "relative",
-                          left: "50%",
-                          marginLeft: "-120px",
-                        }}
-                      />
-                    </Autocomplete>
-                  </GoogleMap>
-                </LoadScript>
-              </div>
-
-              <div style={{ textAlign: "center", marginTop: "10px" }}>
-                {selectedPlaceAddress && (
-                  <p>Searched Location: {selectedPlaceAddress}</p>
-                )}
-              </div>
-
-              <div className="mt-3">
-                <div
-                  className="mb-1"
-                  style={{
-                    color: "black",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  House/Flat/Block No <span style={{ color: "red" }}>*</span>
-                </div>
-                <input
-                  type="text"
-                  style={{
-                    border: "1px solid grey",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                  onChange={(e) => setHouseFlat(e.target.value)}
-                />
-              </div>
-
-              <div className="">
-                <div
-                  className="mb-1"
-                  style={{
-                    color: "black",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Landmark / Society name{" "}
-                  <span style={{ color: "red" }}>*</span>
-                </div>
-                <input
-                  type="text"
-                  style={{
-                    border: "1px solid grey",
-                    borderRadius: "5px",
-                    height: "40px",
-                  }}
-                  onChange={(e) => setLandmark(e.target.value)}
-                />
-              </div>
-
-              <div className="">
-                <div
-                  className="mb-1"
-                  style={{
-                    color: "black",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Save as <span style={{ color: "red" }}>*</span>
-                </div>
-                <div className="d-flex">
-                  <div className="col-md-3">
-                    <div
-                      className=""
-                      style={{
-                        border: "1px solid grey",
-                        padding: "3px",
-                        textAlign: "center",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                        color: home ? "white" : "black",
-                        backgroundColor: home ? "darkred" : "white",
-                      }}
-                      onClick={() => {
-                        setHome(true);
-                        setOthers(false);
-                      }}
-                    >
-                      Home
-                    </div>
-                  </div>
-                  <div className="col-md-1"></div>
-                  <div className="col-md-3">
-                    <div
-                      className=""
-                      style={{
-                        border: "1px solid grey",
-                        padding: "3px",
-                        textAlign: "center",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                        color: others ? "white" : "black",
-                        backgroundColor: others ? "darkred" : "white",
-                      }}
-                      onClick={() => {
-                        setHome(false);
-                        setOthers(true);
-                      }}
-                    >
-                      Others
-                    </div>
-                  </div>
-                  {others && (
-                    <div className="col-md-3 ms-2">
-                      <input
-                        style={{ border: "1px solid black" }}
-                        onChange={(e) => setOthersPlace(e.target.value)}
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div
-                className=""
+          {show1 && isLoaded && (
+            <div
+              className="row mt-5 mb-2 p-2"
+              style={{ justifyContent: "center" }}
+            >
+              <i
+                onClick={() => {
+                  setShow1(false);
+                  setShow(true);
+                }}
+                className="fa-solid fa-x"
                 style={{
                   backgroundColor: "darkred",
-                  padding: "8px",
+                  padding: "10px",
+                  width: "35px",
                   textAlign: "center",
                   color: "white",
-                  fontSize: "14px",
-                  borderRadius: "5px",
-                  marginTop: "25px",
-                  cursor: "pointer",
+                  fontSize: "15px",
+                  borderRadius: "50px",
+                  position: "absolute",
+                  top: "70px",
                 }}
-                // onClick={saveAddress}
-                onClick={() => {
-                  saveAddress(); // Call the saveAddress function here
-                  saveAddress1(); // Also call the saveAddress1 function if needed
+              ></i>
+              <div
+                className="row col-md-10"
+                style={{
+                  backgroundColor: "#80808036",
+                  padding: "20px",
+                  borderRadius: "5px",
                 }}
               >
-                Save
+                <div className="col-md-8">
+                  <div
+                    className=""
+                    style={{
+                      width: "100%",
+                      height: "320px",
+                      position: "relative",
+                    }}
+                  >
+                    <GoogleMap
+                      ref={mapRef}
+                      center={{ lat: 12.9716, lng: 77.5946 }}
+                      zoom={10}
+                      mapContainerStyle={{
+                        height: "100%",
+                        width: "100%",
+                        zIndex: 111,
+                      }}
+                    >
+                      {selectedLocation && (
+                        <Marker
+                          position={{
+                            lat: selectedLocation.latitude,
+                            lng: selectedLocation.longitude,
+                          }}
+                        />
+                      )}
+                      <Autocomplete
+                        onLoad={(autocomplete) => {
+                          autocompleteRef.current = autocomplete;
+                        }}
+                        options={{
+                          fields: ["formatted_address", "geometry", "name"],
+                          types: ["geocode"],
+                        }}
+                        onPlaceChanged={handlePlaceSelect}
+                      >
+                        <input
+                          type="text"
+                          placeholder="Search for a location"
+                          style={{
+                            boxSizing: "border-box",
+                            border: "1px solid transparent",
+                            width: "240px",
+                            height: "32px",
+                            padding: "0 12px",
+                            borderRadius: "3px",
+                            boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
+                            fontSize: "14px",
+                            outline: "none",
+                            textOverflow: "ellipsis",
+                            position: "absolute",
+                            top: "10px",
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                            zIndex: 2,
+                          }}
+                        />
+                      </Autocomplete>
+                    </GoogleMap>
+                  </div>
+                  <button
+                    onClick={getCurrentLocation}
+                    style={{
+                      backgroundColor: "orange",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      padding: "8px",
+                      fontSize: "14px",
+                      width: "50%",
+                    }}
+                  >
+                    Use My Current Location
+                  </button>
+                  <div style={{ textAlign: "center", marginTop: "10px" }}>
+                    {selectedPlaceAddress && (
+                      <p>Searched Location: {selectedPlaceAddress}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-md-4">
+                  <div className="mt-3">
+                    <div
+                      className="mb-1"
+                      style={{
+                        color: "black",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      House/Flat/Block No{" "}
+                      <span style={{ color: "red" }}>*</span>
+                    </div>
+                    <input
+                      type="text"
+                      style={{
+                        border: "1px solid grey",
+                        borderRadius: "5px",
+                        height: "40px",
+                      }}
+                      onChange={(e) => setHouseFlat(e.target.value)}
+                    />
+                  </div>
+                  <div className="">
+                    <div
+                      className="mb-1"
+                      style={{
+                        color: "black",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Landmark / Society name{" "}
+                      <span style={{ color: "red" }}>*</span>
+                    </div>
+                    <input
+                      type="text"
+                      style={{
+                        border: "1px solid grey",
+                        borderRadius: "5px",
+                        height: "40px",
+                      }}
+                      onChange={(e) => setLandmark(e.target.value)}
+                    />
+                  </div>
+                  <div className="">
+                    <div
+                      className="mb-1"
+                      style={{
+                        color: "black",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Save as <span style={{ color: "red" }}>*</span>
+                    </div>
+                    <div className="d-flex">
+                      <div className="col-md-3">
+                        <div
+                          className=""
+                          style={{
+                            border: "1px solid grey",
+                            padding: "3px",
+                            textAlign: "center",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            color: home ? "white" : "black",
+                            backgroundColor: home ? "darkred" : "white",
+                          }}
+                          onClick={() => {
+                            setHome(true);
+                            setOthers(false);
+                          }}
+                        >
+                          Home
+                        </div>
+                      </div>
+                      <div className="col-md-1"></div>
+                      <div className="col-md-3">
+                        <div
+                          className=""
+                          style={{
+                            border: "1px solid grey",
+                            padding: "3px",
+                            textAlign: "center",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            color: others ? "white" : "black",
+                            backgroundColor: others ? "darkred" : "white",
+                          }}
+                          onClick={() => {
+                            setHome(false);
+                            setOthers(true);
+                          }}
+                        >
+                          Others
+                        </div>
+                      </div>
+                      {others && (
+                        <div className="col-md-3 ms-2">
+                          <input
+                            style={{ border: "1px solid black" }}
+                            onChange={(e) => setOthersPlace(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className=""
+                    style={{
+                      backgroundColor: "darkred",
+                      padding: "8px",
+                      textAlign: "center",
+                      color: "white",
+                      fontSize: "14px",
+                      borderRadius: "5px",
+                      marginTop: "25px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      saveAddress();
+                      saveAddress1();
+                      setShow1(false);
+                      setShow(true);
+                    }}
+                  >
+                    Save
+                  </div>
+                </div>
               </div>
             </div>
           )}
+
+          {/* payment getway */}
+          <Modal show={paymentModel} centered onHide={handleClose}>
+            <Modal.Header>
+              <Modal.Title
+                style={{ fontSize: "20px", color: "black", fontWeight: "bold" }}
+              >
+                Confirm Payment
+                <i
+                  onClick={handleClose3}
+                  className="fa-solid fa-x"
+                  style={{
+                    backgroundColor: "darkred",
+                    padding: "10px",
+                    width: "30px",
+                    textAlign: "center",
+                    color: "white",
+                    fontSize: "10px",
+                    borderRadius: "50px",
+                    position: "absolute",
+                    right: "18px",
+                  }}
+                ></i>
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{ textAlign: "center", fontSize: "16px" }}>
+              <p>
+                <i
+                  className="fa fa-exclamation-circle"
+                  style={{ fontSize: "24px", color: "darkred" }}
+                ></i>
+              </p>
+              <p>Are you sure you want to proceed with the payment?</p>
+              <a
+                href={Url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none" }}
+                className="mt-3"
+              >
+                <Button
+                  variant="primary"
+                  style={{ backgroundColor: "darkred" }}
+                >
+                  Yes, proceed
+                </Button>
+              </a>
+            </Modal.Body>
+          </Modal>
         </div>
       </div>
     </div>

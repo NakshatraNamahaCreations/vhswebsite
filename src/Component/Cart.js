@@ -6,6 +6,7 @@ import { deleteMyCartItem } from "../Redux1/MyCartSlice"; // Adjust the path as 
 import NabarCompo from "./navbar";
 
 import { useNavigate, Link } from "react-router-dom";
+import Header1 from "./Header1";
 
 function Cart() {
   const navigate = useNavigate();
@@ -48,7 +49,8 @@ function Cart() {
 
   return (
     <div className="row" style={{ justifyContent: "center" }}>
-      <NabarCompo />
+      {/* <NabarCompo /> */}
+      <Header1 />
       <div className="col-md-8 mt-5 ">
         {MyCartItmes.map((item) => (
           <div

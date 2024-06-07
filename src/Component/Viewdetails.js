@@ -1,9 +1,16 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import {
+  addToCart,
+  addToCart1,
+  removeMyCartItem,
+  clearCart,
+} from "../Redux1/MyCartSlice";
+import { deleteMyCartItem } from "../Redux1/MyCartSlice";
 
 function Viewdetails() {
   const [svideodata, setsvideodata] = useState([]);
@@ -13,6 +20,11 @@ function Viewdetails() {
   const { subcategory } = location.state || {};
   const localstoragecitys = localStorage.getItem("city");
   console.log("localstoragecitys======", localstoragecitys);
+  const MyCartItmes = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const [Item, setItem] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const navigate = useNavigate();
 
   const citys = useSelector((state) => state.city);
   console.log(citys, "citys====");
@@ -20,6 +32,46 @@ function Viewdetails() {
   useEffect(() => {
     getsvideo();
   }, []);
+
+  const isItemInCart = (itemId) => {
+    return MyCartItmes.some((cartItem) => cartItem.id === itemId);
+  };
+
+  const getItemQuantityById = (itemId) => {
+    const cartItem = MyCartItmes.find((item) => item.id === itemId);
+    return cartItem ? cartItem.qty : 0;
+  };
+
+  const handleviewselect = (selectedItem) => {
+    setItem(selectedItem);
+  };
+
+  const CartSavedtotal = MyCartItmes.reduce((accumulator, item) => {
+    const offerPrice = parseFloat(item?.offerprice);
+    const planPrice = parseFloat(item?.planPrice);
+    const quantity = parseInt(item?.qty);
+
+    if (!isNaN(offerPrice) && !isNaN(quantity)) {
+      const subtotal = planPrice * quantity - offerPrice * quantity;
+
+      return accumulator + subtotal;
+    } else {
+      return accumulator;
+    }
+  }, 0);
+
+  const Carttotal = MyCartItmes.reduce((accumulator, item) => {
+    const offerPrice = parseFloat(item?.offerprice);
+    const quantity = parseInt(item?.qty);
+
+    if (!isNaN(offerPrice) && !isNaN(quantity)) {
+      const subtotal = offerPrice * quantity;
+
+      return accumulator + subtotal;
+    } else {
+      return accumulator;
+    }
+  }, 0);
 
   const getsvideo = async () => {
     let res = await axios.get(
@@ -68,11 +120,84 @@ function Viewdetails() {
     }
   };
 
-  console.log("feqdata=====", feqdata);
-  console.log("ReviewVideodata=======", ReviewVideodata);
-  console.log("svideodata======", svideodata);
+  console.log("subcategory====kanmani", subcategory);
 
-  console.log("subcategory======suman", subcategory);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+  const [pricesdata, setpricesdata] = useState([]);
+  const [selectedPlan, setselectedPlan] = useState(pricesdata[0]);
+
+  const handleCategoryClick = (clickedItem) => {
+    setpricesdata(
+      clickedItem?.morepriceData.filter(
+        (i) => i.pricecity === localstoragecitys
+      )
+    );
+
+    setItem(clickedItem);
+  };
+
+  const handleItemClick1 = (item, index) => {
+    setSelectedItemIndex(index);
+    setselectedPlan(item);
+    const itemToAdd = {
+      _id: item._id,
+      category: subcategory,
+      service: selectedItem,
+      pName: item.pName,
+      pPrice: item.pPrice,
+      pofferprice: item.pofferprice,
+      pservices: item.pservices,
+    };
+
+    if (!item.pservices) {
+      const existingCartItem = MyCartItmes.find(
+        (cartItem) => cartItem.category === subcategory.category
+      );
+
+      if (existingCartItem) {
+        dispatch(addToCart({ ...itemToAdd, id: existingCartItem.id }));
+      } else {
+        dispatch(clearCart());
+        dispatch(addToCart(itemToAdd));
+      }
+    } else {
+      // alert("This is AMC services ")
+      navigate("/summary", { state: { plan: item, sdata: selectedItem } });
+    }
+  };
+
+  const handleItemClick = (item, index) => {
+    setSelectedItemIndex(index);
+    setselectedPlan(item);
+    setItem(selectedItem);
+    const itemToAdd = {
+      _id: item._id,
+      category: subcategory.category,
+      service: Item,
+      pName: item.pName,
+      pPrice: item.pPrice,
+      pofferprice: item.pofferprice,
+      pservices: item.pservices,
+    };
+
+    if (!item.pservices) {
+      const existingCartItem = MyCartItmes.find(
+        (cartItem) => cartItem.category === subcategory.category
+      );
+
+      if (existingCartItem) {
+        dispatch(addToCart({ ...itemToAdd, id: existingCartItem.id }));
+      } else {
+        dispatch(clearCart());
+        dispatch(addToCart(itemToAdd));
+      }
+    } else {
+      // alert("This is AMC services ")
+
+      navigate("/summary", { state: { plan: item, sdata: Item } });
+    }
+  };
+
   return (
     <div className="row">
       <div className="col-md-12">
@@ -216,7 +341,7 @@ function Viewdetails() {
                             ).toFixed(0)}
                             % discount
                           </div>
-                          <div
+                          {/* <div
                             className=""
                             style={{
                               backgroundColor: "darkred",
@@ -230,7 +355,109 @@ function Viewdetails() {
                             }}
                           >
                             Book
-                          </div>
+                          </div> */}
+                          {isItemInCart(price._id) ? (
+                            <span> </span>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                handleviewselect(selectedItem);
+                                handleItemClick1(price);
+                              }}
+                              style={{
+                                // position: "absolute",
+                                bottom: 10,
+                                width: "100%",
+                                // backgroundColor: selectedItemId === i._id ? "green" : "darkred",
+                                padding: 5,
+                                color: "white",
+                                textAlign: "center",
+                                borderRadius: 3,
+                                marginTop: 15,
+                              }}
+                            >
+                              Book
+                            </button>
+                          )}
+
+                          {isItemInCart(price._id) && (
+                            <div
+                              style={
+                                {
+                                  // flex: 0.3,
+                                  // position: "absolute",
+                                  // bottom: 10,
+                                }
+                              }
+                            >
+                              <div
+                                className="d-flex m-auto"
+                                style={{
+                                  backgroundColor: "green",
+                                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
+
+                                  borderRadius: 5,
+                                }}
+                              >
+                                <div className="col-md-5">
+                                  <button
+                                    onClick={() => {
+                                      const cartItem = MyCartItmes.find(
+                                        (cartItem) => cartItem.id === price._id
+                                      );
+                                      if (cartItem && cartItem.qty > 1) {
+                                        dispatch(deleteMyCartItem(price._id));
+                                      } else {
+                                        dispatch(deleteMyCartItem(price._id));
+                                      }
+                                    }}
+                                    style={{
+                                      backgroundColor: "transparent",
+                                      border: "none",
+                                      cursor: "pointer",
+                                    }}
+                                  >
+                                    {/* <AntDesign name="minuscircleo" size={18} color="white" /> */}
+                                    <i
+                                      className="fa-solid fa-circle-minus"
+                                      style={{ color: "white" }}
+                                    ></i>
+                                  </button>
+                                </div>
+
+                                <div className="col-md-2">
+                                  <div
+                                    style={{
+                                      color: "white",
+                                      // marginLeft: 5,
+                                      fontSize: "14px",
+                                      textAlign: "center",
+                                      marginTop: "15px",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    {getItemQuantityById(price._id)}
+                                  </div>
+                                </div>
+
+                                <div className="col-md-5">
+                                  <button
+                                    onClick={() => handleItemClick(price)}
+                                    style={{
+                                      backgroundColor: "transparent",
+                                      border: "none",
+                                      cursor: "pointer",
+                                    }}
+                                  >
+                                    <i
+                                      className="fa-solid fa-circle-plus"
+                                      style={{ color: "white" }}
+                                    ></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -243,6 +470,86 @@ function Viewdetails() {
                 );
               })()}
             </div>
+
+            {subcategory?.category === "Painting" ? (
+              ""
+            ) : Carttotal > 0 ? (
+              <div>
+                <div
+                  className="mt-5"
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    backgroundColor: "rgb(224, 206, 85)",
+                    padding: 5,
+                    marginTop: 5,
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    width: "100%",
+                  }}
+                >
+                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <span style={{ color: "black", fontWeight: "bold" }}>
+                      Congratulations!
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      color: "black",
+                      marginLeft: 10,
+                      fontWeight: "bold",
+                    }}
+                  ></span>
+                  <span
+                    style={{
+                      color: "black",
+                      marginLeft: 4,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    saved so far!
+                  </span>
+                </div>
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      backgroundColor: "darkred",
+                      color: "white",
+                      padding: 10,
+                      width: "100%",
+                      textAlign: "center",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => navigate("/cart")}
+                  >
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <span
+                        style={{
+                          color: "white",
+                          fontWeight: "bold",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Total
+                      </span>
+                      <span className="mx-2" style={{ color: "white" }}>
+                        ₹{Carttotal}
+                      </span>
+                    </div>
+                    <span style={{ color: "white", fontWeight: "bold" }}>
+                      View Cart
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
 
             <div
               className="mt-4"

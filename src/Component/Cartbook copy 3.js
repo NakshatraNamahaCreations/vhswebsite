@@ -26,12 +26,10 @@ import {
   LoadScript,
   Marker,
   Autocomplete,
-  useJsApiLoader,
 } from "@react-google-maps/api";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import Header1 from "./Header1";
 
 function Cartbook() {
   const [addondata, setaddondata] = useState([]);
@@ -56,10 +54,6 @@ function Cartbook() {
   const [email, setemail] = useState("");
   const navigate = useNavigate();
   const [responseData, setResponseData] = useState(null);
-  const [googleMapsApiKey, setGoogleMapsApiKey] = useState(
-    "AIzaSyBF48uqsKVyp9P2NlDX-heBJksvvT_8Cqk"
-  );
-  const [libraries, setLibraries] = useState(["places"]);
 
   // payment get way
 
@@ -75,22 +69,6 @@ function Cartbook() {
 
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
-
-  const getVoucher = async () => {
-    let res = await axios.get(
-      "https://api.vijayhomesuperadmin.in/api/userapp/getvoucher"
-    );
-    if (res.status === 200) {
-      const uniqueCategories = MyCartItmes?.[0]?.service?.category;
-
-      let filteredVoucherData = res.data?.voucher.find(
-        (voch) => voch.category === uniqueCategories
-      );
-
-      console.log(filteredVoucherData, "filteredVoucherData");
-      setvoucherdata(filteredVoucherData);
-    }
-  };
 
   useEffect(() => {
     let timer;
@@ -110,15 +88,11 @@ function Cartbook() {
   const userString = localStorage.getItem("user");
   const user = JSON.parse(userString);
 
-  console.log("user======", user);
-
   const [validationMessage, setValidationMessage] = useState("");
 
   const [discountedTotal, setDiscountedTotal] = useState(0);
 
   const [SavedAmount, setSavedAmount] = useState(0);
-  const [couponPercentage, setCouponPercentage] = useState(0);
-  const [DiscountAmount, setDiscountAmount] = useState(0);
   const [customerData, setCustomerData] = useState({
     customerName: "",
     email: "",
@@ -135,19 +109,6 @@ function Cartbook() {
   const storedCustomerName = localStorage.getItem("customerName");
 
   const storedEmail = localStorage.getItem("email");
-
-  console.log("voucherdata=======", voucherdata);
-
-  const [appliedVoucherCode, setAppliedVoucherCode] = useState("");
-
-  const applyVoucherCode = () => {
-    if (voucherCodeValue === voucherdata?.voucherCode) {
-      setAppliedVoucherCode(voucherCodeValue);
-      setValidationMessage("Voucher applied successfully!");
-    } else {
-      setValidationMessage("Invalid voucher code. Please try again.");
-    }
-  };
 
   useEffect(() => {
     const newCartTotal = MyCartItmes.reduce(
@@ -197,10 +158,9 @@ function Cartbook() {
     setSavedAmount(newCartTotal.savedAmount); // Update the state with the total saved amount
 
     // If a coupon code has been applied, calculate the discount
-    if (appliedVoucherCode === voucherdata?.voucherCode) {
+    if (voucherCodeValue === voucherdata?.voucherCode) {
       const discountAmount =
-        (newCartTotal.planSubtotal *
-          (parseInt(voucherdata?.discountPercentage) || 0)) /
+        (newCartTotal.planSubtotal * (voucherdata?.discountPercentage || 0)) /
         100;
       const grandTotal = newCartTotal.planSubtotal - discountAmount;
       setDiscountAmount(grandTotal);
@@ -208,139 +168,10 @@ function Cartbook() {
     } else {
       setDiscountAmount(newCartTotal.planSubtotal);
     }
-  }, [MyCartItmes, MyCartaddonItmes, appliedVoucherCode, voucherdata]);
+  }, [MyCartItmes, MyCartaddonItmes, voucherCodeValue, voucherdata]);
 
-  // useEffect(() => {
-  //   const newCartTotal = MyCartItmes.reduce(
-  //     (accumulator, item) => {
-  //       if (!item) return accumulator; // Ensure item is not undefined
-
-  //       const offerPrice = parseFloat(item?.offerprice) || 0;
-  //       const quantity = parseInt(item?.qty) || 0;
-  //       const planPrice = parseFloat(item?.planPrice?.trim()) || 0;
-
-  //       if (!isNaN(offerPrice) && !isNaN(quantity) && !isNaN(planPrice)) {
-  //         const subtotal = planPrice * quantity;
-  //         const planSubtotal = offerPrice * quantity;
-  //         const saved = Math.abs(planSubtotal - subtotal);
-
-  //         accumulator.savedAmount += saved;
-  //         accumulator.total += subtotal;
-  //         accumulator.planSubtotal += planSubtotal;
-  //       } else if (!isNaN(offerPrice) && !isNaN(quantity)) {
-  //         const planSubtotal = offerPrice * quantity;
-  //         accumulator.total += planSubtotal;
-  //         accumulator.planSubtotal += planSubtotal;
-  //       }
-
-  //       return accumulator;
-  //     },
-  //     { total: 0, savedAmount: 0, planSubtotal: 0 }
-  //   );
-
-  //   // Calculate total price for addon items
-  //   const addonTotal = MyCartaddonItmes.reduce((accumulator, addon) => {
-  //     const addonPlanPrice = parseFloat(addon?.planPrice) || 0;
-  //     const addonQuantity = parseInt(addon?.qty) || 0;
-  //     return accumulator + addonPlanPrice * addonQuantity;
-  //   }, 0);
-
-  //   const addonTotal1 = MyCartaddonItmes.reduce((accumulator, addon) => {
-  //     const addonPlanPrice = parseFloat(addon?.oferprice) || 0;
-  //     const addonQuantity = parseInt(addon?.qty) || 0;
-  //     return accumulator + addonPlanPrice * addonQuantity;
-  //   }, 0);
-
-  //   newCartTotal.total += addonTotal;
-  //   newCartTotal.planSubtotal += addonTotal1;
-
-  //   setCarttotal(newCartTotal.total); // Update the state with the new Cart total
-  //   setSavedAmount(newCartTotal.savedAmount); // Update the state with the total saved amount
-
-  //   // If a coupon code has been applied, calculate the discount
-
-  //   if (voucherCodeValue === voucherdata?.voucherCode) {
-  //     const discountAmount =
-  //       (newCartTotal.planSubtotal * (voucherdata?.discountPercentage || 0)) /
-  //       100;
-  //     console.log("discountAmount", discountAmount);
-
-  //     const grandTotal = newCartTotal.planSubtotal - discountAmount;
-  //     setCouponPercentage(voucherdata.discountPercentage);
-  //     setDiscountAmount(grandTotal);
-
-  //     // if(voucherCodeValue === )
-  //   } else {
-  //     setDiscountAmount(newCartTotal.planSubtotal);
-  //   }
-  // }, [MyCartItmes, MyCartaddonItmes, voucherCodeValue, voucherdata]);
-
-  // Output working
-
-  // useEffect(() => {
-  //   const newCartTotal = MyCartItmes.reduce(
-  //     (accumulator, item) => {
-  //       if (!item) return accumulator;
-
-  //       const offerPrice = parseFloat(item?.offerprice) || 0;
-  //       const quantity = parseInt(item?.qty) || 0;
-  //       const planPrice = parseFloat(item?.planPrice?.trim()) || 0;
-
-  //       if (!isNaN(offerPrice) && !isNaN(quantity) && !isNaN(planPrice)) {
-  //         const subtotal = planPrice * quantity;
-  //         const planSubtotal = offerPrice * quantity;
-  //         const saved = Math.abs(planSubtotal - subtotal);
-
-  //         accumulator.savedAmount += saved;
-  //         accumulator.total += subtotal;
-  //         accumulator.planSubtotal += planSubtotal;
-  //       } else if (!isNaN(offerPrice) && !isNaN(quantity)) {
-  //         const planSubtotal = offerPrice * quantity;
-  //         accumulator.total += planSubtotal;
-  //         accumulator.planSubtotal += planSubtotal;
-  //       }
-
-  //       return accumulator;
-  //     },
-  //     { total: 0, savedAmount: 0, planSubtotal: 0 }
-  //   );
-
-  //   // Calculate total price for addon items
-  //   const addonTotal = MyCartaddonItmes.reduce((accumulator, addon) => {
-  //     const addonPlanPrice = parseFloat(addon?.planPrice) || 0;
-  //     const addonQuantity = parseInt(addon?.qty) || 0;
-  //     return accumulator + addonPlanPrice * addonQuantity;
-  //   }, 0);
-
-  //   const addonTotal1 = MyCartaddonItmes.reduce((accumulator, addon) => {
-  //     const addonPlanPrice = parseFloat(addon?.oferprice) || 0;
-  //     const addonQuantity = parseInt(addon?.qty) || 0;
-  //     return accumulator + addonPlanPrice * addonQuantity;
-  //   }, 0);
-
-  //   newCartTotal.total += addonTotal;
-  //   newCartTotal.planSubtotal += addonTotal1;
-
-  //   setCarttotal(newCartTotal.total); // Update the state with the new Cart total
-  //   setSavedAmount(newCartTotal.savedAmount); // Update the state with the total saved amount
-  //   console.log("voucherCodeValue", voucherCodeValue);
-  //   if (voucherCodeValue && voucherdata?.voucherCode === voucherCodeValue) {
-  //     const discountAmount =
-  //       (newCartTotal?.planSubtotal *
-  //         (parseInt(voucherdata?.discountPercentage) || 0)) /
-  //       100;
-  //     const grandTotal = newCartTotal?.planSubtotal - discountAmount;
-  //     setCouponPercentage(voucherdata?.discountPercentage);
-  //     setDiscountAmount(grandTotal);
-  //   } else {
-  //     setDiscountAmount(newCartTotal.planSubtotal);
-  //   }
-  // }, [MyCartItmes, MyCartaddonItmes, voucherCodeValue, voucherdata]);
-
-  console.log(
-    "voucherdata?.discountPercentage",
-    voucherdata?.discountPercentage
-  );
+  const [couponPercentage, setCouponPercentage] = useState(0);
+  const [DiscountAmount, setDiscountAmount] = useState(0);
 
   const applyCouponCode = async () => {
     if (voucherCodeValue === voucherdata?.voucherCode) {
@@ -351,55 +182,29 @@ function Cartbook() {
     }
   };
 
-  // const handlePlaceSelect = () => {
-  //   const place = autocompleteRef.current.getPlace();
-  //   if (!place.geometry) {
-  //     return;
-  //   }
+  const handlePlaceSelect = () => {
+    const place = autocompleteRef.current.getPlace();
+    if (!place.geometry) {
+      return;
+    }
 
-  //   const latitude = place.geometry.location.lat();
-  //   const longitude = place.geometry.location.lng();
-  //   const location = { latitude, longitude };
-  //   setSelectedLocation(location);
-  //   setSelectedPlaceAddress(place.formatted_address || "");
+    const latitude = place.geometry.location.lat();
+    const longitude = place.geometry.location.lng();
+    const location = { latitude, longitude };
+    setSelectedLocation(location);
+    setSelectedPlaceAddress(place.formatted_address || "");
 
-  //   // Adjust map bounds to include both the marker and the searched location
-  //   if (mapRef.current && mapRef.current.getMap) {
-  //     const map = mapRef.current.getMap();
-  //     const bounds = new window.google.maps.LatLngBounds();
-  //     bounds.extend(location);
-  //     if (selectedLocation) {
-  //       bounds.extend(selectedLocation);
-  //     }
-  //     map.fitBounds(bounds);
-  //   }
-  // };
-
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyBF48uqsKVyp9P2NlDX-heBJksvvT_8Cqk",
-    libraries: ["places"],
-  });
-
-  // const handlePlaceSelect = () => {
-  //   const place = autocompleteRef.current.getPlace();
-  //   if (!place.geometry) {
-  //     return;
-  //   }
-
-  //   const latitude = place.geometry.location.lat();
-  //   const longitude = place.geometry.location.lng();
-  //   const location = { latitude, longitude };
-  //   setSelectedLocation(location);
-  //   setSelectedPlaceAddress(place.formatted_address || "");
-
-  //   // Adjust map bounds to include both the marker and the searched location
-  //   if (mapRef.current && mapRef.current.getMap) {
-  //     const map = mapRef.current.getMap();
-  //     const bounds = new window.google.maps.LatLngBounds();
-  //     bounds.extend(new window.google.maps.LatLng(latitude, longitude));
-  //     map.fitBounds(bounds);
-  //   }
-  // };
+    // Adjust map bounds to include both the marker and the searched location
+    if (mapRef.current && mapRef.current.getMap) {
+      const map = mapRef.current.getMap();
+      const bounds = new window.google.maps.LatLngBounds();
+      bounds.extend(location);
+      if (selectedLocation) {
+        bounds.extend(selectedLocation);
+      }
+      map.fitBounds(bounds);
+    }
+  };
 
   const [show, setShow] = useState(false);
 
@@ -779,8 +584,8 @@ function Cartbook() {
       approach: user?.approach,
     },
     dividedDates: dividedDates.length ? dividedDates : [selectedDate],
-    customerName: customerName,
-    email: email,
+    customerName: storedCustomerName,
+    email: storedEmail,
     dividedamtCharges: dividedamtCharges,
     dividedamtDates: dividedamtDates,
     cardNo: user?.cardNo,
@@ -815,55 +620,25 @@ function Cartbook() {
     transactionId: "T" + Date.now(),
   };
 
-  // const handlePayment = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   try {
-  //     const res = await axios.post(
-  //       "http://localhost:8080/api/payment/yogipayment",
-  //       updateddata
-  //     );
-  //     console.log("Response:", res.data.redirectUrl);
-
-  //     if (res.data.redirectUrl) {
-  //       setpaymentModel(true);
-  //       setUrl(res.data.redirectUrl);
-  //     } else {
-  //       console.log("No redirect URL found in the response.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Payment initiation failed:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handlePayment = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const res = await axios.post(
-        "https://api.vijayhomeservicebengaluru.in/api/payment/yogipayment",
+        "http://localhost:8080/api/payment/yogipayment",
         updateddata
       );
-      console.log("Response:", res.data);
+      console.log("Response:", res.data.redirectUrl);
 
-      if (res.status === 200 && res.data.redirectUrl) {
+      if (res.data.redirectUrl) {
         setpaymentModel(true);
         setUrl(res.data.redirectUrl);
       } else {
         console.log("No redirect URL found in the response.");
       }
     } catch (error) {
-      if (error.response) {
-        console.error("Payment initiation failed:", error.response.data);
-      } else if (error.request) {
-        console.error("No response received:", error.request);
-      } else {
-        console.error("Error:", error.message);
-      }
+      console.error("Payment initiation failed:", error);
     } finally {
       setLoading(false);
     }
@@ -876,7 +651,7 @@ function Cartbook() {
     } else {
       try {
         const config = {
-          url: "https://api.vijayhomeservicebengaluru.in/api/addservicedetails",
+          url: "http://localhost:8080/api/addservicedetails",
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {
@@ -928,10 +703,9 @@ function Cartbook() {
         if (response.status === 200) {
           alert("added");
           console.log("response.data.user", response.data);
+
           setShow2(true);
           setResponseData(response.data);
-          dispatch(clearCart());
-          dispatch(clearCartaddon());
         }
       } catch (error) {
         console.error(error);
@@ -964,72 +738,25 @@ function Cartbook() {
     }
   };
 
-  const handlePlaceSelect = () => {
-    const place = autocompleteRef.current.getPlace();
-    if (!place.geometry) {
-      return;
-    }
+  const getVoucher = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomesuperadmin.in/api/userapp/getvoucher"
+    );
+    if (res.status === 200) {
+      const uniqueCategories = MyCartItmes?.[0]?.service?.category;
 
-    const latitude = place.geometry.location.lat();
-    const longitude = place.geometry.location.lng();
-    const location = { latitude, longitude };
-    setSelectedLocation(location);
-    setSelectedPlaceAddress(place.formatted_address || "");
-
-    if (mapRef.current && mapRef.current.getMap) {
-      const map = mapRef.current.getMap();
-      const bounds = new window.google.maps.LatLngBounds();
-      bounds.extend(new window.google.maps.LatLng(latitude, longitude));
-      map.fitBounds(bounds);
-    }
-  };
-
-  if (loadError) {
-    return <div>Error loading maps</div>;
-  }
-
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          const location = { latitude, longitude };
-          setSelectedLocation(location);
-
-          const geocoder = new window.google.maps.Geocoder();
-          const latlng = new window.google.maps.LatLng(latitude, longitude);
-          geocoder.geocode({ location: latlng }, (results, status) => {
-            if (status === "OK") {
-              if (results[0]) {
-                setSelectedPlaceAddress(results[0].formatted_address);
-              } else {
-                console.log("No results found");
-              }
-            } else {
-              console.log("Geocoder failed due to: " + status);
-            }
-          });
-
-          if (mapRef.current && mapRef.current.getMap) {
-            const map = mapRef.current.getMap();
-            const bounds = new window.google.maps.LatLngBounds();
-            bounds.extend(new window.google.maps.LatLng(latitude, longitude));
-            map.fitBounds(bounds);
-          }
-        },
-        (error) => {
-          console.error("Error fetching location: ", error);
-        }
+      let filteredVoucherData = res.data?.voucher.find(
+        (voch) => voch.category === uniqueCategories
       );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
+
+      console.log(filteredVoucherData, "filteredVoucherData");
+      setvoucherdata(filteredVoucherData);
     }
   };
 
   return (
     <div className="row" style={{ justifyContent: "center" }}>
-      {/* <NabarCompo /> */}
-      <Header1 />
+      <NabarCompo />
       <div className="col-md-10 mt-3">
         {!show1 && (
           <>
@@ -1455,6 +1182,11 @@ function Cartbook() {
                 </div>
                 <div className="col-md-3">
                   <div
+                    onClick={() => {
+                      const result = applyCouponCode();
+                      setDiscountedTotal(result);
+                      // setCouponDiscountShow(true)
+                    }}
                     style={{
                       backgroundColor: "darkred",
                       padding: "8px",
@@ -1463,14 +1195,13 @@ function Cartbook() {
                       borderRadius: "10px",
                       cursor: "pointer",
                     }}
-                    onClick={applyVoucherCode}
                   >
                     Apply
                   </div>
                 </div>
               </div>
 
-              {/* <div style={{ color: "red" }}>{validationMessage}</div> */}
+              <div style={{ color: "red" }}>{validationMessage}</div>
             </>
             {/* )} */}
 
@@ -1677,46 +1408,250 @@ function Cartbook() {
         </Modal>
 
         {/* showing google map after add addresss=========================== */}
-
-        {show1 && isLoaded && (
-          <div
-            className="row mt-5 mb-2 p-2"
-            style={{ justifyContent: "center" }}
-          >
-            <i
-              onClick={() => {
-                setShow1(false);
-                setShow(true);
-              }}
-              className="fa-solid fa-x"
-              style={{
-                backgroundColor: "darkred",
-                padding: "10px",
-                width: "35px",
-                textAlign: "center",
-                color: "white",
-                fontSize: "15px",
-                borderRadius: "50px",
-                position: "absolute",
-                top: "70px",
-              }}
-            ></i>
+        {show1 && (
+          <>
             <div
-              className="row col-md-10"
-              style={{
-                backgroundColor: "#80808036",
-                padding: "20px",
-                borderRadius: "5px",
-              }}
+              className="row mt-5 mb-2  p-2"
+              style={{ justifyContent: "center" }}
             >
-              <div className="col-md-8">
-                <div
-                  className=""
-                  style={{
-                    width: "100%",
-                    height: "320px",
-                    position: "relative",
-                  }}
+              <i
+                onClick={() => {
+                  setShow1(false);
+                  setShow(true);
+                }}
+                class="fa-solid fa-x"
+                style={{
+                  backgroundColor: "darkred",
+                  padding: "10px",
+                  width: "35px",
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: "15px",
+                  borderRadius: "50px",
+                  position: "absolute",
+                  top: "70px",
+                }}
+              ></i>
+              <div
+                className="row col-md-10"
+                style={{
+                  backgroundColor: "grey",
+                  padding: "20px",
+                  borderRadius: "5px",
+                }}
+              >
+                <div className="col-md-8">
+                  <div
+                    className=""
+                    style={{
+                      width: "100%",
+                      height: "320px",
+                      position: "relative",
+                    }}
+                  >
+                    <LoadScript
+                      googleMapsApiKey="AIzaSyBF48uqsKVyp9P2NlDX-heBJksvvT_8Cqk"
+                      libraries={["places"]}
+                    >
+                      <GoogleMap
+                        ref={mapRef}
+                        center={{ lat: 12.9716, lng: 77.5946 }}
+                        zoom={10}
+                        mapContainerStyle={{
+                          height: "100%",
+                          width: "100%",
+                          zIndex: 111,
+                        }}
+                      >
+                        {selectedLocation && (
+                          <Marker position={selectedLocation} />
+                        )}
+                        <Autocomplete
+                          onLoad={(autocomplete) => {
+                            autocompleteRef.current = autocomplete;
+                          }}
+                          options={{
+                            fields: ["formatted_address", "geometry", "name"],
+                            types: ["geocode"],
+                          }}
+                          onPlaceChanged={handlePlaceSelect}
+                        >
+                          <input
+                            type="text"
+                            placeholder="Search for a location"
+                            style={{
+                              boxSizing: "border-box",
+                              border: "1px solid transparent",
+                              width: "240px",
+                              height: "32px",
+                              padding: "0 12px",
+                              borderRadius: "3px",
+                              boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
+                              fontSize: "14px",
+                              outline: "none",
+                              textOverflow: "ellipsis",
+                              position: "absolute",
+                              top: "10px",
+                              left: "50%",
+                              transform: "translateX(-50%)",
+                              zIndex: 2,
+                            }}
+                          />
+                        </Autocomplete>
+                      </GoogleMap>
+                    </LoadScript>
+                  </div>
+                  <div style={{ textAlign: "center", marginTop: "10px" }}>
+                    {selectedPlaceAddress && (
+                      <p>Searched Location: {selectedPlaceAddress}</p>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="mt-3">
+                    <div
+                      className="mb-1"
+                      style={{
+                        color: "black",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      House/Flat/Block No{" "}
+                      <span style={{ color: "red" }}>*</span>
+                    </div>
+                    <input
+                      type="text"
+                      style={{
+                        border: "1px solid grey",
+                        borderRadius: "5px",
+                        height: "40px",
+                      }}
+                      onChange={(e) => setHouseFlat(e.target.value)}
+                    />
+                  </div>
+                  <div className="">
+                    <div
+                      className="mb-1"
+                      style={{
+                        color: "black",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Landmark / Society name{" "}
+                      <span style={{ color: "red" }}>*</span>
+                    </div>
+                    <input
+                      type="text"
+                      style={{
+                        border: "1px solid grey",
+                        borderRadius: "5px",
+                        height: "40px",
+                      }}
+                      onChange={(e) => setLandmark(e.target.value)}
+                    />
+                  </div>
+                  <div className="">
+                    <div
+                      className="mb-1"
+                      style={{
+                        color: "black",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Save as <span style={{ color: "red" }}>*</span>
+                    </div>
+                    <div className="d-flex">
+                      <div className="col-md-3">
+                        <div
+                          className=""
+                          style={{
+                            border: "1px solid grey",
+                            padding: "3px",
+                            textAlign: "center",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            color: home ? "white" : "black",
+                            backgroundColor: home ? "darkred" : "white",
+                          }}
+                          onClick={() => {
+                            setHome(true);
+                            setOthers(false);
+                          }}
+                        >
+                          Home
+                        </div>
+                      </div>
+                      <div className="col-md-1"></div>
+                      <div className="col-md-3">
+                        <div
+                          className=""
+                          style={{
+                            border: "1px solid grey",
+                            padding: "3px",
+                            textAlign: "center",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            color: others ? "white" : "black",
+                            backgroundColor: others ? "darkred" : "white",
+                          }}
+                          onClick={() => {
+                            setHome(false);
+                            setOthers(true);
+                          }}
+                        >
+                          Others
+                        </div>
+                      </div>
+                      {others && (
+                        <div className="col-md-3 ms-2">
+                          <input
+                            style={{ border: "1px solid black" }}
+                            onChange={(e) => setOthersPlace(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className=""
+                    style={{
+                      backgroundColor: "darkred",
+                      padding: "8px",
+                      textAlign: "center",
+                      color: "white",
+                      fontSize: "14px",
+                      borderRadius: "5px",
+                      marginTop: "25px",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      saveAddress();
+                      saveAddress1();
+                      setShow1(false);
+                      setShow(true);
+                    }}
+                  >
+                    Save
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* <Modal show={show1} centered onHide={handleShow1}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row mb-2 p-2">
+              <div className="" style={{ width: "100%", height: "200px" }}>
+                <LoadScript
+                  googleMapsApiKey="AIzaSyBF48uqsKVyp9P2NlDX-heBJksvvT_8Cqk"
+                  libraries={["places"]}
                 >
                   <GoogleMap
                     ref={mapRef}
@@ -1728,234 +1663,206 @@ function Cartbook() {
                       zIndex: 111,
                     }}
                   >
-                    {selectedLocation && (
-                      <Marker
-                        position={{
-                          lat: selectedLocation.latitude,
-                          lng: selectedLocation.longitude,
-                        }}
-                      />
-                    )}
+                    {selectedLocation && <Marker position={selectedLocation} />}
+
                     <Autocomplete
                       onLoad={(autocomplete) => {
+                        // console.log("Autocomplete loaded:", autocomplete);
                         autocompleteRef.current = autocomplete;
                       }}
                       options={{
                         fields: ["formatted_address", "geometry", "name"],
                         types: ["geocode"],
+                        // componentRestrictions: { country: "us" },
                       }}
                       onPlaceChanged={handlePlaceSelect}
+                      style={{ backgroundColor: "red", zIndex: 111 }}
                     >
                       <input
                         type="text"
                         placeholder="Search for a location"
                         style={{
-                          boxSizing: "border-box",
-                          border: "1px solid transparent",
-                          width: "240px",
-                          height: "32px",
-                          padding: "0 12px",
-                          borderRadius: "3px",
-                          boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
-                          fontSize: "14px",
-                          outline: "none",
-                          textOverflow: "ellipsis",
-                          position: "absolute",
-                          top: "10px",
+                          boxSizing: `border-box`,
+                          border: `1px solid transparent`,
+                          width: `240px`,
+                          height: `32px`,
+                          padding: `0 12px`,
+                          borderRadius: `3px`,
+                          boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+                          fontSize: `14px`,
+                          outline: `none`,
+                          textOverflow: `ellipses`,
+                          position: "relative",
                           left: "50%",
-                          transform: "translateX(-50%)",
-                          zIndex: 2,
+                          marginLeft: "-120px",
                         }}
                       />
                     </Autocomplete>
                   </GoogleMap>
-                </div>
-                <button
-                  onClick={getCurrentLocation}
+                </LoadScript>
+              </div>
+
+              <div style={{ textAlign: "center", marginTop: "10px" }}>
+                {selectedPlaceAddress && (
+                  <p>Searched Location: {selectedPlaceAddress}</p>
+                )}
+              </div>
+
+              <div className="mt-3">
+                <div
+                  className="mb-1"
                   style={{
-                    backgroundColor: "orange",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    padding: "8px",
+                    color: "black",
                     fontSize: "14px",
-                    width: "50%",
+                    fontWeight: "bold",
                   }}
                 >
-                  Use My Current Location
-                </button>
-                <div style={{ textAlign: "center", marginTop: "10px" }}>
-                  {selectedPlaceAddress && (
-                    <p>Searched Location: {selectedPlaceAddress}</p>
+                  House/Flat/Block No <span style={{ color: "red" }}>*</span>
+                </div>
+                <input
+                  type="text"
+                  style={{
+                    border: "1px solid grey",
+                    borderRadius: "5px",
+                    height: "40px",
+                  }}
+                  onChange={(e) => setHouseFlat(e.target.value)}
+                />
+              </div>
+
+              <div className="">
+                <div
+                  className="mb-1"
+                  style={{
+                    color: "black",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Landmark / Society name{" "}
+                  <span style={{ color: "red" }}>*</span>
+                </div>
+                <input
+                  type="text"
+                  style={{
+                    border: "1px solid grey",
+                    borderRadius: "5px",
+                    height: "40px",
+                  }}
+                  onChange={(e) => setLandmark(e.target.value)}
+                />
+              </div>
+
+              <div className="">
+                <div
+                  className="mb-1"
+                  style={{
+                    color: "black",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Save as <span style={{ color: "red" }}>*</span>
+                </div>
+                <div className="d-flex">
+                  <div className="col-md-3">
+                    <div
+                      className=""
+                      style={{
+                        border: "1px solid grey",
+                        padding: "3px",
+                        textAlign: "center",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        color: home ? "white" : "black",
+                        backgroundColor: home ? "darkred" : "white",
+                      }}
+                      onClick={() => {
+                        setHome(true);
+                        setOthers(false);
+                      }}
+                    >
+                      Home
+                    </div>
+                  </div>
+                  <div className="col-md-1"></div>
+                  <div className="col-md-3">
+                    <div
+                      className=""
+                      style={{
+                        border: "1px solid grey",
+                        padding: "3px",
+                        textAlign: "center",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        color: others ? "white" : "black",
+                        backgroundColor: others ? "darkred" : "white",
+                      }}
+                      onClick={() => {
+                        setHome(false);
+                        setOthers(true);
+                      }}
+                    >
+                      Others
+                    </div>
+                  </div>
+                  {others && (
+                    <div className="col-md-3 ms-2">
+                      <input
+                        style={{ border: "1px solid black" }}
+                        onChange={(e) => setOthersPlace(e.target.value)}
+                      />
+                    </div>
                   )}
                 </div>
               </div>
 
-              <div className="col-md-4">
-                <div className="mt-3">
-                  <div
-                    className="mb-1"
-                    style={{
-                      color: "black",
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    House/Flat/Block No <span style={{ color: "red" }}>*</span>
-                  </div>
-                  <input
-                    type="text"
-                    style={{
-                      border: "1px solid grey",
-                      borderRadius: "5px",
-                      height: "40px",
-                    }}
-                    onChange={(e) => setHouseFlat(e.target.value)}
-                  />
-                </div>
-                <div className="">
-                  <div
-                    className="mb-1"
-                    style={{
-                      color: "black",
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Landmark / Society name{" "}
-                    <span style={{ color: "red" }}>*</span>
-                  </div>
-                  <input
-                    type="text"
-                    style={{
-                      border: "1px solid grey",
-                      borderRadius: "5px",
-                      height: "40px",
-                    }}
-                    onChange={(e) => setLandmark(e.target.value)}
-                  />
-                </div>
-                <div className="">
-                  <div
-                    className="mb-1"
-                    style={{
-                      color: "black",
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Save as <span style={{ color: "red" }}>*</span>
-                  </div>
-                  <div className="d-flex">
-                    <div className="col-md-3">
-                      <div
-                        className=""
-                        style={{
-                          border: "1px solid grey",
-                          padding: "3px",
-                          textAlign: "center",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                          color: home ? "white" : "black",
-                          backgroundColor: home ? "darkred" : "white",
-                        }}
-                        onClick={() => {
-                          setHome(true);
-                          setOthers(false);
-                        }}
-                      >
-                        Home
-                      </div>
-                    </div>
-                    <div className="col-md-1"></div>
-                    <div className="col-md-3">
-                      <div
-                        className=""
-                        style={{
-                          border: "1px solid grey",
-                          padding: "3px",
-                          textAlign: "center",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                          color: others ? "white" : "black",
-                          backgroundColor: others ? "darkred" : "white",
-                        }}
-                        onClick={() => {
-                          setHome(false);
-                          setOthers(true);
-                        }}
-                      >
-                        Others
-                      </div>
-                    </div>
-                    {others && (
-                      <div className="col-md-3 ms-2">
-                        <input
-                          style={{ border: "1px solid black" }}
-                          onChange={(e) => setOthersPlace(e.target.value)}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div
-                  className=""
-                  style={{
-                    backgroundColor: "darkred",
-                    padding: "8px",
-                    textAlign: "center",
-                    color: "white",
-                    fontSize: "14px",
-                    borderRadius: "5px",
-                    marginTop: "25px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    saveAddress();
-                    saveAddress1();
-                    setShow1(false);
-                    setShow(true);
-                  }}
-                >
-                  Save
-                </div>
+              <div
+                className=""
+                style={{
+                  backgroundColor: "darkred",
+                  padding: "8px",
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: "14px",
+                  borderRadius: "5px",
+                  marginTop: "25px",
+                  cursor: "pointer",
+                }}
+                // onClick={saveAddress}
+                onClick={() => {
+                  saveAddress();
+                  saveAddress1();
+                }}
+              >
+                Save
               </div>
             </div>
-          </div>
-        )}
+          </Modal.Body>
+        </Modal> */}
 
-        {/* {show1 && (
-          <div
-            className="row mt-5 mb-2 p-2"
-            style={{ justifyContent: "center" }}
-          >
-            <i
-              onClick={() => {
-                setShow1(false);
-                setShow(true);
-              }}
-              className="fa-solid fa-x"
-              style={{
-                backgroundColor: "darkred",
-                padding: "10px",
-                width: "35px",
-                textAlign: "center",
-                color: "white",
-                fontSize: "15px",
-                borderRadius: "50px",
-                position: "absolute",
-                top: "70px",
-              }}
-            ></i>
-            <div
-              className="row col-md-10"
-              style={{
-                backgroundColor: "grey",
-                padding: "20px",
-                borderRadius: "5px",
-              }}
-            >
+        {/* <Modal show={show1} size="lg" centered onHide={handleShow1}>
+          <i
+            onClick={() => {
+              setShow1(false);
+              setShow(true);
+            }}
+            class="fa-solid fa-x"
+            style={{
+              backgroundColor: "darkred",
+              padding: "10px",
+              width: "35px",
+              textAlign: "center",
+              color: "white",
+              fontSize: "15px",
+              borderRadius: "50px",
+              position: "absolute",
+              top: "-40px",
+              right: "0px",
+            }}
+          ></i>
+          <Modal.Body>
+            <div className="row mb-2 p-2">
               <div className="col-md-8">
                 <div
                   className=""
@@ -1966,7 +1873,7 @@ function Cartbook() {
                   }}
                 >
                   <LoadScript
-                    googleMapsApiKey={"AIzaSyBF48uqsKVyp9P2NlDX-heBJksvvT_8Cqk"}
+                    googleMapsApiKey="AIzaSyBF48uqsKVyp9P2NlDX-heBJksvvT_8Cqk"
                     libraries={["places"]}
                   >
                     <GoogleMap
@@ -1980,12 +1887,7 @@ function Cartbook() {
                       }}
                     >
                       {selectedLocation && (
-                        <Marker
-                          position={{
-                            lat: selectedLocation.latitude,
-                            lng: selectedLocation.longitude,
-                          }}
-                        />
+                        <Marker position={selectedLocation} />
                       )}
                       <Autocomplete
                         onLoad={(autocomplete) => {
@@ -2150,16 +2052,14 @@ function Cartbook() {
                   onClick={() => {
                     saveAddress();
                     saveAddress1();
-                    setShow1(false);
-                    setShow(true);
                   }}
                 >
                   Save
                 </div>
               </div>
             </div>
-          </div>
-        )} */}
+          </Modal.Body>
+        </Modal> */}
 
         {/* Success Modal */}
 
@@ -2221,57 +2121,13 @@ function Cartbook() {
         </Modal>
 
         {/* payment getway */}
-        <Modal show={paymentModel} centered onHide={handleClose}>
-          <Modal.Header>
-            <Modal.Title
-              style={{ fontSize: "20px", color: "black", fontWeight: "bold" }}
-            >
-              Confirm Payment
-              <i
-                onClick={handleClose3}
-                className="fa-solid fa-x"
-                style={{
-                  backgroundColor: "darkred",
-                  padding: "10px",
-                  width: "30px",
-                  textAlign: "center",
-                  color: "white",
-                  fontSize: "10px",
-                  borderRadius: "50px",
-                  position: "absolute",
-                  right: "18px",
-                }}
-              ></i>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body style={{ textAlign: "center", fontSize: "16px" }}>
-            <p>
-              <i
-                className="fa fa-exclamation-circle"
-                style={{ fontSize: "24px", color: "darkred" }}
-              ></i>
-            </p>
-            <p>Are you sure you want to proceed with the payment?</p>
-            <a
-              href={Url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: "none" }}
-              className="mt-3"
-            >
-              <Button variant="primary" style={{ backgroundColor: "darkred" }}>
-                Yes, proceed
-              </Button>
-            </a>
-          </Modal.Body>
-        </Modal>
-        {/* <Modal show={paymentModel} centered onHide={handleClose3}>
+        <Modal show={paymentModel} centered onHide={handleClose3}>
           <Modal.Body>
             <a href={Url} rel="noopener noreferrer">
               Click here to complete the payment
             </a>
           </Modal.Body>
-        </Modal> */}
+        </Modal>
       </div>
     </div>
   );
