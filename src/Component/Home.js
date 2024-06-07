@@ -1084,7 +1084,7 @@ export default function Home() {
                           width={130}
                           height={130}
                           alt=""
-                          src={`http://localhost:8080/subcat/${ele?.subcatimg}`}
+                          src={`https://api.vijayhomesuperadmin.in/subcat/${ele?.subcatimg}`}
                         />{" "}
                         <p className="row fnt12 text-center m-auto p-2 boldt">
                           {ele.subcategory}
@@ -1123,7 +1123,7 @@ export default function Home() {
                           width={120}
                           height={120}
                           alt=""
-                          src={`http://localhost:8080/subcat/${ele?.subcatimg}`}
+                          src={`https://api.vijayhomesuperadmin.in/subcat/${ele?.subcatimg}`}
                         />
                       </div>
                       <p className="row fnt12 text-center m-auto p-2 boldt">
@@ -1165,7 +1165,7 @@ export default function Home() {
                         width={60}
                         height={60}
                         alt=""
-                        src={`http://localhost:8080/category/${ele?.categoryImg}`}
+                        src={`https://api.vijayhomesuperadmin.in/category/${ele?.categoryImg}`}
                       />
                       <p className="fnt col-md-10">{ele.category}</p>
                     </div>
@@ -1213,7 +1213,7 @@ export default function Home() {
                           width={120}
                           height={120}
                           alt=""
-                          src={`http://localhost:8080/subcat/${ele?.subcatimg}`}
+                          src={`https://api.vijayhomesuperadmin.in/subcat/${ele?.subcatimg}`}
                         />
                       </div>
                       <p className="row fnt12 text-center m-auto p-2 boldt">

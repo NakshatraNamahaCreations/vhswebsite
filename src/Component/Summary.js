@@ -275,7 +275,7 @@ function Summary() {
       const config = {
         url: "/addcustomeraddress",
         method: "post",
-        baseURL: "http://localhost:8080/api",
+        baseURL: "https://api.vijayhomeservicebengaluru.in/api",
         headers: { "content-type": "application/json" },
         data: {
           userId: value._id,
@@ -486,7 +486,7 @@ function Summary() {
     } else {
       try {
         const config = {
-          url: "http://localhost:8080/api/addservicedetails",
+          url: "https://api.vijayhomeservicebengaluru.in/api/addservicedetails",
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {
@@ -699,7 +699,7 @@ function Summary() {
 
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/payment/yogipayment",
+        "https://api.vijayhomeservicebengaluru.in/api/payment/yogipayment",
         updateddata
       );
       console.log("Response:", res.data.redirectUrl);

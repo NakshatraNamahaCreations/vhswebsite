@@ -341,7 +341,7 @@ function Espage() {
       const config = {
         url: "/addcustomeraddress",
         method: "post",
-        baseURL: "http://localhost:8080/api",
+        baseURL: "https://api.vijayhomeservicebengaluru.in/api",
         headers: { "content-type": "application/json" },
         data: {
           userId: value._id,
@@ -560,7 +560,9 @@ function Espage() {
   }, []);
 
   const getenquiryfollowup = async () => {
-    let res = await axios.get("http://localhost:8080/api/getenquiryfollowup");
+    let res = await axios.get(
+      "https://api.vijayhomeservicebengaluru.in/api/getenquiryfollowup"
+    );
     if ((res.status = 200)) {
       setsurveydata(
         res.data?.enquiryfollowup.filter((i) => i.response === "Survey")
@@ -753,7 +755,7 @@ function Espage() {
     } else {
       try {
         const config = {
-          url: "http://localhost:8080/api/addnewenquiry",
+          url: "https://api.vijayhomeservicebengaluru.in/api/addnewenquiry",
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {
@@ -794,7 +796,7 @@ function Espage() {
     } else {
       try {
         const config = {
-          url: "http://localhost:8080/api/addnewenquiry",
+          url: "https://api.vijayhomeservicebengaluru.in/api/addnewenquiry",
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {
@@ -833,7 +835,7 @@ function Espage() {
       const config = {
         url: `/addenquiryfollowup`,
         method: "post",
-        baseURL: "http://localhost:8080/api",
+        baseURL: "https://api.vijayhomeservicebengaluru.in/api",
         // data: formdata,
         headers: { "content-type": "application/json" },
         data: {
@@ -992,7 +994,7 @@ function Espage() {
 
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/payment/yogipayment",
+        "https://api.vijayhomeservicebengaluru.in/api/payment/yogipayment",
         updateddata
       );
       console.log("Response:", res.data.redirectUrl);

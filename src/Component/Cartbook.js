@@ -590,7 +590,7 @@ function Cartbook() {
       const config = {
         url: "/addcustomeraddress",
         method: "post",
-        baseURL: "http://localhost:8080/api",
+        baseURL: "https://api.vijayhomeservicebengaluru.in/api",
         headers: { "content-type": "application/json" },
         data: {
           userId: value._id,
