@@ -27,6 +27,7 @@ import Paymentsuccess from "./Component/Paymentsuccess";
 import Paymentfailure from "./Component/Paymentfailure";
 import Header1 from "./Component/Header1";
 import Mybooking from "./Component/Mybooking";
+import Mainheader from "./Component/Mainheader";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path="/Paymentsuccess" element={<Paymentsuccess />} />
         <Route path="/Paymentfailure" element={<Paymentfailure />} />
         <Route path="/mybooking" element={<Mybooking />} />
+        <Route path="/mainheader" element={<Mainheader />} />
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>
       {/* <AppLink /> */}

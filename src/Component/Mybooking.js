@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header2 from "./Header2";
 import axios from "axios";
+import Footer from "./Footer";
 
 function MyBooking() {
   const [bookingsData, setBookingsData] = useState([]);
@@ -32,9 +33,9 @@ function MyBooking() {
     <div className="">
       <Header2 />
       <div className="container">
-        <div className="row justify-content-center">
+        <div className="row justify-content-center mb-5">
           {bookingsData.map((data, index) => (
-            <div className="row justify-content-center">
+            <div className="row justify-content-center ">
               <div
                 className="col-md-6 mt-3"
                 style={{
@@ -73,6 +74,7 @@ function MyBooking() {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

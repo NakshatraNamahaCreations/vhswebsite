@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // import Card from "react-bootstrap/Card";
 import "../Component/layout.css";
 import "slick-carousel/slick/slick.css";
@@ -16,6 +16,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Footer from "./Footer";
 import Spinner from "react-bootstrap/Spinner";
 import { Loop } from "@mui/icons-material";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 // updated home
 export default function Home() {
@@ -34,6 +36,79 @@ export default function Home() {
   const [bannerdata, setBannerdata] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  // const cleaningServicesRef = useRef(null); // Create a ref for the cleaning services section
+
+  // const scrollToCleaningServices = () => {
+  //   cleaningServicesRef.current.scrollIntoView({ behavior: "smooth" });
+  // };
+  const cleaningServicesRef = useRef(null);
+  const paintingServicesRef = useRef(null);
+  const pestControlRef = useRef(null);
+  const floorPolishingRef = useRef(null);
+  const homeRepairingRef = useRef(null);
+  const packersMoversRef = useRef(null);
+  const applianceServicesRef = useRef(null);
+
+  const sectionRefs = {
+    "Cleaning Services": cleaningServicesRef,
+    "Painting Services": paintingServicesRef,
+    "Pest Control Services": pestControlRef,
+    "Floor Polishing": floorPolishingRef,
+    "Home Repairing Services": homeRepairingRef,
+    "Packers & Movers": packersMoversRef,
+    "Appliance Services": applianceServicesRef,
+  };
+
+  const handleScroll = (title) => {
+    const ref = sectionRefs[title];
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+      slidesToSlide: 4, // optional, default to 1.
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 768 },
+      items: 2,
+      slidesToSlide: 3, // optional, default to 1.
+    },
+    mobile: {
+      breakpoint: { max: 767, min: 464 },
+      items: 1,
+      slidesToSlide: 1, // optional, default to 1.
+    },
+  };
+
+  const sliderImageUrl = [
+    //First image url
+    {
+      url: "https://i2.wp.com/www.geeksaresexy.net/wp-content/uploads/2020/04/movie1.jpg?resize=600%2C892&ssl=1",
+    },
+    {
+      url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-kids-movies-2020-call-of-the-wild-1579042974.jpg?crop=0.9760858955588091xw:1xh;center,top&resize=480:*",
+    },
+    //Second image url
+    {
+      url: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/best-movies-for-kids-2020-sonic-the-hedgehog-1571173983.jpg?crop=0.9871668311944719xw:1xh;center,top&resize=480:*",
+    },
+    //Third image url
+    {
+      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQS82ET2bq9oTNwPOL8gqyoLoLfeqJJJWJmKQ&usqp=CAU",
+    },
+
+    //Fourth image url
+
+    {
+      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTdvuww0JDC7nFRxiFL6yFiAxRJgM-1tvJTxA&usqp=CAU",
+    },
+  ];
+
   const styles = {
     ".carousel-control-prev": {
       backgroundColor: "darkred",
@@ -52,6 +127,8 @@ export default function Home() {
       right: "50px",
     },
   };
+
+  const imageContainerRef = useRef(null);
 
   console.log("FilterRepairing=====", FilterRepairing);
 
@@ -357,6 +434,52 @@ export default function Home() {
     slidesToShow: painitnca,
   };
 
+  const sliderItems = [
+    {
+      imageUrl: "./assests/deepcln.webp",
+      title: "Cleaning Services",
+      backgroundColor: "darkred",
+      desc: "Start add 599",
+    },
+    {
+      imageUrl: "./assests/deepcln.webp",
+      title: "Painting Services",
+      backgroundColor: "#0C999E",
+      desc: "Start add 399",
+    },
+    {
+      imageUrl: "./assests/deepcln.webp",
+      title: "Pest Control Services",
+      backgroundColor: "#0C389E",
+      desc: "Start add 699",
+    },
+    {
+      imageUrl: "./assests/deepcln.webp",
+      title: "Floor Polishing",
+      backgroundColor: "darkred",
+      desc: "Start add 299",
+    },
+    {
+      imageUrl: "./assests/deepcln.webp",
+      title: "Home Repairing Services",
+      backgroundColor: "#0C999E",
+      desc: "Start add 199",
+    },
+    {
+      imageUrl: "./assests/deepcln.webp",
+      title: "Packers & Movers",
+      backgroundColor: "#0C999E",
+      desc: "Start add 799",
+    },
+    {
+      imageUrl: "./assests/deepcln.webp",
+      title: "Appliance Services",
+      backgroundColor: "#0C999E",
+      desc: "Start add 799",
+    },
+    // Add more items as needed
+  ];
+
   return (
     <>
       {isLoading ? (
@@ -425,6 +548,90 @@ export default function Home() {
           </div>
 
           <div className="container mt-5">
+            <div className="parent">
+              <Carousel
+                responsive={responsive}
+                autoPlay={true}
+                swipeable={true}
+                draggable={true}
+                showDots={true}
+                infinite={true}
+                partialVisible={false}
+                dotListClass="custom-dot-list-style"
+              >
+                {sliderItems.map((imageUrl, index) => {
+                  return (
+                    <div
+                      className="col-md-4"
+                      key={index}
+                      style={{
+                        paddingRight: "25px",
+
+                        width: "100%",
+                      }}
+                    >
+                      <div
+                        className=""
+                        style={{
+                          backgroundColor: imageUrl.backgroundColor,
+                          padding: "15px",
+                        }}
+                      >
+                        <div
+                          className="row"
+                          style={{ justifyContent: "center" }}
+                        >
+                          <div
+                            className="col-md-6"
+                            onClick={() => handleScroll(imageUrl.title)}
+                          >
+                            <img
+                              src={imageUrl.imageUrl}
+                              alt="movie"
+                              style={{
+                                width: "100%",
+                                borderRadius: "20px",
+                                height: "180px",
+                              }}
+                            />
+                          </div>
+                          <div
+                            className="col-md-6"
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <div
+                              className="c-back-text"
+                              style={{ marginTop: "47px" }}
+                            >
+                              {imageUrl.title}
+                            </div>
+
+                            <div
+                              className=""
+                              style={{
+                                fontSize: "13px",
+                                fontWeight: "bold",
+                                color: "orange",
+                                textAlign: "center",
+                                marginTop: "8px",
+                              }}
+                            >
+                              {imageUrl.desc}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </Carousel>
+            </div>
+          </div>
+
+          {/* <div className="container mt-5">
             <div className="row">
               <div className="col-md-4">
                 <div className="c-back">
@@ -497,10 +704,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-
+          </div> */}
           <div className="container">
-            <div className="c-head mt-5">Cleaning Services</div>
+            <div className="c-head mt-5" ref={cleaningServicesRef}>
+              Cleaning Services
+            </div>
 
             <Slider {...settings}>
               {FilterCleaning?.map((ele, index) => (
@@ -530,7 +738,9 @@ export default function Home() {
 
             {/* Painting Services */}
 
-            <div className="c-head mt-5">Painting Services</div>
+            <div className="c-head mt-5" ref={paintingServicesRef}>
+              Painting Services
+            </div>
 
             <Slider {...settings}>
               {FilteredPaint?.map((ele, index) => (
@@ -564,7 +774,9 @@ export default function Home() {
 
             {/* Pest Control */}
 
-            <div className="c-head mt-5">Pest Control</div>
+            <div className="c-head mt-5" ref={pestControlRef}>
+              Pest Control
+            </div>
 
             <Slider {...settings}>
               {FilterPestControl?.map((ele, index) => (
@@ -594,7 +806,9 @@ export default function Home() {
 
             {/* Floor Polishing  */}
 
-            <div className="c-head mt-5">Floor Polishing</div>
+            <div className="c-head mt-5" ref={floorPolishingRef}>
+              Floor Polishing
+            </div>
 
             <Slider {...settings}>
               {FilterMarbelPolish?.map((ele, index) => (
@@ -625,7 +839,9 @@ export default function Home() {
 
             {/* Home Repairing Services */}
 
-            <div className="c-head mt-5">Home Repairing Services</div>
+            <div className="c-head mt-5" ref={homeRepairingRef}>
+              Home Repairing Services
+            </div>
 
             <Slider {...settings}>
               {FilterRepairing?.map((ele, index) => (
@@ -666,7 +882,9 @@ export default function Home() {
 
             {/* Packers on Movers */}
 
-            <div className="c-head mt-5">Packers & Movers</div>
+            <div className="c-head mt-5" ref={packersMoversRef}>
+              Packers & Movers
+            </div>
 
             <Slider {...settings}>
               {FilterPackers?.map((ele, index) => (
@@ -697,7 +915,9 @@ export default function Home() {
 
             {/* Appliance Services  */}
 
-            <div className="c-head mt-5">Appliance Services</div>
+            <div className="c-head mt-5" ref={applianceServicesRef}>
+              Appliance Services
+            </div>
 
             <Slider {...settings}>
               {FilterAppliance?.map((ele, index) => (

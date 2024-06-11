@@ -38,6 +38,12 @@ export default function NabarCompo({}) {
     cartShow = true;
   }
 
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
+  const toggleSearch = () => {
+    setIsSearchVisible(!isSearchVisible);
+  };
+
   const userDataString = localStorage.getItem("user");
   const userData = JSON.parse(userDataString);
 
@@ -196,7 +202,7 @@ export default function NabarCompo({}) {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-end menu">
-            <Nav className=" fnt clrrd me-3  boldt">
+            {/* <Nav className=" fnt clrrd me-3  boldt">
               <Link
                 className=" fnt clrrd me-3  boldt"
                 to="/"
@@ -214,8 +220,53 @@ export default function NabarCompo({}) {
                 About Us
               </Link>
             </Nav>
-            <Nav className=" fnt clrrd me-3  boldt">Blog</Nav>
-            <Nav className=" fnt clrrd me-3  boldt">
+            <Nav className=" fnt clrrd me-3  boldt">Blog</Nav> */}
+            <Nav
+              className="   me-3 "
+              style={{ backgroundColor: "orange", padding: "5px 5px" }}
+            >
+              <div className="">
+                <img
+                  src="./assests/new.gif"
+                  alt="loading...."
+                  style={{ width: "43px", height: "30px" }}
+                />{" "}
+                <span style={{ fontSize: "13px", color: "white" }}>
+                  Pest Control
+                </span>
+              </div>
+            </Nav>
+            <Nav
+              className="   me-3 "
+              style={{ backgroundColor: "orange", padding: "5px 5px" }}
+            >
+              <div className="">
+                <img
+                  src="./assests/new.gif"
+                  alt="loading...."
+                  style={{ width: "43px", height: "30px" }}
+                />{" "}
+                <span style={{ fontSize: "13px", color: "white" }}>
+                  AC Repairing
+                </span>
+              </div>
+            </Nav>
+            <Nav
+              className="   me-3  "
+              style={{ backgroundColor: "orange", padding: "5px 5px" }}
+            >
+              <div className="">
+                <img
+                  src="./assests/new.gif"
+                  alt="loading...."
+                  style={{ width: "43px", height: "30px" }}
+                />{" "}
+                <span style={{ fontSize: "13px", color: "white" }}>
+                  Exclusive Offer
+                </span>
+              </div>
+            </Nav>
+            {/* <Nav className=" fnt clrrd me-3  boldt">
               <Link
                 className=" fnt clrrd me-3  boldt"
                 to="/career"
@@ -223,7 +274,7 @@ export default function NabarCompo({}) {
               >
                 Career
               </Link>
-            </Nav>
+            </Nav> */}
 
             <Nav className=" fnt clrrd ">
               <div
@@ -337,6 +388,24 @@ export default function NabarCompo({}) {
                 </Link>
               </>
             )}
+
+            {/* <Nav className=" fnt clrrd ">
+              <div className="search-container">
+                <div className="search-icon" onClick={toggleSearch}>
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <input
+                  type="text"
+                  className={`search-input ${isSearchVisible ? "visible" : ""}`}
+                  placeholder="Search..."
+                  style={{
+                    border: "1px solid black",
+                    width: "100px",
+                    height: "45px",
+                  }}
+                />
+              </div>
+            </Nav> */}
 
             <Nav className="ms-5">
               {!cartShow ? (

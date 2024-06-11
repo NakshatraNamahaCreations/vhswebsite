@@ -372,7 +372,7 @@ button {
 }
 .c-back-text{
   color: white;
-  font-size: 25px;
+  font-size: 20px;
   text-align: center;
   font-weight: bold;
 }
@@ -471,10 +471,14 @@ button {
   border-radius: 4px;
   transition: background-color 0.3s;
 }
-
-.inpt.matching {
-  background-color: yellow !important; /* Change this to your desired color */
+.scheduleservice .select_date .date_selection label input:checked + span {
+   background: white !important; 
+   color: black !important; 
 }
+
+// .inpt.matching {
+//   background-color: yellow !important; /* Change this to your desired color */
+// }
 .slick-arrow{
   background-color: darkred !important;
   font-size: 20px !important;
@@ -545,4 +549,133 @@ button {
 
 .dropdown-menu.show {
   display: block;
+}
+.map_input::placeholder {
+  font-weight: bold;
+  // opacity: 0.5;
+  color: white !important;
+}
+.map_input {
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  width: 350px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  outline: none;
+  text-overflow: ellipsis;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background-color: orange !important;
+  color: white !important;
+}
+
+// Scroll slider
+
+.main {
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.title {
+ font-size: 42px;
+}
+
+
+.image {
+  height: 100px;
+  width: 100px;
+  font-size: 25px;
+  background: blue;
+  margin: 10px;
+  display: inline-block;
+  line-height: 100px; 
+}
+
+
+.image-container {
+  vertical-align: middle;
+  display: inline-block;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 50%;
+}
+
+.prev, .next {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 100%;
+  cursor: pointer;
+  color: black;
+  transition: 0.6s ease;
+}
+
+.next {
+  margin-left: 5px;
+}
+
+.prev {
+  margin-right: 5px;
+}
+
+.prev:hover, .next:hover {
+  color: white;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+}
+// Carousel Slider
+
+.slider {
+  margin:0 20px;
+  overflow:"hidden";
+  padding:2rem 0;
+}
+
+.slider img {
+  width: 100%;
+  border-radius:10px;
+}
+
+.react-multi-carousel-list {
+padding: 0rem 0 2rem 0;
+}
+
+.custom-dot-list-style button{
+border: none;
+background: rgb(255, 68, 68);
+}
+.react-multi-carousel-dot.react-multi-carousel-dot--active button{
+background: rgb(255, 68, 68) !important;
+}
+.react-multiple-carousel__arrow {
+    display: none !important;
+}
+.react-multiple-carousel__arrow{
+  display: none !important;
+}
+.search-container {
+  position: relative;
+}
+
+.search-input {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  transition: opacity 0.3s, height 0.3s, width 0.3s;
+}
+
+.search-input.visible {
+  opacity: 1;
+  height: auto;
+  width: 200px; /* Adjust width as needed */
 }

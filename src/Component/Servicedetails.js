@@ -58,6 +58,8 @@ function Servicedetails() {
 
   const [Bannermidledata, setBannermidledata] = useState([]);
 
+  console.log("serviceData===", serviceData);
+
   useEffect(() => {
     getbannerdatamiddle();
   }, []);
@@ -618,7 +620,7 @@ function Servicedetails() {
                         );
                       })()}
                     </div>
-                    <div className="row">
+                    {/* <div className="row">
                       <div className="col-md-1">
                         <i
                           class="fa-solid fa-star"
@@ -637,6 +639,32 @@ function Servicedetails() {
                           {data.serviceDesc[0]?.text}
                         </div>
                       </div>
+                    </div> */}
+                    <div className="row">
+                      {data.serviceDesc.slice(0, 3).map((desc, index) => (
+                        <div className="col-md-12" key={index}>
+                          <div className="d-flex mt-2">
+                            <div className="col-md-1">
+                              <i
+                                className="fa-solid fa-star"
+                                style={{ color: "green" }}
+                              ></i>
+                            </div>
+                            <div className="col-md-11">
+                              <div
+                                className="mt-1"
+                                style={{
+                                  color: "black",
+                                  fontSize: "14px",
+                                  marginLeft: "-16px",
+                                }}
+                              >
+                                {desc.text}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
 
                     <Link
@@ -662,8 +690,8 @@ function Servicedetails() {
                     <div className="">
                       <img
                         style={{
-                          width: "100px",
-                          height: "100px",
+                          width: "150px",
+                          height: "150px",
                           borderRadius: "10px",
                         }}
                         className="mb-2"
@@ -676,8 +704,8 @@ function Servicedetails() {
                         style={{
                           display: "flex",
                           justifyContent: "end",
-                          marginRight: "17px",
-                          marginTop: "-13px",
+                          marginRight: "30px",
+                          marginTop: "-20px",
                         }}
                       >
                         <div
@@ -687,7 +715,7 @@ function Servicedetails() {
                             fontSize: "13px",
                             backgroundColor: "darkred",
                             textAlign: "center",
-                            width: "60px",
+                            width: "80px",
                             padding: "3px",
                             borderRadius: "10px",
                           }}

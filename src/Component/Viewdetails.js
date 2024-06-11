@@ -11,6 +11,10 @@ import {
   clearCart,
 } from "../Redux1/MyCartSlice";
 import { deleteMyCartItem } from "../Redux1/MyCartSlice";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import Footer from "./Footer";
 
 function Viewdetails() {
   const [svideodata, setsvideodata] = useState([]);
@@ -25,6 +29,16 @@ function Viewdetails() {
   const [Item, setItem] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
+
+  const settings = {
+    dots: true,
+    infinite: false, // Set infinite to false
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    draggable: true,
+    Loop: false,
+  };
 
   const citys = useSelector((state) => state.city);
   console.log(citys, "citys====");
@@ -551,69 +565,83 @@ function Viewdetails() {
               <></>
             )}
 
-            <div
-              className="mt-4"
-              style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
-            >
-              Service Includes
-            </div>
             <div className="row">
-              {subcategory.serviceIncludes.map((data) => (
-                <>
-                  <div className="col-md-1">
-                    <img
-                      style={{ width: "16px", height: "16px" }}
-                      alt=""
-                      src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.Desimg}`}
-                    />
-                  </div>
-                  <div className="col-md-11">
-                    <div
-                      className="mt-1"
-                      style={{
-                        color: "black",
-                        fontSize: "14px",
-                        marginLeft: "-66px",
-                      }}
-                    >
-                      {data.text}
-                    </div>
-                  </div>
-                </>
-              ))}
+              <div className="col-md-6">
+                <div
+                  className="mt-4"
+                  style={{
+                    color: "black",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Service Includes
+                </div>
+                <div className="row">
+                  {subcategory.serviceIncludes.map((data) => (
+                    <>
+                      <div className="col-md-1">
+                        <img
+                          style={{ width: "16px", height: "16px" }}
+                          alt=""
+                          src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.Desimg}`}
+                        />
+                      </div>
+                      <div className="col-md-11">
+                        <div
+                          className="mt-1"
+                          style={{
+                            color: "black",
+                            fontSize: "14px",
+                            marginLeft: "-26px",
+                          }}
+                        >
+                          {data.text}
+                        </div>
+                      </div>
+                    </>
+                  ))}
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div
+                  className="mt-4"
+                  style={{
+                    color: "black",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Service Excludes
+                </div>
+                <div className="row">
+                  {subcategory.serviceExcludes.map((data) => (
+                    <>
+                      <div className="col-md-1">
+                        <img
+                          style={{ width: "16px", height: "16px" }}
+                          alt=""
+                          src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.Inimg}`}
+                        />
+                      </div>
+                      <div className="col-md-11">
+                        <div
+                          className="mt-1"
+                          style={{
+                            color: "black",
+                            fontSize: "14px",
+                            marginLeft: "-26px",
+                          }}
+                        >
+                          {data.text}
+                        </div>
+                      </div>
+                    </>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div
-              className="mt-4"
-              style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
-            >
-              Service Excludes
-            </div>
-            <div className="row">
-              {subcategory.serviceExcludes.map((data) => (
-                <>
-                  <div className="col-md-1">
-                    <img
-                      style={{ width: "16px", height: "16px" }}
-                      alt=""
-                      src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.Inimg}`}
-                    />
-                  </div>
-                  <div className="col-md-11">
-                    <div
-                      className="mt-1"
-                      style={{
-                        color: "black",
-                        fontSize: "14px",
-                        marginLeft: "-66px",
-                      }}
-                    >
-                      {data.text}
-                    </div>
-                  </div>
-                </>
-              ))}
-            </div>
             <div
               className="mt-4"
               style={{ color: "darkred", fontSize: "16px", fontWeight: "bold" }}
@@ -690,44 +718,51 @@ function Viewdetails() {
               })}
             </div>
 
-            {feqdata.map((i) => (
-              <div>
-                <h3
-                  style={{
-                    color: "black",
-                    fontWeight: "bold",
-                    marginTop: 15,
-                    fontSize: 16,
-                  }}
-                >
-                  {i.title}
-                </h3>
-                <div>
-                  {i.img.map((item) => (
-                    <div
+            <div className="mb-5">
+              <Slider {...settings}>
+                {feqdata.map((i) => (
+                  <div>
+                    <h3
                       style={{
-                        marginTop: 10,
-                        display: "flex",
-                        justifyContent: "center",
+                        color: "black",
+                        fontWeight: "bold",
+                        marginTop: 15,
+                        fontSize: 16,
+                        textAlign: "center",
+                        marginBottom: "15px",
                       }}
                     >
-                      <img
-                        src={`https://api.vijayhomesuperadmin.in/feq/${item.data}`}
-                        style={{
-                          width: 300,
-                          height: 300,
-                          objectFit: "contain",
-                        }}
-                        alt=""
-                      />
+                      {i.title}
+                    </h3>
+                    <div>
+                      {i.img.map((item) => (
+                        <div
+                          style={{
+                            marginTop: 10,
+                            display: "flex",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <img
+                            src={`https://api.vijayhomesuperadmin.in/feq/${item.data}`}
+                            style={{
+                              width: "100%",
+                              height: 300,
+                              objectFit: "contain",
+                            }}
+                            alt=""
+                          />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+                  </div>
+                ))}
+              </Slider>
+            </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

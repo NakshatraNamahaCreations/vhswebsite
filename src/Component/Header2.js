@@ -44,7 +44,7 @@ export default function NavbarCompo() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end menu">
-          <Nav className="fnt clrrd me-3 boldt">
+          {/* <Nav className="fnt clrrd me-3 boldt">
             <Link
               className="fnt clrrd me-3 boldt"
               to="/"
@@ -71,6 +71,51 @@ export default function NavbarCompo() {
             >
               Career
             </Link>
+          </Nav> */}
+          <Nav
+            className="   me-3 "
+            style={{ backgroundColor: "orange", padding: "5px 5px" }}
+          >
+            <div className="">
+              <img
+                src="./assests/new.gif"
+                alt="loading...."
+                style={{ width: "43px", height: "30px" }}
+              />{" "}
+              <span style={{ fontSize: "13px", color: "white" }}>
+                Pest Control
+              </span>
+            </div>
+          </Nav>
+          <Nav
+            className="   me-3 "
+            style={{ backgroundColor: "orange", padding: "5px 5px" }}
+          >
+            <div className="">
+              <img
+                src="./assests/new.gif"
+                alt="loading...."
+                style={{ width: "43px", height: "30px" }}
+              />{" "}
+              <span style={{ fontSize: "13px", color: "white" }}>
+                AC Repairing
+              </span>
+            </div>
+          </Nav>
+          <Nav
+            className="   me-3  "
+            style={{ backgroundColor: "orange", padding: "5px 5px" }}
+          >
+            <div className="">
+              <img
+                src="./assests/new.gif"
+                alt="loading...."
+                style={{ width: "43px", height: "30px" }}
+              />{" "}
+              <span style={{ fontSize: "13px", color: "white" }}>
+                Exclusive Offer
+              </span>
+            </div>
           </Nav>
           {userData !== null && userData !== undefined ? (
             <Nav className=" fnt   p-0 ">

@@ -40,6 +40,7 @@ function Espage() {
   const [voucherCodeValue, setVoucherCodeValue] = useState();
   const [Carttotal, setCarttotal] = useState(0);
   const [Fulladd, setFulladd] = useState("");
+  const [showbutton, setshowbutton] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [Url, setUrl] = useState("");
@@ -65,66 +66,6 @@ function Espage() {
 
   const [SavedAmount, setSavedAmount] = useState(0);
 
-  //   useEffect(() => {
-  //     const newCartTotal = MyCartItmes.reduce(
-  //       (accumulator, item) => {
-  //         if (!item) return accumulator; // Ensure item is not undefined
-
-  //         const offerPrice = parseFloat(item?.offerprice) || 0;
-  //         const quantity = parseInt(item?.qty) || 0;
-  //         const planPrice = parseFloat(item?.planPrice?.trim()) || 0;
-
-  //         if (!isNaN(offerPrice) && !isNaN(quantity) && !isNaN(planPrice)) {
-  //           const subtotal = planPrice * quantity;
-  //           const planSubtotal = offerPrice * quantity;
-  //           const saved = Math.abs(planSubtotal - subtotal);
-
-  //           accumulator.savedAmount += saved;
-  //           accumulator.total += subtotal;
-  //           accumulator.planSubtotal += planSubtotal;
-  //         } else if (!isNaN(offerPrice) && !isNaN(quantity)) {
-  //           const planSubtotal = offerPrice * quantity;
-  //           accumulator.total += planSubtotal;
-  //           accumulator.planSubtotal += planSubtotal;
-  //         }
-
-  //         return accumulator;
-  //       },
-  //       { total: 0, savedAmount: 0, planSubtotal: 0 }
-  //     );
-
-  //     // Calculate total price for addon items
-  //     const addonTotal = MyCartaddonItmes.reduce((accumulator, addon) => {
-  //       const addonPlanPrice = parseFloat(addon?.planPrice) || 0;
-  //       const addonQuantity = parseInt(addon?.qty) || 0;
-  //       return accumulator + addonPlanPrice * addonQuantity;
-  //     }, 0);
-
-  //     const addonTotal1 = MyCartaddonItmes.reduce((accumulator, addon) => {
-  //       const addonPlanPrice = parseFloat(addon?.oferprice) || 0;
-  //       const addonQuantity = parseInt(addon?.qty) || 0;
-  //       return accumulator + addonPlanPrice * addonQuantity;
-  //     }, 0);
-
-  //     newCartTotal.total += addonTotal;
-  //     newCartTotal.planSubtotal += addonTotal1;
-
-  //     setCarttotal(newCartTotal.total); // Update the state with the new Cart total
-  //     setSavedAmount(newCartTotal.savedAmount); // Update the state with the total saved amount
-
-  //     // If a coupon code has been applied, calculate the discount
-  //     if (voucherCodeValue === voucherdata?.voucherCode) {
-  //       const discountAmount =
-  //         (newCartTotal.planSubtotal * (voucherdata?.discountPercentage || 0)) /
-  //         100;
-  //       const grandTotal = newCartTotal.planSubtotal - discountAmount;
-  //       setDiscountAmount(grandTotal);
-  //       setCouponPercentage(voucherdata.discountPercentage);
-  //     } else {
-  //       setDiscountAmount(newCartTotal.planSubtotal);
-  //     }
-  //   }, [MyCartItmes, MyCartaddonItmes, voucherCodeValue, voucherdata]);
-
   const [couponPercentage, setCouponPercentage] = useState(0);
   const [DiscountAmount, setDiscountAmount] = useState(0);
 
@@ -136,30 +77,6 @@ function Espage() {
       setCouponPercentage(voucherdata.discountPercentage);
     }
   };
-
-  // const handlePlaceSelect = () => {
-  //   const place = autocompleteRef.current.getPlace();
-  //   if (!place.geometry) {
-  //     return;
-  //   }
-
-  //   const latitude = place.geometry.location.lat();
-  //   const longitude = place.geometry.location.lng();
-  //   const location = { latitude, longitude };
-  //   setSelectedLocation(location);
-  //   setSelectedPlaceAddress(place.formatted_address || "");
-
-  //   // Adjust map bounds to include both the marker and the searched location
-  //   if (mapRef.current && mapRef.current.getMap) {
-  //     const map = mapRef.current.getMap();
-  //     const bounds = new window.google.maps.LatLngBounds();
-  //     bounds.extend(location);
-  //     if (selectedLocation) {
-  //       bounds.extend(selectedLocation);
-  //     }
-  //     map.fitBounds(bounds);
-  //   }
-  // };
 
   const [show, setShow] = useState(false);
 
@@ -189,11 +106,15 @@ function Espage() {
     "Friday",
     "Saturday",
   ];
+
   useEffect(() => {
     const getNextDays = () => {
       const nextDays = [];
-      for (let i = 0; i < 4; i++) {
-        const date = new Date();
+      const currentDate = new Date();
+
+      for (let i = 0; i < 12; i++) {
+        // Changed to 12 dates
+        const date = new Date(currentDate);
         date.setDate(currentDate.getDate() + i);
 
         const day = date.getDate();
@@ -204,6 +125,7 @@ function Espage() {
 
         nextDays.push({ day, month, year, dayName });
       }
+
       return nextDays;
     };
 
@@ -212,20 +134,19 @@ function Espage() {
   }, []);
 
   const monthsMap = {
-    "01": "January",
-    "02": "February",
-    "03": "March",
-    "04": "April",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "August",
-    "09": "September",
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
     10: "October",
     11: "November",
     12: "December",
   };
-
   const isDateSelected = (day) => {
     if (!selectedDate) return false;
 
@@ -233,17 +154,17 @@ function Espage() {
     const monthName = monthsMap[month];
 
     if (!monthName) {
+      console.error("Invalid month:", month);
       return false;
     }
 
     const formattedDay = moment(
-      `${monthName} ${dayNumber}, ${year}`,
-      "MMMM D, YYYY"
-    ).format("LL");
+      `${year}-${month}-${dayNumber}`,
+      "YYYY-M-D"
+    ).format("YYYY-MM-DD");
 
     return formattedDay === selectedDate;
   };
-
   const handleCheckboxSelect = (day) => {
     const formattedDate = `${day.year}-${day.month}-${day.day}`;
     const selectedDate = moment(formattedDate, "YYYY-MM-DD");
@@ -319,7 +240,7 @@ function Espage() {
         setService(res.data.service);
       }
       let addressRes = await axios.get(
-        `http://localhost:8080/api/getcustomeraddresswithuserid/${value?._id}`
+        `https://api.vijayhomeservicebengaluru.in/api/getcustomeraddresswithuserid/${value?._id}`
       );
       if (addressRes) {
         setcustomerAddressdata(addressRes.data?.customerAddress);
@@ -1167,44 +1088,80 @@ function Espage() {
                 )}
               </div>
 
-              {sdata.serviceDirection === "Survey" ? (
-                <div
-                  onClick={addsurvey}
-                  className="col-md-8 mt-4 mb-3"
-                  style={{
-                    backgroundColor: "darkred",
-                    padding: "8px",
-                    color: "white",
-                    fontSize: "14px",
-                    textAlign: "center",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                >
-                  Book
+              {!showbutton ? (
+                <div className="row mt-5 mb-5">
+                  <div
+                    onClick={() => setshowbutton(true)}
+                    className="col-md-8"
+                    style={{
+                      backgroundColor: "darkred",
+                      padding: "8px",
+                      color: "white",
+                      fontSize: "14px",
+                      textAlign: "center",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Book
+                  </div>
                 </div>
               ) : (
-                <div
-                  onClick={addenquiry}
-                  className="col-md-8 mt-4 mb-3"
-                  style={{
-                    backgroundColor: "darkred",
-                    padding: "8px",
-                    color: "white",
-                    fontSize: "14px",
-                    textAlign: "center",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    width: "100%",
-                  }}
-                >
-                  Book
+                <div className="row mt-5 mb-5">
+                  <div className="col-md-6">
+                    {sdata.serviceDirection === "Survey" ? (
+                      <div
+                        onClick={addsurvey}
+                        style={{
+                          backgroundColor: "darkred",
+                          padding: "8px",
+                          color: "white",
+                          fontSize: "14px",
+                          textAlign: "center",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Book
+                      </div>
+                    ) : (
+                      <div
+                        onClick={addenquiry}
+                        style={{
+                          backgroundColor: "darkred",
+                          padding: "8px",
+                          color: "white",
+                          fontSize: "14px",
+                          textAlign: "center",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Book
+                      </div>
+                    )}
+                  </div>
+                  <div className="col-md-6">
+                    <div
+                      onClick={handlePayment}
+                      style={{
+                        backgroundColor: "#040458db",
+                        padding: "8px",
+                        color: "white",
+                        fontSize: "14px",
+                        textAlign: "center",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Payment
+                    </div>
+                  </div>
                 </div>
               )}
 
               <div className="row mt-5 mb-5">
-                <div
+                {/* <div
                   onClick={handlePayment}
                   className="col-md-8"
                   style={{
@@ -1218,7 +1175,7 @@ function Espage() {
                   }}
                 >
                   Payment
-                </div>
+                </div> */}
               </div>
             </>
           )}
@@ -1402,6 +1359,7 @@ function Espage() {
                         <input
                           type="text"
                           placeholder="Search for a location"
+                          className="map_input"
                           style={{
                             boxSizing: "border-box",
                             border: "1px solid transparent",
@@ -1418,6 +1376,8 @@ function Espage() {
                             left: "50%",
                             transform: "translateX(-50%)",
                             zIndex: 2,
+                            backgroundColor: "orange",
+                            width: "350px",
                           }}
                         />
                       </Autocomplete>

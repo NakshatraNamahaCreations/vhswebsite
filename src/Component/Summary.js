@@ -43,6 +43,7 @@ function Summary() {
   const [loading, setLoading] = useState(false);
   const [Url, setUrl] = useState("");
   const [paymentModel, setpaymentModel] = useState(false);
+  const [showbutton, setshowbutton] = useState(false);
 
   const handleClose3 = () => setpaymentModel(false);
 
@@ -123,11 +124,35 @@ function Summary() {
     "Friday",
     "Saturday",
   ];
+  // useEffect(() => {
+  //   const getNextDays = () => {
+  //     const nextDays = [];
+  //     for (let i = 0; i < 4; i++) {
+  //       const date = new Date();
+  //       date.setDate(currentDate.getDate() + i);
+
+  //       const day = date.getDate();
+  //       const month = date.getMonth() + 1;
+  //       const year = date.getFullYear();
+
+  //       const dayName = daysOfWeek[date.getDay()];
+
+  //       nextDays.push({ day, month, year, dayName });
+  //     }
+  //     return nextDays;
+  //   };
+
+  //   const nextDays = getNextDays();
+  //   setFourDates(nextDays);
+  // }, []);
   useEffect(() => {
     const getNextDays = () => {
       const nextDays = [];
-      for (let i = 0; i < 4; i++) {
-        const date = new Date();
+      const currentDate = new Date();
+
+      for (let i = 0; i < 12; i++) {
+        // Changed to 12 dates
+        const date = new Date(currentDate);
         date.setDate(currentDate.getDate() + i);
 
         const day = date.getDate();
@@ -138,6 +163,7 @@ function Summary() {
 
         nextDays.push({ day, month, year, dayName });
       }
+
       return nextDays;
     };
 
@@ -146,20 +172,36 @@ function Summary() {
   }, []);
 
   const monthsMap = {
-    "01": "January",
-    "02": "February",
-    "03": "March",
-    "04": "April",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "August",
-    "09": "September",
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
     10: "October",
     11: "November",
     12: "December",
   };
+  // const isDateSelected = (day) => {
+  //   if (!selectedDate) return false;
 
+  //   const { day: dayNumber, month, year } = day;
+  //   const monthName = monthsMap[month];
+
+  //   if (!monthName) {
+  //     return false;
+  //   }
+
+  //   const formattedDay = moment(
+  //     `${monthName} ${dayNumber}, ${year}`,
+  //     "MMMM D, YYYY"
+  //   ).format("LL");
+
+  //   return formattedDay === selectedDate;
+  // };
   const isDateSelected = (day) => {
     if (!selectedDate) return false;
 
@@ -167,16 +209,24 @@ function Summary() {
     const monthName = monthsMap[month];
 
     if (!monthName) {
+      console.error("Invalid month:", month);
       return false;
     }
 
     const formattedDay = moment(
-      `${monthName} ${dayNumber}, ${year}`,
-      "MMMM D, YYYY"
-    ).format("LL");
+      `${year}-${month}-${dayNumber}`,
+      "YYYY-M-D"
+    ).format("YYYY-MM-DD");
 
     return formattedDay === selectedDate;
   };
+
+  // const handleCheckboxSelect = (day) => {
+  //   const formattedDate = `${day.year}-${day.month}-${day.day}`;
+  //   const selectedDate = moment(formattedDate, "YYYY-MM-DD");
+
+  //   setSelectedDate(selectedDate.format("YYYY-MM-DD"));
+  // };
 
   const handleCheckboxSelect = (day) => {
     const formattedDate = `${day.year}-${day.month}-${day.day}`;
@@ -253,7 +303,7 @@ function Summary() {
         setService(res.data.service);
       }
       let addressRes = await axios.get(
-        `http://localhost:8080/api/getcustomeraddresswithuserid/${value?._id}`
+        `https://api.vijayhomeservicebengaluru.in/api/getcustomeraddresswithuserid/${value?._id}`
       );
       if (addressRes) {
         setcustomerAddressdata(addressRes.data?.customerAddress);
@@ -1058,9 +1108,66 @@ function Summary() {
                 </div>
               </div>
 
-              <div className="row mt-5 mb-5">
+              {!showbutton ? (
+                <div className="row mt-5 mb-5">
+                  <div
+                    onClick={() => setshowbutton(true)}
+                    className="col-md-8"
+                    style={{
+                      backgroundColor: "darkred",
+                      padding: "8px",
+                      color: "white",
+                      fontSize: "14px",
+                      textAlign: "center",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Book
+                  </div>
+                </div>
+              ) : (
+                <div className="row mt-5 mb-5">
+                  <div className="col-md-6">
+                    <div
+                      onClick={addtreatmentdetails}
+                      className="col-md-8"
+                      style={{
+                        backgroundColor: "darkred",
+                        padding: "8px",
+                        color: "white",
+                        fontSize: "14px",
+                        textAlign: "center",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      After Service
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div
+                      onClick={handlePayment}
+                      className="col-md-8"
+                      style={{
+                        backgroundColor: "#040458db",
+                        padding: "8px",
+                        color: "white",
+                        fontSize: "14px",
+                        textAlign: "center",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Pay Now
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* <div className="row mt-5 mb-5">
                 <div
-                  onClick={addtreatmentdetails}
+              onClick={handlePayment}
                   className="col-md-8"
                   style={{
                     backgroundColor: "darkred",
@@ -1092,7 +1199,7 @@ function Summary() {
                 >
                   Payment
                 </div>
-              </div>
+              </div> */}
             </>
           )}
 
@@ -1275,6 +1382,7 @@ function Summary() {
                         <input
                           type="text"
                           placeholder="Search for a location"
+                          className="map_input"
                           style={{
                             boxSizing: "border-box",
                             border: "1px solid transparent",
@@ -1291,6 +1399,8 @@ function Summary() {
                             left: "50%",
                             transform: "translateX(-50%)",
                             zIndex: 2,
+                            backgroundColor: "orange",
+                            width: "350px",
                           }}
                         />
                       </Autocomplete>
