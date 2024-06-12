@@ -350,6 +350,8 @@ function Summary() {
     }
   };
 
+  const a = plan.pofferprice - (plan.pofferprice * couponPercentage) / 100;
+
   const saveAddress1 = () => {
     const fullAddress = `${houseFlat}, ${landmark},${selectedPlaceAddress}, ${
       home ? "Home" : "Others: " + othersPlace
@@ -477,8 +479,8 @@ function Summary() {
 
     return expiryDate;
   };
-  const servicePeriod = 1;
-  const serviceFrequency = 1;
+  const servicePeriod = plan?.servicePeriod;
+  const serviceFrequency = plan?.pservices;
   const expiryDate = calculateExpiryDate(selectedDate, servicePeriod);
 
   const sDate = moment(selectedDate, "YYYY-MM-DD");
@@ -491,11 +493,12 @@ function Summary() {
   const amtFrequency = 1;
   const totalamtDays = Math.ceil(eamtDate.diff(sAmtDate, "days"));
   const intervalamt = Math.ceil(totalamtDays / amtFrequency);
-  console.log("selectedDate====", selectedDate);
+  console.log("totalamtDays====", totalamtDays);
 
-  console.log("sDate====", sDate);
+  console.log("intervalamt====", intervalamt);
   console.log("eDate====", eDate);
 
+  console.log("serviceFrequency", serviceFrequency);
   const dividedDates = [];
   const dividedamtCharges = [];
   const dividedamtDates = [];
@@ -511,21 +514,17 @@ function Summary() {
 
   console.log("dividedDates====", dividedDates);
 
-  // const dividedamtCharge = Math.ceil(remainingAmt / amtFrequency);
-
-  // const dividedamtCharges = [];
-
   for (let i = 0; i < 1; i++) {
     const date = sDate
       .clone()
       .add(intervalamt * i, "days")
       .format("YYYY-MM-DD");
     dividedamtDates.push(date);
-    const charge = DiscountAmount;
+    const charge = a;
     dividedamtCharges.push(charge);
   }
 
-  console.log("dividedamtDates====", dividedamtDates);
+  console.log("dividedamtCharges====", dividedamtCharges);
   console.log("sAmtDate====", sAmtDate);
   console.log("eamtDate====", eamtDate);
 
@@ -624,8 +623,6 @@ function Summary() {
       setvoucherdata(filteredVoucherData);
     }
   };
-
-  const a = plan.pofferprice - (plan.pofferprice * couponPercentage) / 100;
 
   console.log("aaaaaaaa", a);
 

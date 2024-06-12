@@ -447,7 +447,7 @@ function Footer() {
         <div className="col-md-4">
           <div
             className=""
-            style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}
+            style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
           >
             Information
           </div>
@@ -466,25 +466,48 @@ function Footer() {
           <div className="f-desc">Categories</div>
           <div className="f-desc">Blog</div>
           <div className="f-desc">Career</div>
-          <div className="f-desc">
+          {/* <div className="f-desc">
             {" "}
             <a href="/login" style={{ textDecoration: "none", color: "black" }}>
               Login
             </a>
-          </div>
-          <div className="f-desc">
+          </div> */}
+          {/* <div className="f-desc">
             <a
               href="/Register"
               style={{ textDecoration: "none", color: "black" }}
             >
               Register
             </a>
-          </div>
+          </div> */}
         </div>
+
         <div className="col-md-4">
           <div
             className=""
-            style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}
+            style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
+          >
+            Legal
+          </div>
+
+          <div className="f-desc">
+            <a href="/" style={{ textDecoration: "none", color: "black" }}>
+              Terms & conditions
+            </a>
+          </div>
+          <div className="f-desc">
+            {" "}
+            <a href="/about" style={{ textDecoration: "none", color: "black" }}>
+              Privacy policy
+            </a>
+          </div>
+          <div className="f-desc">Cancellation policy</div>
+        </div>
+
+        <div className="col-md-4">
+          <div
+            className=""
+            style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
           >
             About/Contacts
           </div>

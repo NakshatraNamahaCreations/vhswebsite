@@ -666,7 +666,7 @@ function Viewdetails() {
                 <video
                   className="p-0"
                   style={{
-                    objectFit: "cover",
+                    objectFit: "contain",
                     width: "100%",
                     borderRadius: "10px",
                   }}
@@ -680,7 +680,7 @@ function Viewdetails() {
                 <video
                   className="p-0"
                   style={{
-                    objectFit: "cover",
+                    objectFit: "contain",
                     width: "100%",
                     borderRadius: "10px",
                   }}
