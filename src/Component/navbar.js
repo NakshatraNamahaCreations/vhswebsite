@@ -446,7 +446,7 @@ export default function NabarCompo({}) {
             <div className="">
               <div className="col-12">
                 <img
-                  src="./assests/citybanner.jpg"
+                  src="./assests/citybanner1.jpg"
                   alt="loading...."
                   style={{
                     width: "450px",
@@ -488,12 +488,23 @@ export default function NabarCompo({}) {
                             activeCity === city.city ? "active-icon" : ""
                           }`}
                           style={{
-                            color: "grey",
+                            color: "darkred",
                             marginTop: "3px",
                             fontSize: "15px",
                           }}
+                          class="fa-solid fa-location-dot"
                         ></i>
-                        <p className="mx-2">{city.city}</p>
+                        {/* <i
+                          className={`fa-solid fa-location-dot ${
+                            activeCity === city.city ? "active-icon" : ""
+                          }`}
+                          style={{
+                            color: "darkred",
+                            marginTop: "3px",
+                            fontSize: "15px",
+                          }}
+                        ></i> */}
+                        <p className="poppins-regular mx-2">{city.city}</p>
                       </div>
                     </div>
                   );

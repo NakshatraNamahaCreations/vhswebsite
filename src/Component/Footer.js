@@ -465,7 +465,16 @@ function Footer() {
           </div>
           <div className="f-desc">Categories</div>
           <div className="f-desc">Blog</div>
-          <div className="f-desc">Career</div>
+          <div className="f-desc">
+            {" "}
+            <a
+              href="/career"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Career
+            </a>
+          </div>
+
           {/* <div className="f-desc">
             {" "}
             <a href="/login" style={{ textDecoration: "none", color: "black" }}>

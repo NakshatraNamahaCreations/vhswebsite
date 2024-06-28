@@ -385,7 +385,7 @@ function Servicedetails() {
                         }}
                         className="mb-2"
                         alt=""
-                        src={`https://api.vijayhomesuperadmin.in/resubcat/${data.resubcatimg}`}
+                        src={data.imglink}
                       />
                       <div
                         className="pb-2"
@@ -696,7 +696,7 @@ function Servicedetails() {
                         }}
                         className="mb-2"
                         alt=""
-                        src={`https://api.vijayhomesuperadmin.in/service/${data.serviceImg}`}
+                        src={data.imglink}
                       />
                       <div
                         // onClick={handleShow}

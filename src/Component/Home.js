@@ -23,6 +23,15 @@ import four from "../assests/four.jpg";
 import five from "../assests/five.jpg";
 import six from "../assests/six.jpg";
 import seven from "../assests/seven.jpg";
+// Swipper
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import "swiper/css/navigation"; // Import navigation CSS
+
+import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 
 // updated home
 export default function Home() {
@@ -39,6 +48,10 @@ export default function Home() {
   const [FilterPackers, setFilterPackers] = useState([]);
   const [FilterAppliance, setFilterAppliance] = useState([]);
   const [bannerdata, setBannerdata] = useState([]);
+  const [testimonialdata, settestimonialdata] = useState([]);
+  // Offer Banner
+  const [offerBanner, setofferBanner] = useState([]);
+  const [allcategory, setallcategory] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const styles = {
@@ -61,6 +74,45 @@ export default function Home() {
   };
 
   console.log("FilterRepairing=====", FilterRepairing);
+
+  // TestiMonial
+
+  useEffect(() => {
+    getalltestimonial();
+  }, []);
+  const getalltestimonial = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/testimonial/getalltestimonial"
+    );
+    if ((res.status = 200)) {
+      settestimonialdata(res.data?.data);
+    }
+  };
+  const getEmbedUrl = (videoUrl) => {
+    if (videoUrl.includes("youtube.com/shorts")) {
+      const videoId = videoUrl.split("/").pop();
+      return `https://www.youtube.com/embed/${videoId}`;
+    } else if (videoUrl.includes("youtube.com/watch")) {
+      const videoId = new URLSearchParams(new URL(videoUrl).search).get("v");
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+    return videoUrl;
+  };
+
+  // Offer Banner
+
+  useEffect(() => {
+    getallofferbanner();
+  }, []);
+
+  const getallofferbanner = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/offer/getallwebdoffer"
+    );
+    if ((res.status = 200)) {
+      setofferBanner(res.data?.offer);
+    }
+  };
 
   useEffect(() => {
     GetAllWebBanner();
@@ -102,7 +154,20 @@ export default function Home() {
     }
   };
 
-  console.log("bannerdata====", bannerdata);
+  useEffect(() => {
+    getallcategory();
+  }, []);
+
+  const getallcategory = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/getcategory"
+    );
+    if ((res.status = 200)) {
+      setallcategory(res.data?.category);
+    }
+  };
+
+  console.log("allcategory====", allcategory);
 
   const getsubcategory = async () => {
     try {
@@ -394,6 +459,7 @@ export default function Home() {
       image: seven,
     },
   ];
+
   const FilterCleaningWithImages = FilterCleaning.map((item, index) => {
     const image =
       bannerimage[index % bannerimage.length]?.image || defaultImage;
@@ -435,7 +501,7 @@ export default function Home() {
                     className={`carousel-item ${index === 0 ? "active" : ""}`}
                   >
                     <img
-                      src={`https://api.vijayhomesuperadmin.in/webBanner/${data?.banner}`}
+                      src={data.webbanner}
                       className="d-block w-100"
                       alt={`Banner ${index + 1}`}
                       style={{ height: "500px" }}
@@ -495,58 +561,51 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
-                <div className="c-back1">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <img
-                        src="./assests/deepcln.webp"
-                        alt="loading..."
-                        style={{
-                          width: "100%",
-                          borderRadius: "20px",
-                          height: "180px",
-                        }}
-                      />
-                    </div>
-                    <div
-                      className="col-md-6 d-flex"
-                      style={{ justifyContent: "center", alignItems: "center" }}
+
+              {/* <Swiper
+                slidesPerView={3}
+                spaceBetween={30}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                }}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                modules={[FreeMode, Pagination, Autoplay]}
+                className="mySwiper"
+              >
+                <div className="col-md-4" style={{ width: "100%" }}>
+                  {allcategory.map((data) => (
+                    <SwiperSlide
+                      key={data._id}
+                      style={{
+                        // height: "500px",
+                        // width: "500px",
+                        backgroundColor: "white",
+                        padding: "0px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
                     >
-                      <div className="c-back-text">Painting Services</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="c-back2">
-                  <div className="row">
-                    <div className="col-md-6">
                       <img
-                        src="./assests/deepcln.webp"
-                        alt="loading..."
-                        style={{
-                          width: "100%",
-                          borderRadius: "20px",
-                          height: "180px",
-                        }}
+                        src={data.imglink}
+                        alt="loading...."
+                        style={{ width: "100%", height: "200px" }}
                       />
-                    </div>
-                    <div
-                      className="col-md-6 d-flex"
-                      style={{ justifyContent: "center", alignItems: "center" }}
-                    >
-                      <div className="c-back-text">Pest Control Services</div>
-                      <br />
-                    </div>
-                  </div>
+                      <div className="poppins-medium mt-2">{data.category}</div>
+                    </SwiperSlide>
+                  ))}
                 </div>
-              </div>
+              </Swiper> */}
             </div>
           </div>
 
           <div className="container">
-            <div className="c-head mt-5">Cleaning Services</div>
+            <div className="poppins-semibold mt-5">Cleaning Services</div>
 
             {/* <Slider {...settings}>
               {FilterCleaning?.map((ele, index) => (
@@ -568,44 +627,85 @@ export default function Home() {
                         </div>
                       ))}
 
-                      <div className="c-desc"> {ele.subcategory}</div>
+                      <div className="poppins-medium"> {ele.subcategory}</div>
                     </div>
                   </Link>
                 </div>
               ))}
             </Slider> */}
 
-            <Slider {...settings}>
-              {FilterCleaningWithImages.map((ele, index) => (
-                <div className="row" key={index}>
-                  <Link
-                    to="/servicedetails"
-                    state={{ subcategory: ele.subcategory }}
-                    style={{ textDecoration: "none" }}
+            <div className="mt-3" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={5} // Number of slides to show
+                spaceBetween={30} // Space between slides
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {FilterCleaningWithImages.map((ele) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center", // Center text
+                    }}
                   >
-                    <div className="col-md-4">
-                      <div>
-                        <img
-                          src={ele.image}
-                          alt="loading...."
-                          style={{ width: "200px", height: "200px" }}
-                        />
+                    <Link
+                      to="/servicedetails"
+                      state={{ subcategory: ele.subcategory }}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <div className="col-md-4" style={{ width: "100%" }}>
+                        <div>
+                          <img
+                            src={ele.imglink}
+                            alt="loading...."
+                            style={{
+                              width: "200px",
+                              height: "200px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-2">
+                          {ele.subcategory}
+                        </div>
                       </div>
-                      <div className="c-desc" style={{ textAlign: "center" }}>
-                        {" "}
-                        {ele.subcategory}
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </Slider>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* Custom navigation buttons */}
+              <div className="swiper-button-prev">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
+              </div>
+
+              {/* Hide pagination dots */}
+              <div className="swiper-pagination"></div>
+            </div>
 
             {/* Painting Services */}
 
-            <div className="c-head mt-5">Painting Services</div>
+            <div className="poppins-semibold mt-5">Painting Services</div>
 
-            <Slider {...settings}>
+            {/* <Slider {...settings}>
               {FilteredPaint?.map((ele, index) => (
                 <div className="row">
                   <Link
@@ -617,7 +717,7 @@ export default function Home() {
                   >
                     <div className="col-md-4">
                       <img
-                        src={`https://api.vijayhomesuperadmin.in/subcat/${ele?.subcatimg}`}
+                        src={ele.imglink}
                         alt="loading..."
                         style={{
                           width: "100px",
@@ -625,7 +725,7 @@ export default function Home() {
                           borderRadius: "10px",
                         }}
                       />
-                      <div className="c-desc text-center">
+                      <div className="poppins-medium text-center">
                         {" "}
                         {ele.subcategory}
                       </div>
@@ -633,13 +733,83 @@ export default function Home() {
                   </Link>
                 </div>
               ))}
-            </Slider>
+            </Slider> */}
+
+            <div className="mt-3" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={5} // Number of slides to show
+                spaceBetween={30} // Space between slides
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {/* FilteredPaint */}
+                {FilteredPaint.map((ele) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center", // Center text
+                    }}
+                  >
+                    <Link
+                      to="/servicedetails"
+                      state={{ subcategory: ele?.subcategory }}
+                      key={ele.subcategory}
+                      style={{ textDecoration: "none" }}
+                      className="text-decoration-none text-black"
+                    >
+                      <div className="col-md-4" style={{ width: "100%" }}>
+                        <div>
+                          <img
+                            src={ele.imglink}
+                            alt="loading...."
+                            style={{
+                              width: "200px",
+                              height: "200px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-2">
+                          {ele.subcategory}
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* Custom navigation buttons */}
+              <div className="swiper-button-prev">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
+              </div>
+
+              {/* Hide pagination dots */}
+              <div className="swiper-pagination"></div>
+            </div>
 
             {/* Pest Control */}
 
-            <div className="c-head mt-5">Pest Control</div>
+            <div className="poppins-semibold mt-5">Pest Control</div>
 
-            <Slider {...settings}>
+            {/* <Slider {...settings}>
               {FilterPestControl?.map((ele, index) => (
                 <div className="row">
                   <Link
@@ -651,25 +821,95 @@ export default function Home() {
                   >
                     <div className="col-md-4">
                       <img
-                        src={`https://api.vijayhomesuperadmin.in/subcat/${ele?.subcatimg}`}
+                        src={ele.imglink}
                         alt="loading..."
                         style={{
                           width: "100px",
                           height: "100px",
                         }}
                       />
-                      <div className="c-desc"> {ele.subcategory}</div>
+                      <div className="poppins-medium"> {ele.subcategory}</div>
                     </div>
                   </Link>
                 </div>
               ))}
-            </Slider>
+            </Slider> */}
+
+            <div className="mt-3" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={5} // Number of slides to show
+                spaceBetween={30} // Space between slides
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {/* FilterPestControl */}
+                {FilterPestControl.map((ele) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center", // Center text
+                    }}
+                  >
+                    <Link
+                      to="/servicedetails"
+                      state={{ subcategory: ele?.subcategory }}
+                      key={ele.subcategory}
+                      style={{ textDecoration: "none" }}
+                      className="text-decoration-none text-black"
+                    >
+                      <div className="col-md-4" style={{ width: "100%" }}>
+                        <div>
+                          <img
+                            src={ele.imglink}
+                            alt="loading...."
+                            style={{
+                              width: "200px",
+                              height: "200px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-2">
+                          {ele.subcategory}
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* Custom navigation buttons */}
+              <div className="swiper-button-prev">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
+              </div>
+
+              {/* Hide pagination dots */}
+              <div className="swiper-pagination"></div>
+            </div>
 
             {/* Floor Polishing  */}
 
-            <div className="c-head mt-5">Floor Polishing</div>
+            <div className="poppins-semibold mt-5">Floor Polishing</div>
 
-            <Slider {...settings}>
+            {/* <Slider {...settings}>
               {FilterMarbelPolish?.map((ele, index) => (
                 <div className="row">
                   <Link
@@ -681,7 +921,7 @@ export default function Home() {
                   >
                     <div className="col-md-4">
                       <img
-                        src={`https://api.vijayhomesuperadmin.in/subcat/${ele?.subcatimg}`}
+                        src={ele.imglink}
                         alt="loading..."
                         style={{
                           width: "100px",
@@ -689,18 +929,88 @@ export default function Home() {
                           borderRadius: "10px",
                         }}
                       />
-                      <div className="c-desc"> {ele.subcategory}</div>
+                      <div className="poppins-medium"> {ele.subcategory}</div>
                     </div>
                   </Link>
                 </div>
               ))}
-            </Slider>
+            </Slider> */}
+
+            <div className="mt-3" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={5} // Number of slides to show
+                spaceBetween={30} // Space between slides
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {/* FilterMarbelPolish */}
+                {FilterMarbelPolish.map((ele) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center", // Center text
+                    }}
+                  >
+                    <Link
+                      to="/servicedetails"
+                      state={{ subcategory: ele?.subcategory }}
+                      key={ele.subcategory}
+                      style={{ textDecoration: "none" }}
+                      className="text-decoration-none text-black"
+                    >
+                      <div className="col-md-4" style={{ width: "100%" }}>
+                        <div>
+                          <img
+                            src={ele.imglink}
+                            alt="loading...."
+                            style={{
+                              width: "200px",
+                              height: "200px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-2">
+                          {ele.subcategory}
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* Custom navigation buttons */}
+              <div className="swiper-button-prev">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
+              </div>
+
+              {/* Hide pagination dots */}
+              <div className="swiper-pagination"></div>
+            </div>
 
             {/* Home Repairing Services */}
 
-            <div className="c-head mt-5">Home Repairing Services</div>
+            <div className="poppins-semibold mt-5">Home Repairing Services</div>
 
-            <Slider {...settings}>
+            {/* <Slider {...settings}>
               {FilterRepairing?.map((ele, index) => (
                 <div className="row">
                   <Link
@@ -712,7 +1022,7 @@ export default function Home() {
                   >
                     <div className="col-md-4">
                       <img
-                        src={`https://api.vijayhomesuperadmin.in/subcat/${ele?.subcatimg}`}
+                        src={ele.imglink}
                         alt="loading..."
                         style={{
                           width: "100px",
@@ -720,28 +1030,88 @@ export default function Home() {
                           borderRadius: "10px",
                         }}
                       />
-                      <div className="c-desc"> {ele.subcategory}</div>
+                      <div className="poppins-medium"> {ele.subcategory}</div>
                     </div>
                   </Link>
                 </div>
               ))}
-            </Slider>
+            </Slider> */}
 
-            {/* Bannner */}
+            <div className="mt-3" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={5} // Number of slides to show
+                spaceBetween={30} // Space between slides
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {/* FilterRepairing */}
+                {FilterRepairing.map((ele) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center", // Center text
+                    }}
+                  >
+                    <Link
+                      to="/servicedetails"
+                      state={{ subcategory: ele?.subcategory }}
+                      key={ele.subcategory}
+                      style={{ textDecoration: "none" }}
+                      className="text-decoration-none text-black"
+                    >
+                      <div className="col-md-4" style={{ width: "100%" }}>
+                        <div>
+                          <img
+                            src={ele.imglink}
+                            alt="loading...."
+                            style={{
+                              width: "200px",
+                              height: "200px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-2">
+                          {ele.subcategory}
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
 
-            <div className="mt-5">
-              <img
-                src="./assests/Appliances-Repair-Service.jpg"
-                alt="loading...."
-                style={{ width: "100%", height: "auto" }}
-              />
+              {/* Custom navigation buttons */}
+              <div className="swiper-button-prev">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
+              </div>
+
+              {/* Hide pagination dots */}
+              <div className="swiper-pagination"></div>
             </div>
 
             {/* Packers on Movers */}
 
-            <div className="c-head mt-5">Packers & Movers</div>
+            <div className="poppins-semibold mt-5">Packers & Movers</div>
 
-            <Slider {...settings}>
+            {/* <Slider {...settings}>
               {FilterPackers?.map((ele, index) => (
                 <div className="row">
                   <Link
@@ -753,7 +1123,7 @@ export default function Home() {
                   >
                     <div className="col-md-4">
                       <img
-                        src={`https://api.vijayhomesuperadmin.in/subcat/${ele?.subcatimg}`}
+                        src={ele.imglink}
                         alt="loading..."
                         style={{
                           width: "100px",
@@ -761,18 +1131,88 @@ export default function Home() {
                           borderRadius: "10px",
                         }}
                       />
-                      <div className="c-desc"> {ele.subcategory}</div>
+                      <div className="poppins-medium"> {ele.subcategory}</div>
                     </div>
                   </Link>
                 </div>
               ))}
-            </Slider>
+            </Slider> */}
+
+            <div className="mt-3" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={5} // Number of slides to show
+                spaceBetween={30} // Space between slides
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {/* FilterPackers */}
+                {FilterPackers.map((ele) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center", // Center text
+                    }}
+                  >
+                    <Link
+                      to="/servicedetails"
+                      state={{ subcategory: ele?.subcategory }}
+                      key={ele.subcategory}
+                      style={{ textDecoration: "none" }}
+                      className="text-decoration-none text-black"
+                    >
+                      <div className="col-md-4" style={{ width: "100%" }}>
+                        <div>
+                          <img
+                            src={ele.imglink}
+                            alt="loading...."
+                            style={{
+                              width: "200px",
+                              height: "200px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-2">
+                          {ele.subcategory}
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              {/* Custom navigation buttons */}
+              <div className="swiper-button-prev">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
+              </div>
+
+              {/* Hide pagination dots */}
+              <div className="swiper-pagination"></div>
+            </div>
 
             {/* Appliance Services  */}
 
-            <div className="c-head mt-5">Appliance Services</div>
+            <div className="poppins-semibold mt-5">Appliance Services</div>
 
-            <Slider {...settings}>
+            {/* <Slider {...settings}>
               {FilterAppliance?.map((ele, index) => (
                 <div className="row">
                   <Link
@@ -784,7 +1224,7 @@ export default function Home() {
                   >
                     <div className="col-md-4">
                       <img
-                        src={`https://api.vijayhomesuperadmin.in/subcat/${ele?.subcatimg}`}
+                        src={ele.imglink}
                         alt="loading..."
                         style={{
                           width: "100px",
@@ -792,181 +1232,143 @@ export default function Home() {
                           borderRadius: "10px",
                         }}
                       />
-                      <div className="c-desc"> {ele.subcategory}</div>
+                      <div className="poppins-medium"> {ele.subcategory}</div>
                     </div>
                   </Link>
                 </div>
               ))}
-            </Slider>
+            </Slider> */}
 
-            {/* Facility Management  */}
+            <div className="mt-3" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={5} // Number of slides to show
+                spaceBetween={30} // Space between slides
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next",
+                  prevEl: ".swiper-button-prev",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {/* FilterAppliance */}
+                {FilterAppliance.map((ele) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center", // Center text
+                    }}
+                  >
+                    <Link
+                      to="/servicedetails"
+                      state={{ subcategory: ele?.subcategory }}
+                      key={ele.subcategory}
+                      style={{ textDecoration: "none" }}
+                      className="text-decoration-none text-black"
+                    >
+                      <div className="col-md-4" style={{ width: "100%" }}>
+                        <div>
+                          <img
+                            src={ele.imglink}
+                            alt="loading...."
+                            style={{
+                              width: "200px",
+                              height: "200px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-2">
+                          {ele.subcategory}
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
 
-            {/* <div className="c-head mt-5">Facility Management</div>
-
-            <div className="d-flex  mt-3" style={{ gap: "20px" }}>
-              <div className="col-md-2">
-                <img
-                  src="./assests/deepcln.webp"
-                  alt="loading..."
-                  style={{
-                    width: "100%",
-                    height: "150px",
-                    borderRadius: "20px",
-                  }}
-                />
-                <div className="c-desc">Deep Cleaning</div>
+              {/* Custom navigation buttons */}
+              <div className="swiper-button-prev">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
               </div>
 
-              <div className="col-md-2">
-                <img
-                  src="./assests/deepcln.webp"
-                  alt="loading..."
-                  style={{
-                    width: "100%",
-                    height: "150px",
-                    borderRadius: "20px",
-                  }}
-                />
-                <div className="c-desc">Deep Cleaning</div>
-              </div>
-            </div> */}
-
-            {/* Best Ongoing Services */}
-
-            {/* <div className="c-head1 mt-5 text-center">
-              Best Ongoing Services
+              {/* Hide pagination dots */}
+              <div className="swiper-pagination"></div>
             </div>
 
-            <div className="row mt-4">
-              <div className="col-md-3">
-                <div className="b-back">
-                  <img
-                    src="./cleaning/download.jpeg"
+            <div className="poppins-semibold mb-2">TestiMonial</div>
+            <Swiper
+              slidesPerView={3}
+              spaceBetween={30}
+              freeMode={true}
+              pagination={{
+                clickable: true,
+              }}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              modules={[FreeMode, Pagination, Autoplay]}
+              className="mySwiper"
+            >
+              <div className="col-md-4">
+                {testimonialdata.map((testimonial) => (
+                  <SwiperSlide
+                    key={testimonial._id}
                     style={{
-                      width: "100%",
-                      height: "150px",
-                      borderRadius: "20px",
+                      // height: "500px",
+                      // width: "500px",
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
                     }}
-                  />
-                  <div className="b-desc">Cleaning Services</div>
-                  <div className="d-flex mt-3">
-                    <div className="b-desc1 ">₹1500</div>
-                    <div className="b-desc2">₹ 999</div>
-                  </div>
+                  >
+                    {testimonial.videolink && (
+                      <iframe
+                        width="100%"
+                        height="200"
+                        src={getEmbedUrl(testimonial.videolink)}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    )}
+                    <div className="poppins-medium mt-2">
+                      {testimonial.title}
+                    </div>
 
-                  <div className="b-button mt-4">
-                    <span>
-                      <i
-                        class="fa-solid fa-cart-shopping"
-                        style={{
-                          color: "white",
-                          fontSize: "14px",
-                          marginRight: "10px",
-                        }}
-                      ></i>
-                    </span>
-                    Add to cart
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="b-back">
-                  <img
-                    src="./pestcontrol/images.jpeg"
-                    style={{
-                      width: "100%",
-                      height: "150px",
-                      borderRadius: "20px",
-                    }}
-                  />
-                  <div className="b-desc">Pest control Services</div>
-                  <div className="d-flex mt-3">
-                    <div className="b-desc1 ">₹1500</div>
-                    <div className="b-desc2">₹ 999</div>
-                  </div>
+                    <div className="poppins-medium">
+                      {testimonial.Testimonialname}
+                    </div>
 
-                  <div className="b-button mt-4">
-                    <span>
-                      <i
-                        class="fa-solid fa-cart-shopping"
-                        style={{
-                          color: "white",
-                          fontSize: "14px",
-                          marginRight: "10px",
-                        }}
-                      ></i>
-                    </span>
-                    Add to cart
-                  </div>
-                </div>
+                    <div className="poppins-regular mt-2">
+                      {testimonial.review}
+                    </div>
+                  </SwiperSlide>
+                ))}
               </div>
-              <div className="col-md-3">
-                <div className="b-back">
-                  <img
-                    src="./assests/ac.jpg"
-                    style={{
-                      width: "100%",
-                      height: "150px",
-                      borderRadius: "20px",
-                    }}
-                  />
-                  <div className="b-desc">AC Services</div>
-                  <div className="d-flex mt-3">
-                    <div className="b-desc1 ">₹1500</div>
-                    <div className="b-desc2">₹ 999</div>
-                  </div>
-
-                  <div className="b-button mt-4">
-                    <span>
-                      <i
-                        class="fa-solid fa-cart-shopping"
-                        style={{
-                          color: "white",
-                          fontSize: "14px",
-                          marginRight: "10px",
-                        }}
-                      ></i>
-                    </span>
-                    Add to cart
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3">
-                <div className="b-back">
-                  <img
-                    src="./painting/download.jpeg"
-                    style={{
-                      width: "100%",
-                      height: "150px",
-                      borderRadius: "20px",
-                    }}
-                  />
-                  <div className="b-desc">Painting Services</div>
-                  <div className="d-flex mt-3">
-                    <div className="b-desc1 ">₹1500</div>
-                    <div className="b-desc2">₹ 999</div>
-                  </div>
-
-                  <div className="b-button mt-4">
-                    <span>
-                      <i
-                        class="fa-solid fa-cart-shopping"
-                        style={{
-                          color: "white",
-                          fontSize: "14px",
-                          marginRight: "10px",
-                        }}
-                      ></i>
-                    </span>
-                    Add to cart
-                  </div>
-                </div>
-              </div>
-            </div> */}
+            </Swiper>
 
             {/* Deal of The Week */}
 
-            <div className="row mt-5">
+            {/* <div className="row mt-5">
               <div className="col-md-6">
                 <div className="c-head1 text-end mt-2">Deal of The Week</div>
               </div>
@@ -998,9 +1400,9 @@ export default function Home() {
                   <div className="d-desc">Seconds</div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div className="row mt-5">
+            {/* <div className="row mt-5">
               <div className="col-md-6">
                 <div className="c-back" style={{ borderRadius: "20px" }}>
                   <div className="row">
@@ -1053,23 +1455,26 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div className="c-head1 mt-5 text-center">Offer Announcement</div>
+            <div className="poppins-semibold mt-3">Offer Announcement</div>
 
-            <div className="row mt-5">
-              <div className="col-md-6">
-                <img
-                  src="./assests/offer.jpg"
-                  alt="loading..."
-                  style={{
-                    width: "100%",
-                    height: "250px",
-                    borderRadius: "10px",
-                  }}
-                />
-              </div>
-              <div className="col-md-6">
+            <div className="row mt-3">
+              {offerBanner.map((data) => (
+                <div className="col-md-6">
+                  <img
+                    src={data.offer}
+                    alt="loading..."
+                    style={{
+                      width: "100%",
+                      height: "250px",
+                      borderRadius: "10px",
+                    }}
+                  />
+                </div>
+              ))}
+
+              {/* <div className="col-md-6">
                 <img
                   src="./assests/offer1.jpg"
                   alt="loading..."
@@ -1079,7 +1484,7 @@ export default function Home() {
                     borderRadius: "10px",
                   }}
                 />
-              </div>
+              </div> */}
             </div>
 
             <div className="c-head1  mt-5">Best Ongoing Services</div>
@@ -1095,7 +1500,7 @@ export default function Home() {
                     borderRadius: "20px",
                   }}
                 />
-                <div className="c-desc">AC Services</div>
+                <div className="poppins-medium">AC Services</div>
               </div>
 
               <div className="col-md-3">
@@ -1108,7 +1513,7 @@ export default function Home() {
                     borderRadius: "20px",
                   }}
                 />
-                <div className="c-desc">Pest Control Services</div>
+                <div className="poppins-medium">Pest Control Services</div>
               </div>
 
               <div className="col-md-3">
@@ -1121,7 +1526,7 @@ export default function Home() {
                     borderRadius: "20px",
                   }}
                 />
-                <div className="c-desc">Cleaning Services</div>
+                <div className="poppins-medium">Cleaning Services</div>
               </div>
               <div className="col-md-3">
                 <img
@@ -1133,7 +1538,7 @@ export default function Home() {
                     borderRadius: "20px",
                   }}
                 />
-                <div className="c-desc">Painting Services</div>
+                <div className="poppins-medium">Painting Services</div>
               </div>
             </div>
 
