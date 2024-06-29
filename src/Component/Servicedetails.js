@@ -356,6 +356,7 @@ function Servicedetails() {
               <div className="col-md-6">
                 <div>
                   <h2
+                    className="poppins-semibold"
                     style={{
                       color: "black",
                       fontWeight: "bold",
@@ -388,7 +389,7 @@ function Servicedetails() {
                         src={data.imglink}
                       />
                       <div
-                        className="pb-2"
+                        className="poppins-medium pb-2"
                         style={{
                           color: "black",
                           fontSize: "10px",
@@ -412,7 +413,8 @@ function Servicedetails() {
                         playing={true}
                         loop={true}
                         width={"100%"}
-                        // height={"750px"}
+                        style={{ borderRadius: "10px" }}
+                        height="auto"
                       />
                     );
                   })}
@@ -422,24 +424,39 @@ function Servicedetails() {
           <div className="row"></div>
           <div className="container">
             <div
-              className="mt-3"
+              className="poppins-semibold mt-3"
               style={{ color: "black", fontSize: "20px", fontWeight: "bold" }}
             >
               {subcategory}
             </div>
-            <div className="col-md-6 mt-2">
+            <div className="col-md-6">
               <div className="d-flex">
-                <div className="" style={{ color: "black" }}>
+                <div className="poppins-regular" style={{ color: "black" }}>
                   4.9
                 </div>
-                <div className="mx-2">
-                  <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
-                  <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
-                  <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
-                  <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
-                  <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
+                <div className="mx-2" style={{ marginTop: "-5px" }}>
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "gold", fontSize: "14px" }}
+                  ></i>
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "gold", fontSize: "14px" }}
+                  ></i>
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "gold", fontSize: "14px" }}
+                  ></i>
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "gold", fontSize: "14px" }}
+                  ></i>
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "gold", fontSize: "14px" }}
+                  ></i>
                 </div>
-                <div className="" style={{ color: "black" }}>
+                <div className="poppins-regular" style={{ color: "black" }}>
                   (9.1T)
                 </div>
               </div>
@@ -447,7 +464,7 @@ function Servicedetails() {
 
             <div className="row mt-3">
               {offerBannerdata.map((data) => (
-                <div className="col-md-4 mt-3">
+                <div className="col-md-3 mt-3">
                   <div
                     className="d-flex"
                     style={{ backgroundColor: "darkred", borderRadius: "5px" }}
@@ -469,7 +486,7 @@ function Servicedetails() {
                     </div>
                     <div className="col-md-10 mt-3">
                       <div
-                        className=""
+                        className="poppins-regular"
                         style={{
                           color: "white",
                           fontWeight: "bold",
@@ -479,10 +496,13 @@ function Servicedetails() {
                         {data.header}
                       </div>
                       <p
-                        className="mt-1"
+                        className="poppins-regular mt-1"
                         style={{
                           color: "white",
                           fontSize: "11px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
                         }}
                       >
                         {data.desc}
@@ -501,7 +521,7 @@ function Servicedetails() {
                     style={{ borderBottom: "1px solid grey" }}
                   >
                     <div
-                      className=""
+                      className="poppins-regular"
                       style={{
                         backgroundColor: "#E6B45C",
                         padding: "10px",
@@ -514,7 +534,7 @@ function Servicedetails() {
                       {data.servicetitle}
                     </div>
                     <div
-                      className="mt-2"
+                      className="poppins-regular mt-2"
                       style={{
                         color: "black",
                         fontSize: "15px",
@@ -524,7 +544,7 @@ function Servicedetails() {
                       {data.serviceName}
                     </div>
                     <div
-                      className=""
+                      className="poppins-regular"
                       style={{
                         color: "green",
                         fontSize: "12px",
@@ -537,13 +557,13 @@ function Servicedetails() {
                     <div className="d-flex mt-2">
                       <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
                       <div
-                        className="mx-2"
+                        className="poppins-regular mx-2"
                         style={{ color: "black", fontSize: "14px" }}
                       >
                         4.9
                       </div>
                       <div
-                        className=""
+                        className="poppins-regular"
                         style={{ color: "black", fontSize: "14px" }}
                       >
                         (328.8k)
@@ -583,7 +603,7 @@ function Servicedetails() {
                         return (
                           <>
                             <div
-                              className=""
+                              className="poppins-regular"
                               style={{
                                 color: "black",
                                 fontSize: "14px",
@@ -593,7 +613,7 @@ function Servicedetails() {
                               Start Price
                             </div>
                             <div
-                              className="mx-2"
+                              className="poppins-regular mx-2"
                               style={{
                                 color: "grey",
                                 fontWeight: "bold",
@@ -601,19 +621,27 @@ function Servicedetails() {
                                 textDecoration: "line-through",
                               }}
                             >
-                              {highPrice !== null && <p>₹{highPrice}</p>}
+                              {highPrice !== null && (
+                                <p className="poppins-regular">₹{highPrice}</p>
+                              )}
                             </div>
                             <div
-                              className=""
+                              className="poppins-regular"
                               style={{
                                 color: "black",
                                 fontWeight: "bold",
                                 fontSize: "14px",
                               }}
                             >
-                              {lowestPrice !== null && <p>₹{lowestPrice}</p>}
+                              {lowestPrice !== null && (
+                                <p className="poppins-regular">
+                                  ₹{lowestPrice}
+                                </p>
+                              )}
                               {filteredPrices.length === 0 && (
-                                <p>No prices available for this city</p>
+                                <p className="poppins-regular">
+                                  No prices available for this city
+                                </p>
                               )}
                             </div>
                           </>
@@ -647,12 +675,12 @@ function Servicedetails() {
                             <div className="col-md-1">
                               <i
                                 className="fa-solid fa-star"
-                                style={{ color: "green" }}
+                                style={{ color: "green", fontSize: "14px" }}
                               ></i>
                             </div>
                             <div className="col-md-11">
                               <div
-                                className="mt-1"
+                                className="poppins-regular mt-1"
                                 style={{
                                   color: "black",
                                   fontSize: "14px",
@@ -675,7 +703,7 @@ function Servicedetails() {
                       // className="text-decoration-none text-black"
                     >
                       <div
-                        className="mt-4 mb-3"
+                        className="poppins-regular mt-4 mb-3"
                         style={{
                           color: "darkred",
                           fontSize: "17px",
@@ -709,7 +737,7 @@ function Servicedetails() {
                         }}
                       >
                         <div
-                          className=""
+                          className="poppins-regular"
                           style={{
                             color: "white",
                             fontSize: "13px",

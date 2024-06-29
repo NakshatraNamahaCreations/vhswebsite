@@ -15,11 +15,20 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Footer from "./Footer";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import "swiper/css/navigation"; // Import navigation CSS
+
+import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 
 function Viewdetails() {
   const [svideodata, setsvideodata] = useState([]);
   const [ReviewVideodata, setReviewVideodata] = useState([]);
   const [feqdata, setfeqdata] = useState([]);
+  const [whychooseus, setwhychooseus] = useState([]);
   const location = useLocation();
   const { subcategory } = location.state || {};
   const localstoragecitys = localStorage.getItem("city");
@@ -59,6 +68,21 @@ function Viewdetails() {
   const handleviewselect = (selectedItem) => {
     setItem(selectedItem);
   };
+
+  useEffect(() => {
+    getallwhychooseus();
+  }, []);
+
+  const getallwhychooseus = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/whychoose/getallwhychoose"
+    );
+    if (res.status === 200) {
+      setwhychooseus(res.data?.data);
+    }
+  };
+
+  console.log("whychooseus", whychooseus);
 
   const CartSavedtotal = MyCartItmes.reduce((accumulator, item) => {
     const offerPrice = parseFloat(item?.offerprice);
@@ -223,7 +247,7 @@ function Viewdetails() {
         <div className="container">
           <div className="mt-5">
             <div
-              className=""
+              className="poppins-regular"
               style={{
                 color: "green",
                 fontSize: "14px",
@@ -232,17 +256,19 @@ function Viewdetails() {
               {subcategory.servicetitle}
             </div>
             <div
-              className=""
-              style={{
-                color: "black",
-                fontSize: "18px",
-                fontWeight: "bold",
-              }}
+              className="poppins-semibold"
+              style={
+                {
+                  // color: "black",
+                  // fontSize: "18px",
+                  // fontWeight: "bold",
+                }
+              }
             >
               {subcategory.serviceName}
             </div>
             <div
-              className=""
+              className="poppins-regular"
               style={{
                 color: "grey",
                 fontSize: "12px",
@@ -252,7 +278,7 @@ function Viewdetails() {
             </div>
 
             <div
-              className="mt-4"
+              className="poppins-semibold mt-4"
               style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
             >
               Service Description
@@ -269,7 +295,7 @@ function Viewdetails() {
                   </div>
                   <div className="col-md-11">
                     <div
-                      className="mt-1"
+                      className="poppins-regular  mt-1"
                       style={{
                         color: "black",
                         fontSize: "14px",
@@ -302,12 +328,13 @@ function Viewdetails() {
                           }}
                         >
                           <div
-                            className=""
+                            // className="poppins-medium"
                             style={{
                               textAlign: "center",
                               color: "green",
                               fontSize: "16px",
                               fontWeight: "bold",
+                              fontFamily: "sans-serif",
                             }}
                           >
                             {price.pName && <p>{price.pName}</p>}
@@ -318,7 +345,7 @@ function Viewdetails() {
                             style={{ justifyContent: "center" }}
                           >
                             <div
-                              className=""
+                              className="poppins-regular"
                               style={{
                                 color: "black",
                                 fontSize: "14px",
@@ -329,7 +356,7 @@ function Viewdetails() {
                               {price.pPrice && <p>₹{price.pPrice}</p>}
                             </div>
                             <div
-                              className="mx-2"
+                              className="poppins-regular mx-2"
                               style={{
                                 color: "black",
                                 fontSize: "14px",
@@ -341,7 +368,7 @@ function Viewdetails() {
                             </div>
                           </div>
                           <div
-                            className=""
+                            className="poppins-regular"
                             style={{
                               color: "orange",
                               fontSize: "14px",
@@ -374,6 +401,7 @@ function Viewdetails() {
                             <span> </span>
                           ) : (
                             <button
+                              className="poppins-regular"
                               onClick={() => {
                                 handleviewselect(selectedItem);
                                 handleItemClick1(price);
@@ -415,6 +443,7 @@ function Viewdetails() {
                               >
                                 <div className="col-md-5">
                                   <button
+                                    className="poppins-regular"
                                     onClick={() => {
                                       const cartItem = MyCartItmes.find(
                                         (cartItem) => cartItem.id === price._id
@@ -476,7 +505,7 @@ function Viewdetails() {
                       </div>
                     ))}
                     {filteredPrices.length === 0 && (
-                      <div className="col-md-12">
+                      <div className="col-md-12 poppins-regular">
                         <p>No prices available for this city</p>
                       </div>
                     )}
@@ -568,7 +597,7 @@ function Viewdetails() {
             <div className="row">
               <div className="col-md-6">
                 <div
-                  className="mt-4"
+                  className="poppins-semibold mt-4"
                   style={{
                     color: "black",
                     fontSize: "16px",
@@ -589,7 +618,7 @@ function Viewdetails() {
                       </div>
                       <div className="col-md-11">
                         <div
-                          className="mt-1"
+                          className="poppins-regular  mt-1"
                           style={{
                             color: "black",
                             fontSize: "14px",
@@ -605,7 +634,7 @@ function Viewdetails() {
               </div>
               <div className="col-md-6">
                 <div
-                  className="mt-4"
+                  className="poppins-semibold mt-4"
                   style={{
                     color: "black",
                     fontSize: "16px",
@@ -626,7 +655,7 @@ function Viewdetails() {
                       </div>
                       <div className="col-md-11">
                         <div
-                          className="mt-1"
+                          className="poppins-regular mt-1"
                           style={{
                             color: "black",
                             fontSize: "14px",
@@ -643,14 +672,14 @@ function Viewdetails() {
             </div>
 
             <div
-              className="mt-4"
+              className="poppins-semibold mt-4"
               style={{ color: "darkred", fontSize: "16px", fontWeight: "bold" }}
             >
               Thoughtful curations
             </div>
 
             <div
-              className=""
+              className="poppins-regular"
               style={{
                 fontSize: "13px",
                 color: "black",
@@ -661,8 +690,8 @@ function Viewdetails() {
               Of our finest experiences
             </div>
 
-            <div className="row">
-              <div className="col-md-6">
+            <div className="row mt-4">
+              <div className="col-md-3">
                 <video
                   className="p-0"
                   style={{
@@ -676,7 +705,7 @@ function Viewdetails() {
                   src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[0]?.serviceVideo}`}
                 ></video>
               </div>
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <video
                   className="p-0"
                   style={{
@@ -718,7 +747,7 @@ function Viewdetails() {
               })}
             </div>
 
-            <div className="mb-5">
+            {/* <div className="mb-5">
               <Slider {...settings}>
                 {feqdata.map((i) => (
                   <div>
@@ -758,6 +787,103 @@ function Viewdetails() {
                   </div>
                 ))}
               </Slider>
+            </div> */}
+
+            <div className="row" style={{ padding: "15px" }}>
+              <div
+                className="poppins-semibold"
+                style={{ textAlign: "center", marginBottom: "25px" }}
+              >
+                How it Works?
+              </div>
+
+              {/* <Swiper
+                slidesPerView={3}
+                spaceBetween={40}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination-appliance",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next-appliance",
+                  prevEl: ".swiper-button-prev-appliance",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {whychooseus.map((ele) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      // textAlign: "center",
+                    }}
+                  >
+                    <div className="col-md-4" style={{ width: "100%" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <img
+                          src={ele.image}
+                          alt="loading...."
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            borderRadius: "50px",
+                          }}
+                        />
+                      </div>
+                      <div className="poppins-medium mt-2">{ele.title}</div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper> */}
+
+              <div className="row mb-3">
+                {whychooseus.map((data) => (
+                  <div className="col-md-4" key={data._id}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <img
+                        src={data.image}
+                        alt="loading...."
+                        style={{
+                          width: "80px",
+                          height: "80px",
+                          // borderRadius: "50px",
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="poppins-black mt-2"
+                      style={{ fontSize: "12px", textAlign: "center" }}
+                    >
+                      {data.title}
+                    </div>
+                    <div
+                      className="poppins-regular"
+                      style={{ textAlign: "center" }}
+                    >
+                      {data.discription}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

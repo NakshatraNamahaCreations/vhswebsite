@@ -75,6 +75,7 @@ function About() {
             we make sure our team is well trained to all our professionals
             before they start serving our valued customers.
           </p>
+
           <div
             className="text-center mt-3"
             style={{ color: "black", fontSize: "20px", fontWeight: "bold" }}

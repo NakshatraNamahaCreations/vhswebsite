@@ -196,17 +196,37 @@ export default function NabarCompo({}) {
     <>
       <Navbar
         expand="lg"
-        style={{ backgroundColor: "lightgrey", padding: "0px" }}
+        // className="bg-body-tertiary"
+        style={{ backgroundColor: "lightgrey" }}
       >
         <Container>
-          <Navbar.Brand className="fnt rounded-lg brd p-1" href="/">
-            <img src="./images/vhs.png" alt="" width={40} height={40} />
+          <Navbar.Brand className="fnt   rounded-lg brd p-1" href="/">
+            <img src="./images/vhs.png" alt="" width={40} height={40} />{" "}
             <span className="clrrdd boldt mx-2 poppins-medium">
               Vijay Home Services
             </span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-end menu">
+            {/* <Nav className=" fnt clrrd me-3  boldt">
+              <Link
+                className=" fnt clrrd me-3  boldt"
+                to="/"
+                style={{ textDecoration: "none" }}
+              >
+                Home
+              </Link>
+            </Nav>
+            <Nav className=" fnt clrrd me-3  boldt">
+              <Link
+                className=" fnt clrrd me-3  boldt"
+                to="/about"
+                style={{ textDecoration: "none" }}
+              >
+                About Us
+              </Link>
+            </Nav>
+            <Nav className=" fnt clrrd me-3  boldt">Blog</Nav> */}
             <Nav
               className="me-3"
               style={{
@@ -220,7 +240,7 @@ export default function NabarCompo({}) {
                   src="./assests/new.gif"
                   alt="loading...."
                   style={{ width: "25px", height: "25px" }}
-                />
+                />{" "}
                 <span
                   className="poppins-regular"
                   style={{ fontSize: "13px", color: "white" }}
@@ -230,7 +250,7 @@ export default function NabarCompo({}) {
               </div>
             </Nav>
             <Nav
-              className="me-3"
+              className="   me-3 "
               style={{
                 backgroundColor: "orange",
                 padding: "2px 10px",
@@ -242,7 +262,7 @@ export default function NabarCompo({}) {
                   src="./assests/new.gif"
                   alt="loading...."
                   style={{ width: "25px", height: "25px" }}
-                />
+                />{" "}
                 <span
                   className="poppins-regular"
                   style={{ fontSize: "13px", color: "white" }}
@@ -264,7 +284,7 @@ export default function NabarCompo({}) {
                   src="./assests/new.gif"
                   alt="loading...."
                   style={{ width: "25px", height: "25px" }}
-                />
+                />{" "}
                 <span
                   className="poppins-regular"
                   style={{ fontSize: "13px", color: "white" }}
@@ -273,6 +293,16 @@ export default function NabarCompo({}) {
                 </span>
               </div>
             </Nav>
+            {/* <Nav className=" fnt clrrd me-3  boldt">
+              <Link
+                className=" fnt clrrd me-3  boldt"
+                to="/career"
+                style={{ textDecoration: "none" }}
+              >
+                Career
+              </Link>
+            </Nav> */}
+
             <Nav className=" fnt clrrd mt-3">
               <div
                 style={{
@@ -302,7 +332,7 @@ export default function NabarCompo({}) {
                     backgroundColor: "lightgrey",
                     flexGrow: 1,
                     padding: "6px 25px",
-
+                    // marginLeft: "8px",
                     paddingLeft: "25px",
                   }}
                 />
@@ -319,8 +349,9 @@ export default function NabarCompo({}) {
                 ></i>
               </div>
             </Nav>
+
             {userData !== null && userData !== undefined ? (
-              <Nav className=" fnt p-0 px-2">
+              <Nav className=" fnt   p-0 px-2">
                 <div className="btn-group">
                   <button
                     className="btn btn-secondary dropdown-toggle"
@@ -370,76 +401,120 @@ export default function NabarCompo({}) {
             ) : (
               <>
                 <Link
-                  className="mx-2"
+                  className="poppins-regular fnt clrrd me-3  boldt px-2"
                   to="/login"
                   style={{ textDecoration: "none" }}
                 >
                   <div
-                    className="poppins-black mx-1"
+                    className="poppins-black"
                     style={{ color: "darkred", fontSize: "15px" }}
                   >
-                    Login / Signup
+                    Login
+                  </div>
+                </Link>
+                <Link
+                  className="poppins-regular fnt clrrd me-3  boldt"
+                  to="/register"
+                  style={{ textDecoration: "none" }}
+                >
+                  <div
+                    className="poppins-black"
+                    style={{ color: "darkred", fontSize: "15px" }}
+                  >
+                    Register{" "}
                   </div>
                 </Link>
               </>
             )}
+
+            <Nav className="ms-5">
+              {!cartShow ? (
+                <>
+                  <ShoppingCartIcon style={{ fontSize: "30px" }} />
+                  <p
+                    className=" clr2 text-center"
+                    style={{
+                      width: "22px",
+                      height: "23px",
+                      borderRadius: "100%",
+                      position: "absolute",
+                      top: "15%",
+                      right: "5.6%",
+                    }}
+                  >
+                    <span className="m-auto text-white fnt14">
+                      {MyCartItmes.length}
+                    </span>
+                  </p>
+                </>
+              ) : null}
+            </Nav>
           </Navbar.Collapse>
         </Container>
-      </Navbar>
-      <Modal show={openResetModal} centered onHide={handleResetModal}>
-        <div className="modal_wrapper select-city-modal">
-          <div className="">
-            <div className="col-12">
-              <img
-                src="./assests/citybanner1.jpg"
-                alt="loading...."
-                style={{
-                  width: "450px",
-                  height: "130px",
-                  borderTopLeftRadius: "10px",
-                  borderTopRightRadius: "10px",
-                }}
-              />
-            </div>
-          </div>
+        <Offcanvas placement="end" show={show} onHide={handleClose}>
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Profile</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <p>Name : {userData?.customerName}</p>
+            <p>Contact : {userData?.contactPerson}</p>
+          </Offcanvas.Body>
+        </Offcanvas>
 
-          <div className="modal_body">
-            <div className="title">
-              <span>
+        <Modal show={openResetModal} centered onHide={handleResetModal}>
+          <div className="modal_wrapper select-city-modal">
+            <div className="">
+              <div className="col-12">
                 <img
-                  src="./assests/indiaflg.png"
-                  alt="loading..."
+                  src="./assests/citybanner1.jpg"
+                  alt="loading...."
                   style={{
-                    width: "20px",
-                    height: "20px",
-                    marginRight: "10px",
+                    width: "450px",
+                    height: "130px",
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
                   }}
                 />
-              </span>
-              India
+              </div>
             </div>
-            <div className="row">
-              {city.map((city) => {
-                return (
-                  <div className="col-md-6">
-                    <div
-                      className={`city-name p-2 ${
-                        activeCity === city.city ? "active" : ""
-                      }`}
-                      onClick={() => handleChange(city)}
-                    >
-                      <i
-                        className={`fa-solid fa-location-dot ${
-                          activeCity === city.city ? "active-icon" : ""
+
+            <div className="modal_body">
+              <div className="title">
+                <span>
+                  <img
+                    src="./assests/indiaflg.png"
+                    alt="loading..."
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      marginRight: "10px",
+                    }}
+                  />
+                </span>
+                India
+              </div>
+              <div className="row">
+                {city.map((city) => {
+                  return (
+                    <div className="col-md-6">
+                      <div
+                        className={`city-name p-2 ${
+                          activeCity === city.city ? "active" : ""
                         }`}
-                        style={{
-                          color: "darkred",
-                          marginTop: "3px",
-                          fontSize: "15px",
-                        }}
-                        class="fa-solid fa-location-dot"
-                      ></i>
-                      {/* <i
+                        onClick={() => handleChange(city)}
+                      >
+                        <i
+                          className={`fa-solid fa-location-dot ${
+                            activeCity === city.city ? "active-icon" : ""
+                          }`}
+                          style={{
+                            color: "darkred",
+                            marginTop: "3px",
+                            fontSize: "15px",
+                          }}
+                          class="fa-solid fa-location-dot"
+                        ></i>
+                        {/* <i
                           className={`fa-solid fa-location-dot ${
                             activeCity === city.city ? "active-icon" : ""
                           }`}
@@ -449,15 +524,16 @@ export default function NabarCompo({}) {
                             fontSize: "15px",
                           }}
                         ></i> */}
-                      <p className="poppins-regular mx-2">{city.city}</p>
+                        <p className="poppins-regular mx-2">{city.city}</p>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
-      </Modal>
+        </Modal>
+      </Navbar>
     </>
   );
 }

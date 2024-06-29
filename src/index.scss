@@ -805,7 +805,7 @@ background: rgb(255, 68, 68) !important;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 14px;
+  font-size: 13px !important;
   text-align: left;
 }
 
@@ -839,8 +839,9 @@ background: rgb(255, 68, 68) !important;
 
 .poppins-black {
   font-family: "Poppins", sans-serif;
-  font-weight: 900;
+  font-weight: 600 !important;
   font-style: normal;
+  font-size: 15px !important;
 }
 
 .poppins-thin-italic {
