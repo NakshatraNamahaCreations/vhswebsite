@@ -145,13 +145,30 @@ export default function NabarCompo({}) {
     }
     setSearchSubCategory("");
   };
+  // const getCity = async () => {
+  //   try {
+  //     let res = await axios.get(
+  //       "https://api.vijayhomesuperadmin.in/api/master/getcity"
+  //     );
+  //     if (res.status === 200) {
+  //       setCity(res.data.mastercity);
+  //     }
+  //   } catch (er) {
+  //     console.log(er, "err while fetching data");
+  //   }
+  // };
+
   const getCity = async () => {
     try {
       let res = await axios.get(
         "https://api.vijayhomesuperadmin.in/api/master/getcity"
       );
       if (res.status === 200) {
-        setCity(res.data.mastercity);
+        // Sort the cities alphabetically
+        const sortedCities = res.data.mastercity.sort((a, b) =>
+          a.city.localeCompare(b.city)
+        );
+        setCity(sortedCities);
       }
     } catch (er) {
       console.log(er, "err while fetching data");
@@ -361,7 +378,7 @@ export default function NabarCompo({}) {
                   </ul>
                 </div>
                 <span
-                  className="mx-2 poppins-semibold"
+                  className="mx-2 poppins-medium"
                   style={{ fontSize: "14px", marginTop: "7px" }}
                 >
                   {userData?.customerName}
@@ -404,22 +421,23 @@ export default function NabarCompo({}) {
           </div>
 
           <div className="modal_body">
-            <div className="title">
+            <div className="title poppins-semibold">
               <span>
                 <img
                   src="./assests/indiaflg.png"
                   alt="loading..."
                   style={{
-                    width: "20px",
-                    height: "20px",
+                    width: "23px",
+                    height: "23px",
                     marginRight: "10px",
+                    borderRadius: "50px",
                   }}
                 />
               </span>
               India
             </div>
             <div className="row">
-              {city.map((city) => {
+              {/* {city.map((city) => {
                 return (
                   <div className="col-md-6">
                     <div
@@ -439,21 +457,77 @@ export default function NabarCompo({}) {
                         }}
                         class="fa-solid fa-location-dot"
                       ></i>
-                      {/* <i
-                          className={`fa-solid fa-location-dot ${
-                            activeCity === city.city ? "active-icon" : ""
-                          }`}
-                          style={{
-                            color: "darkred",
-                            marginTop: "3px",
-                            fontSize: "15px",
-                          }}
-                        ></i> */}
+                   
                       <p className="poppins-regular mx-2">{city.city}</p>
                     </div>
                   </div>
                 );
-              })}
+              })} */}
+              {city.map((city) => (
+                <div className="col-md-6" key={city._id}>
+                  <div
+                    className={`city-name p-2 ${
+                      activeCity === city.city ? "active" : ""
+                    }`}
+                    onClick={() => handleChange(city)}
+                  >
+                    <i
+                      className={`fa-solid fa-location-dot ${
+                        activeCity === city.city ? "active-icon" : ""
+                      }`}
+                      style={{
+                        color: "darkred",
+                        marginTop: "3px",
+                        fontSize: "15px",
+                      }}
+                    ></i>
+                    <p className="poppins-regular mx-2">{city.city}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="title poppins-semibold mt-1">
+              <span>
+                <img
+                  src="./assests/dubai.png"
+                  alt="loading..."
+                  style={{
+                    width: "23px",
+                    height: "23px",
+                    marginRight: "10px",
+                    borderRadius: "50px",
+                  }}
+                />
+              </span>
+              Dubai{" "}
+              <span
+                className="poppins-light"
+                style={{ color: "grey", fontWeight: "bold", fontSize: "16px" }}
+              >
+                Coming Soon
+              </span>
+            </div>
+
+            <div className="title poppins-semibold mt-1">
+              <span>
+                <img
+                  src="./assests/london.webp"
+                  alt="loading..."
+                  style={{
+                    width: "23px",
+                    height: "23px",
+                    marginRight: "10px",
+                    borderRadius: "50px",
+                  }}
+                />
+              </span>
+              London{" "}
+              <span
+                className="poppins-light"
+                style={{ color: "grey", fontWeight: "bold", fontSize: "16px" }}
+              >
+                Coming Soon
+              </span>
             </div>
           </div>
         </div>

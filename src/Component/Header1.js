@@ -36,89 +36,230 @@ export default function NavbarCompo() {
   };
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    // <Navbar expand="lg" className="bg-body-tertiary">
+    //   <Container>
+    //     <Navbar.Brand className="fnt rounded-lg brd p-1" href="/">
+    //       <img src="./images/vhs.png" alt="" width={40} height={40} />
+    //       <span className="clrrdd boldt mx-2">Vijay Home Services</span>
+    //     </Navbar.Brand>
+    //     <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    //     <Navbar.Collapse className="justify-content-end menu">
+    //       <Nav
+    //         className="   me-3 "
+    //         style={{ backgroundColor: "orange", padding: "5px 5px" }}
+    //       >
+    //         <div className="">
+    //           <img
+    //             src="./assests/new.gif"
+    //             alt="loading...."
+    //             style={{ width: "43px", height: "30px" }}
+    //           />{" "}
+    //           <span style={{ fontSize: "13px", color: "white" }}>
+    //             Pest Control
+    //           </span>
+    //         </div>
+    //       </Nav>
+    //       <Nav
+    //         className="   me-3 "
+    //         style={{ backgroundColor: "orange", padding: "5px 5px" }}
+    //       >
+    //         <div className="">
+    //           <img
+    //             src="./assests/new.gif"
+    //             alt="loading...."
+    //             style={{ width: "43px", height: "30px" }}
+    //           />{" "}
+    //           <span style={{ fontSize: "13px", color: "white" }}>
+    //             AC Repairing
+    //           </span>
+    //         </div>
+    //       </Nav>
+    //       <Nav
+    //         className="   me-3  "
+    //         style={{ backgroundColor: "orange", padding: "5px 5px" }}
+    //       >
+    //         <div className="">
+    //           <img
+    //             src="./assests/new.gif"
+    //             alt="loading...."
+    //             style={{ width: "43px", height: "30px" }}
+    //           />{" "}
+    //           <span style={{ fontSize: "13px", color: "white" }}>
+    //             Exclusive Offer
+    //           </span>
+    //         </div>
+    //       </Nav>
+    //       {userData !== null && userData !== undefined ? (
+    //         <Nav className=" fnt   p-0 ">
+    //           <div className="btn-group">
+    //             <button
+    //               className="btn btn-secondary dropdown-toggle"
+    //               type="button"
+    //               data-bs-toggle="dropdown"
+    //               data-bs-auto-close="true"
+    //               aria-expanded="false"
+    //               style={{
+    //                 backgroundColor: "darkred",
+    //                 borderRadius: "50px",
+    //                 border: "white",
+    //               }}
+    //             >
+    //               <i
+    //                 className="fa-solid fa-user"
+    //                 style={{ fontSize: "15px" }}
+    //               ></i>
+    //             </button>
+    //             <ul className="dropdown-menu">
+    //               <li>
+    //                 <a
+    //                   style={{ fontSize: "12px" }}
+    //                   className="dropdown-item"
+    //                   href="/mybooking"
+    //                 >
+    //                   My Bookings
+    //                 </a>
+    //               </li>
+    //               <li onClick={handleremove}>
+    //                 <a
+    //                   style={{ fontSize: "12px" }}
+    //                   className="dropdown-item"
+    //                   href="#"
+    //                 >
+    //                   Logout
+    //                 </a>
+    //               </li>
+    //             </ul>
+    //           </div>
+    //           <span
+    //             className="mx-2 "
+    //             style={{ fontSize: "14px", marginTop: "7px" }}
+    //           >
+    //             {userData?.customerName}
+    //           </span>
+    //         </Nav>
+    //       ) : (
+    //         <>
+    //           <Link
+    //             className=" fnt clrrd me-3  boldt"
+    //             to="/login"
+    //             style={{ textDecoration: "none" }}
+    //           >
+    //             Login
+    //           </Link>
+    //           <Link
+    //             className=" fnt clrrd me-3  boldt"
+    //             to="/register"
+    //             style={{ textDecoration: "none" }}
+    //           >
+    //             Register{" "}
+    //           </Link>
+    //         </>
+    //       )}
+    //       {cartShow && (
+    //         <Nav className="ms-5">
+    //           <ShoppingCartIcon style={{ fontSize: "30px" }} />
+    //           <p
+    //             className="clr2 text-center"
+    //             style={{
+    //               width: "22px",
+    //               height: "23px",
+    //               borderRadius: "100%",
+    //               position: "absolute",
+    //               top: "15%",
+    //               right: "5.6%",
+    //             }}
+    //           >
+    //             <span className="m-auto text-white fnt14">
+    //               {MyCartItems.length}
+    //             </span>
+    //           </p>
+    //         </Nav>
+    //       )}
+    //     </Navbar.Collapse>
+    //   </Container>
+    // </Navbar>
+    <Navbar
+      expand="lg"
+      style={{ backgroundColor: "lightgrey", padding: "5px" }}
+    >
       <Container>
         <Navbar.Brand className="fnt rounded-lg brd p-1" href="/">
           <img src="./images/vhs.png" alt="" width={40} height={40} />
-          <span className="clrrdd boldt mx-2">Vijay Home Services</span>
+          <span className="clrrdd boldt mx-2 poppins-medium">
+            Vijay Home Services
+          </span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end menu">
-          {/* <Nav className="fnt clrrd me-3 boldt">
-            <Link
-              className="fnt clrrd me-3 boldt"
-              to="/"
-              style={{ textDecoration: "none" }}
-            >
-              Home
-            </Link>
-          </Nav> */}
-          {/* <Nav className="fnt clrrd me-3 boldt">
-            <Link
-              className="fnt clrrd me-3 boldt"
-              to="/about"
-              style={{ textDecoration: "none" }}
-            >
-              About Us
-            </Link>
-          </Nav> */}
-          {/* <Nav className="fnt clrrd me-3 boldt">Blog</Nav> */}
-          {/* <Nav className="fnt clrrd me-3 boldt">
-            <Link
-              className="fnt clrrd me-3 boldt"
-              to="/career"
-              style={{ textDecoration: "none" }}
-            >
-              Career
-            </Link>
-          </Nav> */}
           <Nav
-            className="   me-3 "
-            style={{ backgroundColor: "orange", padding: "5px 5px" }}
+            className="me-3"
+            style={{
+              backgroundColor: "orange",
+              padding: "2px 10px",
+              borderRadius: "5px",
+            }}
           >
             <div className="">
               <img
                 src="./assests/new.gif"
                 alt="loading...."
-                style={{ width: "43px", height: "30px" }}
-              />{" "}
-              <span style={{ fontSize: "13px", color: "white" }}>
+                style={{ width: "25px", height: "25px" }}
+              />
+              <span
+                className="poppins-regular"
+                style={{ fontSize: "13px", color: "white" }}
+              >
                 Pest Control
               </span>
             </div>
           </Nav>
           <Nav
-            className="   me-3 "
-            style={{ backgroundColor: "orange", padding: "5px 5px" }}
+            className="me-3"
+            style={{
+              backgroundColor: "orange",
+              padding: "2px 10px",
+              borderRadius: "5px",
+            }}
           >
             <div className="">
               <img
                 src="./assests/new.gif"
                 alt="loading...."
-                style={{ width: "43px", height: "30px" }}
-              />{" "}
-              <span style={{ fontSize: "13px", color: "white" }}>
+                style={{ width: "25px", height: "25px" }}
+              />
+              <span
+                className="poppins-regular"
+                style={{ fontSize: "13px", color: "white" }}
+              >
                 AC Repairing
               </span>
             </div>
           </Nav>
           <Nav
-            className="   me-3  "
-            style={{ backgroundColor: "orange", padding: "5px 5px" }}
+            className="me-3"
+            style={{
+              backgroundColor: "orange",
+              padding: "2px 10px",
+              borderRadius: "5px",
+            }}
           >
             <div className="">
               <img
                 src="./assests/new.gif"
                 alt="loading...."
-                style={{ width: "43px", height: "30px" }}
-              />{" "}
-              <span style={{ fontSize: "13px", color: "white" }}>
+                style={{ width: "25px", height: "25px" }}
+              />
+              <span
+                className="poppins-regular"
+                style={{ fontSize: "13px", color: "white" }}
+              >
                 Exclusive Offer
               </span>
             </div>
           </Nav>
+
           {userData !== null && userData !== undefined ? (
-            <Nav className=" fnt   p-0 ">
+            <Nav className=" fnt p-0 px-2">
               <div className="btn-group">
                 <button
                   className="btn btn-secondary dropdown-toggle"
@@ -140,8 +281,8 @@ export default function NavbarCompo() {
                 <ul className="dropdown-menu">
                   <li>
                     <a
+                      className="dropdown-item poppins-regular"
                       style={{ fontSize: "12px" }}
-                      className="dropdown-item"
                       href="/mybooking"
                     >
                       My Bookings
@@ -149,8 +290,8 @@ export default function NavbarCompo() {
                   </li>
                   <li onClick={handleremove}>
                     <a
+                      className="poppins-regular dropdown-item"
                       style={{ fontSize: "12px" }}
-                      className="dropdown-item"
                       href="#"
                     >
                       Logout
@@ -159,7 +300,7 @@ export default function NavbarCompo() {
                 </ul>
               </div>
               <span
-                className="mx-2 "
+                className="mx-2 poppins-medium"
                 style={{ fontSize: "14px", marginTop: "7px" }}
               >
                 {userData?.customerName}
@@ -168,21 +309,20 @@ export default function NavbarCompo() {
           ) : (
             <>
               <Link
-                className=" fnt clrrd me-3  boldt"
+                className="mx-2"
                 to="/login"
                 style={{ textDecoration: "none" }}
               >
-                Login
-              </Link>
-              <Link
-                className=" fnt clrrd me-3  boldt"
-                to="/register"
-                style={{ textDecoration: "none" }}
-              >
-                Register{" "}
+                <div
+                  className="poppins-black mx-1"
+                  style={{ color: "darkred", fontSize: "15px" }}
+                >
+                  Login / Signup
+                </div>
               </Link>
             </>
           )}
+
           {cartShow && (
             <Nav className="ms-5">
               <ShoppingCartIcon style={{ fontSize: "30px" }} />

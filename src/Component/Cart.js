@@ -47,6 +47,8 @@ function Cart() {
     dispatch(clearCart());
   };
 
+  console.log("MyCartItmes=====123", MyCartItmes);
+
   return (
     <div className="row" style={{ justifyContent: "center" }}>
       {/* <NabarCompo /> */}
@@ -62,17 +64,20 @@ function Cart() {
             }}
           >
             <div className="col-md-10">
-              <div className="">{item.planName}</div>
-              <div className="">{item.category}</div>
+              <div className="poppins-regular mb-1">{item.planName}</div>
+              <div className="poppins-regular mb-1">{item.category}</div>
               <div className="d-flex">
-                <div className="" style={{ textDecoration: "line-through" }}>
+                <div
+                  className="poppins-regular mb-1"
+                  style={{ textDecoration: "line-through" }}
+                >
                   ₹{item.planPrice}
                 </div>
-                <div className="mx-2">₹{item.offerprice}</div>
+                <div className="mx-2 poppins-regular">₹{item.offerprice}</div>
               </div>
             </div>
             <div className="col-md-2">
-              <div className="" style={{ textAlign: "center" }}>
+              <div className="poppins-regular" style={{ textAlign: "center" }}>
                 ₹{item.offerprice}
               </div>
               <div className="d-flex mt-2" style={{ justifyContent: "center" }}>
@@ -123,11 +128,14 @@ function Cart() {
 
         <div className="row mt-5">
           <div className="col-md-6 d-flex">
-            <p style={{ color: "black", fontSize: 18, fontWeight: "bold" }}>
+            <p
+              className="poppins-extrabold"
+              style={{ color: "black", fontSize: 18, fontWeight: "bold" }}
+            >
               Total :
             </p>
             <p
-              className="mx-2"
+              className="mx-2 poppins-extrabold"
               style={{ fontSize: 18, fontWeight: "bold", color: "black" }}
             >
               {Carttotal}
@@ -138,13 +146,6 @@ function Cart() {
             style={{ display: "flex", justifyContent: "end" }}
           >
             {MyCartItmes !== undefined ? (
-              // <Link
-              //   to="/cartbook"
-              //   // state={{ subcategory: data }}
-              //   // key={data.subcategory}
-              //   style={{ textDecoration: "none" }}
-              //   // className="text-decoration-none text-black"
-              // >
               <button
                 onClick={handleChange}
                 style={{
@@ -155,6 +156,7 @@ function Cart() {
                 }}
               >
                 <span
+                  className="poppins-extrabold"
                   style={{
                     color: "white",
                     fontWeight: "bold",
@@ -166,12 +168,33 @@ function Cart() {
                 </span>
               </button>
             ) : (
-              // </Link>
               <></>
             )}
           </div>
         </div>
       </div>
+
+      {/* <div className="col-md-8 mt-5 ">
+        {MyCartItmes.map((item) => (
+          <div
+            className="row shadow-lg"
+            style={{
+              backgroundColor: "white",
+              padding: "10px",
+              marginBottom: "15px",
+            }}
+          >
+            <div className="">{item.planName}</div>
+            <div className="">{item?.planPrice}</div>
+            <div className="d-flex">
+              <div className="" style={{ textDecoration: "line-through" }}>
+                ₹{item?.planPrice}
+              </div>
+              <div className="mx-2">₹{item?.offerprice}</div>
+            </div>
+          </div>
+        ))}
+      </div> */}
     </div>
   );
 }

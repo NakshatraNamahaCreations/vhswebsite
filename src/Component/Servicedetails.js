@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NabarCompo from "./navbar";
@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ReactPlayer from "react-player";
 import { addToCart, clearCart } from "../Redux1/MyCartSlice";
 import Header1 from "./Header1";
+import call from "../assests/call.gif";
+import web from "../assests/web.gif";
 
 function Servicedetails() {
   const location = useLocation();
@@ -53,6 +55,9 @@ function Servicedetails() {
   const [postsubdata, setpostsubdata] = useState([]);
   const [Servicedata, setServicedata] = useState([]);
   const [pricesdata, setpricesdata] = useState([]);
+  const [ITEM_HEIGHT, setItemHeight] = useState(400);
+
+  const scrollViewRef = useRef(null);
 
   const localstoragecitys = localStorage.getItem("city");
 
@@ -329,6 +334,15 @@ function Servicedetails() {
     });
   };
 
+  const scrollToService = (serviceName) => {
+    const section = document.getElementById(serviceName);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  console.log("postsubdata", postsubdata);
+
   return (
     <>
       {isLoading ? (
@@ -367,40 +381,38 @@ function Servicedetails() {
                     {subcategory}
                   </h2>
                 </div>
-                <div
-                  className="row mt-3"
-                  style={
-                    {
-                      // border: "1px solid lightgrey",
-                      // borderRadius: "20px",
-                    }
-                  }
-                >
-                  {postsubdata.map((data) => (
-                    <div className="col-md-4 mt-4 text-center ">
-                      <img
-                        style={{
-                          width: "90px",
-                          height: "90px",
-                          borderRadius: "10px",
-                        }}
-                        className="mb-2"
-                        alt=""
-                        src={data.imglink}
-                      />
+                <div className="row mt-3" style={{}}>
+                  {postsubdata
+                    .sort((a, b) => parseInt(a.order) - parseInt(b.order))
+                    .map((data, index) => (
                       <div
-                        className="poppins-medium pb-2"
-                        style={{
-                          color: "black",
-                          fontSize: "10px",
-                          fontWeight: "bold",
-                          textAlign: "center",
-                        }}
+                        key={index}
+                        className="col-md-4 mt-4 text-center"
+                        onClick={() => scrollToService(data.sub_subcategory)}
                       >
-                        {data.sub_subcategory}
+                        <img
+                          style={{
+                            width: "90px",
+                            height: "90px",
+                            borderRadius: "10px",
+                          }}
+                          className="mb-2"
+                          alt=""
+                          src={data.imglink}
+                        />
+                        <div
+                          className="poppins-medium pb-2"
+                          style={{
+                            color: "black",
+                            fontSize: "10px",
+                            fontWeight: "bold",
+                            textAlign: "center",
+                          }}
+                        >
+                          {data.sub_subcategory}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
 
@@ -430,7 +442,7 @@ function Servicedetails() {
               {subcategory}
             </div>
             <div className="col-md-6">
-              <div className="d-flex">
+              <div className="d-flex mt-2">
                 <div className="poppins-regular" style={{ color: "black" }}>
                   4.9
                 </div>
@@ -458,6 +470,22 @@ function Servicedetails() {
                 </div>
                 <div className="poppins-regular" style={{ color: "black" }}>
                   (9.1T)
+                </div>
+                <div className="mx-5 px-5" style={{ marginTop: "-28px" }}>
+                  <img
+                    src={call}
+                    alt="loading....."
+                    style={{ width: "80px", height: "80px" }}
+                  />
+                  <img
+                    src={web}
+                    alt="loading....."
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      marginLeft: "15px",
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -491,6 +519,9 @@ function Servicedetails() {
                           color: "white",
                           fontWeight: "bold",
                           fontSize: "14px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
                         }}
                       >
                         {data.header}
@@ -514,9 +545,13 @@ function Servicedetails() {
             </div>
 
             <div className="row mt-5">
-              {Servicedata.map((data) => (
+              {Servicedata.sort(
+                (a, b) => parseInt(a.order) - parseInt(b.order)
+              ).map((data, index) => (
                 <>
                   <div
+                    key={index}
+                    id={data.serviceName}
                     className="col-md-6 mt-4"
                     style={{ borderBottom: "1px solid grey" }}
                   >
@@ -766,13 +801,20 @@ function Servicedetails() {
               ))}
             </div>
 
-            <div className="row mt-5 mb-5">
+            <div
+              className="row mt-5 mb-5 "
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
               {Bannermidledata.map((data) => (
                 <div key={data._id}>
                   <img
                     style={{
                       width: "100%",
-                      height: "auto",
+                      height: "450px",
                     }}
                     className="mb-2"
                     alt=""
@@ -835,7 +877,14 @@ function Servicedetails() {
                             fontWeight: "bold",
                           }}
                         >
-                          {price.pName && <p>{price.pName}</p>}
+                          {price.pName && (
+                            <p
+                              className="poppins-bold"
+                              style={{ color: "green" }}
+                            >
+                              {price.pName}
+                            </p>
+                          )}
                         </div>
 
                         <div
@@ -851,7 +900,9 @@ function Servicedetails() {
                               textAlign: "center",
                             }}
                           >
-                            {price.pPrice && <p>₹{price.pPrice}</p>}
+                            {price.pPrice && (
+                              <p className="poppins-regular">₹{price.pPrice}</p>
+                            )}
                           </div>
                           <div
                             className="mx-2"
@@ -862,7 +913,11 @@ function Servicedetails() {
                               textAlign: "center",
                             }}
                           >
-                            {price.pofferprice && <p>₹{price.pofferprice}</p>}
+                            {price.pofferprice && (
+                              <p className="poppins-medium">
+                                ₹{price.pofferprice}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -874,7 +929,7 @@ function Servicedetails() {
           </div>
 
           <div
-            className=""
+            className="poppins-medium"
             style={{
               backgroundColor: "rgb(224, 206, 85)",
               padding: "5px",
@@ -890,13 +945,13 @@ function Servicedetails() {
             style={{ backgroundColor: "darkred", padding: "10px" }}
           >
             <div
-              className="col-md-3"
+              className="col-md-3 poppins-extrabold"
               style={{ color: "white", fontSize: "15px", fontWeight: "bold" }}
             >
               Total ₹{TotalPrice}
             </div>
             <div
-              className="col-md-9 "
+              className="col-md-9 poppins-extrabold"
               style={{
                 color: "white",
                 fontSize: "15px",

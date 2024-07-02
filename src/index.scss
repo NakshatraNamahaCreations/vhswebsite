@@ -571,7 +571,7 @@ button {
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  background-color: orange !important;
+  background-color: darkblue !important;
   color: white !important;
 }
 
@@ -827,8 +827,9 @@ background: rgb(255, 68, 68) !important;
 
 .poppins-bold {
   font-family: "Poppins", sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   font-style: normal;
+  color: green !important;
 }
 
 .poppins-extrabold {
@@ -914,3 +915,59 @@ background: rgb(255, 68, 68) !important;
   margin-Left: 50px !important;
   font-size: 20px !important;
 }
+
+// Bookins
+
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// }
+
+.content {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.order-item {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.service-name {
+  color: darkred;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.category i {
+  margin-right: 10px;
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+}
+
+// Calender View 

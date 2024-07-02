@@ -9,6 +9,7 @@ function Signup() {
   const [status, setStatus] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,30 +26,62 @@ function Signup() {
     setMainContact(e.target.value);
   };
 
+  // const sendOTP = async () => {
+  //   setTimer(60);
+  //   setError("");
+  //   setSuccess("");
+  //   const isValidMobile = /^\d{10}$/.test(mainContact);
+
+  //   if (!isValidMobile) {
+  //     setError("Please enter a valid 10-digit mobile number.");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.post(
+  //       "https://api.vijayhomeservicebengaluru.in/api/sendotp",
+  //       { mainContact }
+  //     );
+
+  //     setStatus(true);
+  //     setSuccess("OTP sent successfully.");
+  //   } catch (error) {
+  //     setError(
+  //       error.response?.data?.error ||
+  //         "An error occurred. Please try again later."
+  //     );
+  //   }
+  // };
+
   const sendOTP = async () => {
-    setTimer(60);
-    setError("");
-    setSuccess("");
+    // Validate mobile number
     const isValidMobile = /^\d{10}$/.test(mainContact);
 
     if (!isValidMobile) {
-      setError("Please enter a valid 10-digit mobile number.");
+      alert("Please enter a valid 10-digit mobile number.");
       return;
     }
 
     try {
       const response = await axios.post(
-        "https://api.vijayhomeservicebengaluru.in/api/sendotp",
-        { mainContact }
+        "https://api.vijayhomeservicebengaluru.in/api/sendotp/sendByCartBook",
+        { mainContact: mainContact }
       );
 
-      setStatus(true);
-      setSuccess("OTP sent successfully.");
+      if (response.status === 200) {
+        alert("Successful login");
+        setUser(response.data.user);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        navigate("/cartbook");
+        // getAddress(response.data.user);
+      }
     } catch (error) {
-      setError(
-        error.response?.data?.error ||
-          "An error occurred. Please try again later."
-      );
+      if (error.response && error.response.data && error.response.data.error) {
+        alert(error.response.data.error);
+      } else {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again later.");
+      }
     }
   };
 
@@ -153,170 +186,245 @@ function Signup() {
     //     )}
     //   </div>
     // </div>
+    // <div className="row">
+    //   <div className="col-md-12">
+    //     {!status ? (
+    //       <div
+    //         className="row"
+    //         style={{ justifyContent: "center", alignItems: "center" }}
+    //       >
+    //         <div
+    //           className="col-md-5"
+    //           style={{
+    //             marginTop: "10%",
+    //             border: "1px solid grey",
+    //             padding: "20px",
+    //             borderRadius: "5px",
+    //           }}
+    //         >
+    //           <div
+    //             className="row"
+    //             style={{ justifyContent: "center", alignItems: "center" }}
+    //           >
+    //             <img
+    //               src="./images/vhs.png"
+    //               style={{
+    //                 width: "110px",
+    //                 height: "90px",
+    //                 textAlign: "center",
+    //               }}
+    //               alt="VHS Logo"
+    //             />
+
+    //             <div
+    //               className="mt-3"
+    //               style={{
+    //                 color: "black",
+    //                 fontSize: "17px",
+    //                 textAlign: "center",
+    //                 fontWeight: "bold",
+    //               }}
+    //             >
+    //               Login With Mobile Number
+    //             </div>
+
+    //             <input
+    //               type="text"
+    //               onChange={handlenumber}
+    //               maxLength={10}
+    //               value={mainContact}
+    //               placeholder="Enter Mobile Number"
+    //               style={{
+    //                 border: "1px solid grey",
+    //                 height: "45px",
+    //                 width: "60%",
+    //                 marginTop: "15px",
+    //               }}
+    //             />
+
+    //             <div
+    //               onClick={sendOTP}
+    //               className="mb-2"
+    //               style={{
+    //                 textAlign: "center",
+    //                 color: "white",
+    //                 fontSize: 16,
+    //                 fontWeight: "800",
+    //                 backgroundColor: "darkred",
+    //                 padding: "5px",
+    //                 width: "60%",
+    //                 borderRadius: "5px",
+    //               }}
+    //             >
+    //               SIGN IN WITH OTP
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     ) : (
+    //       <div
+    //         className="row"
+    //         style={{ justifyContent: "center", alignItems: "center" }}
+    //       >
+    //         <div
+    //           className="col-md-5"
+    //           style={{
+    //             marginTop: "10%",
+    //             border: "1px solid grey",
+    //             padding: "20px",
+    //             borderRadius: "5px",
+    //           }}
+    //         >
+    //           <div
+    //             className="row"
+    //             style={{ justifyContent: "center", alignItems: "center" }}
+    //           >
+    //             <img
+    //               src="./images/vhs.png"
+    //               style={{
+    //                 width: "110px",
+    //                 height: "90px",
+    //                 textAlign: "center",
+    //               }}
+    //               alt="VHS Logo"
+    //             />
+
+    //             <div
+    //               className="mt-3"
+    //               style={{
+    //                 color: "black",
+    //                 fontSize: "17px",
+    //                 textAlign: "center",
+    //                 fontWeight: "bold",
+    //               }}
+    //             >
+    //               Please enter the OTP that has been sent to your registered
+    //               mobile number
+    //             </div>
+
+    //             <input
+    //               type="text"
+    //               onChange={(e) => setOtp(e.target.value)}
+    //               value={otp}
+    //               placeholder="Enter OTP"
+    //               style={{
+    //                 border: "1px solid grey",
+    //                 height: "45px",
+    //                 width: "60%",
+    //                 marginTop: "15px",
+    //               }}
+    //             />
+
+    //             {timer > 0 ? (
+    //               <div style={{ textAlign: "center", color: "black" }}>
+    //                 Resend in {timer}
+    //               </div>
+    //             ) : (
+    //               <div onClick={sendOTP}>
+    //                 <div
+    //                   className="mb-3"
+    //                   style={{ textAlign: "center", color: "darkred" }}
+    //                 >
+    //                   Resend OTP
+    //                 </div>
+    //               </div>
+    //             )}
+
+    //             <div
+    //               onClick={OTPVerification}
+    //               className="mb-2"
+    //               style={{
+    //                 textAlign: "center",
+    //                 color: "white",
+    //                 fontSize: 16,
+    //                 fontWeight: "800",
+    //                 backgroundColor: "darkred",
+    //                 padding: "5px",
+    //                 width: "60%",
+    //                 borderRadius: "5px",
+    //               }}
+    //             >
+    //               VERIFY OTP
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     )}
+    //   </div>
+    // </div>
     <div className="row">
       <div className="col-md-12">
-        {!status ? (
+        <div
+          className="row"
+          style={{ justifyContent: "center", alignItems: "center" }}
+        >
           <div
-            className="row"
-            style={{ justifyContent: "center", alignItems: "center" }}
+            className="col-md-5"
+            style={{
+              marginTop: "10%",
+              border: "1px solid grey",
+              padding: "20px",
+              borderRadius: "5px",
+            }}
           >
             <div
-              className="col-md-5"
-              style={{
-                marginTop: "10%",
-                border: "1px solid grey",
-                padding: "20px",
-                borderRadius: "5px",
-              }}
+              className="row"
+              style={{ justifyContent: "center", alignItems: "center" }}
             >
+              <img
+                src="./images/vhs.png"
+                style={{
+                  width: "110px",
+                  height: "90px",
+                  textAlign: "center",
+                }}
+                alt="VHS Logo"
+              />
+
               <div
-                className="row"
-                style={{ justifyContent: "center", alignItems: "center" }}
+                className="mt-3"
+                style={{
+                  color: "black",
+                  fontSize: "17px",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
               >
-                <img
-                  src="./images/vhs.png"
-                  style={{
-                    width: "110px",
-                    height: "90px",
-                    textAlign: "center",
-                  }}
-                  alt="VHS Logo"
-                />
+                Login With Mobile Number
+              </div>
 
-                <div
-                  className="mt-3"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    textAlign: "center",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Login With Mobile Number
-                </div>
+              <input
+                type="text"
+                value={mainContact}
+                onChange={(e) => setMainContact(e.target.value)}
+                placeholder="Enter Mobile Number"
+                style={{
+                  border: "1px solid grey",
+                  height: "45px",
+                  width: "60%",
+                  marginTop: "15px",
+                }}
+              />
 
-                <input
-                  type="text"
-                  onChange={handlenumber}
-                  maxLength={10}
-                  value={mainContact}
-                  placeholder="Enter Mobile Number"
-                  style={{
-                    border: "1px solid grey",
-                    height: "45px",
-                    width: "60%",
-                    marginTop: "15px",
-                  }}
-                />
-
-                <div
-                  onClick={sendOTP}
-                  className="mb-2"
-                  style={{
-                    textAlign: "center",
-                    color: "white",
-                    fontSize: 16,
-                    fontWeight: "800",
-                    backgroundColor: "darkred",
-                    padding: "5px",
-                    width: "60%",
-                    borderRadius: "5px",
-                  }}
-                >
-                  SIGN IN WITH OTP
-                </div>
+              <div
+                onClick={sendOTP}
+                className="mb-2"
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: "800",
+                  backgroundColor: "darkred",
+                  padding: "5px",
+                  width: "60%",
+                  borderRadius: "5px",
+                }}
+              >
+                SIGN IN WITH OTP
               </div>
             </div>
           </div>
-        ) : (
-          <div
-            className="row"
-            style={{ justifyContent: "center", alignItems: "center" }}
-          >
-            <div
-              className="col-md-5"
-              style={{
-                marginTop: "10%",
-                border: "1px solid grey",
-                padding: "20px",
-                borderRadius: "5px",
-              }}
-            >
-              <div
-                className="row"
-                style={{ justifyContent: "center", alignItems: "center" }}
-              >
-                <img
-                  src="./images/vhs.png"
-                  style={{
-                    width: "110px",
-                    height: "90px",
-                    textAlign: "center",
-                  }}
-                  alt="VHS Logo"
-                />
-
-                <div
-                  className="mt-3"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    textAlign: "center",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Please enter the OTP that has been sent to your registered
-                  mobile number
-                </div>
-
-                <input
-                  type="text"
-                  onChange={(e) => setOtp(e.target.value)}
-                  value={otp}
-                  placeholder="Enter OTP"
-                  style={{
-                    border: "1px solid grey",
-                    height: "45px",
-                    width: "60%",
-                    marginTop: "15px",
-                  }}
-                />
-
-                {timer > 0 ? (
-                  <div style={{ textAlign: "center", color: "black" }}>
-                    Resend in {timer}
-                  </div>
-                ) : (
-                  <div onClick={sendOTP}>
-                    <div
-                      className="mb-3"
-                      style={{ textAlign: "center", color: "darkred" }}
-                    >
-                      Resend OTP
-                    </div>
-                  </div>
-                )}
-
-                <div
-                  onClick={OTPVerification}
-                  className="mb-2"
-                  style={{
-                    textAlign: "center",
-                    color: "white",
-                    fontSize: 16,
-                    fontWeight: "800",
-                    backgroundColor: "darkred",
-                    padding: "5px",
-                    width: "60%",
-                    borderRadius: "5px",
-                  }}
-                >
-                  VERIFY OTP
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

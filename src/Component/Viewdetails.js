@@ -407,10 +407,8 @@ function Viewdetails() {
                                 handleItemClick1(price);
                               }}
                               style={{
-                                // position: "absolute",
                                 bottom: 10,
                                 width: "100%",
-                                // backgroundColor: selectedItemId === i._id ? "green" : "darkred",
                                 padding: 5,
                                 color: "white",
                                 textAlign: "center",
@@ -423,22 +421,14 @@ function Viewdetails() {
                           )}
 
                           {isItemInCart(price._id) && (
-                            <div
-                              style={
-                                {
-                                  // flex: 0.3,
-                                  // position: "absolute",
-                                  // bottom: 10,
-                                }
-                              }
-                            >
+                            <div style={{ marginTop: "5px" }}>
                               <div
                                 className="d-flex m-auto"
                                 style={{
                                   backgroundColor: "green",
                                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
-
                                   borderRadius: 5,
+                                  padding: "0px",
                                 }}
                               >
                                 <div className="col-md-5">
@@ -458,12 +448,15 @@ function Viewdetails() {
                                       backgroundColor: "transparent",
                                       border: "none",
                                       cursor: "pointer",
+                                      height: "20px",
                                     }}
                                   >
-                                    {/* <AntDesign name="minuscircleo" size={18} color="white" /> */}
                                     <i
                                       className="fa-solid fa-circle-minus"
-                                      style={{ color: "white" }}
+                                      style={{
+                                        color: "white",
+                                        fontSize: "18px",
+                                      }}
                                     ></i>
                                   </button>
                                 </div>
@@ -475,7 +468,7 @@ function Viewdetails() {
                                       // marginLeft: 5,
                                       fontSize: "14px",
                                       textAlign: "center",
-                                      marginTop: "15px",
+                                      marginTop: "8px",
                                       fontWeight: "bold",
                                     }}
                                   >
@@ -490,11 +483,15 @@ function Viewdetails() {
                                       backgroundColor: "transparent",
                                       border: "none",
                                       cursor: "pointer",
+                                      height: "20px",
                                     }}
                                   >
                                     <i
                                       className="fa-solid fa-circle-plus"
-                                      style={{ color: "white" }}
+                                      style={{
+                                        color: "white",
+                                        fontSize: "18px",
+                                      }}
                                     ></i>
                                   </button>
                                 </div>
@@ -513,86 +510,6 @@ function Viewdetails() {
                 );
               })()}
             </div>
-
-            {subcategory?.category === "Painting" ? (
-              ""
-            ) : Carttotal > 0 ? (
-              <div>
-                <div
-                  className="mt-5"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    backgroundColor: "rgb(224, 206, 85)",
-                    padding: 5,
-                    marginTop: 5,
-                    alignSelf: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    width: "100%",
-                  }}
-                >
-                  <div style={{ display: "flex", flexDirection: "row" }}>
-                    <span style={{ color: "black", fontWeight: "bold" }}>
-                      Congratulations!
-                    </span>
-                  </div>
-                  <span
-                    style={{
-                      color: "black",
-                      marginLeft: 10,
-                      fontWeight: "bold",
-                    }}
-                  ></span>
-                  <span
-                    style={{
-                      color: "black",
-                      marginLeft: 4,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    saved so far!
-                  </span>
-                </div>
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      backgroundColor: "darkred",
-                      color: "white",
-                      padding: 10,
-                      width: "100%",
-                      textAlign: "center",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => navigate("/cart")}
-                  >
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                      <span
-                        style={{
-                          color: "white",
-                          fontWeight: "bold",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Total
-                      </span>
-                      <span className="mx-2" style={{ color: "white" }}>
-                        ₹{Carttotal}
-                      </span>
-                    </div>
-                    <span style={{ color: "white", fontWeight: "bold" }}>
-                      View Cart
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
 
             <div className="row">
               <div className="col-md-6">
@@ -671,80 +588,183 @@ function Viewdetails() {
               </div>
             </div>
 
-            <div
-              className="poppins-semibold mt-4"
-              style={{ color: "darkred", fontSize: "16px", fontWeight: "bold" }}
-            >
-              Thoughtful curations
-            </div>
-
-            <div
-              className="poppins-regular"
-              style={{
-                fontSize: "13px",
-                color: "black",
-                fontWeight: "bold",
-                marginTop: "5px",
-              }}
-            >
-              Of our finest experiences
-            </div>
-
-            <div className="row mt-4">
-              <div className="col-md-3">
-                <video
-                  className="p-0"
+            {/* <div className="row">
+              <div className="col-md-6">
+                <div
+                  className="poppins-semibold mt-4"
                   style={{
-                    objectFit: "contain",
-                    width: "100%",
-                    borderRadius: "10px",
+                    color: "darkred",
+                    fontSize: "16px",
+                    fontWeight: "bold",
                   }}
-                  height={400}
-                  autoPlay
-                  loop
-                  src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[0]?.serviceVideo}`}
-                ></video>
-              </div>
-              <div className="col-md-3">
-                <video
-                  className="p-0"
+                >
+                  Thoughtful curations
+                </div>
+
+                <div
+                  className="poppins-regular"
                   style={{
-                    objectFit: "contain",
-                    width: "100%",
-                    borderRadius: "10px",
+                    fontSize: "13px",
+                    color: "black",
+                    fontWeight: "bold",
+                    marginTop: "5px",
+
                   }}
-                  height={400}
-                  autoPlay
-                  loop
-                  src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[1]?.serviceVideo}`}
-                ></video>
-              </div>
-            </div>
+                >
+                  Of our finest experiences
+                </div>
 
-            <div
-              className="mt-4"
-              style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
-            >
-              Testimonial Videos
-            </div>
-
-            <div className="row mb-3 mt-3">
-              {ReviewVideodata.map((video, index) => {
-                const videoId = video.Links.split("v=")[1];
-                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                return (
-                  <div className="col-md-12" key={index}>
-                    <iframe
-                      width="100%"
-                      height="400px"
-                      src={embedUrl}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
+                <div className="row mt-4">
+                  <div className="col-md-3">
+                    <video
+                      className="p-0"
+                      style={{
+                        objectFit: "contain",
+                        width: "100%",
+                        borderRadius: "10px",
+                      }}
+                      height={400}
+                      autoPlay
+                      loop
+                      src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[0]?.serviceVideo}`}
+                    ></video>
                   </div>
-                );
-              })}
+                  <div className="col-md-3">
+                    <video
+                      className="p-0"
+                      style={{
+                        objectFit: "contain",
+                        width: "100%",
+                        borderRadius: "10px",
+                      }}
+                      height={400}
+                      autoPlay
+                      loop
+                      src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[1]?.serviceVideo}`}
+                    ></video>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div
+                  className="mt-4"
+                  style={{
+                    color: "black",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Testimonial Videos
+                </div>
+
+                <div className="row mb-3 mt-3">
+                  {ReviewVideodata.map((video, index) => {
+                    const videoId = video.Links.split("v=")[1];
+                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                    return (
+                      <div className="col-md-12" key={index}>
+                        <iframe
+                          width="100%"
+                          height="200px"
+                          src={embedUrl}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        ></iframe>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div> */}
+            <div className="row">
+              <div className="col-md-6">
+                <div
+                  className="poppins-semibold mt-4"
+                  style={{
+                    color: "darkred",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Thoughtful curations
+                </div>
+
+                <div
+                  className="poppins-regular"
+                  style={{
+                    fontSize: "13px",
+                    color: "black",
+                    fontWeight: "bold",
+                    marginTop: "5px",
+                  }}
+                >
+                  Of our finest experiences
+                </div>
+
+                <div className="row d-flex mt-4">
+                  <div className="col-md-6">
+                    <video
+                      className="p-0"
+                      style={{
+                        objectFit: "contain",
+                        width: "200px",
+                        borderRadius: "10px",
+                      }}
+                      height={300}
+                      autoPlay
+                      loop
+                      src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[0]?.serviceVideo}`}
+                    ></video>
+                  </div>
+                  <div className="col-md-6">
+                    <video
+                      className="p-0"
+                      style={{
+                        objectFit: "contain",
+                        width: "200px",
+                        borderRadius: "10px",
+                      }}
+                      height={300}
+                      autoPlay
+                      loop
+                      src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[1]?.serviceVideo}`}
+                    ></video>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div
+                  className="poppins-semibold mt-4"
+                  style={{
+                    color: "black",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Testimonial Videos
+                </div>
+
+                <div className="row mb-3 mt-5">
+                  {ReviewVideodata.map((video, index) => {
+                    const videoId = video.Links.split("v=")[1];
+                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                    return (
+                      <div className="col-12" key={index}>
+                        <iframe
+                          width="100%"
+                          height="300px"
+                          src={embedUrl}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          style={{ borderRadius: "5px" }}
+                        ></iframe>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
 
             {/* <div className="mb-5">
@@ -885,6 +905,86 @@ function Viewdetails() {
                 ))}
               </div>
             </div>
+
+            {subcategory?.category === "Painting" ? (
+              ""
+            ) : Carttotal > 0 ? (
+              <div className="mb-5">
+                <div
+                  className="mt-5"
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    backgroundColor: "rgb(224, 206, 85)",
+                    padding: 5,
+                    marginTop: 5,
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    width: "100%",
+                  }}
+                >
+                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <span style={{ color: "black", fontWeight: "bold" }}>
+                      Congratulations!
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      color: "black",
+                      marginLeft: 10,
+                      fontWeight: "bold",
+                    }}
+                  ></span>
+                  <span
+                    style={{
+                      color: "black",
+                      marginLeft: 4,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    saved so far!
+                  </span>
+                </div>
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      backgroundColor: "darkred",
+                      color: "white",
+                      padding: 10,
+                      width: "100%",
+                      textAlign: "center",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => navigate("/cart")}
+                  >
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <span
+                        style={{
+                          color: "white",
+                          fontWeight: "bold",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Total
+                      </span>
+                      <span className="mx-2" style={{ color: "white" }}>
+                        ₹{Carttotal}
+                      </span>
+                    </div>
+                    <span style={{ color: "white", fontWeight: "bold" }}>
+                      View Cart
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

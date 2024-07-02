@@ -335,14 +335,14 @@ export default function Home() {
   );
 
   useEffect(() => {
-    setFilteredCategory(viewmoreCategory ? category : category.slice(0, 7));
-    setFilterCleaning(filteredCleaning.slice(0, 7));
-    setFilteredPaint(filteredPaint.slice(0, 7));
-    setFilterPestControl(filteredpestc.slice(0, 7));
-    setFilterMarbelPolish(filtermarbel.slice(0, 7));
-    setFilterRepairing(Repairing.slice(0, 7));
-    setFilterPackers(filterpackers.slice(0, 7));
-    setFilterAppliance(filterappliance.slice(0, 7));
+    setFilteredCategory(viewmoreCategory ? category : category);
+    setFilterCleaning(filteredCleaning);
+    setFilteredPaint(filteredPaint);
+    setFilterPestControl(filteredpestc);
+    setFilterMarbelPolish(filtermarbel);
+    setFilterRepairing(Repairing);
+    setFilterPackers(filterpackers);
+    setFilterAppliance(filterappliance);
   }, [
     category,
     viewmoreCategory,
@@ -543,8 +543,10 @@ export default function Home() {
   });
 
   const getEmbedUrl1 = (videoUrl) => {
-    return videoUrl; // Assuming the video URL can be directly embedded
+    return videoUrl;
   };
+
+  console.log("FilterCleaningWithImages=====", FilterCleaningWithImages);
 
   return (
     <>
@@ -736,7 +738,7 @@ export default function Home() {
 
               <Swiper
                 slidesPerView={3}
-                spaceBetween={30}
+                spaceBetween={40}
                 freeMode={true}
                 pagination={{
                   clickable: true,
@@ -808,8 +810,8 @@ export default function Home() {
             <div className="poppins-semibold mt-5">Cleaning Services</div>
             <div className="mt-3" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={4}
-                spaceBetween={40}
+                slidesPerView={5}
+                spaceBetween={30}
                 freeMode={true}
                 pagination={{
                   clickable: true,
@@ -822,7 +824,9 @@ export default function Home() {
                 modules={[FreeMode, Pagination, Autoplay, Navigation]}
                 className="mySwiper"
               >
-                {FilterCleaningWithImages.map((ele) => (
+                {FilterCleaningWithImages.sort(
+                  (a, b) => parseInt(a.order) - parseInt(b.order)
+                ).map((ele, index) => (
                   <SwiperSlide
                     key={ele._id}
                     style={{
@@ -840,14 +844,27 @@ export default function Home() {
                       state={{ subcategory: ele.subcategory }}
                       style={{ textDecoration: "none" }}
                     >
-                      <div className="col-md-4" style={{ width: "100%" }}>
-                        <div>
+                      <div
+                        className="col-md-4"
+                        style={{
+                          width: "100%",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <img
                             src={ele.imglink}
                             alt="loading...."
                             style={{
-                              width: "200px",
-                              height: "200px",
+                              width: "150px",
+                              height: "150px",
                               borderRadius: "10px",
                             }}
                           />
@@ -873,8 +890,8 @@ export default function Home() {
             <div className="poppins-semibold mt-5">Painting Services</div>
             <div className="mt-3" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={4}
-                spaceBetween={40}
+                slidesPerView={5}
+                spaceBetween={30}
                 freeMode={true}
                 pagination={{
                   clickable: true,
@@ -887,7 +904,9 @@ export default function Home() {
                 modules={[FreeMode, Pagination, Autoplay, Navigation]}
                 className="mySwiper"
               >
-                {FilteredPaint.map((ele) => (
+                {FilteredPaint.sort(
+                  (a, b) => parseInt(a.order) - parseInt(b.order)
+                ).map((ele, index) => (
                   <SwiperSlide
                     key={ele._id}
                     style={{
@@ -908,13 +927,19 @@ export default function Home() {
                       className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
-                        <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <img
                             src={ele.imglink}
                             alt="loading...."
                             style={{
-                              width: "200px",
-                              height: "200px",
+                              width: "150px",
+                              height: "150px",
                               borderRadius: "10px",
                             }}
                           />
@@ -940,8 +965,8 @@ export default function Home() {
             <div className="poppins-semibold mt-5">Pest Control</div>
             <div className="mt-3" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={4}
-                spaceBetween={40}
+                slidesPerView={5}
+                spaceBetween={30}
                 freeMode={true}
                 pagination={{
                   clickable: true,
@@ -954,7 +979,9 @@ export default function Home() {
                 modules={[FreeMode, Pagination, Autoplay, Navigation]}
                 className="mySwiper"
               >
-                {FilterPestControl.map((ele) => (
+                {FilterPestControl.sort(
+                  (a, b) => parseInt(a.order) - parseInt(b.order)
+                ).map((ele, index) => (
                   <SwiperSlide
                     key={ele._id}
                     style={{
@@ -975,13 +1002,19 @@ export default function Home() {
                       className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
-                        <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <img
                             src={ele.imglink}
                             alt="loading...."
                             style={{
-                              width: "200px",
-                              height: "200px",
+                              width: "150px",
+                              height: "150px",
                               borderRadius: "10px",
                             }}
                           />
@@ -1007,8 +1040,8 @@ export default function Home() {
             <div className="poppins-semibold mt-5">Floor Polishing</div>
             <div className="mt-3" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={4}
-                spaceBetween={40}
+                slidesPerView={5}
+                spaceBetween={30}
                 freeMode={true}
                 pagination={{
                   clickable: true,
@@ -1021,7 +1054,9 @@ export default function Home() {
                 modules={[FreeMode, Pagination, Autoplay, Navigation]}
                 className="mySwiper"
               >
-                {FilterMarbelPolish.map((ele) => (
+                {FilterMarbelPolish.sort(
+                  (a, b) => parseInt(a.order) - parseInt(b.order)
+                ).map((ele, index) => (
                   <SwiperSlide
                     key={ele._id}
                     style={{
@@ -1042,13 +1077,19 @@ export default function Home() {
                       className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
-                        <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <img
                             src={ele.imglink}
                             alt="loading...."
                             style={{
-                              width: "200px",
-                              height: "200px",
+                              width: "150px",
+                              height: "150px",
                               borderRadius: "10px",
                             }}
                           />
@@ -1074,8 +1115,8 @@ export default function Home() {
             <div className="poppins-semibold mt-5">Home Repairing Services</div>
             <div className="mt-3" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={4}
-                spaceBetween={40}
+                slidesPerView={5}
+                spaceBetween={30}
                 freeMode={true}
                 pagination={{
                   clickable: true,
@@ -1088,7 +1129,9 @@ export default function Home() {
                 modules={[FreeMode, Pagination, Autoplay, Navigation]}
                 className="mySwiper"
               >
-                {FilterRepairing.map((ele) => (
+                {FilterRepairing.sort(
+                  (a, b) => parseInt(a.order) - parseInt(b.order)
+                ).map((ele, index) => (
                   <SwiperSlide
                     key={ele._id}
                     style={{
@@ -1109,13 +1152,19 @@ export default function Home() {
                       className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
-                        <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <img
                             src={ele.imglink}
                             alt="loading...."
                             style={{
-                              width: "200px",
-                              height: "200px",
+                              width: "150px",
+                              height: "150px",
                               borderRadius: "10px",
                             }}
                           />
@@ -1141,8 +1190,8 @@ export default function Home() {
             <div className="poppins-semibold mt-5">Packers & Movers</div>
             <div className="mt-3" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={4}
-                spaceBetween={40}
+                slidesPerView={5}
+                spaceBetween={30}
                 freeMode={true}
                 pagination={{
                   clickable: true,
@@ -1155,7 +1204,9 @@ export default function Home() {
                 modules={[FreeMode, Pagination, Autoplay, Navigation]}
                 className="mySwiper"
               >
-                {FilterPackers.map((ele) => (
+                {FilterPackers.sort(
+                  (a, b) => parseInt(a.order) - parseInt(b.order)
+                ).map((ele, index) => (
                   <SwiperSlide
                     key={ele._id}
                     style={{
@@ -1176,13 +1227,19 @@ export default function Home() {
                       className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
-                        <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <img
                             src={ele.imglink}
                             alt="loading...."
                             style={{
-                              width: "200px",
-                              height: "200px",
+                              width: "150px",
+                              height: "150px",
                               borderRadius: "10px",
                             }}
                           />
@@ -1208,8 +1265,8 @@ export default function Home() {
             <div className="poppins-semibold mt-5">Appliance Services</div>
             <div className="mt-3" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={4}
-                spaceBetween={40}
+                slidesPerView={5}
+                spaceBetween={30}
                 freeMode={true}
                 pagination={{
                   clickable: true,
@@ -1222,7 +1279,9 @@ export default function Home() {
                 modules={[FreeMode, Pagination, Autoplay, Navigation]}
                 className="mySwiper"
               >
-                {FilterAppliance.map((ele) => (
+                {FilterAppliance.sort(
+                  (a, b) => parseInt(a.order) - parseInt(b.order)
+                ).map((ele, index) => (
                   <SwiperSlide
                     key={ele._id}
                     style={{
@@ -1243,7 +1302,13 @@ export default function Home() {
                       className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
-                        <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <img
                             src={ele.imglink}
                             alt="loading...."
@@ -1270,6 +1335,84 @@ export default function Home() {
               </div>
               <div className="swiper-pagination swiper-pagination-appliance"></div>
             </div>
+
+            {/* Facility man agement Services */}
+            <div className="poppins-semibold mt-5">
+              Corporate Facility Management
+            </div>
+            <div className="mt-3" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={5}
+                spaceBetween={30}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination-appliance",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next-appliance",
+                  prevEl: ".swiper-button-prev-appliance",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {FacilityManagement.sort(
+                  (a, b) => parseInt(a.order) - parseInt(b.order)
+                ).map((ele, index) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Link
+                      to="/servicedetails"
+                      state={{ subcategory: ele?.subcategory }}
+                      key={ele.subcategory}
+                      style={{ textDecoration: "none" }}
+                      className="text-decoration-none text-black"
+                    >
+                      <div className="col-md-4" style={{ width: "100%" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <img
+                            src={ele.imglink}
+                            alt="loading...."
+                            style={{
+                              width: "150px",
+                              height: "150px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-2">
+                          {ele.subcategory}
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="swiper-button-prev swiper-button-prev-appliance">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next swiper-button-next-appliance">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
+              </div>
+              <div className="swiper-pagination swiper-pagination-appliance"></div>
+            </div>
+
             {/* suman */}
             <div className="poppins-semibold mb-4 mt-5">TestiMonial</div>
             <Swiper
@@ -1480,13 +1623,13 @@ export default function Home() {
               </Swiper>
             </div>
 
-            <div className="poppins-semibold mt-4">
+            <div className="poppins-semibold mt-4 mb-4">
               {homepagetitledata[0]?.title}
             </div>
 
             <Swiper
-              slidesPerView={4}
-              spaceBetween={40}
+              slidesPerView={5}
+              spaceBetween={30}
               freeMode={true}
               pagination={{
                 clickable: true,
@@ -1530,8 +1673,8 @@ export default function Home() {
                             source={i.imglink}
                             alt="loading...."
                             style={{
-                              width: "200px",
-                              height: "200px",
+                              width: "150px",
+                              height: "150px",
                               borderRadius: "10px",
                             }}
                           />
@@ -1545,13 +1688,13 @@ export default function Home() {
                 ))}
             </Swiper>
 
-            <div className="poppins-semibold mt-4">
+            <div className="poppins-semibold mt-4 mb-4">
               {homepagetitledata[1]?.title}
             </div>
 
             <Swiper
-              slidesPerView={4}
-              spaceBetween={40}
+              slidesPerView={5}
+              spaceBetween={30}
               freeMode={true}
               pagination={{
                 clickable: true,
@@ -1595,13 +1738,13 @@ export default function Home() {
                             source={i.imglink}
                             alt="loading...."
                             style={{
-                              width: "200px",
-                              height: "200px",
+                              width: "150px",
+                              height: "150px",
                               borderRadius: "10px",
                             }}
                           />
                         </div>
-                        <div className="poppins-medium mt-2">
+                        <div className="poppins-medium mt-2 mb-5">
                           {i.subcategory}
                         </div>
                       </div>
@@ -1610,7 +1753,7 @@ export default function Home() {
                 ))}
             </Swiper>
 
-            <div className="row mt-5">
+            {/* <div className="row mt-5">
               <h2 className="row">Corporate Facility Management</h2>
             </div>
             <div className="row mb-5 brclr1 p-4">
@@ -1640,7 +1783,7 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
           <Footer />
         </>

@@ -46,6 +46,11 @@ function Espage() {
   const [Url, setUrl] = useState("");
   const [paymentModel, setpaymentModel] = useState(false);
 
+  const [show6, setShow6] = useState(false);
+
+  const handleClose6 = () => setShow6(false);
+  const handleShow6 = () => setShow6(true);
+
   const handleClose3 = () => setpaymentModel(false);
 
   // const user = JSON.parse(localStorage.getItem("user"));
@@ -589,7 +594,7 @@ function Espage() {
           {slotGroup.map((slot, index) => (
             <div key={index} className="col-md-2">
               <div
-                className="mt-3"
+                className="mt-3 poppins-light"
                 style={{
                   border: "1px solid grey",
                   fontSize: "14px",
@@ -942,12 +947,11 @@ function Espage() {
           {!show1 && (
             <>
               <div
-                className="mb-3 mt-3"
+                className="mb-3 mt-3 poppins-semibold"
                 style={{
                   color: "black",
                   fontSize: "20px",
                   fontWeight: "bold",
-                  textDecoration: "underline",
                 }}
               >
                 Service Details
@@ -961,25 +965,28 @@ function Espage() {
                     style={{
                       width: "100%",
                       borderRadius: "10px",
-                      height: "185px",
+                      height: "150px",
                     }}
                   />
                 </div>
-                <div className="col-md-9 mt-4">
+                <div className="col-md-9 mt-5">
                   <div
+                    className="poppins-black"
                     style={{
-                      fontSize: 18,
+                      fontSize: "18px",
                       color: "black",
                       fontWeight: "bold",
                       marginTop: 5,
+                      textAlign: "left",
                     }}
                   >
                     {sdata.serviceName}
                   </div>
                   <div
+                    className="poppins-regular"
                     style={{
-                      fontSize: 14,
-                      color: "black",
+                      fontSize: "14px",
+                      color: "grey",
                       marginTop: 5,
                     }}
                   >
@@ -991,9 +998,9 @@ function Espage() {
               </div>
 
               <div className="scheduleservice mb-5">
-                <div className="title">Schedule Service</div>
+                <div className="title poppins-semibold">Schedule Service</div>
                 <div className="select_date">
-                  <div className="text">Select the date</div>
+                  <div className="text poppins-medium">Select the date</div>
 
                   <div className="date_selection">
                     {fourDates?.map((day, index) => {
@@ -1004,7 +1011,7 @@ function Espage() {
                           <input type="checkbox" name="" id={day?.day} />
 
                           <span
-                            className={`inpt ${
+                            className={`inpt poppins-medium ${
                               isDefaultChecked ? "matching" : ""
                             }`}
                             onClick={() => handleCheckboxSelect(day)}
@@ -1015,14 +1022,23 @@ function Espage() {
                       );
                     })}
                   </div>
+
                   <div className="date">
-                    <button onClick={DatePicker} style={{ cursor: "pointer" }}>
+                    <button
+                      className="poppins-light"
+                      onClick={DatePicker}
+                      style={{ cursor: "pointer", fontWeight: "bold" }}
+                    >
                       Pick Date{" "}
                       <span>
                         {selectedDate && (
                           <div
-                            className="selected_date mx-2"
-                            style={{ color: "darkred" }}
+                            className="selected_date mx-2 poppins-light"
+                            style={{
+                              color: "darkred",
+                              fontSize: "16px",
+                              fontWeight: "bold",
+                            }}
                           >
                             {moment(selectedDate).format("YYYY-MM-DD")}
                           </div>
@@ -1054,15 +1070,16 @@ function Espage() {
                     </div>
                   )}
                 </div>
+
                 <div className="select_date">
-                  <div className="text">Select the Slot</div>
+                  <div className="text poppins-medium">Select the Slot</div>
 
                   {renderSlots()}
                 </div>
               </div>
 
               <div
-                className=""
+                className="poppins-semibold"
                 style={{
                   color: "black",
                   fontSize: "20px",
@@ -1081,10 +1098,10 @@ function Espage() {
                 }}
               >
                 {Object.keys(selectedAddress).length > 0 && (
-                  <>
+                  <div className="poppins-regular" style={{ fontSize: "14px" }}>
                     {selectedAddress.platNo},{selectedAddress.address}
                     <p>{selectedAddress.landmark}</p>
-                  </>
+                  </div>
                 )}
               </div>
 
@@ -1092,7 +1109,7 @@ function Espage() {
                 <div className="row mt-5 mb-5">
                   <div
                     onClick={() => setshowbutton(true)}
-                    className="col-md-8"
+                    className="col-md-8 poppins-black"
                     style={{
                       backgroundColor: "darkred",
                       padding: "8px",
@@ -1103,7 +1120,7 @@ function Espage() {
                       cursor: "pointer",
                     }}
                   >
-                    Book
+                    Book Now
                   </div>
                 </div>
               ) : (
@@ -1111,6 +1128,7 @@ function Espage() {
                   <div className="col-md-6">
                     {sdata.serviceDirection === "Survey" ? (
                       <div
+                        className="poppins-black"
                         onClick={addsurvey}
                         style={{
                           backgroundColor: "darkred",
@@ -1122,10 +1140,11 @@ function Espage() {
                           cursor: "pointer",
                         }}
                       >
-                        Book
+                        Book Now
                       </div>
                     ) : (
                       <div
+                        className="poppins-black"
                         onClick={addenquiry}
                         style={{
                           backgroundColor: "darkred",
@@ -1137,12 +1156,13 @@ function Espage() {
                           cursor: "pointer",
                         }}
                       >
-                        Book
+                        Book Now
                       </div>
                     )}
                   </div>
                   <div className="col-md-6">
                     <div
+                      className="poppins-black"
                       onClick={handlePayment}
                       style={{
                         backgroundColor: "#040458db",
@@ -1183,7 +1203,10 @@ function Espage() {
           {/* old address select */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header>
-              <Modal.Title style={{ fontSize: "20px", fontWeight: "bold" }}>
+              <Modal.Title
+                className="poppins-medium"
+                style={{ fontSize: "20px", fontWeight: "bold" }}
+              >
                 Select your address
               </Modal.Title>
               <div onClick={handleClose}>
@@ -1191,11 +1214,12 @@ function Espage() {
                   class="fa-solid fa-xmark"
                   style={{
                     backgroundColor: "darkred",
-                    padding: "9px",
+                    padding: "5px",
                     color: "white",
                     borderRadius: "50px",
-                    width: "35px",
+                    width: "25px",
                     textAlign: "center",
+                    fontSize: "14px",
                   }}
                 ></i>
               </div>
@@ -1219,7 +1243,7 @@ function Espage() {
                     </div>
                     <div className="col-md-11 mb-3">
                       <div
-                        className=""
+                        className="poppins-black"
                         style={{
                           color: "black",
                           fontSize: "15px",
@@ -1229,7 +1253,7 @@ function Espage() {
                         {item.saveAs}
                       </div>
                       <div
-                        className=""
+                        className="poppins-regular"
                         style={{
                           color: "black",
                           fontSize: "14px",
@@ -1238,7 +1262,7 @@ function Espage() {
                         {item.platNo},{item.address}
                       </div>
                       <div
-                        className=""
+                        className="poppins-regular"
                         style={{
                           color: "black",
                           fontSize: "13px",
@@ -1257,7 +1281,7 @@ function Espage() {
                 <i className="fa-solid fa-plus mt-1"></i>
                 <div
                   onClick={handleShow1}
-                  className="mx-3"
+                  className="mx-3 poppins-black mt-2"
                   style={{
                     color: "darkred",
                     fontSize: "15px",
@@ -1269,7 +1293,7 @@ function Espage() {
               </div>
 
               <div
-                className=""
+                className="poppins-black"
                 style={{
                   backgroundColor: "darkred",
                   padding: "8px",
@@ -1359,7 +1383,7 @@ function Espage() {
                         <input
                           type="text"
                           placeholder="Search for a location"
-                          className="map_input"
+                          className="map_input poppins-black"
                           style={{
                             boxSizing: "border-box",
                             border: "1px solid transparent",
@@ -1376,7 +1400,7 @@ function Espage() {
                             left: "50%",
                             transform: "translateX(-50%)",
                             zIndex: 2,
-                            backgroundColor: "orange",
+                            backgroundColor: "darkblue",
                             width: "350px",
                           }}
                         />
@@ -1384,9 +1408,10 @@ function Espage() {
                     </GoogleMap>
                   </div>
                   <button
+                    className="poppins-black"
                     onClick={getCurrentLocation}
                     style={{
-                      backgroundColor: "orange",
+                      backgroundColor: "darkblue",
                       color: "white",
                       border: "none",
                       borderRadius: "5px",
@@ -1400,7 +1425,9 @@ function Espage() {
                   </button>
                   <div style={{ textAlign: "center", marginTop: "10px" }}>
                     {selectedPlaceAddress && (
-                      <p>Searched Location: {selectedPlaceAddress}</p>
+                      <p className="poppins-regular">
+                        Searched Location: {selectedPlaceAddress}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -1408,7 +1435,7 @@ function Espage() {
                 <div className="col-md-4">
                   <div className="mt-3">
                     <div
-                      className="mb-1"
+                      className="mb-1 poppins-regular"
                       style={{
                         color: "black",
                         fontSize: "14px",
@@ -1419,6 +1446,7 @@ function Espage() {
                       <span style={{ color: "red" }}>*</span>
                     </div>
                     <input
+                      className="poppins-regular"
                       type="text"
                       style={{
                         border: "1px solid grey",
@@ -1430,7 +1458,7 @@ function Espage() {
                   </div>
                   <div className="">
                     <div
-                      className="mb-1"
+                      className="mb-1 poppins-regular"
                       style={{
                         color: "black",
                         fontSize: "14px",
@@ -1442,6 +1470,7 @@ function Espage() {
                     </div>
                     <input
                       type="text"
+                      className="poppins-regular"
                       style={{
                         border: "1px solid grey",
                         borderRadius: "5px",
@@ -1450,7 +1479,7 @@ function Espage() {
                       onChange={(e) => setLandmark(e.target.value)}
                     />
                   </div>
-                  <div className="">
+                  <div className="poppins-regular">
                     <div
                       className="mb-1"
                       style={{
@@ -1464,7 +1493,7 @@ function Espage() {
                     <div className="d-flex">
                       <div className="col-md-3">
                         <div
-                          className=""
+                          className="poppins-regular"
                           style={{
                             border: "1px solid grey",
                             padding: "3px",
@@ -1485,7 +1514,7 @@ function Espage() {
                       <div className="col-md-1"></div>
                       <div className="col-md-3">
                         <div
-                          className=""
+                          className="poppins-regular"
                           style={{
                             border: "1px solid grey",
                             padding: "3px",
@@ -1514,7 +1543,7 @@ function Espage() {
                     </div>
                   </div>
                   <div
-                    className=""
+                    className="poppins-black"
                     style={{
                       backgroundColor: "darkred",
                       padding: "8px",

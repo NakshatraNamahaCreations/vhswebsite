@@ -435,7 +435,7 @@ function Summary() {
         {slots.map((slot, index) => (
           <div key={index} className="col-md-2">
             <div
-              className="mt-3"
+              className="mt-3 poppins-light"
               style={{
                 border: "1px solid grey",
                 fontSize: "14px",
@@ -773,12 +773,11 @@ function Summary() {
           {!show1 && (
             <>
               <div
-                className="mb-3 mt-3"
+                className="mb-3 mt-3 poppins-semibold"
                 style={{
                   color: "black",
                   fontSize: "20px",
                   fontWeight: "bold",
-                  textDecoration: "underline",
                 }}
               >
                 Service Details
@@ -792,33 +791,36 @@ function Summary() {
                     style={{
                       width: "100%",
                       borderRadius: "10px",
-                      height: "185px",
+                      height: "150px",
                     }}
                   />
                 </div>
                 <div className="col-md-9 mt-4">
                   <div
+                    className="poppins-black"
                     style={{
-                      fontSize: 18,
+                      fontSize: "18px",
                       color: "black",
                       fontWeight: "bold",
                       marginTop: 5,
+                      textAlign: "left",
                     }}
                   >
                     {sdata.serviceName}
                   </div>
                   <div
+                    className="poppins-regular"
                     style={{
-                      fontSize: 14,
-                      color: "black",
+                      fontSize: "14px",
+                      color: "grey",
                       marginTop: 5,
                     }}
                   >
                     {sdata?.serviceDesc[0]?.text}
                   </div>
-                  <div className="d-flex">
+                  <div className="d-flex mt-1">
                     <div
-                      className=""
+                      className="poppins-regular"
                       style={{
                         textDecoration: "line-through",
                         color: "black",
@@ -829,7 +831,7 @@ function Summary() {
                       ₹{plan.pPrice}
                     </div>
                     <div
-                      className="mx-2"
+                      className="mx-2 poppins-regular"
                       style={{
                         color: "red",
                         fontSize: "16px",
@@ -840,20 +842,23 @@ function Summary() {
                     </div>
                   </div>
                   {plan?.pservices ? (
-                    <div style={{ color: "black" }}>
+                    <div
+                      className="poppins-regular mt-1"
+                      style={{ color: "black" }}
+                    >
                       {plan?.pservices} Services
                     </div>
                   ) : (
                     ""
                   )}
-                  <div>{sdata?.serviceHours}</div>
+                  <div className="poppins-regular">{sdata?.serviceHours}</div>
                 </div>
               </div>
 
               <div className="scheduleservice mb-5">
-                <div className="title">Schedule Service</div>
-                <div className="select_date">
-                  <div className="text">Select the date</div>
+                <div className="title poppins-semibold">Schedule Service</div>
+                <div className="select_date ">
+                  <div className="text poppins-medium">Select the date</div>
 
                   <div className="date_selection">
                     {fourDates?.map((day, index) => {
@@ -864,7 +869,7 @@ function Summary() {
                           <input type="checkbox" name="" id={day?.day} />
 
                           <span
-                            className={`inpt ${
+                            className={`inpt poppins-medium ${
                               isDefaultChecked ? "matching" : ""
                             }`}
                             onClick={() => handleCheckboxSelect(day)}
@@ -876,13 +881,21 @@ function Summary() {
                     })}
                   </div>
                   <div className="date">
-                    <button onClick={DatePicker} style={{ cursor: "pointer" }}>
+                    <button
+                      className="poppins-light"
+                      onClick={DatePicker}
+                      style={{ cursor: "pointer", fontWeight: "bold" }}
+                    >
                       Pick Date{" "}
                       <span>
                         {selectedDate && (
                           <div
-                            className="selected_date mx-2"
-                            style={{ color: "darkred" }}
+                            className="selected_date mx-2 poppins-light"
+                            style={{
+                              color: "darkred",
+                              fontSize: "16px",
+                              fontWeight: "bold",
+                            }}
                           >
                             {moment(selectedDate).format("YYYY-MM-DD")}
                           </div>
@@ -915,14 +928,14 @@ function Summary() {
                   )}
                 </div>
                 <div className="select_date">
-                  <div className="text">Select the Slot</div>
+                  <div className="text poppins-medium">Select the Slot</div>
 
                   {renderSlots()}
                 </div>
               </div>
 
               <div
-                className=""
+                className="poppins-semibold"
                 style={{
                   color: "black",
                   fontSize: "20px",
@@ -941,17 +954,17 @@ function Summary() {
                 }}
               >
                 {Object.keys(selectedAddress).length > 0 && (
-                  <>
+                  <div className="poppins-regular" style={{ fontSize: "14px" }}>
                     {selectedAddress.platNo},{selectedAddress.address}
                     <p>{selectedAddress.landmark}</p>
-                  </>
+                  </div>
                 )}
               </div>
 
               {/* {voucherdata && ( */}
               <>
                 <div
-                  className="mt-5"
+                  className="mt-5 poppins-semibold"
                   style={{
                     color: "black",
                     fontSize: "20px",
@@ -965,7 +978,7 @@ function Summary() {
                   <div className="col-md-4">
                     <input
                       type="text"
-                      className=""
+                      className="poppins-regular"
                       style={{
                         border: "1px solid grey",
                         padding: "8px",
@@ -978,6 +991,7 @@ function Summary() {
                   </div>
                   <div className="col-md-3">
                     <div
+                      className="poppins-black"
                       onClick={() => {
                         const result = applyCouponCode();
                         setDiscountedTotal(result);
@@ -1006,7 +1020,7 @@ function Summary() {
               ) : (
                 <>
                   <div
-                    className="mt-3"
+                    className="mt-3 poppins-semibold"
                     style={{
                       color: "black",
                       fontSize: "20px",
@@ -1015,12 +1029,12 @@ function Summary() {
                   >
                     Customer details
                   </div>
-                  <div className="mt-3 mb-2">Customer Name</div>
+                  <div className="mt-3 mb-2 poppins-light">Customer Name</div>
 
                   <div className="">
                     <input
                       type="text"
-                      className=""
+                      className="poppins-light"
                       onChange={(e) => setcustomerName(e.target.value)}
                       value={customerName}
                       placeholder="Customer Name"
@@ -1028,12 +1042,12 @@ function Summary() {
                     />
                   </div>
 
-                  <div className="mb-2">Email</div>
+                  <div className="mb-2 poppins-light">Email</div>
 
                   <div className="">
                     <input
                       type="text"
-                      className=""
+                      className="poppins-light"
                       onChange={(e) => setemail(e.target.value)}
                       value={email}
                       placeholder="Email"
@@ -1044,7 +1058,7 @@ function Summary() {
               )}
 
               <div
-                className="mt-3"
+                className="mt-3 poppins-black"
                 style={{
                   color: "#40A2D8",
                   fontWeight: "900",
@@ -1055,7 +1069,7 @@ function Summary() {
                 Account !
               </div>
               <div
-                className="mt-1 mb-3"
+                className="mt-1 mb-3 poppins-black"
                 style={{
                   color: "#40A2D8",
                   fontWeight: "900",
@@ -1066,7 +1080,7 @@ function Summary() {
               </div>
 
               <div
-                className=""
+                className="poppins-semibold"
                 style={{
                   color: "darkred",
                   fontSize: "18px",
@@ -1077,9 +1091,9 @@ function Summary() {
               </div>
 
               <div className="row mt-3">
-                <div className="col-md-4">Total Amount</div>
+                <div className="col-md-4 poppins-black">Total Amount</div>
                 <div
-                  className="col-md-4"
+                  className="col-md-4 poppins-light"
                   style={{ textDecoration: "line-through" }}
                 >
                   ₹{plan.pPrice}
@@ -1087,20 +1101,28 @@ function Summary() {
               </div>
 
               <div className="row mt-3">
-                <div className="col-md-4">Discount</div>
-                <div className="col-md-4">{couponPercentage}%</div>
+                <div className="col-md-4 poppins-black">Discount</div>
+                <div className="col-md-4 poppins-light">
+                  {couponPercentage}%
+                </div>
               </div>
 
               <div className="row mt-3">
-                <div className="col-md-4">Saved</div>
-                <div className="col-md-4" style={{ color: "#40A2D8" }}>
+                <div className="col-md-4 poppins-black">Saved</div>
+                <div
+                  className="col-md-4 poppins-light"
+                  style={{ color: "#40A2D8" }}
+                >
                   ₹{Math.abs(plan.pofferprice - plan.pPrice)}
                 </div>
               </div>
 
               <div className="row mt-3">
-                <div className="col-md-4">Grand Total</div>
-                <div className="col-md-4" style={{ color: "#40A2D8" }}>
+                <div className="col-md-4 poppins-black">Grand Total</div>
+                <div
+                  className="col-md-4 poppins-light"
+                  style={{ color: "#40A2D8" }}
+                >
                   ₹{a}
                 </div>
               </div>
@@ -1109,7 +1131,7 @@ function Summary() {
                 <div className="row mt-5 mb-5">
                   <div
                     onClick={() => setshowbutton(true)}
-                    className="col-md-8"
+                    className="col-md-8 poppins-black"
                     style={{
                       backgroundColor: "darkred",
                       padding: "8px",
@@ -1128,7 +1150,7 @@ function Summary() {
                   <div className="col-md-6">
                     <div
                       onClick={addtreatmentdetails}
-                      className="col-md-8"
+                      className="col-md-8 poppins-black"
                       style={{
                         backgroundColor: "darkred",
                         padding: "8px",
@@ -1145,7 +1167,7 @@ function Summary() {
                   <div className="col-md-6">
                     <div
                       onClick={handlePayment}
-                      className="col-md-8"
+                      className="col-md-8 poppins-black"
                       style={{
                         backgroundColor: "#040458db",
                         padding: "8px",
@@ -1203,7 +1225,10 @@ function Summary() {
           {/* old address select */}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header>
-              <Modal.Title style={{ fontSize: "20px", fontWeight: "bold" }}>
+              <Modal.Title
+                className="poppins-medium"
+                style={{ fontSize: "20px", fontWeight: "bold" }}
+              >
                 Select your address
               </Modal.Title>
               <div onClick={handleClose}>
@@ -1211,11 +1236,12 @@ function Summary() {
                   class="fa-solid fa-xmark"
                   style={{
                     backgroundColor: "darkred",
-                    padding: "9px",
+                    padding: "5px",
                     color: "white",
                     borderRadius: "50px",
-                    width: "35px",
+                    width: "25px",
                     textAlign: "center",
+                    fontSize: "14px",
                   }}
                 ></i>
               </div>
@@ -1239,7 +1265,7 @@ function Summary() {
                     </div>
                     <div className="col-md-11 mb-3">
                       <div
-                        className=""
+                        className="poppins-black"
                         style={{
                           color: "black",
                           fontSize: "15px",
@@ -1249,7 +1275,7 @@ function Summary() {
                         {item.saveAs}
                       </div>
                       <div
-                        className=""
+                        className="poppins-regular"
                         style={{
                           color: "black",
                           fontSize: "14px",
@@ -1258,7 +1284,7 @@ function Summary() {
                         {item.platNo},{item.address}
                       </div>
                       <div
-                        className=""
+                        className="poppins-regular"
                         style={{
                           color: "black",
                           fontSize: "13px",
@@ -1277,7 +1303,7 @@ function Summary() {
                 <i className="fa-solid fa-plus mt-1"></i>
                 <div
                   onClick={handleShow1}
-                  className="mx-3"
+                  className="mx-3 poppins-black mt-2"
                   style={{
                     color: "darkred",
                     fontSize: "15px",
@@ -1289,7 +1315,7 @@ function Summary() {
               </div>
 
               <div
-                className=""
+                className="poppins-black"
                 style={{
                   backgroundColor: "darkred",
                   padding: "8px",
@@ -1379,7 +1405,7 @@ function Summary() {
                         <input
                           type="text"
                           placeholder="Search for a location"
-                          className="map_input"
+                          className="map_input poppins-black"
                           style={{
                             boxSizing: "border-box",
                             border: "1px solid transparent",
@@ -1396,7 +1422,7 @@ function Summary() {
                             left: "50%",
                             transform: "translateX(-50%)",
                             zIndex: 2,
-                            backgroundColor: "orange",
+                            backgroundColor: "darkblue",
                             width: "350px",
                           }}
                         />
@@ -1405,8 +1431,9 @@ function Summary() {
                   </div>
                   <button
                     onClick={getCurrentLocation}
+                    className="poppins-black"
                     style={{
-                      backgroundColor: "orange",
+                      backgroundColor: "darkblue",
                       color: "white",
                       border: "none",
                       borderRadius: "5px",
@@ -1420,7 +1447,9 @@ function Summary() {
                   </button>
                   <div style={{ textAlign: "center", marginTop: "10px" }}>
                     {selectedPlaceAddress && (
-                      <p>Searched Location: {selectedPlaceAddress}</p>
+                      <p className="poppins-regular">
+                        Searched Location: {selectedPlaceAddress}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -1428,7 +1457,7 @@ function Summary() {
                 <div className="col-md-4">
                   <div className="mt-3">
                     <div
-                      className="mb-1"
+                      className="mb-1 poppins-regular"
                       style={{
                         color: "black",
                         fontSize: "14px",
@@ -1440,6 +1469,7 @@ function Summary() {
                     </div>
                     <input
                       type="text"
+                      className="poppins-regular"
                       style={{
                         border: "1px solid grey",
                         borderRadius: "5px",
@@ -1450,7 +1480,7 @@ function Summary() {
                   </div>
                   <div className="">
                     <div
-                      className="mb-1"
+                      className="mb-1 poppins-regular"
                       style={{
                         color: "black",
                         fontSize: "14px",
@@ -1462,6 +1492,7 @@ function Summary() {
                     </div>
                     <input
                       type="text"
+                      className="poppins-regular"
                       style={{
                         border: "1px solid grey",
                         borderRadius: "5px",
@@ -1472,7 +1503,7 @@ function Summary() {
                   </div>
                   <div className="">
                     <div
-                      className="mb-1"
+                      className="mb-1 poppins-regular"
                       style={{
                         color: "black",
                         fontSize: "14px",
@@ -1484,7 +1515,7 @@ function Summary() {
                     <div className="d-flex">
                       <div className="col-md-3">
                         <div
-                          className=""
+                          className="poppins-regular"
                           style={{
                             border: "1px solid grey",
                             padding: "3px",
@@ -1505,7 +1536,7 @@ function Summary() {
                       <div className="col-md-1"></div>
                       <div className="col-md-3">
                         <div
-                          className=""
+                          className="poppins-regular"
                           style={{
                             border: "1px solid grey",
                             padding: "3px",
@@ -1534,7 +1565,7 @@ function Summary() {
                     </div>
                   </div>
                   <div
-                    className=""
+                    className="poppins-black"
                     style={{
                       backgroundColor: "darkred",
                       padding: "8px",
