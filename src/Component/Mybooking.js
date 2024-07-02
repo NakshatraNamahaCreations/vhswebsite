@@ -83,115 +83,114 @@
 
 // upcoming
 
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-// function Allorder() {
-//   const [allorder, setAllorder] = useState([]);
-//   const [value, setValue] = useState("");
-//   const [loading, setLoading] = useState(true);
-//   const navigate = useNavigate();
+function Allorder() {
+  const [allorder, setAllorder] = useState([]);
+  const [value, setValue] = useState("");
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const userData = localStorage.getItem("user");
-//         if (userData) {
-//           setValue(JSON.parse(userData));
-//           console.log(userData);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching user data: ", error);
-//       }
-//     };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = localStorage.getItem("user");
+        if (userData) {
+          setValue(JSON.parse(userData));
+          console.log(userData);
+        }
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
 
-//     fetchData();
-//   }, []);
+    fetchData();
+  }, []);
 
-//   useEffect(() => {
-//     fetchData();
-//   }, [value]);
+  useEffect(() => {
+    fetchData();
+  }, [value]);
 
-//   const fetchData = async () => {
-//     try {
-//       const response = await axios.get(
-//         `https://api.vijayhomeservicebengaluru.in/api/mybookingdata/${value?._id}`
-//       );
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.vijayhomeservicebengaluru.in/api/mybookingdata/${value?._id}`
+      );
 
-//       if (response.status === 200) {
-//         setAllorder(response.data?.runningdata);
-//         setLoading(false);
-//       } else {
-//         alert("Something went wrong");
-//       }
-//     } catch (error) {
-//       console.error("Error fetching data: ", error);
-//       setLoading(false);
-//     }
-//   };
+      if (response.status === 200) {
+        setAllorder(response.data?.runningdata);
+        setLoading(false);
+      } else {
+        alert("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      setLoading(false);
+    }
+  };
 
-//   useEffect(() => {
-//     const refreshInterval = setInterval(() => {
-//       fetchData();
-//     }, 1000);
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      fetchData();
+    }, 1000);
 
-//     return () => {
-//       clearInterval(refreshInterval);
-//     };
-//   }, [value]);
+    return () => {
+      clearInterval(refreshInterval);
+    };
+  }, [value]);
 
-//   const cdata = allorder.filter((i) => i.dsrdata[0]?.endJobTime === undefined);
+  const cdata = allorder.filter((i) => i.dsrdata[0]?.endJobTime === undefined);
 
-//   const [isLoading, setIsLoading] = useState(true);
-//   useEffect(() => {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
 
-//     const timer = setTimeout(() => {
-//       setIsLoading(false);
-//     }, 5000);
+    // Clear the timer when the component unmounts
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
-//     // Clear the timer when the component unmounts
-//     return () => {
-//       clearTimeout(timer);
-//     };
-//   }, []);
+  return (
+    <div className="container">
+      {isLoading ? (
+        <div className="loader"></div>
+      ) : (
+        <div className="content">
+          {cdata?.length > 0 ? (
+            <div className="order-list">
+              {cdata.map((item) => (
+                <div
+                  key={item.id}
+                  className="order-item"
+                  onClick={() => {
+                    navigate("/upcomingdetail", { state: { allorder: item } });
+                  }}
+                >
+                  <h3 className="service-name">{item.service}</h3>
+                  <div className="category">
+                    <i className="fa fa-category"></i>
+                    <span>{item.category}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="no-data">
+              <p>No data! Please book a service</p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
-//   return (
-//     <div className="container">
-//       {isLoading ? (
-//         <div className="loader"></div>
-//       ) : (
-//         <div className="content">
-//           {cdata?.length > 0 ? (
-//             <div className="order-list">
-//               {cdata.map((item) => (
-//                 <div
-//                   key={item.id}
-//                   className="order-item"
-//                   onClick={() => {
-//                     navigate("/upcomingdetail", { state: { allorder: item } });
-//                   }}
-//                 >
-//                   <h3 className="service-name">{item.service}</h3>
-//                   <div className="category">
-//                     <i className="fa fa-category"></i>
-//                     <span>{item.category}</span>
-//                   </div>
-//                 </div>
-//               ))}
-//             </div>
-//           ) : (
-//             <div className="no-data">
-//               <p>No data! Please book a service</p>
-//             </div>
-//           )}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Allorder;
+export default Allorder;
 
 // completed
 
@@ -325,103 +324,103 @@
 
 // Cancell Enquiry
 
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; // For navigation
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
-function Completed() {
-  const [enquiry, setEnquiry] = useState([]);
-  const [value, setValue] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+// function Completed() {
+//   const [enquiry, setEnquiry] = useState([]);
+//   const [value, setValue] = useState("");
+//   const [isLoading, setIsLoading] = useState(true);
+//   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const userValue = localStorage.getItem("user");
-        if (userValue) {
-          setValue(JSON.parse(userValue));
-        }
-      } catch (error) {
-        console.error("Error retrieving user data:", error);
-      }
-    };
+//   useEffect(() => {
+//     const getUserData = async () => {
+//       try {
+//         const userValue = localStorage.getItem("user");
+//         if (userValue) {
+//           setValue(JSON.parse(userValue));
+//         }
+//       } catch (error) {
+//         console.error("Error retrieving user data:", error);
+//       }
+//     };
 
-    getUserData();
-  }, []);
+//     getUserData();
+//   }, []);
 
-  useEffect(() => {
-    if (value) {
-      getEnquiry();
-    }
-  }, [value]);
+//   useEffect(() => {
+//     if (value) {
+//       getEnquiry();
+//     }
+//   }, [value]);
 
-  const getEnquiry = async () => {
-    try {
-      const res = await axios.get(
-        `https://api.vijayhomeservicebengaluru.in/api/findwithuseridinenquiryfollowup/${value?._id}`
-      );
-      if (res.status === 200) {
-        setEnquiry(res.data?.enquiryfollowup);
-      }
-    } catch (error) {
-      console.error("Error fetching enquiry data:", error);
-    }
-  };
+//   const getEnquiry = async () => {
+//     try {
+//       const res = await axios.get(
+//         `https://api.vijayhomeservicebengaluru.in/api/findwithuseridinenquiryfollowup/${value?._id}`
+//       );
+//       if (res.status === 200) {
+//         setEnquiry(res.data?.enquiryfollowup);
+//       }
+//     } catch (error) {
+//       console.error("Error fetching enquiry data:", error);
+//     }
+//   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
+//   useEffect(() => {
+//     const timer = setTimeout(() => {
+//       setIsLoading(false);
+//     }, 3000);
+//     return () => clearTimeout(timer);
+//   }, []);
 
-  return (
-    <div className="container">
-      {isLoading ? (
-        // <Loader />
-        <div className="">My Bookings Page</div>
-      ) : (
-        <div className="content">
-          {enquiry.length === 0 ? (
-            <div className="no-data">
-              {/* <video
-                src={require("../assets/nodata.mp4")}
-                className="no-data-video"
-                muted={false}
-                loop
-                autoPlay
-              /> */}
-              <p className="no-data-text">No data found!</p>
-            </div>
-          ) : (
-            <div className="enquiry-list">
-              {enquiry.map((item) => (
-                <div
-                  key={item.id}
-                  className="enquiry-item"
-                  onClick={() =>
-                    navigate("/Enquirydetails", {
-                      state: { enquirydata: item },
-                    })
-                  }
-                >
-                  <p className="category">{item.category}</p>
-                  {item.appoDate && (
-                    <div className="date-time">
-                      <span className="time">{item.appoTime}</span>
-                      <span className="date">{item.appoDate}</span>
-                    </div>
-                  )}
-                  <p className="description">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
+//   return (
+//     <div className="container">
+//       {isLoading ? (
+//         // <Loader />
+//         <div className="">My Bookings Page</div>
+//       ) : (
+//         <div className="content">
+//           {enquiry.length === 0 ? (
+//             <div className="no-data">
+//               {/* <video
+//                 src={require("../assets/nodata.mp4")}
+//                 className="no-data-video"
+//                 muted={false}
+//                 loop
+//                 autoPlay
+//               /> */}
+//               <p className="no-data-text">No data found!</p>
+//             </div>
+//           ) : (
+//             <div className="enquiry-list">
+//               {enquiry.map((item) => (
+//                 <div
+//                   key={item.id}
+//                   className="enquiry-item"
+//                   onClick={() =>
+//                     navigate("/Enquirydetails", {
+//                       state: { enquirydata: item },
+//                     })
+//                   }
+//                 >
+//                   <p className="category">{item.category}</p>
+//                   {item.appoDate && (
+//                     <div className="date-time">
+//                       <span className="time">{item.appoTime}</span>
+//                       <span className="date">{item.appoDate}</span>
+//                     </div>
+//                   )}
+//                   <p className="description">{item.desc}</p>
+//                 </div>
+//               ))}
+//             </div>
+//           )}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
-export default Completed;
+// export default Completed;

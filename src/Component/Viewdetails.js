@@ -925,8 +925,11 @@ function Viewdetails() {
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "row" }}>
-                    <span style={{ color: "black", fontWeight: "bold" }}>
-                      Congratulations!
+                    <span
+                      className="poppins-medium"
+                      style={{ color: "black", fontWeight: "bold" }}
+                    >
+                      Congratulations! ₹{Carttotal}
                     </span>
                   </div>
                   <span
@@ -937,6 +940,7 @@ function Viewdetails() {
                     }}
                   ></span>
                   <span
+                    className="poppins-medium"
                     style={{
                       color: "black",
                       marginLeft: 4,
@@ -964,6 +968,7 @@ function Viewdetails() {
                   >
                     <div style={{ display: "flex", flexDirection: "row" }}>
                       <span
+                        className="poppins-extrabold"
                         style={{
                           color: "white",
                           fontWeight: "bold",
@@ -972,11 +977,17 @@ function Viewdetails() {
                       >
                         Total
                       </span>
-                      <span className="mx-2" style={{ color: "white" }}>
+                      <span
+                        className="poppins-extrabold mx-2"
+                        style={{ color: "white" }}
+                      >
                         ₹{Carttotal}
                       </span>
                     </div>
-                    <span style={{ color: "white", fontWeight: "bold" }}>
+                    <span
+                      className="poppins-extrabold"
+                      style={{ color: "white", fontWeight: "bold" }}
+                    >
                       View Cart
                     </span>
                   </div>

@@ -835,6 +835,8 @@ function Cartbook() {
     }
   };
 
+  console.log("responseData======", responseData);
+
   return (
     <div className="row" style={{ justifyContent: "center" }}>
       <Header1 />
@@ -1846,6 +1848,27 @@ function Cartbook() {
                 {responseData?.data.serviceCharge}
               </div>
             </div>
+
+            {responseData?.data.GrandTotal >= 1500 ? (
+              <div>
+                <p
+                  className="poppins-regular mt-3"
+                  style={{
+                    padding: 10,
+                    color: "green",
+                    fontWeight: "bold",
+                    fontSize: 15,
+                    textAlign: "center",
+                  }}
+                >
+                  Congratulations !!! You won a reward of Rs{" "}
+                  {(responseData?.data.GrandTotal * 0.02).toFixed(2)}/- in your
+                  Wallet..!!
+                </p>
+              </div>
+            ) : (
+              <></>
+            )}
 
             <div className="d-flex justify-content-center mt-3 mb-3">
               <Button

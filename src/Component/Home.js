@@ -640,7 +640,9 @@ export default function Home() {
                   </div>
                 </div>
               </div> */}
-              <div className="poppins-semibold">Thoughtfull Curations</div>
+              <div className="poppins-semibold" style={{ fontSize: "20px" }}>
+                Thoughtful Curations
+              </div>
               <div className="poppins-medium-italic mt-1 mb-4">
                 Of our finest experiences
               </div>

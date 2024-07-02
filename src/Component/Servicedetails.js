@@ -55,7 +55,7 @@ function Servicedetails() {
   const [postsubdata, setpostsubdata] = useState([]);
   const [Servicedata, setServicedata] = useState([]);
   const [pricesdata, setpricesdata] = useState([]);
-  const [ITEM_HEIGHT, setItemHeight] = useState(400);
+  const [ITEM_HEIGHT, setItemHeight] = useState(350);
 
   const scrollViewRef = useRef(null);
 
@@ -334,12 +334,19 @@ function Servicedetails() {
     });
   };
 
-  const scrollToService = (serviceName) => {
-    const section = document.getElementById(serviceName);
+  const scrollToService = (index) => {
+    const section = document.getElementById(`service-${index}`);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  // const scrollToService = (index, sub_subcategory) => {
+  //   const yPosition = index * ITEM_HEIGHT;
+  //   if (scrollViewRef.current) {
+  //     scrollViewRef.current.scrollTo({ y: yPosition, animated: true });
+  //   }
+  // };
 
   console.log("postsubdata", postsubdata);
 
@@ -388,7 +395,11 @@ function Servicedetails() {
                       <div
                         key={index}
                         className="col-md-4 mt-4 text-center"
-                        onClick={() => scrollToService(data.sub_subcategory)}
+                        onClick={() => scrollToService(index)}
+                        // onPress={() =>
+                        //   scrollToService(index + 1, data?.sub_subcategory)
+                        // }
+                        // scrollToService(index + 1, item?.sub_subcategory)
                       >
                         <img
                           style={{
@@ -551,9 +562,9 @@ function Servicedetails() {
                 <>
                   <div
                     key={index}
-                    id={data.serviceName}
+                    id={`service-${index}`}
                     className="col-md-6 mt-4"
-                    style={{ borderBottom: "1px solid grey" }}
+                    style={{ borderBottom: "1px solid grey", height: "340px" }}
                   >
                     <div
                       className="poppins-regular"
@@ -683,26 +694,7 @@ function Servicedetails() {
                         );
                       })()}
                     </div>
-                    {/* <div className="row">
-                      <div className="col-md-1">
-                        <i
-                          class="fa-solid fa-star"
-                          style={{ color: "green" }}
-                        ></i>
-                      </div>
-                      <div className="col-md-11">
-                        <div
-                          className="mt-1"
-                          style={{
-                            color: "black",
-                            fontSize: "14px",
-                            marginLeft: "-16px",
-                          }}
-                        >
-                          {data.serviceDesc[0]?.text}
-                        </div>
-                      </div>
-                    </div> */}
+
                     <div className="row">
                       {data.serviceDesc.slice(0, 3).map((desc, index) => (
                         <div className="col-md-12" key={index}>
@@ -810,11 +802,18 @@ function Servicedetails() {
               }}
             >
               {Bannermidledata.map((data) => (
-                <div key={data._id}>
+                <div
+                  key={data._id}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <img
                     style={{
-                      width: "100%",
-                      height: "450px",
+                      width: "50%",
+                      height: "250px",
                     }}
                     className="mb-2"
                     alt=""

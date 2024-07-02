@@ -535,7 +535,7 @@ function Summary() {
     } else {
       try {
         const config = {
-          url: "https://api.vijayhomeservicebengaluru.in/api/addservicedetails",
+          url: "http://api.vijayhomeservicebengaluru.in/api/addservicedetails",
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {
@@ -1633,6 +1633,27 @@ function Summary() {
                   {responseData?.data.serviceCharge}
                 </div>
               </div>
+
+              {responseData?.data.GrandTotal >= 1500 ? (
+                <div>
+                  <p
+                    className="poppins-regular mt-3"
+                    style={{
+                      padding: 10,
+                      color: "green",
+                      fontWeight: "bold",
+                      fontSize: 15,
+                      textAlign: "center",
+                    }}
+                  >
+                    Congratulations !!! You won a reward of Rs{" "}
+                    {(responseData?.data.GrandTotal * 0.02).toFixed(2)}/- in
+                    your Wallet..!!
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
 
               <div className="d-flex justify-content-center mt-3 mb-3">
                 <Button
