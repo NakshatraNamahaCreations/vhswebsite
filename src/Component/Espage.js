@@ -52,13 +52,10 @@ function Espage() {
   const handleShow6 = () => setShow6(true);
 
   const handleClose3 = () => setpaymentModel(false);
+  const [user, setUser] = useState(null);
+  const [mainContact, setMainContact] = useState("");
 
   // const user = JSON.parse(localStorage.getItem("user"));
-
-  const userString = localStorage.getItem("user");
-  const user = JSON.parse(userString);
-
-  console.log("laksi", user._id);
 
   const [validationMessage, setValidationMessage] = useState("");
 
@@ -202,6 +199,39 @@ function Espage() {
     setdatePicker(false);
   };
 
+  const sendOTP = async () => {
+    // Validate mobile number
+    const isValidMobile = /^\d{10}$/.test(mainContact);
+
+    if (!isValidMobile) {
+      alert("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "https://api.vijayhomeservicebengaluru.in/api/sendotp/sendByCartBook",
+        { mainContact: mainContact }
+      );
+
+      if (response.status === 200) {
+        alert("Successful login");
+        setUser(response.data.user);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        // navigate("/cartbook");
+        // getAddress(response.data.user);
+        window.location.assign("/ESpage");
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        alert(error.response.data.error);
+      } else {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again later.");
+      }
+    }
+  };
+
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
 
@@ -230,6 +260,8 @@ function Espage() {
   const [Service, setService] = useState([]);
   const value = JSON.parse(localStorage.getItem("user"));
   const [customeraddress, setcustomerAddressdata] = useState([]);
+
+  console.log("value====", value);
 
   useEffect(() => {
     getAllServices();
@@ -270,7 +302,7 @@ function Espage() {
         baseURL: "https://api.vijayhomeservicebengaluru.in/api",
         headers: { "content-type": "application/json" },
         data: {
-          userId: value._id,
+          userId: value?._id,
           address: selectedPlaceAddress,
           saveAs: home ? "Home" : others ? othersPlace : "",
           landmark: landmark,
@@ -305,33 +337,6 @@ function Espage() {
 
   const now = new Date();
 
-  // const filteredData1 = filteredData.filter((item) => {
-  //   try {
-  //     const currentDateISO = now.toISOString().split("T")[0];
-
-  //     const startTimeString = item.startTime.split("-")[0].trim();
-
-  //     const dateTimeString = `${currentDateISO}T${item.startTime
-  //       .split("-")[0]
-  //       .trim()}`;
-
-  //     const startTime = moment(dateTimeString, "YYYY-MM-DDThh:mmA");
-
-  //     if (!startTime.isValid()) {
-  //       return false;
-  //     }
-
-  //     const startTimeDate = startTime.toDate();
-
-  //     const timeDifferenceInHours = (startTimeDate - now) / (1000 * 60 * 60);
-
-  //     return timeDifferenceInHours >= 2;
-  //   } catch (error) {
-  //     console.error("Error parsing date:", error);
-  //     return false;
-  //   }
-  // });
-
   const [selectedSlotIndex, setSelectedSlotIndex] = useState(null);
   const [selectedSlotText, setSelectedSlotText] = useState("");
 
@@ -346,62 +351,11 @@ function Espage() {
     "selectedSlotText",
     selectedSlotText
   );
-  // const renderSlots = () => {
-  //   if (!selectedDate) {
-  //     return null;
-  //   }
-
-  //   const currentDate = new Date();
-  //   const dateToCompare = new Date(selectedDate);
-
-  //   let slots;
-
-  //   if (currentDate == dateToCompare) {
-  //     slots = filteredData || [];
-  //   } else if (currentDate > dateToCompare) {
-  //     slots = filteredData1 || [];
-  //   } else {
-  //     slots = filteredData || [];
-  //   }
-
-  //   slots.sort((a, b) => {
-  //     const startTimeA = moment(a.startTime, "hA");
-  //     const startTimeB = moment(b.startTime, "hA");
-  //     return startTimeA.diff(startTimeB);
-  //   });
-
-  //   return (
-  //     <div className="row">
-  //       {slots.map((slot, index) => (
-  //         <div key={index} className="col-md-2">
-  //           <div
-  //             className="mt-3"
-  //             style={{
-  //               border: "1px solid grey",
-  //               fontSize: "14px",
-  //               textAlign: "center",
-  //               padding: "5px",
-  //               borderRadius: "5px",
-  //               cursor: "pointer",
-  //               color: selectedSlotIndex === index ? "white" : "black",
-  //               backgroundColor: selectedSlotIndex === index ? "darkred" : "",
-  //             }}
-  //             onClick={() => handleSlotClick1(index, slot.startTime)}
-  //           >
-  //             {slot.startTime}
-  //           </div>
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
 
   // bOOKING dETAILS
 
   const calculateExpiryDate = (selectedDate, servicePeriod) => {
     let monthsToAdd = 0;
-
-    // Determine the number of months to add based on service period
     if (servicePeriod === "monthly") {
       monthsToAdd = 1;
     } else if (servicePeriod === "quart") {
@@ -780,10 +734,6 @@ function Espage() {
       };
       await axios(config).then(function (response) {
         if (response.status === 200) {
-          // const selectedResponse = whatsappdata[0];
-          // makeApiCall(selectedResponse, user?.mainContact);
-          // setModalVisible1(false);
-
           navigate("/ESuccess", {
             state: {
               data: sdata,
@@ -944,260 +894,328 @@ function Espage() {
 
       <div className="container">
         <div className="row">
-          {!show1 && (
-            <>
-              <div
-                className="mb-3 mt-3 poppins-semibold"
-                style={{
-                  color: "black",
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
-              >
-                Service Details
-              </div>
-
-              <div className="row">
-                <div className="col-md-3">
-                  <img
-                    src={`https://api.vijayhomesuperadmin.in/service/${sdata?.serviceImg}`}
-                    alt="loading...."
-                    style={{
-                      width: "100%",
-                      borderRadius: "10px",
-                      height: "150px",
-                    }}
-                  />
-                </div>
-                <div className="col-md-9 mt-5">
+          {value?.mainContact ? (
+            <div>
+              {!show1 && (
+                <>
                   <div
-                    className="poppins-black"
+                    className="mb-3 mt-3 poppins-semibold"
                     style={{
-                      fontSize: "18px",
                       color: "black",
+                      fontSize: "20px",
                       fontWeight: "bold",
-                      marginTop: 5,
-                      textAlign: "left",
                     }}
                   >
-                    {sdata.serviceName}
-                  </div>
-                  <div
-                    className="poppins-regular"
-                    style={{
-                      fontSize: "14px",
-                      color: "grey",
-                      marginTop: 5,
-                    }}
-                  >
-                    {sdata?.serviceDesc[0]?.text}
+                    Service Details
                   </div>
 
-                  <div>{sdata?.serviceHours}</div>
-                </div>
-              </div>
-
-              <div className="scheduleservice mb-5">
-                <div className="title poppins-semibold">Schedule Service</div>
-                <div className="select_date">
-                  <div className="text poppins-medium">Select the date</div>
-
-                  <div className="date_selection">
-                    {fourDates?.map((day, index) => {
-                      const isDefaultChecked = isDateSelected(day);
-
-                      return (
-                        <label htmlFor={index} key={index}>
-                          <input type="checkbox" name="" id={day?.day} />
-
-                          <span
-                            className={`inpt poppins-medium ${
-                              isDefaultChecked ? "matching" : ""
-                            }`}
-                            onClick={() => handleCheckboxSelect(day)}
-                          >
-                            {day?.dayName}- {day?.day}
-                          </span>
-                        </label>
-                      );
-                    })}
-                  </div>
-
-                  <div className="date">
-                    <button
-                      className="poppins-light"
-                      onClick={DatePicker}
-                      style={{ cursor: "pointer", fontWeight: "bold" }}
-                    >
-                      Pick Date{" "}
-                      <span>
-                        {selectedDate && (
-                          <div
-                            className="selected_date mx-2 poppins-light"
-                            style={{
-                              color: "darkred",
-                              fontSize: "16px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {moment(selectedDate).format("YYYY-MM-DD")}
-                          </div>
-                        )}
-                      </span>
-                    </button>
-                    <div className="date_picker"></div>
-                  </div>
-                  {datepicker && (
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "100vh",
-                        zIndex: "100",
-                        marginTop: "-250px",
-                      }}
-                    >
-                      <div>
-                        <Calendar
-                          onChange={(date) => handleCalendarSelect(date)}
-                          value={selectedDate}
-                          calendarType="US"
-                          tileDisabled={tileDisabled}
-                          tileClassName={tileClassName}
-                        />
-                      </div>
+                  <div className="row">
+                    <div className="col-md-3">
+                      <img
+                        src={`https://api.vijayhomesuperadmin.in/service/${sdata?.serviceImg}`}
+                        alt="loading...."
+                        style={{
+                          width: "100%",
+                          borderRadius: "10px",
+                          height: "150px",
+                        }}
+                      />
                     </div>
-                  )}
-                </div>
+                    <div className="col-md-9 mt-5">
+                      <div
+                        className="poppins-black"
+                        style={{
+                          fontSize: "18px",
+                          color: "black",
+                          fontWeight: "bold",
+                          marginTop: 5,
+                          textAlign: "left",
+                        }}
+                      >
+                        {sdata.serviceName}
+                      </div>
+                      <div
+                        className="poppins-regular"
+                        style={{
+                          fontSize: "14px",
+                          color: "grey",
+                          marginTop: 5,
+                        }}
+                      >
+                        {sdata?.serviceDesc[0]?.text}
+                      </div>
 
-                <div className="select_date">
-                  <div className="text poppins-medium">Select the Slot</div>
-
-                  {renderSlots()}
-                </div>
-              </div>
-
-              <div
-                className="poppins-semibold"
-                style={{
-                  color: "black",
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
-              >
-                Select the address
-              </div>
-
-              <div
-                className="shadow-sm mt-2 mb-2"
-                style={{
-                  backgroundColor: "white",
-                  padding: "10px",
-                  borderRadius: "10px",
-                }}
-              >
-                {Object.keys(selectedAddress).length > 0 && (
-                  <div className="poppins-regular" style={{ fontSize: "14px" }}>
-                    {selectedAddress.platNo},{selectedAddress.address}
-                    <p>{selectedAddress.landmark}</p>
+                      <div>{sdata?.serviceHours}</div>
+                    </div>
                   </div>
-                )}
-              </div>
 
-              {!showbutton ? (
-                <div className="row mt-5 mb-5">
+                  <div className="scheduleservice mb-5">
+                    <div className="title poppins-semibold">
+                      Schedule Service
+                    </div>
+                    <div className="select_date">
+                      <div className="text poppins-medium">Select the date</div>
+
+                      <div className="date_selection">
+                        {fourDates?.map((day, index) => {
+                          const isDefaultChecked = isDateSelected(day);
+
+                          return (
+                            <label htmlFor={index} key={index}>
+                              <input type="checkbox" name="" id={day?.day} />
+
+                              <span
+                                className={`inpt poppins-medium ${
+                                  isDefaultChecked ? "matching" : ""
+                                }`}
+                                onClick={() => handleCheckboxSelect(day)}
+                              >
+                                {day?.dayName}- {day?.day}
+                              </span>
+                            </label>
+                          );
+                        })}
+                      </div>
+
+                      <div className="date">
+                        <button
+                          className="poppins-light"
+                          onClick={DatePicker}
+                          style={{ cursor: "pointer", fontWeight: "bold" }}
+                        >
+                          Pick Date{" "}
+                          <span>
+                            {selectedDate && (
+                              <div
+                                className="selected_date mx-2 poppins-light"
+                                style={{
+                                  color: "darkred",
+                                  fontSize: "16px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {moment(selectedDate).format("YYYY-MM-DD")}
+                              </div>
+                            )}
+                          </span>
+                        </button>
+                        <div className="date_picker"></div>
+                      </div>
+                      {datepicker && (
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            height: "100vh",
+                            zIndex: "100",
+                            marginTop: "-250px",
+                          }}
+                        >
+                          <div>
+                            <Calendar
+                              onChange={(date) => handleCalendarSelect(date)}
+                              value={selectedDate}
+                              calendarType="US"
+                              tileDisabled={tileDisabled}
+                              tileClassName={tileClassName}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="select_date">
+                      <div className="text poppins-medium">Select the Slot</div>
+
+                      {renderSlots()}
+                    </div>
+                  </div>
+
                   <div
-                    onClick={() => setshowbutton(true)}
-                    className="col-md-8 poppins-black"
+                    className="poppins-semibold"
                     style={{
-                      backgroundColor: "darkred",
-                      padding: "8px",
-                      color: "white",
-                      fontSize: "14px",
-                      textAlign: "center",
-                      borderRadius: "5px",
-                      cursor: "pointer",
+                      color: "black",
+                      fontSize: "20px",
+                      fontWeight: "bold",
                     }}
                   >
-                    Book Now
+                    Select the address
                   </div>
-                </div>
-              ) : (
-                <div className="row mt-5 mb-5">
-                  <div className="col-md-6">
-                    {sdata.serviceDirection === "Survey" ? (
+
+                  <div
+                    className="shadow-sm mt-2 mb-2"
+                    style={{
+                      backgroundColor: "white",
+                      padding: "10px",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    {Object.keys(selectedAddress).length > 0 && (
                       <div
-                        className="poppins-black"
-                        onClick={addsurvey}
-                        style={{
-                          backgroundColor: "darkred",
-                          padding: "8px",
-                          color: "white",
-                          fontSize: "14px",
-                          textAlign: "center",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                        }}
+                        className="poppins-regular"
+                        style={{ fontSize: "14px" }}
                       >
-                        Book Now
-                      </div>
-                    ) : (
-                      <div
-                        className="poppins-black"
-                        onClick={addenquiry}
-                        style={{
-                          backgroundColor: "darkred",
-                          padding: "8px",
-                          color: "white",
-                          fontSize: "14px",
-                          textAlign: "center",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Book Now
+                        {selectedAddress.platNo},{selectedAddress.address}
+                        <p>{selectedAddress.landmark}</p>
                       </div>
                     )}
                   </div>
-                  <div className="col-md-6">
+
+                  {!showbutton ? (
+                    <div className="row mt-5 mb-5">
+                      <div
+                        onClick={() => setshowbutton(true)}
+                        className="col-md-8 poppins-black"
+                        style={{
+                          backgroundColor: "darkred",
+                          padding: "8px",
+                          color: "white",
+                          fontSize: "14px",
+                          textAlign: "center",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Book Now
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="row mt-5 mb-5">
+                      <div className="col-md-6">
+                        {sdata.serviceDirection === "Survey" ? (
+                          <div
+                            className="poppins-black"
+                            onClick={addsurvey}
+                            style={{
+                              backgroundColor: "darkred",
+                              padding: "8px",
+                              color: "white",
+                              fontSize: "14px",
+                              textAlign: "center",
+                              borderRadius: "5px",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Book Now
+                          </div>
+                        ) : (
+                          <div
+                            className="poppins-black"
+                            onClick={addenquiry}
+                            style={{
+                              backgroundColor: "darkred",
+                              padding: "8px",
+                              color: "white",
+                              fontSize: "14px",
+                              textAlign: "center",
+                              borderRadius: "5px",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Book Now
+                          </div>
+                        )}
+                      </div>
+                      <div className="col-md-6">
+                        <div
+                          className="poppins-black"
+                          onClick={handlePayment}
+                          style={{
+                            backgroundColor: "#040458db",
+                            padding: "8px",
+                            color: "white",
+                            fontSize: "14px",
+                            textAlign: "center",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Payment
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          ) : (
+            <div className="row">
+              <div className="col-md-12">
+                <div
+                  className="row"
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <div
+                    className="col-md-5"
+                    style={{
+                      marginTop: "10%",
+                      border: "1px solid grey",
+                      padding: "20px",
+                      borderRadius: "5px",
+                    }}
+                  >
                     <div
-                      className="poppins-black"
-                      onClick={handlePayment}
-                      style={{
-                        backgroundColor: "#040458db",
-                        padding: "8px",
-                        color: "white",
-                        fontSize: "14px",
-                        textAlign: "center",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                      }}
+                      className="row"
+                      style={{ justifyContent: "center", alignItems: "center" }}
                     >
-                      Payment
+                      <img
+                        src="./images/vhs.png"
+                        style={{
+                          width: "110px",
+                          height: "90px",
+                          textAlign: "center",
+                        }}
+                        alt="VHS Logo"
+                      />
+
+                      <div
+                        className="mt-3"
+                        style={{
+                          color: "black",
+                          fontSize: "17px",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Login With Mobile Number
+                      </div>
+
+                      <input
+                        type="text"
+                        value={mainContact}
+                        onChange={(e) => setMainContact(e.target.value)}
+                        placeholder="Enter Mobile Number"
+                        style={{
+                          border: "1px solid grey",
+                          height: "45px",
+                          width: "60%",
+                          marginTop: "15px",
+                        }}
+                      />
+
+                      <div
+                        onClick={sendOTP}
+                        className="mb-2"
+                        style={{
+                          textAlign: "center",
+                          color: "white",
+                          fontSize: 16,
+                          fontWeight: "800",
+                          backgroundColor: "darkred",
+                          padding: "5px",
+                          width: "60%",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        SIGN IN
+                      </div>
                     </div>
                   </div>
                 </div>
-              )}
-
-              <div className="row mt-5 mb-5">
-                {/* <div
-                  onClick={handlePayment}
-                  className="col-md-8"
-                  style={{
-                    backgroundColor: "darkred",
-                    padding: "8px",
-                    color: "white",
-                    fontSize: "14px",
-                    textAlign: "center",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Payment
-                </div> */}
               </div>
-            </>
+            </div>
           )}
 
           {/* old address select */}

@@ -909,7 +909,10 @@ function Viewdetails() {
             {subcategory?.category === "Painting" ? (
               ""
             ) : Carttotal > 0 ? (
-              <div className="mb-5">
+              <div
+                className="row mb-5"
+                style={{ justifyContent: "center", alignItems: "center" }}
+              >
                 <div
                   className="mt-5"
                   style={{
@@ -921,7 +924,7 @@ function Viewdetails() {
                     alignSelf: "center",
                     justifyContent: "center",
                     textAlign: "center",
-                    width: "100%",
+                    width: "60%",
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "row" }}>
@@ -950,14 +953,17 @@ function Viewdetails() {
                     saved so far!
                   </span>
                 </div>
-                <div>
+                <div
+                  className="row"
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
                   <div
                     style={{
                       display: "flex",
                       backgroundColor: "darkred",
                       color: "white",
                       padding: 10,
-                      width: "100%",
+                      width: "61%",
                       textAlign: "center",
                       flexDirection: "row",
                       justifyContent: "space-between",

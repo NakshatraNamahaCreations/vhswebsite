@@ -1004,6 +1004,12 @@ function Cartbook() {
                             color: "black",
                             fontSize: "12px",
                             marginTop: "3px",
+                            whiteSpace: "normal",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            display: "-webkit-box",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 3,
                           }}
                         >
                           {i.addOnsDescription}
@@ -1446,7 +1452,10 @@ function Cartbook() {
         {/* old address select */}
         <Modal show={show} onHide={handleClose}>
           <Modal.Header>
-            <Modal.Title style={{ fontSize: "20px", fontWeight: "bold" }}>
+            <Modal.Title
+              className="poppins-medium"
+              style={{ fontSize: "20px", fontWeight: "bold" }}
+            >
               Select your address
             </Modal.Title>
             <div onClick={handleClose}>
@@ -1454,11 +1463,12 @@ function Cartbook() {
                 class="fa-solid fa-xmark"
                 style={{
                   backgroundColor: "darkred",
-                  padding: "9px",
+                  padding: "5px",
                   color: "white",
                   borderRadius: "50px",
-                  width: "35px",
+                  width: "25px",
                   textAlign: "center",
+                  fontSize: "14px",
                 }}
               ></i>
             </div>
@@ -1482,7 +1492,7 @@ function Cartbook() {
                   </div>
                   <div className="col-md-11 mb-3">
                     <div
-                      className=""
+                      className="poppins-black"
                       style={{
                         color: "black",
                         fontSize: "15px",
@@ -1492,7 +1502,7 @@ function Cartbook() {
                       {item.saveAs}
                     </div>
                     <div
-                      className=""
+                      className="poppins-regular"
                       style={{
                         color: "black",
                         fontSize: "14px",
@@ -1501,7 +1511,7 @@ function Cartbook() {
                       {item.platNo},{item.address}
                     </div>
                     <div
-                      className=""
+                      className="poppins-regular"
                       style={{
                         color: "black",
                         fontSize: "13px",
@@ -1520,7 +1530,7 @@ function Cartbook() {
               <i className="fa-solid fa-plus mt-1"></i>
               <div
                 onClick={handleShow1}
-                className="mx-3"
+                className="mx-3 poppins-black mt-2"
                 style={{
                   color: "darkred",
                   fontSize: "15px",
@@ -1532,7 +1542,7 @@ function Cartbook() {
             </div>
 
             <div
-              className=""
+              className="poppins-black"
               style={{
                 backgroundColor: "darkred",
                 padding: "8px",

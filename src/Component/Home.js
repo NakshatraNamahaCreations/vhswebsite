@@ -30,6 +30,13 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import "swiper/css/navigation"; // Import navigation CSS
+import hbanner from "../assests/hbanner.jpg";
+import hbanner1 from "../assests/hbanner1.jpg";
+import hbanner2 from "../assests/hbanner2.jpg";
+import hbanner3 from "../assests/hbanner3.jpg";
+import hbanner4 from "../assests/hbanner4.jpg";
+import hbanner5 from "../assests/hbanner5.jpg";
+import hbanner6 from "../assests/hbanner6.jpg";
 
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 
@@ -281,6 +288,16 @@ export default function Home() {
       setIsLoading(false);
     }
   };
+
+  const Bannerimages = [
+    { images: hbanner },
+    { images: hbanner1 },
+    { images: hbanner2 },
+    { images: hbanner3 },
+    { images: hbanner4 },
+    { images: hbanner5 },
+    { images: hbanner6 },
+  ];
 
   console.log("FilterPestControl======", FilterPestControl);
 
@@ -715,7 +732,7 @@ export default function Home() {
                   </div>
                 </div>
               </div> */}
-              <div className="poppins-semibold mb-4">Category</div>
+              <div className="poppins-semibold mb-4">Category </div>
 
               {/* {allcategory.map((data) => (
                 <div className="row">
@@ -740,20 +757,21 @@ export default function Home() {
 
               <Swiper
                 slidesPerView={3}
-                spaceBetween={40}
+                spaceBetween={30}
                 freeMode={true}
                 pagination={{
                   clickable: true,
                 }}
                 autoplay={{
-                  delay: 4000,
+                  delay: 2500,
                   disableOnInteraction: false,
                 }}
                 modules={[FreeMode, Pagination, Autoplay]}
                 className="mySwiper"
               >
                 <div className="col-md-4">
-                  {allcategory.map((data) => (
+                  {/* allcategory */}
+                  {Bannerimages.map((data) => (
                     <SwiperSlide
                       key={data._id}
                       style={{
@@ -765,9 +783,9 @@ export default function Home() {
                         alignItems: "flex-start",
                       }}
                     >
-                      <div
+                      {/* <div
                         style={{
-                          // backgroundColor: "grey",
+                     
                           backgroundColor: getCategoryColor(data.category),
                           padding: "10px",
                           width: "100%",
@@ -800,7 +818,16 @@ export default function Home() {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
+                      <img
+                        src={data.images}
+                        style={{
+                          width: "350px",
+                          height: "200px",
+                          borderRadius: "10px",
+                        }}
+                        alt="loading...."
+                      />
                     </SwiperSlide>
                   ))}
                 </div>
@@ -809,8 +836,20 @@ export default function Home() {
           </div>
 
           <div className="container">
-            <div className="poppins-semibold mt-5">Cleaning Services</div>
-            <div className="mt-3" style={{ position: "relative" }}>
+            <div className="poppins-semibold mt-4 mb-2">
+              Cleaning Services
+              <span
+                style={{
+                  backgroundColor: "#FFB6C1",
+                  padding: "3px 25px",
+                  borderRadius: "20px",
+                }}
+                className="poppins-black mx-2"
+              >
+                up to 50% off
+              </span>
+            </div>
+            <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
                 slidesPerView={5}
                 spaceBetween={30}
@@ -889,8 +928,20 @@ export default function Home() {
             </div>
 
             {/* Painting Services */}
-            <div className="poppins-semibold mt-5">Painting Services</div>
-            <div className="mt-3" style={{ position: "relative" }}>
+            <div className="poppins-semibold mt-2 mb-2">
+              Painting Services{" "}
+              <span
+                style={{
+                  backgroundColor: "#ADD8E6",
+                  padding: "3px 25px",
+                  borderRadius: "20px",
+                }}
+                className="poppins-black mx-2"
+              >
+                100 % In House Staff
+              </span>
+            </div>
+            <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
                 slidesPerView={5}
                 spaceBetween={30}
@@ -964,8 +1015,20 @@ export default function Home() {
             </div>
 
             {/* Pest Control */}
-            <div className="poppins-semibold mt-5">Pest Control</div>
-            <div className="mt-3" style={{ position: "relative" }}>
+            <div className="poppins-semibold mt-4 mb-2">
+              Pest Control{" "}
+              <span
+                style={{
+                  backgroundColor: "#98FB98",
+                  padding: "3px 25px",
+                  borderRadius: "20px",
+                }}
+                className="poppins-black mx-2"
+              >
+                Licensed Company
+              </span>
+            </div>
+            <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
                 slidesPerView={5}
                 spaceBetween={30}
@@ -1039,8 +1102,20 @@ export default function Home() {
             </div>
 
             {/* Floor Polishing */}
-            <div className="poppins-semibold mt-5">Floor Polishing</div>
-            <div className="mt-3" style={{ position: "relative" }}>
+            <div className="poppins-semibold mt-4 mb-2">
+              Floor Polishing{" "}
+              <span
+                style={{
+                  backgroundColor: "#FFD700",
+                  padding: "3px 25px",
+                  borderRadius: "20px",
+                }}
+                className="poppins-black mx-2"
+              >
+                Shine Like New
+              </span>
+            </div>
+            <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
                 slidesPerView={5}
                 spaceBetween={30}
@@ -1113,84 +1188,21 @@ export default function Home() {
               <div className="swiper-pagination swiper-pagination-polishing"></div>
             </div>
 
-            {/* Home Repairing Services */}
-            <div className="poppins-semibold mt-5">Home Repairing Services</div>
-            <div className="mt-3" style={{ position: "relative" }}>
-              <Swiper
-                slidesPerView={5}
-                spaceBetween={30}
-                freeMode={true}
-                pagination={{
-                  clickable: true,
-                  el: ".swiper-pagination-repairing",
-                }}
-                navigation={{
-                  nextEl: ".swiper-button-next-repairing",
-                  prevEl: ".swiper-button-prev-repairing",
-                }}
-                modules={[FreeMode, Pagination, Autoplay, Navigation]}
-                className="mySwiper"
-              >
-                {FilterRepairing.sort(
-                  (a, b) => parseInt(a.order) - parseInt(b.order)
-                ).map((ele, index) => (
-                  <SwiperSlide
-                    key={ele._id}
-                    style={{
-                      backgroundColor: "white",
-                      padding: "0px",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      textAlign: "center",
-                    }}
-                  >
-                    <Link
-                      to="/servicedetails"
-                      state={{ subcategory: ele?.subcategory }}
-                      key={ele.subcategory}
-                      style={{ textDecoration: "none" }}
-                      className="text-decoration-none text-black"
-                    >
-                      <div className="col-md-4" style={{ width: "100%" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <img
-                            src={ele.imglink}
-                            alt="loading...."
-                            style={{
-                              width: "150px",
-                              height: "150px",
-                              borderRadius: "10px",
-                            }}
-                          />
-                        </div>
-                        <div className="poppins-medium mt-2">
-                          {ele.subcategory}
-                        </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-              <div className="swiper-button-prev swiper-button-prev-repairing">
-                <i className="fa-solid fa-arrow-left left-icon"></i>
-              </div>
-              <div className="swiper-button-next swiper-button-next-repairing">
-                <i className="fa-solid fa-arrow-right right-icon"></i>
-              </div>
-              <div className="swiper-pagination swiper-pagination-repairing"></div>
-            </div>
-
             {/* Packers & Movers */}
-            <div className="poppins-semibold mt-5">Packers & Movers</div>
-            <div className="mt-3" style={{ position: "relative" }}>
+            <div className="poppins-semibold mt-4 mb-2">
+              Packers & Movers{" "}
+              <span
+                style={{
+                  backgroundColor: "#20B2AA",
+                  padding: "3px 25px",
+                  borderRadius: "20px",
+                }}
+                className="poppins-black mx-2"
+              >
+                1Lakh + Happy Customer
+              </span>
+            </div>
+            <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
                 slidesPerView={5}
                 spaceBetween={30}
@@ -1264,8 +1276,20 @@ export default function Home() {
             </div>
 
             {/* Appliance Services */}
-            <div className="poppins-semibold mt-5">Appliance Services</div>
-            <div className="mt-3" style={{ position: "relative" }}>
+            <div className="poppins-semibold mt-4 mb-2">
+              Appliance Services{" "}
+              <span
+                style={{
+                  backgroundColor: "#9370DB",
+                  padding: "3px 25px",
+                  borderRadius: "20px",
+                }}
+                className="poppins-black mx-2"
+              >
+                Amazon prime Partner
+              </span>
+            </div>
+            <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
                 slidesPerView={5}
                 spaceBetween={30}
@@ -1315,8 +1339,8 @@ export default function Home() {
                             src={ele.imglink}
                             alt="loading...."
                             style={{
-                              width: "200px",
-                              height: "200px",
+                              width: "150px",
+                              height: "150px",
                               borderRadius: "10px",
                             }}
                           />
@@ -1336,6 +1360,93 @@ export default function Home() {
                 <i className="fa-solid fa-arrow-right right-icon"></i>
               </div>
               <div className="swiper-pagination swiper-pagination-appliance"></div>
+            </div>
+
+            {/* Home Repairing Services */}
+            <div className="poppins-semibold mt-4 mb-2">
+              Home Repairing Services
+              <span
+                style={{
+                  backgroundColor: "#FFA07A",
+                  padding: "3px 25px",
+                  borderRadius: "20px",
+                }}
+                className="poppins-black mx-2"
+              >
+                Amazon prime Partner
+              </span>
+            </div>
+            <div className="mt-4" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={5}
+                spaceBetween={30}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination-repairing",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next-repairing",
+                  prevEl: ".swiper-button-prev-repairing",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {FilterRepairing.sort(
+                  (a, b) => parseInt(a.order) - parseInt(b.order)
+                ).map((ele, index) => (
+                  <SwiperSlide
+                    key={ele._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Link
+                      to="/servicedetails"
+                      state={{ subcategory: ele?.subcategory }}
+                      key={ele.subcategory}
+                      style={{ textDecoration: "none" }}
+                      className="text-decoration-none text-black"
+                    >
+                      <div className="col-md-4" style={{ width: "100%" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <img
+                            src={ele.imglink}
+                            alt="loading...."
+                            style={{
+                              width: "150px",
+                              height: "150px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-2">
+                          {ele.subcategory}
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="swiper-button-prev swiper-button-prev-repairing">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next swiper-button-next-repairing">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
+              </div>
+              <div className="swiper-pagination swiper-pagination-repairing"></div>
             </div>
 
             {/* Facility man agement Services */}
@@ -1600,8 +1711,6 @@ export default function Home() {
                     <SwiperSlide
                       key={data._id}
                       style={{
-                        // height: "500px",
-                        // width: "500px",
                         backgroundColor: "white",
                         padding: "0px",
                         display: "flex",

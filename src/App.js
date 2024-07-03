@@ -28,6 +28,10 @@ import Paymentfailure from "./Component/Paymentfailure";
 import Header1 from "./Component/Header1";
 import Mybooking from "./Component/Mybooking";
 import Mainheader from "./Component/Mainheader";
+import Completed from "./Component/Completed";
+import Upcomingdetail from "./Component/Upcomingdetail";
+import Enquirydetails from "./Component/Enquirydetails";
+import Completeddetails from "./Component/Completeddetails";
 
 function App() {
   return (
@@ -56,6 +60,10 @@ function App() {
         <Route path="/Paymentfailure" element={<Paymentfailure />} />
         <Route path="/mybooking" element={<Mybooking />} />
         <Route path="/mainheader" element={<Mainheader />} />
+        <Route path="/completed" element={<Completed />} />
+        <Route path="/upcomingdetail" element={<Upcomingdetail />} />
+        <Route path="/enquirydetails" element={<Enquirydetails />} />
+        <Route path="/completeddetails" element={<Completeddetails />} />
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>
       {/* <AppLink /> */}
