@@ -64,6 +64,7 @@ function App() {
         <Route path="/upcomingdetail" element={<Upcomingdetail />} />
         <Route path="/enquirydetails" element={<Enquirydetails />} />
         <Route path="/completeddetails" element={<Completeddetails />} />
+
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>
       {/* <AppLink /> */}

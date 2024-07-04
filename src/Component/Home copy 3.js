@@ -34,7 +34,6 @@ import hbanner6 from "../assests/hbanner6.jpg";
 import { setstoreCity } from "../dataStoreComponent/citySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
-import { useLocation } from "react-router-dom";
 
 // updated home
 export default function Home() {
@@ -65,51 +64,6 @@ export default function Home() {
   const [selectedCity, setSelectedCity] = useState("");
   const [activeCity, setActiveCity] = useState("");
   const distpatch = useDispatch();
-  const location = useLocation();
-  const pathName = location.pathname;
-
-  // Searc Modal
-  const [searchlist, setSearchlist] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredResults, setFilteredResults] = useState([]);
-
-  useEffect(() => {
-    getsearch();
-  }, []);
-
-  const getsearch = async () => {
-    let res = await axios.get(
-      "https://api.vijayhomeservicebengaluru.in/api/userapp/getappsubcat"
-    );
-    if (res.status === 200) {
-      setSearchlist(res.data?.subcategory);
-    }
-  };
-
-  console.log("searchlist", searchlist);
-
-  useEffect(() => {
-    if (searchQuery.length > 0) {
-      const filtered = searchlist.filter((data) => {
-        const categoryMatches = data.category
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase());
-        const subcategoryMatches = data.subcategory
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase());
-        return categoryMatches || subcategoryMatches;
-      });
-      setFilteredResults(filtered);
-    } else {
-      setFilteredResults([]); // Clear the results when the search query is empty
-    }
-  }, [searchQuery, searchlist]);
-
-  useEffect(() => {
-    // if (pathName === "/") {
-    setOpenResetModal(true);
-    // }
-  }, []);
 
   const [isLoading, setIsLoading] = useState(false);
   const styles = {
@@ -656,7 +610,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* <div
+          <div
             className="row"
             style={{
               backgroundColor: "skyblue",
@@ -676,8 +630,6 @@ export default function Home() {
                 className="col-md-12 poppins-black"
                 placeholder="Search for Services"
                 style={{ height: "45px", paddingLeft: "140px" }}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                value={searchQuery}
               />
               <div
                 onClick={handleResetModal}
@@ -708,6 +660,7 @@ export default function Home() {
                 className="fa-solid fa-magnifying-glass"
                 style={{
                   position: "absolute",
+                  // marginRight: "25px",
                   fontSize: "20px",
                   marginTop: "13px",
                   marginLeft: "-40px",
@@ -715,249 +668,6 @@ export default function Home() {
               ></i>
             </div>
           </div>
-
-          <div className="">
-            {filteredResults.map((data) => (
-              <div className="row" style={{ justifyContent: "center" }}>
-                <div className="col-md-3 ">
-                  <Link
-                    className="row"
-                    to="/servicedetails"
-                    state={{ subcategory: data.subcategory }}
-                    style={{
-                      textDecoration: "none",
-                      backgroundColor: "white",
-                      padding: "10px",
-                    }}
-                  >
-                    <div className="col-md-3">
-                      <img
-                        src={data.imglink}
-                        alt="Subcategory"
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          borderRadius: "5px",
-                          objectFit: "contain",
-                        }}
-                      />
-                    </div>
-                    <div className="col-md-9" style={{}}>
-                      <div
-                        className="poppins-regular"
-                        style={{ color: "black" }}
-                      >
-                        {data?.category}
-                      </div>
-                      <div
-                        className="poppins-regular"
-                        style={{ color: "black" }}
-                      >
-                        {data?.subcategory}
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div> */}
-          <div
-            className="row"
-            style={{
-              backgroundColor: "skyblue",
-              padding: "20px",
-              justifyContent: "center",
-              position: "relative",
-            }}
-          >
-            <div className="col-md-6 col-sm-12 col-xs-12">
-              <div
-                className="poppins-semibold mb-4"
-                style={{ textAlign: "center" }}
-              >
-                The Award winning company
-              </div>
-              <input
-                type="text"
-                className="col-md-12 poppins-regular"
-                placeholder="Search for Services"
-                style={{
-                  height: "45px",
-                  paddingLeft: "140px",
-                  fontSize: "16px",
-                }}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                value={searchQuery}
-              />
-              <div
-                onClick={handleResetModal}
-                className="d-flex"
-                style={{
-                  position: "absolute",
-                  marginTop: "-54px",
-                  marginLeft: "15px",
-                  borderRight: "2px solid black",
-                }}
-              >
-                <i
-                  className="fa-solid fa-location-dot"
-                  style={{
-                    fontSize: "16px",
-                    marginTop: "3px",
-                    color: "darkred",
-                  }}
-                ></i>
-                <div
-                  className="poppins-regular mx-2"
-                  style={{ fontSize: "16px", marginTop: "2px" }}
-                >
-                  {selectedCity ? selectedCity : "Select City"}
-                </div>
-              </div>
-              <i
-                className="fa-solid fa-magnifying-glass"
-                style={{
-                  position: "absolute",
-                  fontSize: "20px",
-                  marginTop: "13px",
-                  marginLeft: "-40px",
-                }}
-              ></i>
-            </div>
-
-            {/* Display search results */}
-            {searchQuery.length > 0 && (
-              <div
-                className="search-results"
-                style={{
-                  position: "absolute",
-                  backgroundColor: "white",
-                  width: "33%",
-                  maxHeight: "300px",
-                  overflowY: "auto",
-                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                  borderRadius: "5px",
-                  marginTop: "105px",
-                  zIndex: 1000,
-                  left: "40%",
-                  right: "10%",
-                }}
-              >
-                {filteredResults.length > 0 ? (
-                  filteredResults.map((data) => (
-                    <div
-                      className="row"
-                      key={data._id}
-                      style={{ justifyContent: "center", padding: "5px 5px" }}
-                    >
-                      <div className="col-md-12">
-                        <Link
-                          to="/servicedetails"
-                          state={{ subcategory: data.subcategory }}
-                          style={{
-                            textDecoration: "none",
-                            backgroundColor: "white",
-                            // padding: "10px",
-                          }}
-                        >
-                          <div className="row">
-                            <div className="col-md-3">
-                              <img
-                                src={data.imglink}
-                                alt="Subcategory"
-                                style={{
-                                  width: "80px",
-                                  height: "80px",
-                                  borderRadius: "5px",
-                                  objectFit: "contain",
-                                }}
-                              />
-                            </div>
-                            <div className="col-md-9 mt-3">
-                              <div
-                                className="poppins-regular"
-                                style={{ color: "black" }}
-                              >
-                                {data?.category}
-                              </div>
-                              <div
-                                className="poppins-regular"
-                                style={{ color: "black" }}
-                              >
-                                {data?.subcategory}
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div
-                    style={{
-                      textAlign: "center",
-                      padding: "10px",
-                      color: "black",
-                    }}
-                  >
-                    No results found
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* {searchQuery.length > 0 ? (
-            filteredResults.map((data) => (
-              <Link
-                className="row shadow"
-                to="/servicedetails"
-                state={{ subcategory: data.subcategory }}
-                style={{
-                  textDecoration: "none",
-                  backgroundColor: "white",
-                  padding: "15px",
-                }}
-              >
-                <div className="col-md-6">
-                  <div className="row">
-                    <div className="col-md-4">
-                      <img
-                        src={`https://api.vijayhomesuperadmin.in/subcat/${data?.subcatimg}`}
-                        alt="Subcategory"
-                        style={{
-                          width: "100%",
-                          height: 70,
-                          borderRadius: 5,
-                          objectFit: "contain",
-                        }}
-                      />
-                    </div>
-                    <div
-                      className="col-md-8"
-                      style={{
-                        justifyContent: "center",
-                        marginLeft: "15px",
-                      }}
-                    >
-                      <div style={{ color: "black" }}>{data?.category}</div>
-                      <div style={{ color: "black" }}>{data?.subcategory}</div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))
-          ) : (
-            <div
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ color: "black" }}>No results found</div>
-            </div>
-          )} */}
 
           <div className="container mt-3">
             <div className="row">

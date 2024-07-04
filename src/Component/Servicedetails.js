@@ -63,7 +63,7 @@ function Servicedetails() {
 
   const [Bannermidledata, setBannermidledata] = useState([]);
 
-  console.log("serviceData===", serviceData);
+  console.log("localstoragecitys===", localstoragecitys);
 
   useEffect(() => {
     getbannerdatamiddle();

@@ -4,12 +4,27 @@ import Header2 from "./Header2";
 import vhslogo from "../assests/vhs-lgo.png";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
+import moment from "moment/moment";
+import { Button } from "react-bootstrap";
 
 function Upcomingdetail() {
   const location = useLocation();
   const { allorder } = location.state || {};
   const [technisian, setTechnisian] = useState([]);
   const value = JSON.parse(localStorage.getItem("user"));
+  const [serviceDate, setserviceDate] = useState("");
+  const [paymentUrl, setPaymentUrl] = useState("");
+  const [paymentMode, setpaymentMode] = useState("");
+  const [isCheckingStatus, setIsCheckingStatus] = useState(false);
+  const [Transaction, setTransaction] = useState("");
+  const [showWebView, setShowWebView] = useState(false);
+  const [paymentModel, setpaymentModel] = useState(false);
+  const [Url, setUrl] = useState("");
+  const [showbutton, setshowbutton] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClose3 = () => setpaymentModel(false);
+  const handleClose = () => setShow(false);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -46,6 +61,49 @@ function Upcomingdetail() {
     }
   };
   console.log("allorder====", allorder);
+
+  const updateddata = {
+    paymentDate: moment().format("YYYY-MM-DD"),
+    paymentType: "Customer",
+    paymentMode: "online",
+    amount: allorder?.GrandTotal,
+    Comment: "website",
+    serviceDate: serviceDate,
+    serviceId: allorder?._id,
+    customerId: value?._id,
+    userId: value?._id,
+    MUID: "MUID" + Date.now(),
+    transactionId: "T" + Date.now(),
+  };
+
+  console.log("value?._id", value?._id);
+
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        "https://api.vijayhomeservicebengaluru.in/api/payment/upcomingpayment",
+        updateddata
+      );
+      console.log("Response:", res.data);
+
+      if (res.status === 200 && res.data.redirectUrl) {
+        setpaymentModel(true);
+        setUrl(res.data.redirectUrl);
+      } else {
+        console.log("No redirect URL found in the response.");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("Payment initiation failed:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error:", error.message);
+      }
+    }
+  };
+
   return (
     <div className="">
       <Header2 />
@@ -77,15 +135,12 @@ function Upcomingdetail() {
                   }}
                 >
                   <div style={{ flex: 0.7 }}>
-                    <p
-                      style={{
-                        color: "black",
-                        fontSize: 15,
-                        fontWeight: 600,
-                      }}
+                    <div
+                      className="poppins-black"
+                      style={{ color: "black", fontSize: "15px" }}
                     >
                       Thanks for Choosing Vijay Home Servicess
-                    </p>
+                    </div>
 
                     <div
                       style={{
@@ -94,8 +149,15 @@ function Upcomingdetail() {
                         marginTop: 5,
                       }}
                     >
-                      <p style={{ color: "green", fontSize: 17 }}> ● Paid</p>
-                      <p
+                      <div
+                        className="poppins-regular"
+                        style={{ color: "green", fontSize: 17 }}
+                      >
+                        {" "}
+                        ● Paid
+                      </div>
+                      <div
+                        className="poppins-regular"
                         style={{
                           color: "green",
                           fontSize: 17,
@@ -103,7 +165,7 @@ function Upcomingdetail() {
                         }}
                       >
                         ₹ {allorder.serviceCharge}
-                      </p>
+                      </div>
                     </div>
 
                     {/* <button
@@ -690,6 +752,7 @@ function Upcomingdetail() {
             </div>
 
             <div
+              onClick={handlePayment}
               className="col-md-5 poppins-black"
               style={{
                 backgroundColor: "darkred",
@@ -963,6 +1026,52 @@ function Upcomingdetail() {
               before the scheduled slot, there will be no cancellation charges.
             </div>
           </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* payment getway */}
+      <Modal show={paymentModel} centered onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title
+            style={{ fontSize: "20px", color: "black", fontWeight: "bold" }}
+          >
+            Confirm Payment
+            <i
+              onClick={handleClose3}
+              className="fa-solid fa-x"
+              style={{
+                backgroundColor: "darkred",
+                padding: "10px",
+                width: "30px",
+                textAlign: "center",
+                color: "white",
+                fontSize: "10px",
+                borderRadius: "50px",
+                position: "absolute",
+                right: "18px",
+              }}
+            ></i>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ textAlign: "center", fontSize: "16px" }}>
+          <p>
+            <i
+              className="fa fa-exclamation-circle"
+              style={{ fontSize: "24px", color: "darkred" }}
+            ></i>
+          </p>
+          <p>Are you sure you want to proceed with the payment?</p>
+          <a
+            href={Url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: "none" }}
+            className="mt-3"
+          >
+            <Button variant="primary" style={{ backgroundColor: "darkred" }}>
+              Yes, proceed
+            </Button>
+          </a>
         </Modal.Body>
       </Modal>
     </div>

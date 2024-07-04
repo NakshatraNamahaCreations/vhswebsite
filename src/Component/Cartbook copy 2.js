@@ -384,7 +384,7 @@ function Cartbook() {
         setService(res.data.service);
       }
       let addressRes = await axios.get(
-        `http://localhost:8080/api/getcustomeraddresswithuserid/${value?._id}`
+        `https://api.vijayhomeservicebengaluru.in/api/getcustomeraddresswithuserid/${value?._id}`
       );
       if (addressRes) {
         setcustomerAddressdata(addressRes.data?.customerAddress);
@@ -406,7 +406,7 @@ function Cartbook() {
       const config = {
         url: "/addcustomeraddress",
         method: "post",
-        baseURL: "http://localhost:8080/api",
+        baseURL: "https://api.vijayhomeservicebengaluru.in/api",
         headers: { "content-type": "application/json" },
         data: {
           userId: value._id,
@@ -630,7 +630,7 @@ function Cartbook() {
     } else {
       try {
         const config = {
-          url: "http://localhost:8080/api/addservicedetails",
+          url: "https://api.vijayhomeservicebengaluru.in/api/addservicedetails",
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {

@@ -48,7 +48,7 @@ export default function NabarCompo({}) {
   const userData = JSON.parse(userDataString);
 
   const storedUserDataJSON = sessionStorage.getItem("userdata");
-  const [openResetModal, setOpenResetModal] = useState(false);
+  const [openResetModal, setOpenResetModal] = useState(true);
   const [SearchSubCategory, setSearchSubCategory] = useState("");
   const [isDropdownEnabled, setIsDropdownEnabled] = useState(true);
   // let userData = null;
@@ -290,7 +290,7 @@ export default function NabarCompo({}) {
                 </span>
               </div>
             </Nav>
-            <Nav className=" fnt clrrd mt-3">
+            {/* <Nav className=" fnt clrrd mt-3">
               <div
                 style={{
                   position: "relative",
@@ -335,7 +335,7 @@ export default function NabarCompo({}) {
                   }}
                 ></i>
               </div>
-            </Nav>
+            </Nav> */}
             {userData !== null && userData !== undefined ? (
               <Nav className=" fnt p-0 px-2">
                 <div className="btn-group">
@@ -403,7 +403,8 @@ export default function NabarCompo({}) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Modal show={openResetModal} centered onHide={handleResetModal}>
+
+      {/* <Modal show={openResetModal} centered onHide={handleResetModal}>
         <div className="modal_wrapper select-city-modal">
           <div className="">
             <div className="col-12">
@@ -437,32 +438,7 @@ export default function NabarCompo({}) {
               India
             </div>
             <div className="row">
-              {/* {city.map((city) => {
-                return (
-                  <div className="col-md-6">
-                    <div
-                      className={`city-name p-2 ${
-                        activeCity === city.city ? "active" : ""
-                      }`}
-                      onClick={() => handleChange(city)}
-                    >
-                      <i
-                        className={`fa-solid fa-location-dot ${
-                          activeCity === city.city ? "active-icon" : ""
-                        }`}
-                        style={{
-                          color: "darkred",
-                          marginTop: "3px",
-                          fontSize: "15px",
-                        }}
-                        class="fa-solid fa-location-dot"
-                      ></i>
-                   
-                      <p className="poppins-regular mx-2">{city.city}</p>
-                    </div>
-                  </div>
-                );
-              })} */}
+             
               {city.map((city) => (
                 <div className="col-md-6" key={city._id}>
                   <div
@@ -531,7 +507,7 @@ export default function NabarCompo({}) {
             </div>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

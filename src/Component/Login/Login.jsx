@@ -90,7 +90,10 @@ function Signup() {
     try {
       const response = await axios.post(
         "https://api.vijayhomeservicebengaluru.in/api/verifyotp",
-        { otp, mainContact }
+        {
+          otp,
+          mainContact,
+        }
       );
 
       if (response.data.success) {
