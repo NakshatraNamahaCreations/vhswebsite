@@ -41,7 +41,7 @@ function Enquirydetails() {
   return (
     <div className="">
       <Header2 />
-      <div className="row mt-3" style={{ justifyContent: "center" }}>
+      <div className="row mt-5 pt-2" style={{ justifyContent: "center" }}>
         <div className="col-md-7">
           <div
             style={{

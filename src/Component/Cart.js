@@ -53,14 +53,15 @@ function Cart() {
     <div className="row" style={{ justifyContent: "center" }}>
       {/* <NabarCompo /> */}
       <Header1 />
-      <div className="col-md-8 mt-5 ">
+      <div className="col-md-8 mt-5" style={{ paddingTop: "45px" }}>
         {MyCartItmes.map((item) => (
           <div
-            className="row shadow-lg"
+            className="row shadow-sm"
             style={{
               backgroundColor: "white",
               padding: "10px",
               marginBottom: "15px",
+              borderRadius: "5px",
             }}
           >
             <div className="col-md-10">

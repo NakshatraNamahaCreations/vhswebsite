@@ -49,7 +49,7 @@ function Completeddetails() {
   return (
     <div className="">
       <Header2 />
-      <div className="row" style={{ justifyContent: "center" }}>
+      <div className="row mt-5 pt-2" style={{ justifyContent: "center" }}>
         <div className="col-md-8">
           <p
             className="poppins-semibold mt-4"

@@ -15,13 +15,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Footer from "./Footer";
+// Import navigation CSS
+import Header1 from "./Header1";
+import voffer from "../assests/voffer.jpeg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import "swiper/css/navigation"; // Import navigation CSS
-
+import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 
 function Viewdetails() {
@@ -38,6 +40,7 @@ function Viewdetails() {
   const [Item, setItem] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
+  const [certificatedata, setcertificatedata] = useState([]);
 
   const settings = {
     dots: true,
@@ -136,10 +139,25 @@ function Viewdetails() {
       setfeqdata(
         res.data?.feq.filter((i) => i.category === subcategory.category)
       );
-
-      // Filter images based on some condition (e.g., only images for a specific category)
     }
   };
+
+  useEffect(() => {
+    getcertificate();
+  });
+
+  const getcertificate = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/certificate/getallcertificate"
+    );
+    if (res.status === 200) {
+      setcertificatedata(
+        res.data?.data.filter((i) => i.category === subcategory.category)
+      );
+    }
+  };
+
+  console.log("certificatedata", certificatedata);
 
   useEffect(() => {
     getReviewsVideos();
@@ -238,14 +256,17 @@ function Viewdetails() {
 
   return (
     <div className="row">
+      <Header1 />
       <div className="col-md-12">
-        <img
-          style={{ width: "100%", height: "350px" }}
-          alt=""
-          src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.serviceImg}`}
-        />
-        <div className="container">
-          <div className="mt-5">
+        <div className="container mt-5">
+          <img
+            className="mt-5"
+            src={voffer}
+            style={{ width: "100%", height: "auto", borderRadius: "5px" }}
+            alt=""
+            // src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.serviceImg}`}
+          />
+          <div className="mt-3">
             <div
               className="poppins-regular"
               style={{
@@ -255,16 +276,7 @@ function Viewdetails() {
             >
               {subcategory.servicetitle}
             </div>
-            <div
-              className="poppins-semibold"
-              style={
-                {
-                  // color: "black",
-                  // fontSize: "18px",
-                  // fontWeight: "bold",
-                }
-              }
-            >
+            <div className="poppins-semibold" style={{}}>
               {subcategory.serviceName}
             </div>
             <div
@@ -337,7 +349,9 @@ function Viewdetails() {
                               fontFamily: "sans-serif",
                             }}
                           >
-                            {price.pName && <p>{price.pName}</p>}
+                            {price.pName && (
+                              <p className="poppins-black">{price.pName}</p>
+                            )}
                           </div>
 
                           <div
@@ -353,7 +367,9 @@ function Viewdetails() {
                                 textAlign: "center",
                               }}
                             >
-                              {price.pPrice && <p>₹{price.pPrice}</p>}
+                              {price.pPrice && (
+                                <p className="poppins-black">₹{price.pPrice}</p>
+                              )}
                             </div>
                             <div
                               className="poppins-regular mx-2"
@@ -364,7 +380,11 @@ function Viewdetails() {
                                 textAlign: "center",
                               }}
                             >
-                              {price.pofferprice && <p>₹{price.pofferprice}</p>}
+                              {price.pofferprice && (
+                                <p className="poppins-black">
+                                  ₹{price.pofferprice}
+                                </p>
+                              )}
                             </div>
                           </div>
                           <div
@@ -382,26 +402,12 @@ function Viewdetails() {
                             ).toFixed(0)}
                             % discount
                           </div>
-                          {/* <div
-                            className=""
-                            style={{
-                              backgroundColor: "darkred",
-                              padding: "5px",
-                              borderRadius: "5px",
-                              color: "white",
-                              fontSize: "15px",
-                              textAlign: "center",
-                              fontWeight: "bold",
-                              marginTop: "50px",
-                            }}
-                          >
-                            Book
-                          </div> */}
+
                           {isItemInCart(price._id) ? (
                             <span> </span>
                           ) : (
                             <button
-                              className="poppins-regular"
+                              className="poppins-black"
                               onClick={() => {
                                 handleviewselect(selectedItem);
                                 handleItemClick1(price);
@@ -414,6 +420,9 @@ function Viewdetails() {
                                 textAlign: "center",
                                 borderRadius: 3,
                                 marginTop: 15,
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
                               }}
                             >
                               Book
@@ -588,95 +597,6 @@ function Viewdetails() {
               </div>
             </div>
 
-            {/* <div className="row">
-              <div className="col-md-6">
-                <div
-                  className="poppins-semibold mt-4"
-                  style={{
-                    color: "darkred",
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Thoughtful curations
-                </div>
-
-                <div
-                  className="poppins-regular"
-                  style={{
-                    fontSize: "13px",
-                    color: "black",
-                    fontWeight: "bold",
-                    marginTop: "5px",
-
-                  }}
-                >
-                  Of our finest experiences
-                </div>
-
-                <div className="row mt-4">
-                  <div className="col-md-3">
-                    <video
-                      className="p-0"
-                      style={{
-                        objectFit: "contain",
-                        width: "100%",
-                        borderRadius: "10px",
-                      }}
-                      height={400}
-                      autoPlay
-                      loop
-                      src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[0]?.serviceVideo}`}
-                    ></video>
-                  </div>
-                  <div className="col-md-3">
-                    <video
-                      className="p-0"
-                      style={{
-                        objectFit: "contain",
-                        width: "100%",
-                        borderRadius: "10px",
-                      }}
-                      height={400}
-                      autoPlay
-                      loop
-                      src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[1]?.serviceVideo}`}
-                    ></video>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div
-                  className="mt-4"
-                  style={{
-                    color: "black",
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Testimonial Videos
-                </div>
-
-                <div className="row mb-3 mt-3">
-                  {ReviewVideodata.map((video, index) => {
-                    const videoId = video.Links.split("v=")[1];
-                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                    return (
-                      <div className="col-md-12" key={index}>
-                        <iframe
-                          width="100%"
-                          height="200px"
-                          src={embedUrl}
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        ></iframe>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div> */}
             <div className="row">
               <div className="col-md-6">
                 <div
@@ -767,111 +687,17 @@ function Viewdetails() {
               </div>
             </div>
 
-            {/* <div className="mb-5">
-              <Slider {...settings}>
-                {feqdata.map((i) => (
-                  <div>
-                    <h3
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        marginTop: 15,
-                        fontSize: 16,
-                        textAlign: "center",
-                        marginBottom: "15px",
-                      }}
-                    >
-                      {i.title}
-                    </h3>
-                    <div>
-                      {i.img.map((item) => (
-                        <div
-                          style={{
-                            marginTop: 10,
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <img
-                            src={`https://api.vijayhomesuperadmin.in/feq/${item.data}`}
-                            style={{
-                              width: "100%",
-                              height: 300,
-                              objectFit: "contain",
-                            }}
-                            alt=""
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </Slider>
-            </div> */}
-
             <div className="row" style={{ padding: "15px" }}>
               <div
                 className="poppins-semibold"
                 style={{ textAlign: "center", marginBottom: "25px" }}
               >
-                How it Works?
+                How we Work?
               </div>
 
-              {/* <Swiper
-                slidesPerView={3}
-                spaceBetween={40}
-                freeMode={true}
-                pagination={{
-                  clickable: true,
-                  el: ".swiper-pagination-appliance",
-                }}
-                navigation={{
-                  nextEl: ".swiper-button-next-appliance",
-                  prevEl: ".swiper-button-prev-appliance",
-                }}
-                modules={[FreeMode, Pagination, Autoplay, Navigation]}
-                className="mySwiper"
-              >
-                {whychooseus.map((ele) => (
-                  <SwiperSlide
-                    key={ele._id}
-                    style={{
-                      backgroundColor: "white",
-                      padding: "0px",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      // textAlign: "center",
-                    }}
-                  >
-                    <div className="col-md-4" style={{ width: "100%" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <img
-                          src={ele.image}
-                          alt="loading...."
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "50px",
-                          }}
-                        />
-                      </div>
-                      <div className="poppins-medium mt-2">{ele.title}</div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper> */}
-
               <div className="row mb-3">
-                {whychooseus.map((data) => (
-                  <div className="col-md-4" key={data._id}>
+                {/* {whychooseus.map((data) => (
+                  <div className="col-md-4 mb-3" key={data._id}>
                     <div
                       style={{
                         display: "flex",
@@ -902,8 +728,148 @@ function Viewdetails() {
                       {data.discription}
                     </div>
                   </div>
-                ))}
+                ))} */}
+                <Swiper
+                  slidesPerView={4}
+                  spaceBetween={30}
+                  freeMode={true}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  modules={[FreeMode, Pagination, Autoplay]}
+                  className="mySwiper"
+                >
+                  {whychooseus.map((data, index) => (
+                    <SwiperSlide
+                      key={index._id}
+                      style={{
+                        backgroundColor: "white",
+                        padding: "0px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                      }}
+                    >
+                      <div
+                        className="col-md-4"
+                        style={{
+                          width: "100%",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <img
+                            src={data.image}
+                            alt="loading...."
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              // borderRadius: "50px",
+                            }}
+                          />
+                        </div>
+                        <div
+                          className="poppins-black mt-2"
+                          style={{ fontSize: "12px", textAlign: "center" }}
+                        >
+                          {data.title}
+                        </div>
+                        <div
+                          className="poppins-regular"
+                          style={{ textAlign: "center" }}
+                        >
+                          {data.discription}
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                <div className="swiper-button-prev swiper-button-prev-cleaning">
+                  <i className="fa-solid fa-arrow-left left-icon"></i>
+                </div>
+                <div className="swiper-button-next swiper-button-next-cleaning">
+                  <i className="fa-solid fa-arrow-right right-icon"></i>
+                </div>
+                <div className="swiper-pagination swiper-pagination-cleaning"></div>
               </div>
+            </div>
+
+            <div className="row" style={{ padding: "15px" }}>
+              <div className="poppins-semibold" style={{ textAlign: "center" }}>
+                Certificates
+              </div>
+            </div>
+
+            <div className="mt-1 mb-3" style={{ position: "relative" }}>
+              <Swiper
+                slidesPerView={4}
+                spaceBetween={30}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination-cleaning",
+                }}
+                navigation={{
+                  nextEl: ".swiper-button-next-cleaning",
+                  prevEl: ".swiper-button-prev-cleaning",
+                }}
+                modules={[FreeMode, Pagination, Autoplay, Navigation]}
+                className="mySwiper"
+              >
+                {certificatedata.map((i, index) => (
+                  <SwiperSlide
+                    key={index._id}
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div
+                      className="col-md-4"
+                      style={{
+                        width: "100%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <img
+                        src={i.image}
+                        style={{
+                          width: "250px",
+                          height: "250px",
+                        }}
+                        alt=""
+                      />
+                      {/* <div className="poppins-black mt-2">{i.title}</div> */}
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="swiper-button-prev swiper-button-prev-cleaning">
+                <i className="fa-solid fa-arrow-left left-icon"></i>
+              </div>
+              <div className="swiper-button-next swiper-button-next-cleaning">
+                <i className="fa-solid fa-arrow-right right-icon"></i>
+              </div>
+              <div className="swiper-pagination swiper-pagination-cleaning"></div>
             </div>
 
             {subcategory?.category === "Painting" ? (

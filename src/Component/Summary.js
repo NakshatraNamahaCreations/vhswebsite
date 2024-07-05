@@ -768,7 +768,7 @@ function Summary() {
     <div className="">
       <Header2 />
 
-      <div className="container">
+      <div className="container mt-5 pt-3">
         <div className="row">
           {!show1 && (
             <>
@@ -1131,7 +1131,7 @@ function Summary() {
                 <div className="row mt-5 mb-5">
                   <div
                     onClick={() => setshowbutton(true)}
-                    className="col-md-8 poppins-black"
+                    className="col-md-6 poppins-black"
                     style={{
                       backgroundColor: "darkred",
                       padding: "8px",
@@ -1142,7 +1142,7 @@ function Summary() {
                       cursor: "pointer",
                     }}
                   >
-                    Book
+                    Book Now
                   </div>
                 </div>
               ) : (

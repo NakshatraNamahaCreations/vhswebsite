@@ -76,7 +76,7 @@ function NoAnimationExample() {
   return (
     <div className="">
       <Header2 />
-      <div className="row mt-5" style={{ justifyContent: "center" }}>
+      <div className="row mt-5 pt-5" style={{ justifyContent: "center" }}>
         <div className="col-md-8">
           <Tabs
             defaultActiveKey="home"

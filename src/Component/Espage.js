@@ -892,7 +892,7 @@ function Espage() {
     <div className="">
       <Header2 />
 
-      <div className="container">
+      <div className="container mt-5 pt-2">
         <div className="row">
           {value?.mainContact ? (
             <div>
@@ -1063,10 +1063,13 @@ function Espage() {
                   </div>
 
                   {!showbutton ? (
-                    <div className="row mt-5 mb-5">
+                    <div
+                      className="row mt-5 mb-5"
+                      style={{ justifyContent: "center" }}
+                    >
                       <div
                         onClick={() => setshowbutton(true)}
-                        className="col-md-8 poppins-black"
+                        className="col-md-6 poppins-black"
                         style={{
                           backgroundColor: "darkred",
                           padding: "8px",

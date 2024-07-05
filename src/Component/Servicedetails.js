@@ -6,15 +6,11 @@ import { Button, Modal } from "react-bootstrap";
 import "../Component/Servicedetails.css";
 import CheckIcon from "@mui/icons-material/Check";
 import { Link } from "react-router-dom";
-
 import AddIcon from "@mui/icons-material/Add";
 import StarIcon from "@mui/icons-material/Star";
 import { SpinnerCircular } from "spinners-react";
-
 import Footer from "./Footer";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import ReactPlayer from "react-player";
 import { addToCart, clearCart } from "../Redux1/MyCartSlice";
 import Header1 from "./Header1";
@@ -27,7 +23,6 @@ function Servicedetails() {
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const [show, setShow] = useState(false);
   const MyCartItmes = useSelector((state) => state.cart);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
@@ -56,6 +51,10 @@ function Servicedetails() {
   const [Servicedata, setServicedata] = useState([]);
   const [pricesdata, setpricesdata] = useState([]);
   const [ITEM_HEIGHT, setItemHeight] = useState(350);
+  const [vshow, setvShow] = useState(false);
+
+  const vhandleClose = () => setvShow(false);
+  const vhandleShow = () => setvShow(true);
 
   const scrollViewRef = useRef(null);
 
@@ -348,7 +347,7 @@ function Servicedetails() {
   //   }
   // };
 
-  console.log("postsubdata", postsubdata);
+  console.log("postsubdata", postsubdata, serviceData);
 
   return (
     <>
@@ -372,8 +371,8 @@ function Servicedetails() {
           {" "}
           {/* <NabarCompo /> */}
           <Header1 />
-          <div className="container">
-            <div className="row ">
+          <div className="container mt-5">
+            <div className="row">
               <div className="col-md-6">
                 <div>
                   <h2
@@ -382,24 +381,20 @@ function Servicedetails() {
                       color: "black",
                       fontWeight: "bold",
                       fontSize: "18px",
-                      marginTop: "15px",
+                      marginTop: "25px",
                     }}
                   >
                     {subcategory}
                   </h2>
                 </div>
-                <div className="row mt-3" style={{}}>
+                <div className="row" style={{}}>
                   {postsubdata
                     .sort((a, b) => parseInt(a.order) - parseInt(b.order))
                     .map((data, index) => (
                       <div
                         key={index}
                         className="col-md-4 mt-4 text-center"
-                        onClick={() => scrollToService(index)}
-                        // onPress={() =>
-                        //   scrollToService(index + 1, data?.sub_subcategory)
-                        // }
-                        // scrollToService(index + 1, item?.sub_subcategory)
+                        onClick={() => scrollToService(index + 1)}
                       >
                         <img
                           style={{
@@ -427,7 +422,7 @@ function Servicedetails() {
                 </div>
               </div>
 
-              <div className="col-md-6">
+              <div className="col-md-6 mt-5">
                 {subcategoryVideo &&
                   subcategoryVideo.map((Ele) => {
                     return (
@@ -436,7 +431,7 @@ function Servicedetails() {
                         playing={true}
                         loop={true}
                         width={"100%"}
-                        style={{ borderRadius: "10px" }}
+                        className="react-player-rounded"
                         height="auto"
                       />
                     );
@@ -482,21 +477,51 @@ function Servicedetails() {
                 <div className="poppins-regular" style={{ color: "black" }}>
                   (9.1T)
                 </div>
-                <div className="mx-5 px-5" style={{ marginTop: "-28px" }}>
-                  <img
-                    src={call}
-                    alt="loading....."
-                    style={{ width: "80px", height: "80px" }}
-                  />
-                  <img
-                    src={web}
-                    alt="loading....."
-                    style={{
-                      width: "80px",
-                      height: "80px",
-                      marginLeft: "15px",
-                    }}
-                  />
+                <div
+                  className="d-flex mx-5 px-5"
+                  style={{ marginTop: "-50px" }}
+                >
+                  <div>
+                    <img
+                      src={call}
+                      alt="loading....."
+                      style={{ width: "80px", height: "80px" }}
+                    />
+                    <div
+                      className="poppins-black shadow-lg"
+                      style={{
+                        backgroundColor: "white",
+                        padding: "3px 8px",
+                        marginTop: "-11px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      Call Now
+                    </div>
+                  </div>
+
+                  <div style={{ marginLeft: "40px" }}>
+                    <img
+                      src={web}
+                      alt="loading....."
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        marginLeft: "15px",
+                      }}
+                    />
+                    <div
+                      className="poppins-black shadow-lg"
+                      style={{
+                        backgroundColor: "white",
+                        padding: "3px 8px",
+                        marginTop: "-11px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      Wtsup us
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -564,7 +589,7 @@ function Servicedetails() {
                     key={index}
                     id={`service-${index}`}
                     className="col-md-6 mt-4"
-                    style={{ borderBottom: "1px solid grey", height: "340px" }}
+                    style={{ borderBottom: "1px solid grey" }}
                   >
                     <div
                       className="poppins-regular"
@@ -722,31 +747,60 @@ function Servicedetails() {
                       ))}
                     </div>
 
-                    <Link
-                      to="/viewdetails"
-                      state={{ subcategory: data }}
-                      // key={data.subcategory}
-                      style={{ textDecoration: "none" }}
-                      // className="text-decoration-none text-black"
-                    >
-                      <div
-                        className="poppins-regular mt-4 mb-3"
-                        style={{
-                          color: "darkred",
-                          fontSize: "17px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        View details
+                    <div className="row">
+                      <div className="col-md-3">
+                        <Link
+                          to="/viewdetails"
+                          state={{ subcategory: data }}
+                          // key={data.subcategory}
+                          style={{ textDecoration: "none" }}
+                          // className="text-decoration-none text-black"
+                        >
+                          <div
+                            className="poppins-regular mt-4 mb-3"
+                            style={{
+                              color: "darkred",
+                              fontSize: "17px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            View details{" "}
+                          </div>
+                        </Link>
                       </div>
-                    </Link>
+                      <div
+                        className="col-md-3 mt-4 mb-3"
+                        style={{ marginLeft: "-50px" }}
+                      >
+                        <div
+                          onClick={vhandleShow}
+                          className="poppins-regular mx-2"
+                          style={{
+                            color: "blue",
+                            fontSize: "17px",
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Show more
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-md-6 mt-4" style={{ textAlign: "end" }}>
+                  <div
+                    className="col-md-6 mt-4"
+                    style={{
+                      textAlign: "end",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                    }}
+                  >
                     <div className="">
                       <img
                         style={{
-                          width: "150px",
-                          height: "150px",
+                          width: "250px",
+                          height: "250px",
                           borderRadius: "10px",
                         }}
                         className="mb-2"
@@ -758,21 +812,23 @@ function Servicedetails() {
                         className=""
                         style={{
                           display: "flex",
-                          justifyContent: "end",
-                          marginRight: "30px",
-                          marginTop: "-20px",
+                          justifyContent: "center",
+                          // marginRight: "30px",
+                          // marginTop: "-20px",
                         }}
                       >
                         <div
-                          className="poppins-regular"
+                          className="poppins-black"
                           style={{
                             color: "white",
                             fontSize: "13px",
                             backgroundColor: "darkred",
                             textAlign: "center",
-                            width: "80px",
-                            padding: "3px",
+                            // width: "80px",
+                            padding: "4px",
                             borderRadius: "10px",
+                            width: "50%",
+                            marginTop: "-25px",
                           }}
                           // onClick={() => handleBook(data)}
                           onClick={() => {
@@ -1218,6 +1274,20 @@ function Servicedetails() {
               ))
           )}
         </Modal.Footer>
+      </Modal>
+
+      {/* V Modal */}
+      <Modal
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={vshow}
+        onHide={vhandleClose}
+        animation={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
       </Modal>
     </>
   );

@@ -840,7 +840,7 @@ function Cartbook() {
   return (
     <div className="row" style={{ justifyContent: "center" }}>
       <Header1 />
-      <div className="col-md-10 mt-3">
+      <div className="col-md-10 mt-5 pt-4">
         {!show1 && (
           <>
             <div
@@ -1375,7 +1375,7 @@ function Cartbook() {
 
             <div
               onClick={handleShow6}
-              className="col-md-8 poppins-black"
+              className="col-md-12 mt-3 poppins-black"
               style={{
                 backgroundColor: "darkred",
                 padding: "8px",
@@ -1384,17 +1384,18 @@ function Cartbook() {
                 textAlign: "center",
                 borderRadius: "5px",
                 cursor: "pointer",
-                marginTop: "20px",
+                width: "51%",
+                marginLeft: "-10px",
               }}
             >
               Cancellation Policy
             </div>
 
             {!showbutton ? (
-              <div className="row mt-5 mb-5">
+              <div className="row mt-3 mb-5">
                 <div
                   onClick={() => setshowbutton(true)}
-                  className="col-md-8 poppins-black"
+                  className="col-md-12 poppins-black"
                   style={{
                     backgroundColor: "darkred",
                     padding: "8px",
@@ -1403,6 +1404,7 @@ function Cartbook() {
                     textAlign: "center",
                     borderRadius: "5px",
                     cursor: "pointer",
+                    width: "50%",
                   }}
                 >
                   Book Now
