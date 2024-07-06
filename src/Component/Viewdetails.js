@@ -41,6 +41,7 @@ function Viewdetails() {
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
   const [certificatedata, setcertificatedata] = useState([]);
+  const [modalbanner, setmodalbanner] = useState([]);
 
   const settings = {
     dots: true,
@@ -157,7 +158,20 @@ function Viewdetails() {
     }
   };
 
-  console.log("certificatedata", certificatedata);
+  useEffect(() => {
+    getmodalbanner();
+  }, []);
+
+  const getmodalbanner = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/pbanner/getallpopupbanner"
+    );
+    if ((res.status = 200)) {
+      setmodalbanner(
+        res.data?.data.filter((i) => i?.category === subcategory?.category)
+      );
+    }
+  };
 
   useEffect(() => {
     getReviewsVideos();

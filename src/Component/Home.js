@@ -1209,7 +1209,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: ele.subcategory }}
+                      state={({ subcategory: ele.subcategory }, { data: ele })}
                       style={{ textDecoration: "none" }}
                     >
                       <div
@@ -1301,7 +1301,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: ele?.subcategory }}
+                      state={({ subcategory: ele.subcategory }, { data: ele })}
                       key={ele.subcategory}
                       style={{ textDecoration: "none" }}
                       className="text-decoration-none text-black"
@@ -1388,7 +1388,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: ele?.subcategory }}
+                      state={({ subcategory: ele.subcategory }, { data: ele })}
                       key={ele.subcategory}
                       style={{ textDecoration: "none" }}
                       className="text-decoration-none text-black"
@@ -1475,7 +1475,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: ele?.subcategory }}
+                      state={({ subcategory: ele.subcategory }, { data: ele })}
                       key={ele.subcategory}
                       style={{ textDecoration: "none" }}
                       className="text-decoration-none text-black"
@@ -1562,7 +1562,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: ele?.subcategory }}
+                      state={({ subcategory: ele.subcategory }, { data: ele })}
                       key={ele.subcategory}
                       style={{ textDecoration: "none" }}
                       className="text-decoration-none text-black"
@@ -1649,7 +1649,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: ele?.subcategory }}
+                      state={({ subcategory: ele.subcategory }, { data: ele })}
                       key={ele.subcategory}
                       style={{ textDecoration: "none" }}
                       className="text-decoration-none text-black"
@@ -1736,7 +1736,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: ele?.subcategory }}
+                      state={({ subcategory: ele.subcategory }, { data: ele })}
                       key={ele.subcategory}
                       style={{ textDecoration: "none" }}
                       className="text-decoration-none text-black"
@@ -1813,7 +1813,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: ele?.subcategory }}
+                      state={({ subcategory: ele.subcategory }, { data: ele })}
                       key={ele.subcategory}
                       style={{ textDecoration: "none" }}
                       className="text-decoration-none text-black"

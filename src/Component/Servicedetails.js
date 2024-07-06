@@ -16,10 +16,18 @@ import { addToCart, clearCart } from "../Redux1/MyCartSlice";
 import Header1 from "./Header1";
 import call from "../assests/call.gif";
 import web from "../assests/web.gif";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import "swiper/css/navigation";
+import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
+import Faq from "react-faq-component";
 
 function Servicedetails() {
   const location = useLocation();
-  const { subcategory, SelecteddCity } = location.state || {};
+  const { subcategory, data } = location.state || {};
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const [show, setShow] = useState(false);
   const MyCartItmes = useSelector((state) => state.cart);
@@ -52,6 +60,30 @@ function Servicedetails() {
   const [pricesdata, setpricesdata] = useState([]);
   const [ITEM_HEIGHT, setItemHeight] = useState(350);
   const [vshow, setvShow] = useState(false);
+  const [modalbanner, setmodalbanner] = useState([]);
+  const [allcategory, setallcategory] = useState([]);
+  const [vhspromise, setvhspromise] = useState([]);
+  const [whychooseus, setwhychooseus] = useState([]);
+  const [allcamparison, setallcamparison] = useState([]);
+  const [faq, setfaq] = useState([]);
+  const [review, setreview] = useState([]);
+
+  const transformedFaqData = {
+    rows: faq.map((f) => ({
+      title: <div className="poppins-black">{f.question}</div>,
+      content: <div className="poppins-regular">{f.answer}</div>,
+    })),
+  };
+
+  const styles = {
+    // bgColor: 'white',
+    titleTextColor: "darkred",
+    rowTitleColor: "darkred",
+    // rowContentColor: 'grey',
+    // arrowColor: "red",
+  };
+
+  console.log("data", data);
 
   const vhandleClose = () => setvShow(false);
   const vhandleShow = () => setvShow(true);
@@ -74,10 +106,96 @@ function Servicedetails() {
     );
     if ((res.status = 200)) {
       setBannermidledata(
-        res.data?.SpotlightSP.filter((i) => i?.service === subcategory)
+        res.data?.SpotlightSP.filter((i) => i?.service === data?.subcategory)
       );
     }
   };
+
+  useEffect(() => {
+    getmodalbanner();
+  }, []);
+
+  const getmodalbanner = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/pbanner/getallpopupbanner"
+    );
+    if ((res.status = 200)) {
+      setmodalbanner(
+        res.data?.data.filter((i) => i?.category === data?.category)
+      );
+    }
+  };
+
+  useEffect(() => {
+    getreview();
+  }, []);
+
+  const getreview = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/review/getallvhsreview"
+    );
+    if ((res.status = 200)) {
+      setreview(res.data?.data.filter((i) => i?.category === data?.category));
+    }
+  };
+
+  useEffect(() => {
+    getallfaq();
+  }, []);
+
+  const getallfaq = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/faq/getallvhsfaq"
+    );
+    if ((res.status = 200)) {
+      setfaq(res.data?.data.filter((i) => i?.category === data?.category));
+    }
+  };
+
+  useEffect(() => {
+    getallcomparison();
+  }, []);
+
+  const getallcomparison = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/comparison/getallvhscomparison"
+    );
+    if ((res.status = 200)) {
+      setallcamparison(
+        res.data?.data.filter((i) => i?.category === data?.category)
+      );
+    }
+  };
+
+  console.log("comparison", allcamparison);
+
+  useEffect(() => {
+    getallcategory();
+  }, []);
+
+  const getallcategory = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/getcategory"
+    );
+    if ((res.status = 200)) {
+      setallcategory(res.data?.category);
+    }
+  };
+
+  useEffect(() => {
+    getallvhspromises();
+  }, []);
+
+  const getallvhspromises = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/vhspromise/getallvhspromise"
+    );
+    if ((res.status = 200)) {
+      setvhspromise(res.data?.data);
+    }
+  };
+
+  console.log("modalbanner", modalbanner);
 
   useEffect(() => {
     getAllServices();
@@ -111,6 +229,19 @@ function Servicedetails() {
   };
 
   useEffect(() => {
+    getallwhychooseus();
+  }, []);
+
+  const getallwhychooseus = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/whychoose/getallwhychoose"
+    );
+    if (res.status === 200) {
+      setwhychooseus(res.data?.data);
+    }
+  };
+
+  useEffect(() => {
     getsubcategory();
   }, []);
 
@@ -118,7 +249,7 @@ function Servicedetails() {
     let res = await axios.post(
       `https://api.vijayhomesuperadmin.in/api/userapp/postappresubcat/`,
       {
-        subcategory: subcategory,
+        subcategory: data?.subcategory,
       }
     );
 
@@ -136,7 +267,7 @@ function Servicedetails() {
       const res = await axios.post(
         `https://api.vijayhomesuperadmin.in/api/userapp/postsubcatservice/`,
         {
-          Subcategory: subcategory,
+          Subcategory: data?.subcategory,
         }
       );
       if (res.status === 200) {
@@ -159,7 +290,7 @@ function Servicedetails() {
     );
     if ((res.status = 200)) {
       setofferBannerdata(
-        res.data?.offerbanner.filter((i) => i.subcategory === subcategory)
+        res.data?.offerbanner.filter((i) => i.subcategory === data?.subcategory)
       );
     }
   };
@@ -220,7 +351,7 @@ function Servicedetails() {
         "https://api.vijayhomesuperadmin.in/api/userapp/getappsubcat"
       );
       if ((res.status = 200)) {
-        let subcategorys = subcategory?.toLowerCase();
+        let subcategorys = data?.subcategory?.toLowerCase();
         let filteredData = res?.data?.subcategory?.filter((Ele) => {
           let videoLink = Ele?.subcategory?.toLowerCase();
 
@@ -301,7 +432,7 @@ function Servicedetails() {
     const Item = selectedData;
     const itemToAdd = {
       _id: item._id,
-      category: subcategory,
+      category: data?.subcategory,
       service: Item,
       pName: item.pName,
       pPrice: item.pPrice,
@@ -311,7 +442,7 @@ function Servicedetails() {
 
     if (!item.pservices) {
       const existingCartItem = MyCartItmes.find(
-        (cartItem) => cartItem.category === subcategory
+        (cartItem) => cartItem.category === data?.subcategory
       );
 
       if (existingCartItem) {
@@ -1283,11 +1414,221 @@ function Servicedetails() {
         show={vshow}
         onHide={vhandleClose}
         animation={false}
+        scrollable
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Body style={{ maxHeight: "80vh", overflowY: "auto" }}>
+          {modalbanner.map((data) => (
+            <div key={data._id}>
+              <img
+                src={data.image}
+                alt="vhs"
+                style={{ width: "100%", height: "150px", borderRadius: "5px" }}
+              />
+            </div>
+          ))}
+
+          <div className="poppins-black mt-2 mb-2"> Why choose us</div>
+          <div>
+            <Swiper
+              slidesPerView={3}
+              spaceBetween={30}
+              freeMode={true}
+              pagination={{
+                clickable: true,
+              }}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              modules={[FreeMode, Pagination, Autoplay]}
+              className="mySwiper"
+            >
+              {whychooseus.map((data, index) => (
+                <SwiperSlide
+                  key={data._id}
+                  style={{
+                    backgroundColor: "white",
+                    padding: "0px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <div
+                    className="col-md-4"
+                    style={{
+                      width: "100%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <img
+                        src={data.image}
+                        alt="loading...."
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                        }}
+                      />
+                    </div>
+                    <div
+                      className="poppins-thin mt-2"
+                      style={{ textAlign: "center" }}
+                    >
+                      {data.title}
+                    </div>
+                    <div
+                      className="poppins-extralight"
+                      style={{ textAlign: "center" }}
+                    >
+                      {data.discription}
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <div className="poppins-black mt-2 mb-2"> VHS Promise</div>
+          <div
+            className="row"
+            style={{ justifyContent: "center", alignItems: "center" }}
+          >
+            {vhspromise.map((data) => (
+              <div className="col-md-4" key={data._id}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={data.image}
+                    alt="vhs"
+                    style={{ width: "60px", height: "60px" }}
+                  />
+                </div>
+                <div
+                  className="poppins-thin mt-2"
+                  style={{ textAlign: "center" }}
+                >
+                  {data.title}
+                </div>
+                <div
+                  className="poppins-extralight"
+                  style={{ textAlign: "center" }}
+                >
+                  {data.discription}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="poppins-black mt-2 mb-2">Comparison </div>
+          {allcamparison.map((data) => (
+            <div key={data._id}>
+              <img
+                src={data.image}
+                alt="vhs"
+                style={{ width: "100%", height: "auto" }}
+              />
+            </div>
+          ))}
+
+          <div className="poppins-black mt-2 mb-2"> Review</div>
+
+          <div>
+            <Swiper
+              slidesPerView={2}
+              spaceBetween={30}
+              freeMode={true}
+              pagination={{
+                clickable: true,
+              }}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              modules={[FreeMode, Pagination, Autoplay]}
+              className="mySwiper"
+            >
+              {review.map((data, index) => (
+                <SwiperSlide
+                  key={data._id}
+                  className="shadow"
+                  style={{
+                    backgroundColor: "white",
+                    padding: "0px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <div
+                    className="col-md-4"
+                    style={{
+                      width: "100%",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "1px solid darkred",
+                      padding: "8px 8px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <div
+                      className="poppins-black"
+                      style={{ textAlign: "justify" }}
+                    >
+                      {data.title}
+                    </div>
+                    <div
+                      className="poppins-thin mt-1"
+                      style={{
+                        textAlign: "justify",
+                        color: "darkred",
+                        fontSize: "13px",
+                      }}
+                    >
+                      {data.category}
+                    </div>
+
+                    <div
+                      className="poppins-extralight mt-2"
+                      style={{
+                        textAlign: "justify",
+                        color: "black",
+                        fontSize: "13px",
+                      }}
+                    >
+                      {data.discription}
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          <div className="poppins-black mt-3">FAQ</div>
+          <div>
+            <Faq
+              data={transformedFaqData}
+              styles={styles}
+              // config={config}
+            />
+          </div>
+        </Modal.Body>
       </Modal>
     </>
   );
