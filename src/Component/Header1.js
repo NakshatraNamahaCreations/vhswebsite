@@ -28,7 +28,7 @@ export default function NavbarCompo() {
   return (
     <Navbar
       expand="lg"
-      className="fixed-top"
+      // className="fixed-top"
       style={{ backgroundColor: "lightgrey", padding: "5px" }}
     >
       <Container>

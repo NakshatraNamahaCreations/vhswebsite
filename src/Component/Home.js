@@ -1429,7 +1429,7 @@ export default function Home() {
               <div className="swiper-pagination swiper-pagination-pest"></div>
             </div>
 
-            <div className="poppins-semibold mt-3">Offer Announcement</div>
+            <div className="poppins-semibold mt-3">Deal of the week</div>
 
             <div className="row mt-3">
               <Swiper
@@ -1472,6 +1472,21 @@ export default function Home() {
                   ))}
                 </div>
               </Swiper>
+            </div>
+
+            <div
+              className="pt-3"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={deal}
+                alt="vhs"
+                style={{ width: "480px", height: "100px" }}
+              />
             </div>
 
             {/* Floor Polishing */}
@@ -2087,7 +2102,7 @@ export default function Home() {
                 ))}
             </Swiper>
 
-            <div className="row">
+            {/* <div className="row">
               <div
                 className="col-md-4"
                 style={{
@@ -2107,39 +2122,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-
-              {/* <div className="col-md-6">
-                <div className="c-head1 text-end mt-2">Deal of The Week</div>
-              </div>
-
-              <div className="col-md-1">
-                <div className="d-back">
-                  <div className="d-desc">75</div>
-                  <div className="d-desc">Days</div>
-                </div>
-              </div>
-
-              <div className="col-md-1">
-                <div className="d-back">
-                  <div className="d-desc">20</div>
-                  <div className="d-desc">Hours</div>
-                </div>
-              </div>
-
-              <div className="col-md-1">
-                <div className="d-back">
-                  <div className="d-desc">8</div>
-                  <div className="d-desc">Minutes</div>
-                </div>
-              </div>
-
-              <div className="col-md-1">
-                <div className="d-back">
-                  <div className="d-desc">8</div>
-                  <div className="d-desc">Seconds</div>
-                </div>
-              </div> */}
-            </div>
+            </div> */}
           </div>
           <Footer />
         </>

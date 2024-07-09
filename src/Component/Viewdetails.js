@@ -274,7 +274,7 @@ function Viewdetails() {
     <div className="row">
       <Header1 />
       <div className="col-md-12">
-        <div className="container mt-5">
+        <div className="container">
           <img
             className="mt-5"
             src={subcategory.viewbanner}

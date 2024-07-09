@@ -68,6 +68,8 @@ function Servicedetails() {
   const [faq, setfaq] = useState([]);
   const [review, setreview] = useState([]);
 
+  console.log("data---", data);
+
   const transformedFaqData = {
     rows: faq.map((f) => ({
       title: <div className="poppins-black">{f.question}</div>,
@@ -504,7 +506,7 @@ function Servicedetails() {
           {" "}
           {/* <NabarCompo /> */}
           <Header1 />
-          <div className="container mt-5">
+          <div className="container">
             <div className="row">
               <div className="col-md-6">
                 <div>
@@ -517,7 +519,7 @@ function Servicedetails() {
                       marginTop: "25px",
                     }}
                   >
-                    {subcategory}
+                    {data?.subcategory}
                   </h2>
                 </div>
                 <div className="row" style={{}}>
@@ -578,7 +580,7 @@ function Servicedetails() {
               className="poppins-semibold mt-3"
               style={{ color: "black", fontSize: "20px", fontWeight: "bold" }}
             >
-              {subcategory}
+              {data.subcategory}
             </div>
             <div className="col-md-6">
               <div className="d-flex mt-2">
