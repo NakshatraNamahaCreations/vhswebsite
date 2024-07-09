@@ -35,6 +35,7 @@ import { setstoreCity } from "../dataStoreComponent/citySlice";
 import { useSelector, useDispatch } from "react-redux";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import { useLocation } from "react-router-dom";
+import deal from "../../src/assests/deal.png";
 
 // updated home
 export default function Home() {
@@ -624,7 +625,7 @@ export default function Home() {
                       src={data.webbanner}
                       className="d-block w-100"
                       alt={`Banner ${index + 1}`}
-                      style={{ height: "500px" }}
+                      style={{ height: "250px" }}
                     />
                   </div>
                 ))}
@@ -1428,6 +1429,51 @@ export default function Home() {
               <div className="swiper-pagination swiper-pagination-pest"></div>
             </div>
 
+            <div className="poppins-semibold mt-3">Offer Announcement</div>
+
+            <div className="row mt-3">
+              <Swiper
+                slidesPerView={4}
+                spaceBetween={30}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                }}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                modules={[FreeMode, Pagination, Autoplay]}
+                className="mySwiper"
+              >
+                <div className="col-md-4">
+                  {offerBanner.map((data) => (
+                    <SwiperSlide
+                      key={data._id}
+                      style={{
+                        backgroundColor: "white",
+                        padding: "0px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <img
+                        src={data.offer}
+                        alt="loading..."
+                        style={{
+                          width: "100%",
+                          height: "150px",
+                          borderRadius: "10px",
+                        }}
+                      />
+                    </SwiperSlide>
+                  ))}
+                </div>
+              </Swiper>
+            </div>
+
             {/* Floor Polishing */}
             <div className="poppins-semibold mt-4 mb-2">
               Floor Polishing{" "}
@@ -1911,65 +1957,6 @@ export default function Home() {
               </div>
             </Swiper>
 
-            <div className="poppins-semibold mt-3">Offer Announcement</div>
-
-            <div className="row mt-3">
-              {/* {offerBanner.map((data) => (
-                <div className="col-md-6">
-                  <img
-                    src={data.offer}
-                    alt="loading..."
-                    style={{
-                      width: "100%",
-                      height: "250px",
-                      borderRadius: "10px",
-                    }} 
-                  />
-                </div>
-              ))} */}
-
-              <Swiper
-                slidesPerView={4}
-                spaceBetween={30}
-                freeMode={true}
-                pagination={{
-                  clickable: true,
-                }}
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
-                }}
-                modules={[FreeMode, Pagination, Autoplay]}
-                className="mySwiper"
-              >
-                <div className="col-md-4">
-                  {offerBanner.map((data) => (
-                    <SwiperSlide
-                      key={data._id}
-                      style={{
-                        backgroundColor: "white",
-                        padding: "0px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <img
-                        src={data.offer}
-                        alt="loading..."
-                        style={{
-                          width: "100%",
-                          height: "150px",
-                          borderRadius: "10px",
-                        }}
-                      />
-                    </SwiperSlide>
-                  ))}
-                </div>
-              </Swiper>
-            </div>
-
             <div className="poppins-semibold mt-4 mb-4">
               {homepagetitledata[0]?.title}
             </div>
@@ -2099,6 +2086,60 @@ export default function Home() {
                   </SwiperSlide>
                 ))}
             </Swiper>
+
+            <div className="row">
+              <div
+                className="col-md-4"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <div className="poppins-semibold">Deal of the week</div>
+              </div>
+              <div className="col-md-8">
+                <div className="" style={{}}>
+                  <img
+                    src={deal}
+                    alt="vhs"
+                    style={{ width: "480px", height: "100px" }}
+                  />
+                </div>
+              </div>
+
+              {/* <div className="col-md-6">
+                <div className="c-head1 text-end mt-2">Deal of The Week</div>
+              </div>
+
+              <div className="col-md-1">
+                <div className="d-back">
+                  <div className="d-desc">75</div>
+                  <div className="d-desc">Days</div>
+                </div>
+              </div>
+
+              <div className="col-md-1">
+                <div className="d-back">
+                  <div className="d-desc">20</div>
+                  <div className="d-desc">Hours</div>
+                </div>
+              </div>
+
+              <div className="col-md-1">
+                <div className="d-back">
+                  <div className="d-desc">8</div>
+                  <div className="d-desc">Minutes</div>
+                </div>
+              </div>
+
+              <div className="col-md-1">
+                <div className="d-back">
+                  <div className="d-desc">8</div>
+                  <div className="d-desc">Seconds</div>
+                </div>
+              </div> */}
+            </div>
           </div>
           <Footer />
         </>
@@ -2241,8 +2282,8 @@ export default function Home() {
         </Modal.Footer>
       </Modal>
 
-      <Modal show={openResetModal} centered onHide={handleResetModal}>
-        <div className="modal_wrapper select-city-modal">
+      {/* <Modal show={openResetModal} centered onHide={handleResetModal}>
+        <div className="">
           <div className="">
             <div className="col-12">
               <img
@@ -2276,7 +2317,7 @@ export default function Home() {
             </div>
             <div className="row">
               {city.map((city) => (
-                <div className="col-md-6" key={city._id}>
+                <div className="" key={city._id}>
                   <div
                     className={`city-name p-2 ${
                       activeCity === city.city ? "active" : ""
@@ -2348,6 +2389,338 @@ export default function Home() {
               >
                 Coming Soon
               </span>
+            </div>
+          </div>
+        </div>
+      </Modal> */}
+      {/* <Modal show={openResetModal} centered onHide={handleResetModal}>
+        <div className="modal_grid">
+          <div className="modal_header">
+            <img src="./assests/citybanner1.jpg" alt="loading...." />
+          </div>
+
+          <div className="modal_body">
+            <div className="title poppins-semibold">
+              <span>
+                <img
+                  src="./assests/indiaflg.png"
+                  alt="loading..."
+                  style={{
+                    width: "23px",
+                    height: "23px",
+                    marginRight: "10px",
+                    borderRadius: "50px",
+                  }}
+                />
+              </span>
+              India
+            </div>
+            <div className="row">
+              {city.map((city) => (
+                <div className="city-item" key={city._id}>
+                  <div
+                    className={`city-name p-2 ${
+                      activeCity === city.city ? "active" : ""
+                    }`}
+                    onClick={() => handleChange(city)}
+                  >
+                    <i
+                      className={`fa-solid fa-location-dot ${
+                        activeCity === city.city ? "active-icon" : ""
+                      }`}
+                      style={{
+                        color: "darkred",
+                        marginTop: "3px",
+                        fontSize: "15px",
+                      }}
+                    ></i>
+                    <p className="poppins-regular mx-2">{city.city}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="title poppins-semibold mt-1">
+              <span>
+                <img
+                  src="./assests/dubai.png"
+                  alt="loading..."
+                  style={{
+                    width: "23px",
+                    height: "23px",
+                    marginRight: "10px",
+                    borderRadius: "50px",
+                  }}
+                />
+              </span>
+              Dubai{" "}
+              <span
+                className="poppins-light"
+                style={{
+                  color: "grey",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                }}
+              >
+                Coming Soon
+              </span>
+            </div>
+
+            <div className="title poppins-semibold mt-1">
+              <span>
+                <img
+                  src="./assests/london.webp"
+                  alt="loading..."
+                  style={{
+                    width: "23px",
+                    height: "23px",
+                    marginRight: "10px",
+                    borderRadius: "50px",
+                  }}
+                />
+              </span>
+              London{" "}
+              <span
+                className="poppins-light"
+                style={{
+                  color: "grey",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                }}
+              >
+                Coming Soon
+              </span>
+            </div>
+          </div>
+        </div>
+      </Modal> */}
+      {/* <Modal
+        show={openResetModal}
+        style={{ width: "100%" }}
+        centered
+        onHide={handleResetModal}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+      >
+        <div className="modal_grid">
+          <div className="modal_header">
+            <img src="./assests/citybanner1.jpg" alt="loading...." />
+          </div>
+
+          <div className="modal_body">
+            <div className="title poppins-semibold">
+              <span>
+                <img
+                  src="./assests/indiaflg.png"
+                  alt="loading..."
+                  style={{
+                    width: "23px",
+                    height: "23px",
+                    marginRight: "10px",
+                    borderRadius: "50px",
+                  }}
+                />
+              </span>
+              India
+            </div>
+            <div className="city-grid">
+              {city.map((city) => (
+                <div className="city-item" key={city._id}>
+                  <div
+                    className={`city-name ${
+                      activeCity === city.city ? "active" : ""
+                    }`}
+                    onClick={() => handleChange(city)}
+                  >
+                    <i
+                      className={`fa-solid fa-location-dot ${
+                        activeCity === city.city ? "active-icon" : ""
+                      }`}
+                      style={{
+                        color: "darkred",
+                        marginTop: "3px",
+                        fontSize: "15px",
+                      }}
+                    ></i>
+                    <p className="poppins-regular">{city.city}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="title poppins-semibold mt-1">
+              <span>
+                <img
+                  src="./assests/dubai.png"
+                  alt="loading..."
+                  style={{
+                    width: "23px",
+                    height: "23px",
+                    marginRight: "10px",
+                    borderRadius: "50px",
+                  }}
+                />
+              </span>
+              Dubai{" "}
+              <span
+                className="poppins-light"
+                style={{
+                  color: "grey",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                }}
+              >
+                Coming Soon
+              </span>
+            </div>
+
+            <div className="title poppins-semibold mt-1">
+              <span>
+                <img
+                  src="./assests/london.webp"
+                  alt="loading..."
+                  style={{
+                    width: "23px",
+                    height: "23px",
+                    marginRight: "10px",
+                    borderRadius: "50px",
+                  }}
+                />
+              </span>
+              London{" "}
+              <span
+                className="poppins-light"
+                style={{
+                  color: "grey",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                }}
+              >
+                Coming Soon
+              </span>
+            </div>
+          </div>
+        </div>
+      </Modal> */}
+
+      <Modal
+        show={openResetModal}
+        style={{ width: "100%" }}
+        centered
+        onHide={handleResetModal}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+      >
+        <div className="modal_grid">
+          <div className="modal_header">
+            <img src="./assests/citybanner1.jpg" alt="loading...." />
+          </div>
+
+          <div className="modal_body">
+            <div
+              className="title poppins-semibold"
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                paddingBottom: "20px",
+              }}
+            >
+              <span>
+                <img
+                  src="./assests/indiaflg.png"
+                  alt="loading..."
+                  style={{
+                    width: "23px",
+                    height: "23px",
+                    marginRight: "10px",
+                    borderRadius: "50px",
+                  }}
+                />
+              </span>
+              India
+            </div>
+            <div className="city-grid">
+              {city.map((city) => (
+                <div className="city-item" key={city._id}>
+                  <div
+                    className={`city-name ${
+                      activeCity === city.city ? "active" : ""
+                    }`}
+                    onClick={() => handleChange(city)}
+                  >
+                    <i
+                      className={`fa-solid fa-location-dot ${
+                        activeCity === city.city ? "active-icon" : ""
+                      }`}
+                      style={{
+                        color: "darkred",
+                        marginTop: "3px",
+                        fontSize: "15px",
+                      }}
+                    ></i>
+                    <p className="poppins-regular">{city.city}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div
+              className="row mt-4"
+              style={{ justifyContent: "flex-start", alignItems: "flex-start" }}
+            >
+              <div className="col-md-5">
+                <div className=" poppins-semibold mt-1">
+                  <span>
+                    <img
+                      src="./assests/dubai.png"
+                      alt="loading..."
+                      style={{
+                        width: "23px",
+                        height: "23px",
+                        marginRight: "10px",
+                        borderRadius: "50px",
+                      }}
+                    />
+                  </span>
+                  Dubai{" "}
+                  <span
+                    className="poppins-light"
+                    style={{
+                      color: "grey",
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                    }}
+                  >
+                    Coming Soon
+                  </span>
+                </div>
+              </div>
+              <div className="col-md-5">
+                <div className=" poppins-semibold mt-1">
+                  <span>
+                    <img
+                      src="./assests/london.webp"
+                      alt="loading..."
+                      style={{
+                        width: "23px",
+                        height: "23px",
+                        marginRight: "10px",
+                        borderRadius: "50px",
+                      }}
+                    />
+                  </span>
+                  London{" "}
+                  <span
+                    className="poppins-light"
+                    style={{
+                      color: "grey",
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                    }}
+                  >
+                    Coming Soon
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

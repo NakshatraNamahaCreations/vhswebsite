@@ -213,7 +213,7 @@ export default function NabarCompo({}) {
     <>
       <Navbar
         expand="lg"
-        style={{ backgroundColor: "lightgrey", padding: "0px" }}
+        style={{ backgroundColor: "aliceblue", padding: "0px" }}
       >
         <Container>
           <Navbar.Brand className="fnt rounded-lg brd p-1" href="/">
@@ -227,7 +227,7 @@ export default function NabarCompo({}) {
             <Nav
               className="me-3"
               style={{
-                backgroundColor: "orange",
+                backgroundColor: "#ffa50082",
                 padding: "2px 10px",
                 borderRadius: "5px",
               }}
@@ -240,7 +240,7 @@ export default function NabarCompo({}) {
                 />
                 <span
                   className="poppins-regular"
-                  style={{ fontSize: "13px", color: "white" }}
+                  style={{ fontSize: "13px", color: "black" }}
                 >
                   Pest Control
                 </span>
@@ -249,7 +249,7 @@ export default function NabarCompo({}) {
             <Nav
               className="me-3"
               style={{
-                backgroundColor: "orange",
+                backgroundColor: "#ffa50082",
                 padding: "2px 10px",
                 borderRadius: "5px",
               }}
@@ -262,7 +262,7 @@ export default function NabarCompo({}) {
                 />
                 <span
                   className="poppins-regular"
-                  style={{ fontSize: "13px", color: "white" }}
+                  style={{ fontSize: "13px", color: "black" }}
                 >
                   AC Repairing
                 </span>
@@ -271,7 +271,7 @@ export default function NabarCompo({}) {
             <Nav
               className="me-3"
               style={{
-                backgroundColor: "orange",
+                backgroundColor: "#ffa50082",
                 padding: "2px 10px",
                 borderRadius: "5px",
               }}
@@ -284,7 +284,7 @@ export default function NabarCompo({}) {
                 />
                 <span
                   className="poppins-regular"
-                  style={{ fontSize: "13px", color: "white" }}
+                  style={{ fontSize: "13px", color: "black" }}
                 >
                   Exclusive Offer
                 </span>

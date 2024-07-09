@@ -427,7 +427,10 @@ function Footer() {
   return (
     <div
       className="row"
-      style={{ backgroundColor: "#C2C2C2", padding: "40px" }}
+      style={{
+        backgroundColor: "aliceblue",
+        padding: "30px",
+      }}
     >
       <div className="d-flex">
         <img
@@ -436,7 +439,7 @@ function Footer() {
           style={{ width: "60px", height: "55px" }}
         />
         <div
-          className="mx-3 mt-2 pt-1"
+          className="mx-3 mt-2 pt-1 poppins-semibold"
           style={{ color: "darkred", fontSize: "20px", fontWeight: "bold" }}
         >
           Vijay Home Services
@@ -446,28 +449,37 @@ function Footer() {
       <div className="row mt-4">
         <div className="col-md-4">
           <div
-            className=""
+            className="poppins-black"
             style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
           >
             Information
           </div>
 
           <div className="f-desc">
-            <a href="/" style={{ textDecoration: "none", color: "black" }}>
+            <a
+              href="/"
+              className="poppins-light"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               Home
             </a>
           </div>
           <div className="f-desc">
             {" "}
-            <a href="/about" style={{ textDecoration: "none", color: "black" }}>
+            <a
+              className="poppins-light"
+              href="/about"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               About Us
             </a>
           </div>
-          <div className="f-desc">Categories</div>
-          <div className="f-desc">Blog</div>
-          <div className="f-desc">
+          <div className="f-desc poppins-light">Categories</div>
+          <div className="f-desc poppins-light">Blog</div>
+          <div className="f-desc poppins-light">
             {" "}
             <a
+              className="poppins-light"
               href="/career"
               style={{ textDecoration: "none", color: "black" }}
             >
@@ -493,35 +505,43 @@ function Footer() {
 
         <div className="col-md-4">
           <div
-            className=""
-            style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
+            className="poppins-black"
+            style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}
           >
             Legal
           </div>
 
           <div className="f-desc">
-            <a href="/" style={{ textDecoration: "none", color: "black" }}>
+            <a
+              className="poppins-light"
+              href="/"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               Terms & conditions
             </a>
           </div>
           <div className="f-desc">
             {" "}
-            <a href="/about" style={{ textDecoration: "none", color: "black" }}>
+            <a
+              className="poppins-light"
+              href="/about"
+              style={{ textDecoration: "none", color: "black" }}
+            >
               Privacy policy
             </a>
           </div>
-          <div className="f-desc">Cancellation policy</div>
+          <div className="f-desc poppins-light">Cancellation policy</div>
         </div>
 
-        <div className="col-md-4">
+        <div className="col-md-4 ">
           <div
-            className=""
-            style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
+            className="poppins-black"
+            style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}
           >
             About/Contacts
           </div>
 
-          <div className="f-desc">
+          <div className="f-desc poppins-light">
             Vijay Home Services - Home Painting & Deep Cleaning Expert
           </div>
 

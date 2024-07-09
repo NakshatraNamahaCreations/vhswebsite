@@ -228,6 +228,8 @@ function Servicedetails() {
     }
   };
 
+  console.log("servicedata", serviceData);
+
   useEffect(() => {
     getallwhychooseus();
   }, []);

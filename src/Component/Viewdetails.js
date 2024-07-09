@@ -43,6 +43,8 @@ function Viewdetails() {
   const [certificatedata, setcertificatedata] = useState([]);
   const [modalbanner, setmodalbanner] = useState([]);
 
+  console.log("subcategory", subcategory);
+
   const settings = {
     dots: true,
     infinite: false, // Set infinite to false
@@ -275,8 +277,8 @@ function Viewdetails() {
         <div className="container mt-5">
           <img
             className="mt-5"
-            src={voffer}
-            style={{ width: "100%", height: "auto", borderRadius: "5px" }}
+            src={subcategory.viewbanner}
+            style={{ width: "100%", height: "250px", borderRadius: "5px" }}
             alt=""
             // src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.serviceImg}`}
           />
