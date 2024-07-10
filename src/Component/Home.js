@@ -186,6 +186,7 @@ export default function Home() {
   const handleResetModal = () => {
     setOpenResetModal(true);
   };
+
   const handleChange = (e) => {
     setSelectedOption(selectedOption);
     setActiveCity(e.city);
@@ -854,7 +855,7 @@ export default function Home() {
                       <div className="col-md-12">
                         <Link
                           to="/servicedetails"
-                          state={{ subcategory: data.subcategory }}
+                          state={{ data: data }}
                           style={{
                             textDecoration: "none",
                             backgroundColor: "white",
@@ -1429,7 +1430,18 @@ export default function Home() {
               <div className="swiper-pagination swiper-pagination-pest"></div>
             </div>
 
-            <div className="poppins-semibold mt-3">Deal of the week</div>
+            <div className="mb-3 mt-3" style={{ display: "flex" }}>
+              {/* <div className="col-md-2"> */}
+              <div className="poppins-semibold mt-3">Deal of the week</div>
+              {/* </div> */}
+              {/* <div className="col-md-8"> */}
+              <img
+                src={deal}
+                alt="vhs"
+                style={{ width: "245px", height: "51px" }}
+              />
+              {/* </div> */}
+            </div>
 
             <div className="row mt-3">
               <Swiper
@@ -1472,21 +1484,6 @@ export default function Home() {
                   ))}
                 </div>
               </Swiper>
-            </div>
-
-            <div
-              className="pt-3"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={deal}
-                alt="vhs"
-                style={{ width: "480px", height: "100px" }}
-              />
             </div>
 
             {/* Floor Polishing */}

@@ -580,7 +580,7 @@ function Servicedetails() {
               className="poppins-semibold mt-3"
               style={{ color: "black", fontSize: "20px", fontWeight: "bold" }}
             >
-              {data.subcategory}
+              {data?.subcategory}
             </div>
             <div className="col-md-6">
               <div className="d-flex mt-2">
