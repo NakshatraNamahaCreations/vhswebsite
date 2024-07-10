@@ -274,14 +274,14 @@ function Viewdetails() {
     <div className="row">
       <Header1 />
       <div className="col-md-12">
+        <img
+          className=""
+          src={subcategory.viewbanner}
+          style={{ width: "100%", height: "250px" }}
+          alt=""
+          // src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.serviceImg}`}
+        />
         <div className="container">
-          <img
-            className="mt-5"
-            src={subcategory.viewbanner}
-            style={{ width: "100%", height: "250px", borderRadius: "5px" }}
-            alt=""
-            // src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.serviceImg}`}
-          />
           <div className="mt-3">
             <div
               className="poppins-regular"

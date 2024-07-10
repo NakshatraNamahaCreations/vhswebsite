@@ -29,7 +29,7 @@ export default function NavbarCompo() {
     <Navbar
       expand="lg"
       // className="fixed-top"
-      style={{ backgroundColor: "lightgrey", padding: "5px" }}
+      style={{ backgroundColor: "aliceblue", padding: "5px" }}
     >
       <Container>
         <Navbar.Brand className="fnt rounded-lg brd p-1" href="/">
