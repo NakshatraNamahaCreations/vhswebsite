@@ -30,7 +30,7 @@ function Cart() {
   const MyCartItmes = useSelector((state) => state.cart);
   console.log(MyCartItmes);
 
-  const Carttotal = MyCartItmes.reduce((accumulator, item) => {
+  const Carttotal = MyCartItmes?.reduce((accumulator, item) => {
     const offerPrice = parseFloat(item?.offerprice);
     const quantity = parseInt(item?.qty);
 
@@ -53,8 +53,8 @@ function Cart() {
     <div className="row" style={{ justifyContent: "center" }}>
       {/* <NabarCompo /> */}
       <Header1 />
-      <div className="col-md-8 mt-5" style={{ paddingTop: "45px" }}>
-        {MyCartItmes.map((item) => (
+      <div className="col-md-8 mt-2" style={{ paddingTop: "45px" }}>
+        {MyCartItmes?.map((item) => (
           <div
             className="row shadow-sm"
             style={{
@@ -65,8 +65,8 @@ function Cart() {
             }}
           >
             <div className="col-md-10">
-              <div className="poppins-regular mb-1">{item.planName}</div>
-              <div className="poppins-regular mb-1">{item.category}</div>
+              <div className="poppins-regular mb-1">{item?.planName}</div>
+              <div className="poppins-regular mb-1">{item?.category}</div>
               <div className="d-flex">
                 <div
                   className="poppins-regular mb-1"
@@ -74,12 +74,12 @@ function Cart() {
                 >
                   ₹{item.planPrice}
                 </div>
-                <div className="mx-2 poppins-regular">₹{item.offerprice}</div>
+                <div className="mx-2 poppins-regular">₹{item?.offerprice}</div>
               </div>
             </div>
             <div className="col-md-2">
               <div className="poppins-regular" style={{ textAlign: "center" }}>
-                ₹{item.offerprice}
+                ₹{item?.offerprice}
               </div>
               <div className="d-flex mt-2" style={{ justifyContent: "center" }}>
                 <div
@@ -108,7 +108,7 @@ function Cart() {
                   className="mx-2"
                   style={{ color: "black", fontSize: "14px", marginTop: "3px" }}
                 >
-                  {item.qty}
+                  {item?.qty}
                 </div>
                 <div className="" onClick={() => handle(item)}>
                   <i

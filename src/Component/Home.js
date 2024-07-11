@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../Component/layout.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -36,6 +36,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import { useLocation } from "react-router-dom";
 import deal from "../../src/assests/deal.png";
+import moment from "moment";
 
 // updated home
 export default function Home() {
@@ -68,6 +69,10 @@ export default function Home() {
   const distpatch = useDispatch();
   const location = useLocation();
   const pathName = location.pathname;
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // Searc Modal
   const [searchlist, setSearchlist] = useState([]);
@@ -185,6 +190,56 @@ export default function Home() {
 
   const handleResetModal = () => {
     setOpenResetModal(true);
+  };
+
+  const [name, setname] = useState("");
+  const [contact1, setcontact1] = useState("");
+  const [email, setemail] = useState("");
+  const [comment, setcomment] = useState("");
+  const [enquirydate, setenquirydate] = useState(moment().format("MM-DD-YYYY"));
+  const localstoragecitys = localStorage.getItem("city");
+
+  const addEnquiry = async (e) => {
+    e.preventDefault();
+
+    if (!name) {
+      alert("Please enter all fields");
+    } else {
+      try {
+        const config = {
+          url: "/addnewenquiry",
+          method: "post",
+          baseURL: "https://api.vijayhomeservicebengaluru.in/api",
+          // baseURL: "http://localhost:8080/api",
+          headers: { "content-type": "application/json" },
+          data: {
+            date: enquirydate,
+            name: name,
+            time: moment().format("h:mm:ss a"),
+            mobile: contact1,
+            email: email,
+            category: offerBanner[0]?.category,
+            reference2: "website",
+            city: localstoragecitys,
+            comment: comment,
+            // interestedFor: serviceName,
+            // serviceID: serviceId,
+            // responseType: getTemplateDetails, // Ensure this matches your data structure
+          },
+        };
+
+        const response = await axios(config);
+
+        if (response.status === 200) {
+          const data = response.data.data;
+          alert("Enquiry added successfully:", data);
+          setShow(false);
+          // window.location.assign("/");
+        }
+      } catch (error) {
+        console.error("Error adding enquiry:", error);
+      }
+    }
   };
 
   const handleChange = (e) => {
@@ -399,15 +454,30 @@ export default function Home() {
     }
   };
 
+  const cleaningServicesRef = useRef(null);
+  const paintingServicesRef = useRef(null);
+  const PestControlRef = useRef(null);
+  const FloorPolishingRef = useRef(null);
+  const PackersMoversRef = useRef(null);
+  const ApplianceServicesRef = useRef(null);
+  const HomeRepairingServicesRef = useRef(null);
+
   const Bannerimages = [
-    { images: hbanner },
-    { images: hbanner1 },
-    { images: hbanner2 },
-    { images: hbanner3 },
-    { images: hbanner4 },
-    { images: hbanner5 },
-    { images: hbanner6 },
+    { images: hbanner, section: cleaningServicesRef },
+    { images: hbanner1, section: paintingServicesRef },
+    { images: hbanner2, section: PestControlRef },
+    { images: hbanner3, section: FloorPolishingRef },
+    { images: hbanner4, section: PackersMoversRef },
+    { images: hbanner5, section: ApplianceServicesRef },
+    { images: hbanner6, section: HomeRepairingServicesRef },
   ];
+
+  const scrollToSection = (sectionRef) => {
+    if (sectionRef && sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const [showModal, setShowModal] = useState(false);
   const filteredCleaning = categoryData.filter((cat) =>
     cat.category.toLowerCase().includes("cleaning")
@@ -658,111 +728,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* <div
-            className="row"
-            style={{
-              backgroundColor: "skyblue",
-              padding: "20px",
-              justifyContent: "center",
-            }}
-          >
-            <div className="col-md-8  col-sm-12 col-xs-12">
-              <div
-                className="poppins-semibold mb-4"
-                style={{ textAlign: "center" }}
-              >
-                The Award winning company
-              </div>
-              <input
-                type="text"
-                className="col-md-12 poppins-black"
-                placeholder="Search for Services"
-                style={{ height: "45px", paddingLeft: "140px" }}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                value={searchQuery}
-              />
-              <div
-                onClick={handleResetModal}
-                className="d-flex"
-                style={{
-                  position: "absolute",
-                  marginTop: "-54px",
-                  marginLeft: "15px",
-                  borderRight: "2px solid black",
-                }}
-              >
-                <i
-                  className="fa-solid fa-location-dot"
-                  style={{
-                    fontSize: "16px",
-                    marginTop: "3px",
-                    color: "darkred",
-                  }}
-                ></i>
-                <div
-                  className="poppins-medium mx-2"
-                  style={{ fontSize: "16px" }}
-                >
-                  {selectedCity ? selectedCity : "Select City"}
-                </div>
-              </div>
-              <i
-                className="fa-solid fa-magnifying-glass"
-                style={{
-                  position: "absolute",
-                  fontSize: "20px",
-                  marginTop: "13px",
-                  marginLeft: "-40px",
-                }}
-              ></i>
-            </div>
-          </div>
-
-          <div className="">
-            {filteredResults.map((data) => (
-              <div className="row" style={{ justifyContent: "center" }}>
-                <div className="col-md-3 ">
-                  <Link
-                    className="row"
-                    to="/servicedetails"
-                    state={{ subcategory: data.subcategory }}
-                    style={{
-                      textDecoration: "none",
-                      backgroundColor: "white",
-                      padding: "10px",
-                    }}
-                  >
-                    <div className="col-md-3">
-                      <img
-                        src={data.imglink}
-                        alt="Subcategory"
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          borderRadius: "5px",
-                          objectFit: "contain",
-                        }}
-                      />
-                    </div>
-                    <div className="col-md-9" style={{}}>
-                      <div
-                        className="poppins-regular"
-                        style={{ color: "black" }}
-                      >
-                        {data?.category}
-                      </div>
-                      <div
-                        className="poppins-regular"
-                        style={{ color: "black" }}
-                      >
-                        {data?.subcategory}
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div> */}
           <div
             className="row"
             style={{
@@ -909,83 +874,8 @@ export default function Home() {
             )}
           </div>
 
-          {/* {searchQuery.length > 0 ? (
-            filteredResults.map((data) => (
-              <Link
-                className="row shadow"
-                to="/servicedetails"
-                state={{ subcategory: data.subcategory }}
-                style={{
-                  textDecoration: "none",
-                  backgroundColor: "white",
-                  padding: "15px",
-                }}
-              >
-                <div className="col-md-6">
-                  <div className="row">
-                    <div className="col-md-4">
-                      <img
-                        src={`https://api.vijayhomesuperadmin.in/subcat/${data?.subcatimg}`}
-                        alt="Subcategory"
-                        style={{
-                          width: "100%",
-                          height: 70,
-                          borderRadius: 5,
-                          objectFit: "contain",
-                        }}
-                      />
-                    </div>
-                    <div
-                      className="col-md-8"
-                      style={{
-                        justifyContent: "center",
-                        marginLeft: "15px",
-                      }}
-                    >
-                      <div style={{ color: "black" }}>{data?.category}</div>
-                      <div style={{ color: "black" }}>{data?.subcategory}</div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))
-          ) : (
-            <div
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ color: "black" }}>No results found</div>
-            </div>
-          )} */}
-
           <div className="container mt-3">
             <div className="row">
-              {/* <div className="col-md-4">
-                <div className="c-back">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <img
-                        src="./assests/deepcln.webp"
-                        alt="loading..."
-                        style={{
-                          width: "100%",
-                          borderRadius: "20px",
-                          height: "180px",
-                        }}
-                      />
-                    </div>
-                    <div
-                      className="col-md-6 d-flex"
-                      style={{ justifyContent: "center", alignItems: "center" }}
-                    >
-                      <div className="c-back-text">Cleaning Services</div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
               <div className="poppins-semibold" style={{ fontSize: "20px" }}>
                 Thoughtful Curations
               </div>
@@ -1038,51 +928,7 @@ export default function Home() {
 
           <div className="container mt-3">
             <div className="row">
-              {/* <div className="col-md-4">
-                <div className="c-back">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <img
-                        src="./assests/deepcln.webp"
-                        alt="loading..."
-                        style={{
-                          width: "100%",
-                          borderRadius: "20px",
-                          height: "180px",
-                        }}
-                      />
-                    </div>
-                    <div
-                      className="col-md-6 d-flex"
-                      style={{ justifyContent: "center", alignItems: "center" }}
-                    >
-                      <div className="c-back-text">Cleaning Services</div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
               <div className="poppins-semibold mb-4">Category </div>
-
-              {/* {allcategory.map((data) => (
-                <div className="row">
-                  <div className="col-md-8">
-                    <div className="row">
-                      <div className="col-md-3">
-                        <img
-                          src={data.imglink}
-                          alt="loading...."
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "10px",
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4"></div>
-                </div>
-              ))} */}
 
               <Swiper
                 slidesPerView={3}
@@ -1111,43 +957,8 @@ export default function Home() {
                         justifyContent: "center",
                         alignItems: "flex-start",
                       }}
+                      onClick={() => scrollToSection(data.section)}
                     >
-                      {/* <div
-                        style={{
-                     
-                          backgroundColor: getCategoryColor(data.category),
-                          padding: "10px",
-                          width: "100%",
-                          paddingLeft: "10px",
-                          borderRadius: 5,
-                        }}
-                      >
-                        <div className="row">
-                          <div className="col-md-7">
-                            <img
-                              src={data.imglink}
-                              alt="loading..."
-                              style={{
-                                width: "100%",
-                                borderRadius: "5px",
-                                height: "150px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            className="col-md-5"
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
-                          >
-                            <div className="poppins-medium">
-                              {data.category}
-                            </div>
-                          </div>
-                        </div>
-                      </div> */}
                       <img
                         src={data.images}
                         style={{
@@ -1165,7 +976,10 @@ export default function Home() {
           </div>
 
           <div className="container">
-            <div className="poppins-semibold mt-4 mb-2">
+            <div
+              ref={cleaningServicesRef}
+              className="poppins-semibold mt-4 mb-2"
+            >
               Cleaning Services
               <span
                 style={{
@@ -1257,7 +1071,10 @@ export default function Home() {
             </div>
 
             {/* Painting Services */}
-            <div className="poppins-semibold mt-2 mb-2">
+            <div
+              ref={paintingServicesRef}
+              className="poppins-semibold mt-2 mb-2"
+            >
               Painting Services{" "}
               <span
                 style={{
@@ -1344,7 +1161,7 @@ export default function Home() {
             </div>
 
             {/* Pest Control */}
-            <div className="poppins-semibold mt-4 mb-2">
+            <div ref={PestControlRef} className="poppins-semibold mt-4 mb-2">
               Pest Control{" "}
               <span
                 style={{
@@ -1433,14 +1250,12 @@ export default function Home() {
             <div className="mb-3 mt-3" style={{ display: "flex" }}>
               {/* <div className="col-md-2"> */}
               <div className="poppins-semibold mt-3">Deal of the week</div>
-              {/* </div> */}
-              {/* <div className="col-md-8"> */}
+
               <img
                 src={deal}
                 alt="vhs"
                 style={{ width: "245px", height: "51px" }}
               />
-              {/* </div> */}
             </div>
 
             <div className="row mt-3">
@@ -1471,15 +1286,18 @@ export default function Home() {
                         alignItems: "flex-start",
                       }}
                     >
-                      <img
-                        src={data.offer}
-                        alt="loading..."
-                        style={{
-                          width: "100%",
-                          height: "150px",
-                          borderRadius: "10px",
-                        }}
-                      />
+                      <div onClick={handleShow}>
+                        <img
+                          src={data.offer}
+                          alt="loading..."
+                          style={{
+                            width: "100%",
+                            height: "150px",
+                            borderRadius: "10px",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </div>
                     </SwiperSlide>
                   ))}
                 </div>
@@ -1487,7 +1305,7 @@ export default function Home() {
             </div>
 
             {/* Floor Polishing */}
-            <div className="poppins-semibold mt-4 mb-2">
+            <div ref={FloorPolishingRef} className="poppins-semibold mt-4 mb-2">
               Floor Polishing{" "}
               <span
                 style={{
@@ -1574,7 +1392,7 @@ export default function Home() {
             </div>
 
             {/* Packers & Movers */}
-            <div className="poppins-semibold mt-4 mb-2">
+            <div ref={PackersMoversRef} className="poppins-semibold mt-4 mb-2">
               Packers & Movers{" "}
               <span
                 style={{
@@ -1661,7 +1479,10 @@ export default function Home() {
             </div>
 
             {/* Appliance Services */}
-            <div className="poppins-semibold mt-4 mb-2">
+            <div
+              ref={ApplianceServicesRef}
+              className="poppins-semibold mt-4 mb-2"
+            >
               Appliance Services{" "}
               <span
                 style={{
@@ -1748,7 +1569,10 @@ export default function Home() {
             </div>
 
             {/* Home Repairing Services */}
-            <div className="poppins-semibold mt-4 mb-2">
+            <div
+              ref={HomeRepairingServicesRef}
+              className="poppins-semibold mt-4 mb-2"
+            >
               Home Repairing Services
               <span
                 style={{
@@ -2704,6 +2528,72 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </Modal>
+
+      {/* Enquiry Modal */}
+      <Modal centered show={show} onHide={handleClose}>
+        <Modal.Body>
+          <div className="poppins-semibold">Enquiry Add</div>
+
+          <div className="mt-2">
+            <div className="poppins-light">Name</div>
+            <input
+              type="text"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setname(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Email</div>
+            <input
+              type="text"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setemail(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Contact</div>
+            <input
+              type="number"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setcontact1(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Discription</div>
+            <input
+              type="text"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setcomment(e.target.value)}
+            />
+          </div>
+
+          <div
+            onClick={addEnquiry}
+            className="poppins-black"
+            style={{
+              backgroundColor: "darkred",
+              padding: "7px",
+              borderRadius: "5px",
+              marginTop: "20px",
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            Submit
+          </div>
+        </Modal.Body>
+        {/* <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer> */}
       </Modal>
     </>
   );

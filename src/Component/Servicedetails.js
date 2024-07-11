@@ -475,13 +475,6 @@ function Servicedetails() {
     }
   };
 
-  // const scrollToService = (index, sub_subcategory) => {
-  //   const yPosition = index * ITEM_HEIGHT;
-  //   if (scrollViewRef.current) {
-  //     scrollViewRef.current.scrollTo({ y: yPosition, animated: true });
-  //   }
-  // };
-
   console.log("postsubdata", postsubdata, serviceData);
 
   return (
@@ -887,9 +880,7 @@ function Servicedetails() {
                         <Link
                           to="/viewdetails"
                           state={{ subcategory: data }}
-                          // key={data.subcategory}
                           style={{ textDecoration: "none" }}
-                          // className="text-decoration-none text-black"
                         >
                           <div
                             className="poppins-regular mt-4 mb-3"
@@ -899,7 +890,7 @@ function Servicedetails() {
                               fontWeight: "bold",
                             }}
                           >
-                            View details{" "}
+                            View details
                           </div>
                         </Link>
                       </div>

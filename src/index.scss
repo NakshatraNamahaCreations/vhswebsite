@@ -1088,3 +1088,11 @@ background: rgb(255, 68, 68) !important;
 .d-back {
   animation: pulse 1s infinite;
 }
+.vhs-input-value {
+  border: 1px solid #eee;
+  border-left: 2px solid #a9042e;
+  border-radius: 3px;
+  height: 32px;
+  outline: none;
+  padding-left: 5px;
+}

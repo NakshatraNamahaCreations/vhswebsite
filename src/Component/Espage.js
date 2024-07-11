@@ -641,7 +641,7 @@ function Espage() {
           data: {
             customerData: user,
             date: moment().format("DD-MM-YYYY"),
-            userId: user._id,
+            userId: user?._id,
             mobile: user?.mainContact,
             // email: user?.email ? user?.email : email,
             // name: user?.customerName ? user?.customerName : customerName,
@@ -682,7 +682,7 @@ function Espage() {
           data: {
             customerData: user,
             date: moment().format("DD-MM-YYYY"),
-            userId: user._id,
+            userId: user?._id,
             mobile: user?.mainContact,
             // email: user?.email ? user?.email : email,
             // name: user?.customerName ? user?.customerName : customerName,
@@ -729,7 +729,7 @@ function Espage() {
           appoDate: selectedDate,
           slotid: slotId,
           type: "website",
-          userId: user._id,
+          userId: user?._id,
         },
       };
       await axios(config).then(function (response) {

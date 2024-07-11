@@ -43,17 +43,11 @@ function Viewdetails() {
   const [certificatedata, setcertificatedata] = useState([]);
   const [modalbanner, setmodalbanner] = useState([]);
 
-  console.log("subcategory", subcategory);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-  const settings = {
-    dots: true,
-    infinite: false, // Set infinite to false
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    draggable: true,
-    Loop: false,
-  };
+  console.log("subcategory", subcategory);
 
   const citys = useSelector((state) => state.city);
   console.log(citys, "citys====");
@@ -87,6 +81,8 @@ function Viewdetails() {
       setwhychooseus(res.data?.data);
     }
   };
+
+  console.log("select=====", selectedItem);
 
   console.log("whychooseus", whychooseus);
 
@@ -198,16 +194,6 @@ function Viewdetails() {
   const [pricesdata, setpricesdata] = useState([]);
   const [selectedPlan, setselectedPlan] = useState(pricesdata[0]);
 
-  const handleCategoryClick = (clickedItem) => {
-    setpricesdata(
-      clickedItem?.morepriceData.filter(
-        (i) => i.pricecity === localstoragecitys
-      )
-    );
-
-    setItem(clickedItem);
-  };
-
   const handleItemClick1 = (item, index) => {
     setSelectedItemIndex(index);
     setselectedPlan(item);
@@ -233,7 +219,6 @@ function Viewdetails() {
         dispatch(addToCart(itemToAdd));
       }
     } else {
-      // alert("This is AMC services ")
       navigate("/summary", { state: { plan: item, sdata: selectedItem } });
     }
   };
@@ -265,7 +250,6 @@ function Viewdetails() {
       }
     } else {
       // alert("This is AMC services ")
-
       navigate("/summary", { state: { plan: item, sdata: Item } });
     }
   };
@@ -274,14 +258,14 @@ function Viewdetails() {
     <div className="row">
       <Header1 />
       <div className="col-md-12">
-        <img
-          className=""
-          src={subcategory.viewbanner}
-          style={{ width: "100%", height: "250px" }}
-          alt=""
-          // src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.serviceImg}`}
-        />
         <div className="container">
+          <img
+            className=""
+            src={subcategory.viewbanner}
+            style={{ width: "100%", height: "250px" }}
+            alt=""
+            // src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.serviceImg}`}
+          />
           <div className="mt-3">
             <div
               className="poppins-regular"
@@ -290,10 +274,10 @@ function Viewdetails() {
                 fontSize: "14px",
               }}
             >
-              {subcategory.servicetitle}
+              {subcategory?.servicetitle}
             </div>
             <div className="poppins-semibold" style={{}}>
-              {subcategory.serviceName}
+              {subcategory?.serviceName}
             </div>
             <div
               className="poppins-regular"
@@ -302,7 +286,7 @@ function Viewdetails() {
                 fontSize: "12px",
               }}
             >
-              {subcategory.servicebelow}
+              {subcategory?.servicebelow}
             </div>
 
             <div
@@ -312,7 +296,7 @@ function Viewdetails() {
               Service Description
             </div>
             <div className="row">
-              {subcategory.serviceDesc.map((data) => (
+              {subcategory?.serviceDesc.map((data) => (
                 <>
                   <div className="col-md-1">
                     <img
@@ -403,6 +387,23 @@ function Viewdetails() {
                               )}
                             </div>
                           </div>
+
+                          <div
+                            style={{
+                              textAlign: "center",
+                              color: "black",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                              fontFamily: "sans-serif",
+                            }}
+                          >
+                            {price.pservices && (
+                              <p className="poppins-black">
+                                Services - {price.pservices}
+                              </p>
+                            )}
+                          </div>
+
                           <div
                             className="poppins-regular"
                             style={{
@@ -535,6 +536,103 @@ function Viewdetails() {
                 );
               })()}
             </div>
+
+            {subcategory?.category === "Painting" ? (
+              ""
+            ) : Carttotal > 0 ? (
+              <div
+                className="row mb-5"
+                style={{ justifyContent: "center", alignItems: "center" }}
+              >
+                <div
+                  className="mt-5"
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    backgroundColor: "rgb(224, 206, 85)",
+                    padding: 5,
+                    marginTop: 5,
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    width: "60%",
+                  }}
+                >
+                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <span
+                      className="poppins-medium"
+                      style={{ color: "black", fontWeight: "bold" }}
+                    >
+                      Congratulations! ₹{Carttotal}
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      color: "black",
+                      marginLeft: 10,
+                      fontWeight: "bold",
+                    }}
+                  ></span>
+                  <span
+                    className="poppins-medium"
+                    style={{
+                      color: "black",
+                      marginLeft: 4,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    saved so far!
+                  </span>
+                </div>
+                <div
+                  className="row"
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      backgroundColor: "darkred",
+                      color: "white",
+                      padding: 10,
+                      width: "61%",
+                      textAlign: "center",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => navigate("/cart")}
+                  >
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <span
+                        className="poppins-extrabold"
+                        style={{
+                          color: "white",
+                          fontWeight: "bold",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Total
+                      </span>
+                      <span
+                        className="poppins-extrabold mx-2"
+                        style={{ color: "white" }}
+                      >
+                        ₹{Carttotal}
+                      </span>
+                    </div>
+                    <span
+                      className="poppins-extrabold"
+                      style={{ color: "white", fontWeight: "bold" }}
+                    >
+                      View Cart
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
 
             <div className="row">
               <div className="col-md-6">
@@ -712,39 +810,6 @@ function Viewdetails() {
               </div>
 
               <div className="row mb-3">
-                {/* {whychooseus.map((data) => (
-                  <div className="col-md-4 mb-3" key={data._id}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <img
-                        src={data.image}
-                        alt="loading...."
-                        style={{
-                          width: "80px",
-                          height: "80px",
-                          // borderRadius: "50px",
-                        }}
-                      />
-                    </div>
-                    <div
-                      className="poppins-black mt-2"
-                      style={{ fontSize: "12px", textAlign: "center" }}
-                    >
-                      {data.title}
-                    </div>
-                    <div
-                      className="poppins-regular"
-                      style={{ textAlign: "center" }}
-                    >
-                      {data.discription}
-                    </div>
-                  </div>
-                ))} */}
                 <Swiper
                   slidesPerView={4}
                   spaceBetween={30}
@@ -887,103 +952,6 @@ function Viewdetails() {
               </div>
               <div className="swiper-pagination swiper-pagination-cleaning"></div>
             </div>
-
-            {subcategory?.category === "Painting" ? (
-              ""
-            ) : Carttotal > 0 ? (
-              <div
-                className="row mb-5"
-                style={{ justifyContent: "center", alignItems: "center" }}
-              >
-                <div
-                  className="mt-5"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    backgroundColor: "rgb(224, 206, 85)",
-                    padding: 5,
-                    marginTop: 5,
-                    alignSelf: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    width: "60%",
-                  }}
-                >
-                  <div style={{ display: "flex", flexDirection: "row" }}>
-                    <span
-                      className="poppins-medium"
-                      style={{ color: "black", fontWeight: "bold" }}
-                    >
-                      Congratulations! ₹{Carttotal}
-                    </span>
-                  </div>
-                  <span
-                    style={{
-                      color: "black",
-                      marginLeft: 10,
-                      fontWeight: "bold",
-                    }}
-                  ></span>
-                  <span
-                    className="poppins-medium"
-                    style={{
-                      color: "black",
-                      marginLeft: 4,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    saved so far!
-                  </span>
-                </div>
-                <div
-                  className="row"
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      backgroundColor: "darkred",
-                      color: "white",
-                      padding: 10,
-                      width: "61%",
-                      textAlign: "center",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => navigate("/cart")}
-                  >
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                      <span
-                        className="poppins-extrabold"
-                        style={{
-                          color: "white",
-                          fontWeight: "bold",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Total
-                      </span>
-                      <span
-                        className="poppins-extrabold mx-2"
-                        style={{ color: "white" }}
-                      >
-                        ₹{Carttotal}
-                      </span>
-                    </div>
-                    <span
-                      className="poppins-extrabold"
-                      style={{ color: "white", fontWeight: "bold" }}
-                    >
-                      View Cart
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
           </div>
         </div>
       </div>

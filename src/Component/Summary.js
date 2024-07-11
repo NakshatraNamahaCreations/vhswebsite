@@ -21,6 +21,12 @@ function Summary() {
   const location = useLocation();
   const { plan, sdata } = location.state || {};
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  console.log("sdata=-=====", sdata);
+
   console.log("sdata=======", plan);
 
   const [addondata, setaddondata] = useState([]);
@@ -124,27 +130,7 @@ function Summary() {
     "Friday",
     "Saturday",
   ];
-  // useEffect(() => {
-  //   const getNextDays = () => {
-  //     const nextDays = [];
-  //     for (let i = 0; i < 4; i++) {
-  //       const date = new Date();
-  //       date.setDate(currentDate.getDate() + i);
 
-  //       const day = date.getDate();
-  //       const month = date.getMonth() + 1;
-  //       const year = date.getFullYear();
-
-  //       const dayName = daysOfWeek[date.getDay()];
-
-  //       nextDays.push({ day, month, year, dayName });
-  //     }
-  //     return nextDays;
-  //   };
-
-  //   const nextDays = getNextDays();
-  //   setFourDates(nextDays);
-  // }, []);
   useEffect(() => {
     const getNextDays = () => {
       const nextDays = [];
@@ -185,23 +171,7 @@ function Summary() {
     11: "November",
     12: "December",
   };
-  // const isDateSelected = (day) => {
-  //   if (!selectedDate) return false;
 
-  //   const { day: dayNumber, month, year } = day;
-  //   const monthName = monthsMap[month];
-
-  //   if (!monthName) {
-  //     return false;
-  //   }
-
-  //   const formattedDay = moment(
-  //     `${monthName} ${dayNumber}, ${year}`,
-  //     "MMMM D, YYYY"
-  //   ).format("LL");
-
-  //   return formattedDay === selectedDate;
-  // };
   const isDateSelected = (day) => {
     if (!selectedDate) return false;
 
@@ -615,7 +585,7 @@ function Summary() {
       "https://api.vijayhomesuperadmin.in/api/userapp/getvoucher"
     );
     if (res.status === 200) {
-      const uniqueCategories = sdata.category;
+      const uniqueCategories = sdata?.category;
       let filteredVoucherData = res.data?.voucher.find(
         (voch) => voch.category === uniqueCategories
       );
@@ -768,7 +738,7 @@ function Summary() {
     <div className="">
       <Header2 />
 
-      <div className="container mt-5 pt-3">
+      <div className="container mt-1">
         <div className="row">
           {!show1 && (
             <>
@@ -786,7 +756,7 @@ function Summary() {
               <div className="row">
                 <div className="col-md-3">
                   <img
-                    src={`https://api.vijayhomesuperadmin.in/service/${sdata?.serviceImg}`}
+                    src={sdata?.imglink}
                     alt="loading...."
                     style={{
                       width: "100%",
@@ -806,7 +776,7 @@ function Summary() {
                       textAlign: "left",
                     }}
                   >
-                    {sdata.serviceName}
+                    {sdata?.serviceName}
                   </div>
                   <div
                     className="poppins-regular"
