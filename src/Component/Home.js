@@ -78,6 +78,10 @@ export default function Home() {
   const [searchlist, setSearchlist] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState({});
+  const [selectedPlaceAddress, setSelectedPlaceAddress] = useState("");
+  const mapRef = useRef(null);
 
   useEffect(() => {
     getsearch();
@@ -315,6 +319,8 @@ export default function Home() {
       );
     }
   };
+
+  console.log("sdata======", sdata);
 
   useEffect(() => {
     getallthoughtfull();
@@ -659,6 +665,44 @@ export default function Home() {
     return videoUrl;
   };
 
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const location = { latitude, longitude };
+          setSelectedLocation(location);
+
+          const geocoder = new window.google.maps.Geocoder();
+          const latlng = new window.google.maps.LatLng(latitude, longitude);
+          geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === "OK") {
+              if (results[0]) {
+                setSelectedPlaceAddress(results[0].formatted_address);
+              } else {
+                console.log("No results found");
+              }
+            } else {
+              console.log("Geocoder failed due to: " + status);
+            }
+          });
+
+          if (mapRef.current && mapRef.current.getMap) {
+            const map = mapRef.current.getMap();
+            const bounds = new window.google.maps.LatLngBounds();
+            bounds.extend(new window.google.maps.LatLng(latitude, longitude));
+            map.fitBounds(bounds);
+          }
+        },
+        (error) => {
+          console.error("Error fetching location: ", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
   console.log("FilterCleaningWithImages=====", FilterCleaningWithImages);
 
   return (
@@ -684,6 +728,22 @@ export default function Home() {
         <>
           <NabarCompo />
           {/* Carousel-----------slider */}
+          {/* 
+          <button
+            onClick={getCurrentLocation}
+            style={{
+              backgroundColor: "orange",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              padding: "8px",
+              fontSize: "14px",
+              width: "50%",
+            }}
+          >
+            Use My Current Location
+          </button> */}
           <div className="">
             <div id="carouselExample" className="carousel slide">
               <div className="carousel-inner">
@@ -882,7 +942,7 @@ export default function Home() {
               <div className="poppins-medium-italic mt-1 mb-4">
                 Of our finest experiences
               </div>
-              <Swiper
+              {/* <Swiper
                 slidesPerView={5}
                 spaceBetween={30}
                 freeMode={true}
@@ -919,6 +979,59 @@ export default function Home() {
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                       ></iframe>
+                      <iframe
+                        src={`${getEmbedUrl1(
+                          data.creationslink
+                        )}?autoplay=1&controls=0`}
+                        title={data.category}
+                        width="200px"
+                        height="300px"
+                        style={{ borderRadius: 10 }}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </SwiperSlide>
+                  ))}
+                </div>
+              </Swiper> */}
+              <Swiper
+                slidesPerView={5}
+                spaceBetween={30}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                }}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                modules={[FreeMode, Pagination, Autoplay]}
+                className="mySwiper"
+              >
+                <div className="col-md-4" style={{ width: "100%" }}>
+                  {thoughtfull.map((data) => (
+                    <SwiperSlide
+                      key={data._id}
+                      style={{
+                        backgroundColor: "white",
+                        padding: "0px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <video
+                        src={data.creationslink}
+                        width="200px"
+                        height="300px"
+                        style={{ borderRadius: 10 }}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      ></video>
                     </SwiperSlide>
                   ))}
                 </div>
@@ -1840,7 +1953,7 @@ export default function Home() {
                             // source={{
                             //   uri: `https://api.vijayhomesuperadmin.in/subcat/${i.subcatimg}`,
                             // }}
-                            source={i.imglink}
+                            src={i.imglink}
                             alt="loading...."
                             style={{
                               width: "150px",
@@ -1905,7 +2018,7 @@ export default function Home() {
                             // source={{
                             //   uri: `https://api.vijayhomesuperadmin.in/subcat/${i.subcatimg}`,
                             // }}
-                            source={i.imglink}
+                            src={i.imglink}
                             alt="loading...."
                             style={{
                               width: "150px",
@@ -2085,325 +2198,6 @@ export default function Home() {
           </Button>
         </Modal.Footer>
       </Modal>
-
-      {/* <Modal show={openResetModal} centered onHide={handleResetModal}>
-        <div className="">
-          <div className="">
-            <div className="col-12">
-              <img
-                src="./assests/citybanner1.jpg"
-                alt="loading...."
-                style={{
-                  width: "450px",
-                  height: "130px",
-                  borderTopLeftRadius: "10px",
-                  borderTopRightRadius: "10px",
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="modal_body">
-            <div className="title poppins-semibold">
-              <span>
-                <img
-                  src="./assests/indiaflg.png"
-                  alt="loading..."
-                  style={{
-                    width: "23px",
-                    height: "23px",
-                    marginRight: "10px",
-                    borderRadius: "50px",
-                  }}
-                />
-              </span>
-              India
-            </div>
-            <div className="row">
-              {city.map((city) => (
-                <div className="" key={city._id}>
-                  <div
-                    className={`city-name p-2 ${
-                      activeCity === city.city ? "active" : ""
-                    }`}
-                    onClick={() => handleChange(city)}
-                  >
-                    <i
-                      className={`fa-solid fa-location-dot ${
-                        activeCity === city.city ? "active-icon" : ""
-                      }`}
-                      style={{
-                        color: "darkred",
-                        marginTop: "3px",
-                        fontSize: "15px",
-                      }}
-                    ></i>
-                    <p className="poppins-regular mx-2">{city.city}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="title poppins-semibold mt-1">
-              <span>
-                <img
-                  src="./assests/dubai.png"
-                  alt="loading..."
-                  style={{
-                    width: "23px",
-                    height: "23px",
-                    marginRight: "10px",
-                    borderRadius: "50px",
-                  }}
-                />
-              </span>
-              Dubai{" "}
-              <span
-                className="poppins-light"
-                style={{
-                  color: "grey",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                }}
-              >
-                Coming Soon
-              </span>
-            </div>
-
-            <div className="title poppins-semibold mt-1">
-              <span>
-                <img
-                  src="./assests/london.webp"
-                  alt="loading..."
-                  style={{
-                    width: "23px",
-                    height: "23px",
-                    marginRight: "10px",
-                    borderRadius: "50px",
-                  }}
-                />
-              </span>
-              London{" "}
-              <span
-                className="poppins-light"
-                style={{
-                  color: "grey",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                }}
-              >
-                Coming Soon
-              </span>
-            </div>
-          </div>
-        </div>
-      </Modal> */}
-      {/* <Modal show={openResetModal} centered onHide={handleResetModal}>
-        <div className="modal_grid">
-          <div className="modal_header">
-            <img src="./assests/citybanner1.jpg" alt="loading...." />
-          </div>
-
-          <div className="modal_body">
-            <div className="title poppins-semibold">
-              <span>
-                <img
-                  src="./assests/indiaflg.png"
-                  alt="loading..."
-                  style={{
-                    width: "23px",
-                    height: "23px",
-                    marginRight: "10px",
-                    borderRadius: "50px",
-                  }}
-                />
-              </span>
-              India
-            </div>
-            <div className="row">
-              {city.map((city) => (
-                <div className="city-item" key={city._id}>
-                  <div
-                    className={`city-name p-2 ${
-                      activeCity === city.city ? "active" : ""
-                    }`}
-                    onClick={() => handleChange(city)}
-                  >
-                    <i
-                      className={`fa-solid fa-location-dot ${
-                        activeCity === city.city ? "active-icon" : ""
-                      }`}
-                      style={{
-                        color: "darkred",
-                        marginTop: "3px",
-                        fontSize: "15px",
-                      }}
-                    ></i>
-                    <p className="poppins-regular mx-2">{city.city}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="title poppins-semibold mt-1">
-              <span>
-                <img
-                  src="./assests/dubai.png"
-                  alt="loading..."
-                  style={{
-                    width: "23px",
-                    height: "23px",
-                    marginRight: "10px",
-                    borderRadius: "50px",
-                  }}
-                />
-              </span>
-              Dubai{" "}
-              <span
-                className="poppins-light"
-                style={{
-                  color: "grey",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                }}
-              >
-                Coming Soon
-              </span>
-            </div>
-
-            <div className="title poppins-semibold mt-1">
-              <span>
-                <img
-                  src="./assests/london.webp"
-                  alt="loading..."
-                  style={{
-                    width: "23px",
-                    height: "23px",
-                    marginRight: "10px",
-                    borderRadius: "50px",
-                  }}
-                />
-              </span>
-              London{" "}
-              <span
-                className="poppins-light"
-                style={{
-                  color: "grey",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                }}
-              >
-                Coming Soon
-              </span>
-            </div>
-          </div>
-        </div>
-      </Modal> */}
-      {/* <Modal
-        show={openResetModal}
-        style={{ width: "100%" }}
-        centered
-        onHide={handleResetModal}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-      >
-        <div className="modal_grid">
-          <div className="modal_header">
-            <img src="./assests/citybanner1.jpg" alt="loading...." />
-          </div>
-
-          <div className="modal_body">
-            <div className="title poppins-semibold">
-              <span>
-                <img
-                  src="./assests/indiaflg.png"
-                  alt="loading..."
-                  style={{
-                    width: "23px",
-                    height: "23px",
-                    marginRight: "10px",
-                    borderRadius: "50px",
-                  }}
-                />
-              </span>
-              India
-            </div>
-            <div className="city-grid">
-              {city.map((city) => (
-                <div className="city-item" key={city._id}>
-                  <div
-                    className={`city-name ${
-                      activeCity === city.city ? "active" : ""
-                    }`}
-                    onClick={() => handleChange(city)}
-                  >
-                    <i
-                      className={`fa-solid fa-location-dot ${
-                        activeCity === city.city ? "active-icon" : ""
-                      }`}
-                      style={{
-                        color: "darkred",
-                        marginTop: "3px",
-                        fontSize: "15px",
-                      }}
-                    ></i>
-                    <p className="poppins-regular">{city.city}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="title poppins-semibold mt-1">
-              <span>
-                <img
-                  src="./assests/dubai.png"
-                  alt="loading..."
-                  style={{
-                    width: "23px",
-                    height: "23px",
-                    marginRight: "10px",
-                    borderRadius: "50px",
-                  }}
-                />
-              </span>
-              Dubai{" "}
-              <span
-                className="poppins-light"
-                style={{
-                  color: "grey",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                }}
-              >
-                Coming Soon
-              </span>
-            </div>
-
-            <div className="title poppins-semibold mt-1">
-              <span>
-                <img
-                  src="./assests/london.webp"
-                  alt="loading..."
-                  style={{
-                    width: "23px",
-                    height: "23px",
-                    marginRight: "10px",
-                    borderRadius: "50px",
-                  }}
-                />
-              </span>
-              London{" "}
-              <span
-                className="poppins-light"
-                style={{
-                  color: "grey",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                }}
-              >
-                Coming Soon
-              </span>
-            </div>
-          </div>
-        </div>
-      </Modal> */}
 
       <Modal
         show={openResetModal}

@@ -89,6 +89,34 @@ function Footer() {
               Register as a professional
             </a>
           </div>
+
+          <div className="f-desc">
+            <a
+              className="poppins-regular"
+              href="/"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Register as a Investor
+            </a>
+          </div>
+          <div className="f-desc">
+            <a
+              className="poppins-regular"
+              href="/"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Interior Company Collaboration
+            </a>
+          </div>
+          <div className="f-desc">
+            <a
+              className="poppins-regular"
+              href="/"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Commercial Carpet Cleaning
+            </a>
+          </div>
         </div>
 
         <div className="col-md-3 ">
@@ -123,6 +151,7 @@ function Footer() {
             alt="loading...."
             style={{ width: "140px", height: "40px", marginTop: "10px" }}
           />
+          <br />
           <img
             src={socialone}
             alt="loading...."

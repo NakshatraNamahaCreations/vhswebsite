@@ -42,12 +42,13 @@ function Viewdetails() {
   const navigate = useNavigate();
   const [certificatedata, setcertificatedata] = useState([]);
   const [modalbanner, setmodalbanner] = useState([]);
+  const [paintingbanner, setpaintingbanner] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log("subcategory", subcategory);
+  console.log("MyCartItmes", MyCartItmes);
 
   const citys = useSelector((state) => state.city);
   console.log(citys, "citys====");
@@ -66,6 +67,7 @@ function Viewdetails() {
   };
 
   const handleviewselect = (selectedItem) => {
+    console.log("selectedYogi", selectedItem);
     setItem(selectedItem);
   };
 
@@ -188,11 +190,62 @@ function Viewdetails() {
     }
   };
 
+  useEffect(() => {
+    getpaintingbanner();
+  }, []);
+
+  const getpaintingbanner = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomeservice.com/api/paintingbanner/getallpaintingbanner"
+    );
+    if ((res.status = 200)) {
+      setpaintingbanner(
+        res.data?.banner.filter((i) => i.category === subcategory?.category)
+      );
+    }
+  };
+
+  console.log("paintingbanner", paintingbanner);
+
   console.log("subcategory====kanmani", subcategory);
 
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const [pricesdata, setpricesdata] = useState([]);
   const [selectedPlan, setselectedPlan] = useState(pricesdata[0]);
+
+  const handleItemClick = (item, index) => {
+    console.log("Item Yogi", item);
+    console.log("Item====", Item);
+
+    setSelectedItemIndex(index);
+    setselectedPlan(item);
+    setItem(selectedItem);
+    const itemToAdd = {
+      _id: item._id,
+      category: subcategory?.category,
+      service: subcategory,
+      pName: item.pName,
+      pPrice: item.pPrice,
+      pofferprice: item.pofferprice,
+      pservices: item.pservices,
+    };
+
+    if (!item.pservices) {
+      const existingCartItem = MyCartItmes.find(
+        (cartItem) => cartItem.category === subcategory?.category
+      );
+
+      if (existingCartItem) {
+        dispatch(addToCart({ ...itemToAdd, id: existingCartItem.id }));
+      } else {
+        dispatch(clearCart());
+        dispatch(addToCart(itemToAdd));
+      }
+    } else {
+      // alert("This is AMC services ")
+      navigate("/summary", { state: { plan: item, sdata: Item } });
+    }
+  };
 
   const handleItemClick1 = (item, index) => {
     setSelectedItemIndex(index);
@@ -219,40 +272,11 @@ function Viewdetails() {
         dispatch(addToCart(itemToAdd));
       }
     } else {
-      navigate("/summary", { state: { plan: item, sdata: selectedItem } });
+      navigate("/summary", { state: { plan: item, sdata: subcategory } });
     }
   };
 
-  const handleItemClick = (item, index) => {
-    setSelectedItemIndex(index);
-    setselectedPlan(item);
-    setItem(selectedItem);
-    const itemToAdd = {
-      _id: item._id,
-      category: subcategory.category,
-      service: Item,
-      pName: item.pName,
-      pPrice: item.pPrice,
-      pofferprice: item.pofferprice,
-      pservices: item.pservices,
-    };
-
-    if (!item.pservices) {
-      const existingCartItem = MyCartItmes.find(
-        (cartItem) => cartItem.category === subcategory.category
-      );
-
-      if (existingCartItem) {
-        dispatch(addToCart({ ...itemToAdd, id: existingCartItem.id }));
-      } else {
-        dispatch(clearCart());
-        dispatch(addToCart(itemToAdd));
-      }
-    } else {
-      // alert("This is AMC services ")
-      navigate("/summary", { state: { plan: item, sdata: Item } });
-    }
-  };
+  console.log("selectedItem====12", selectedItem, Item);
 
   return (
     <div className="row">
@@ -296,29 +320,45 @@ function Viewdetails() {
               Service Description
             </div>
             <div className="row">
-              {subcategory?.serviceDesc.map((data) => (
-                <>
-                  <div className="col-md-1">
-                    <img
-                      style={{ width: "16px", height: "16px" }}
-                      alt=""
-                      src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.Eximg}`}
-                    />
-                  </div>
-                  <div className="col-md-11">
-                    <div
-                      className="poppins-regular  mt-1"
-                      style={{
-                        color: "black",
-                        fontSize: "14px",
-                        marginLeft: "-66px",
-                      }}
-                    >
-                      {data.text}
+              <div className="col-md-8">
+                {subcategory?.serviceDesc.map((data, index) => (
+                  <div key={index} className="d-flex mb-2">
+                    <div>
+                      <img
+                        style={{ width: "16px", height: "16px" }}
+                        alt=""
+                        src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.Eximg}`}
+                      />
+                    </div>
+                    <div className="ml-2 mx-1">
+                      <div
+                        className="poppins-regular mt-1"
+                        style={{
+                          color: "black",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {data.text}
+                      </div>
                     </div>
                   </div>
-                </>
-              ))}
+                ))}
+              </div>
+              <div className="col-md-4">
+                {paintingbanner.map((data, index) => (
+                  <div key={index} className="mb-2">
+                    <img
+                      src={data?.banner}
+                      alt="painting"
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        borderRadius: "10px",
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="row mt-2">
@@ -340,7 +380,6 @@ function Viewdetails() {
                           }}
                         >
                           <div
-                            // className="poppins-medium"
                             style={{
                               textAlign: "center",
                               color: "green",
@@ -939,7 +978,6 @@ function Viewdetails() {
                         }}
                         alt=""
                       />
-                      {/* <div className="poppins-black mt-2">{i.title}</div> */}
                     </div>
                   </SwiperSlide>
                 ))}

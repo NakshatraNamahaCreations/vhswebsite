@@ -840,7 +840,7 @@ function Cartbook() {
   return (
     <div className="row" style={{ justifyContent: "center" }}>
       <Header1 />
-      <div className="col-md-10 mt-5 pt-4">
+      <div className="col-md-10 mt-3">
         {!show1 && (
           <>
             <div
@@ -1375,17 +1375,18 @@ function Cartbook() {
 
             <div
               onClick={handleShow6}
-              className="col-md-12 mt-3 poppins-black"
+              className="col-md-12 mt-3 shadow poppins-black"
               style={{
-                backgroundColor: "darkred",
+                // backgroundColor: "darkred",
                 padding: "8px",
-                color: "white",
+                color: "orange",
                 fontSize: "14px",
                 textAlign: "center",
                 borderRadius: "5px",
                 cursor: "pointer",
                 width: "51%",
                 marginLeft: "-10px",
+                width: "250px",
               }}
             >
               Cancellation Policy
@@ -1943,7 +1944,7 @@ function Cartbook() {
         {/* Cancel Policy */}
 
         <Modal show={show6} centered style={{ padding: "15px" }}>
-          <Modal.Header closeButton>
+          <Modal.Header>
             <Modal.Title
               className="poppins-semibold"
               id="contained-modal-title-vcenter"

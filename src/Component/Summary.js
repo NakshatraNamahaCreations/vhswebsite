@@ -25,9 +25,7 @@ function Summary() {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log("sdata=-=====", sdata);
-
-  console.log("sdata=======", plan);
+  console.log("sdata=======", plan, sdata);
 
   const [addondata, setaddondata] = useState([]);
   const dispatch = useDispatch();
