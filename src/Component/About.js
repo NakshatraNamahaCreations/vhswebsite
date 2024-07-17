@@ -20,6 +20,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Footer from "./Footer";
+import Aboutgif from "../../src/assests/aboutgif.gif";
 
 function About() {
   const settings = {
@@ -41,40 +42,53 @@ function About() {
   return (
     <div className="row">
       <NabarCompo />
-      <img
-        src="./assests/offer1.jpg"
-        class="d-block w-100"
-        alt="..."
-        style={{ height: "450px" }}
-      />
+
       <div className="container">
-        <div className="row container m-auto mt-5 mb-3">
-          <p>
-            Vijay Home Services is the best Home service provider company in pan
-            India. We operates in all the major cities,Ex Bangalore - Hyderabad
-            - Chennai -Pune-Mumbai - Delhi - Gujarat - Kolkatta ,With 40m +
-            Happy Customer's , Our services include all types of Home based
-            services like Home Cleaning, Painting, Pest control, marble polish,
-            Appliances Repair and many more.
+        <div className="row container m-auto  mb-3">
+          <img
+            src={Aboutgif}
+            class="d-block w-100"
+            alt="..."
+            style={{ height: "350px" }}
+          />
+          <p className="poppins-regular mt-3">
+            Vijay Home Services is a premier home service provider operating in
+            21 cities across India, including Bangalore, Hyderabad, Chennai,
+            Pune, Mumbai, and many more.
           </p>
-          <p>
-            Our aims are to provide reliable, trustworthy and affordable with
-            high quality services. We are feasible and best services provider to
-            our customers through our trained professionals.Our customer’s
-            satisfaction is our prime objective.
+          <p className="poppins-regular">
+            We offer a wide range of home-based services, including cleaning,
+            painting, pest control, floor polishing, home repair services,
+            packers and movers, appliance services, and facility management. Our
+            aim is to provide reliable, trustworthy, and affordable services
+            with the highest quality through our trained professionals. Customer
+            satisfaction is our primary objective.
           </p>
-          <p>
-            Our goal is to reach the door step of each and every houses and
-            should be word of mouth to der family, friends.
+          <p className="poppins-regular">
+            Our goal is to reach every doorstep and become a household name,
+            recommended by families and friends.
           </p>
-          <p>
-            Our vision is to provide the best services to millions of pan
-            Indians and our states in the best feasible and affordable manner.
-          </p>
-          <p>
-            we make sure our team is well trained to all our professionals
-            before they start serving our valued customers.
-          </p>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="poppins-semibold">Our Vision</div>
+              <p className="poppins-regular mt-2">
+                Our vision is to deliver the best services to millions of people
+                across India in an affordable and efficient manner. We ensure
+                our team is well-trained and prepared before they start serving
+                our valued customers.
+              </p>
+            </div>
+            <div className="col-md-6">
+              <div className="poppins-semibold">Our Mission</div>
+              <p className="poppins-regular mt-2">
+                Our mission is to deliver the best cleaning services across the
+                states by using high-quality equipment and environmentally
+                friendly detergents, backed by a professional team with
+                sufficient training and experience.
+              </p>
+            </div>
+          </div>
 
           <div
             className="text-center mt-3"
@@ -82,7 +96,17 @@ function About() {
           >
             Why choose Us ?
           </div>
-          <div className="col-md-2 mt-5">
+          <p className="poppins-regular mt-2 text-center">
+            Vijay Home Services is India's leading home repair services
+            provider, offering extended warranty, damage protection, AMC plans,
+            and on-demand repair services. We cover all types of home repair
+            services, including cleaning, painting, pest control, floor
+            polishing, home repair services, packers and movers, appliance
+            services, and facility management. Our services cater to both
+            household and commercial areas.
+          </p>
+
+          <div className="col-md-2 mt-3">
             <img
               src={painterIcon}
               alt="Painter Icon"
@@ -104,7 +128,7 @@ function About() {
             </div>
           </div>
 
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-3">
             <img
               src={certificateIcon}
               alt="Painter Icon"
@@ -128,7 +152,7 @@ function About() {
             </div>
           </div>
 
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-3">
             <img
               src={guaranteeIcon}
               alt="Painter Icon"
@@ -150,7 +174,7 @@ function About() {
             </div>
           </div>
 
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-3">
             <img
               src={bestpriceIcon}
               alt="Painter Icon"
@@ -172,7 +196,7 @@ function About() {
             </div>
           </div>
 
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-3">
             <img
               src={guaranteeeIcon}
               alt="Painter Icon"
@@ -194,7 +218,7 @@ function About() {
             </div>
           </div>
 
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-3">
             <img
               src={networkIcon}
               alt="Painter Icon"
@@ -215,12 +239,56 @@ function About() {
               No Subcontract
             </div>
           </div>
+
+          <div className="poppins-semibold">Why We Stand Out</div>
+
+          <div className="poppins-light mt-2">
+            Trained Professionals:{" "}
+            <span className="poppins-regular">
+              Our team is composed of skilled and trained professionals
+            </span>
+          </div>
+
+          <div className="poppins-light mt-2">
+            Asian Paint Certified:{" "}
+            <span className="poppins-regular">
+              We are certified by Asian Paints, ensuring high-quality service.
+            </span>
+          </div>
+
+          <div className="poppins-light mt-2">
+            100% Guarantee:{" "}
+            <span className="poppins-regular">
+              We provide a full guarantee on our services.
+            </span>
+          </div>
+
+          <div className="poppins-light mt-2">
+            Best Price, Best Work:{" "}
+            <span className="poppins-regular">
+              We offer competitive pricing without compromising on quality.
+            </span>
+          </div>
+          <div className="poppins-light mt-2">
+            1 Year Service Warranty:{" "}
+            <span className="poppins-regular">
+              Enjoy peace of mind with our one-year service warranty.
+            </span>
+          </div>
+
+          <div className="poppins-light mt-2">
+            No Subcontracting:{" "}
+            <span className="poppins-regular">
+              We handle all services in-house, ensuring consistent quality and
+              reliability.
+            </span>
+          </div>
         </div>
       </div>
 
       <div className="container">
         <div
-          className="row container m-auto mt-2 mb-3"
+          className="row container m-auto mt-2"
           style={{ justifyContent: "space-between" }}
         >
           <div
@@ -229,7 +297,7 @@ function About() {
           >
             Awards and Recognition
           </div>
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-4">
             <img
               src={AwardImg}
               alt="loading"
@@ -240,7 +308,7 @@ function About() {
             />
           </div>
 
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-4">
             <img
               src={AwardImg1}
               alt="loading"
@@ -251,7 +319,7 @@ function About() {
             />
           </div>
 
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-4">
             <img
               src={AwardImg2}
               alt="loading"
@@ -262,7 +330,7 @@ function About() {
             />
           </div>
 
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-4">
             <img
               src={AwardImg3}
               alt="loading"
@@ -273,7 +341,7 @@ function About() {
             />
           </div>
 
-          <div className="col-md-2 mt-5">
+          <div className="col-md-2 mt-4">
             <img
               src={AwardImg4}
               alt="loading"
@@ -297,7 +365,7 @@ function About() {
           >
             Some Facts about Vijay Home Service
           </div>
-          <div className="col-md-3 mt-5">
+          <div className="col-md-3 mt-3">
             <div
               className="text-center"
               style={{ fontSize: "35px", fontWeight: "bold" }}
@@ -312,7 +380,7 @@ function About() {
             </div>
           </div>
 
-          <div className="col-md-3 mt-5">
+          <div className="col-md-3 mt-3">
             <div
               className="text-center"
               style={{ fontSize: "35px", fontWeight: "bold" }}
@@ -327,7 +395,7 @@ function About() {
             </div>
           </div>
 
-          <div className="col-md-3 mt-5">
+          <div className="col-md-3 mt-3">
             <div
               className="text-center"
               style={{ fontSize: "35px", fontWeight: "bold" }}
@@ -342,7 +410,7 @@ function About() {
             </div>
           </div>
 
-          <div className="col-md-3 mt-5">
+          <div className="col-md-3 mt-3">
             <div
               className="text-center"
               style={{ fontSize: "35px", fontWeight: "bold" }}

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "../Component/layout.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SpinnerCircular } from "spinners-react";
 import { Modal } from "react-bootstrap";
@@ -83,6 +83,10 @@ export default function Home() {
   const [selectedPlaceAddress, setSelectedPlaceAddress] = useState("");
   const mapRef = useRef(null);
 
+  const localstoragecitys = localStorage.getItem("city");
+
+  console.log("localstoragecitys=====", localstoragecitys);
+
   useEffect(() => {
     getsearch();
   }, []);
@@ -116,9 +120,7 @@ export default function Home() {
   }, [searchQuery, searchlist]);
 
   useEffect(() => {
-    // if (pathName === "/") {
     setOpenResetModal(true);
-    // }
   }, []);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -201,7 +203,6 @@ export default function Home() {
   const [email, setemail] = useState("");
   const [comment, setcomment] = useState("");
   const [enquirydate, setenquirydate] = useState(moment().format("MM-DD-YYYY"));
-  const localstoragecitys = localStorage.getItem("city");
 
   const addEnquiry = async (e) => {
     e.preventDefault();
@@ -246,14 +247,33 @@ export default function Home() {
     }
   };
 
-  const handleChange = (e) => {
-    setSelectedOption(selectedOption);
-    setActiveCity(e.city);
-    setSelectedCity(e.city);
-    localStorage.setItem("city", e.city);
-    distpatch(setstoreCity(selectedOption.text));
-    distpatch(setstoreCity(e.city));
+  // const handleChange = (e) => {
+  //   setSelectedOption(selectedOption);
+  //   setActiveCity(e.city);
+  //   setActiveCity(e.city);
+  //   setSelectedCity(e.city);
+  //   localStorage.setItem("city", e.city);
+  //   distpatch(setstoreCity(selectedOption.text));
+  //   distpatch(setstoreCity(e.city));
+  //   setOpenResetModal(false);
+  // };
+
+  const navigate = useNavigate();
+
+  // const handleChange = (selectedCity) => {
+  //   const cityName = selectedCity.city;
+  //   setActiveCity(cityName); // Update the state
+  //   setOpenResetModal(false); // Close the modal
+  //   localStorage.setItem("selectedCity", cityName); // Save to localStorage
+  //   navigate(`/city/${city.city}`); // Update the URL
+  // };
+
+  const handleChange = (city) => {
     setOpenResetModal(false);
+    setActiveCity(city.city);
+    setSelectedCity(city.city);
+    localStorage.setItem("city", city.city);
+    navigate(`/${city.city}`);
   };
 
   // TestiMonial
@@ -1942,7 +1962,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: i?.subcategory }}
+                      state={({ subcategory: i?.subcategory }, { data: i })}
                       key={i.subcategory}
                       style={{ textDecoration: "none" }}
                       className="text-decoration-none text-black"
@@ -1950,9 +1970,6 @@ export default function Home() {
                       <div className="col-md-4" style={{ width: "100%" }}>
                         <div>
                           <img
-                            // source={{
-                            //   uri: `https://api.vijayhomesuperadmin.in/subcat/${i.subcatimg}`,
-                            // }}
                             src={i.imglink}
                             alt="loading...."
                             style={{
@@ -2007,7 +2024,7 @@ export default function Home() {
                   >
                     <Link
                       to="/servicedetails"
-                      state={{ subcategory: i?.subcategory }}
+                      state={({ subcategory: i?.subcategory }, { data: i })}
                       key={i.subcategory}
                       style={{ textDecoration: "none" }}
                       className="text-decoration-none text-black"
@@ -2035,28 +2052,6 @@ export default function Home() {
                   </SwiperSlide>
                 ))}
             </Swiper>
-
-            {/* <div className="row">
-              <div
-                className="col-md-4"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <div className="poppins-semibold">Deal of the week</div>
-              </div>
-              <div className="col-md-8">
-                <div className="" style={{}}>
-                  <img
-                    src={deal}
-                    alt="vhs"
-                    style={{ width: "480px", height: "100px" }}
-                  />
-                </div>
-              </div>
-            </div> */}
           </div>
           <Footer />
         </>
@@ -2209,7 +2204,7 @@ export default function Home() {
       >
         <div className="modal_grid">
           <div className="modal_header">
-            <img src="./assests/citybanner1.jpg" alt="loading...." />
+            <img src="./assests/locationmap.jpg" alt="city images" />
           </div>
 
           <div className="modal_body">
@@ -2380,14 +2375,6 @@ export default function Home() {
             Submit
           </div>
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );

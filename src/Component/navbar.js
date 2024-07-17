@@ -56,12 +56,12 @@ export default function NabarCompo({}) {
   const [selectedCity, setSelectedCity] = useState("");
   const [CategoryData, setCategoryData] = useState([]);
   const [SearchSubCategoryd, setSearchSubCategoryD] = useState([]);
-  const [activeCity, setActiveCity] = useState("");
-  try {
-    userData = JSON.parse(storedUserDataJSON);
-  } catch (error) {
-    console.error("Error parsing JSON:", error);
-  }
+  // const [activeCity, setActiveCity] = useState("");
+  // try {
+  //   userData = JSON.parse(storedUserDataJSON);
+  // } catch (error) {
+  //   console.error("Error parsing JSON:", error);
+  // }
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -188,16 +188,6 @@ export default function NabarCompo({}) {
     e.preventDefault();
     setSearchSubCategory(ele);
     setIsDropdownEnabled(true);
-  };
-
-  const handleChange = (e) => {
-    setSelectedOption(selectedOption);
-    setActiveCity(e.city);
-    setSelectedCity(e.city);
-    localStorage.setItem("city", e.city);
-    distpatch(setstoreCity(selectedOption.text));
-    distpatch(setstoreCity(e.city));
-    setOpenResetModal(false);
   };
 
   const handleremove = () => {

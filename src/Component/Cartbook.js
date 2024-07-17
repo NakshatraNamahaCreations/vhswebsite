@@ -158,7 +158,7 @@ function Cartbook() {
   useEffect(() => {
     const newCartTotal = MyCartItmes.reduce(
       (accumulator, item) => {
-        if (!item) return accumulator; // Ensure item is not undefined
+        if (!item) return accumulator;
 
         const offerPrice = parseFloat(item?.offerprice) || 0;
         const quantity = parseInt(item?.qty) || 0;
@@ -199,10 +199,8 @@ function Cartbook() {
     newCartTotal.total += addonTotal;
     newCartTotal.planSubtotal += addonTotal1;
 
-    setCarttotal(newCartTotal.total); // Update the state with the new Cart total
-    setSavedAmount(newCartTotal.savedAmount); // Update the state with the total saved amount
-
-    // If a coupon code has been applied, calculate the discount
+    setCarttotal(newCartTotal.total);
+    setSavedAmount(newCartTotal.savedAmount);
     if (appliedVoucherCode === voucherdata?.voucherCode) {
       const discountAmount =
         (newCartTotal.planSubtotal *

@@ -51,6 +51,11 @@ function Summary() {
 
   const handleClose3 = () => setpaymentModel(false);
 
+  const [show6, setShow6] = useState(false);
+
+  const handleClose6 = () => setShow6(false);
+  const handleShow6 = () => setShow6(true);
+
   const handleClose2 = () => setShow2(false);
   const [responseData, setResponseData] = useState(null);
   const [email, setemail] = useState("");
@@ -1095,8 +1100,27 @@ function Summary() {
                 </div>
               </div>
 
+              <div
+                onClick={handleShow6}
+                className="col-md-12 mt-3 shadow poppins-black"
+                style={{
+                  // backgroundColor: "darkred",
+                  padding: "8px",
+                  color: "orange",
+                  fontSize: "14px",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  width: "51%",
+                  // marginLeft: "-10px",
+                  width: "250px",
+                }}
+              >
+                Cancellation Policy
+              </div>
+
               {!showbutton ? (
-                <div className="row mt-5 mb-5">
+                <div className="row mt-4 mb-5">
                   <div
                     onClick={() => setshowbutton(true)}
                     className="col-md-6 poppins-black"
@@ -1681,6 +1705,268 @@ function Summary() {
                   Yes, proceed
                 </Button>
               </a>
+            </Modal.Body>
+          </Modal>
+
+          {/* Cancel Policy */}
+
+          <Modal show={show6} centered style={{ padding: "15px" }}>
+            <Modal.Header>
+              <Modal.Title
+                className="poppins-semibold"
+                id="contained-modal-title-vcenter"
+              >
+                Cancellation Policy
+              </Modal.Title>
+            </Modal.Header>
+            <i
+              onClick={handleClose6}
+              className="fa-solid fa-x"
+              style={{
+                backgroundColor: "darkred",
+                padding: "8px",
+                width: "30px",
+                textAlign: "center",
+                color: "white",
+                fontSize: "15px",
+                borderRadius: "50px",
+                position: "absolute",
+                right: "15px",
+                top: "15px",
+                fontSize: "14px",
+                // top: "70px",
+              }}
+            ></i>
+            <Modal.Body>
+              <div className="poppins-regular" style={{}}>
+                We understand that plans can change. Our cancellation policy is
+                designed to be fair and transparent for all our customers.
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  No Cancellation Charges !!
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Cancellation Charges !!
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Within 4 Hours to 1 Hour Before Scheduled Slot: Full House
+                  Cleaning: ₹500
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹100
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Home Repair Services : 200
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Appliances Services : 200
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Within 1 Hour and After Scheduled Slot: Full House Cleaning:
+                  ₹700
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹150
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  We appreciate your understanding and cooperation.
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Please contact us as soon as possible if you need to cancel or
+                  reschedule your service to avoid any charges.
+                </div>
+              </div>
+
+              <div className="row mt-2">
+                <div className="col-md-1">
+                  <i
+                    class="fa-solid fa-star"
+                    style={{ color: "green", fontSize: "16px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 mt-1 poppins-regular"
+                  style={{
+                    color: "black",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Before 4 Hours: If you cancel your service more than 4 hours
+                  before the scheduled slot, there will be no cancellation
+                  charges.
+                </div>
+              </div>
             </Modal.Body>
           </Modal>
         </div>

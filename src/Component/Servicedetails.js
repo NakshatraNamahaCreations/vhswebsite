@@ -531,7 +531,7 @@ function Servicedetails() {
                             borderRadius: "10px",
                           }}
                           className="mb-2"
-                          alt=""
+                          alt={`${data.subcategory} images`}
                           src={data.imglink}
                         />
                         <div
@@ -930,7 +930,7 @@ function Servicedetails() {
                           borderRadius: "10px",
                         }}
                         className="mb-2"
-                        alt=""
+                        alt={`${data.category} images`}
                         src={data.imglink}
                       />
                       <div

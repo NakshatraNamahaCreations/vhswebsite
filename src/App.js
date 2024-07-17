@@ -32,12 +32,16 @@ import Completed from "./Component/Completed";
 import Upcomingdetail from "./Component/Upcomingdetail";
 import Enquirydetails from "./Component/Enquirydetails";
 import Completeddetails from "./Component/Completeddetails";
+import Category from "./Component/Category";
+import Homecity from "./Component/Homecity";
+import Subcategory from "./Component/Subcategory";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/:cityName" element={<Homecity />} />
         <Route path="login" element={<Login />} />
         <Route path="Register" element={<Register />} />
         <Route path="resetpassword" element={<ResetPassword />} />
@@ -64,6 +68,8 @@ function App() {
         <Route path="/upcomingdetail" element={<Upcomingdetail />} />
         <Route path="/enquirydetails" element={<Enquirydetails />} />
         <Route path="/completeddetails" element={<Completeddetails />} />
+        <Route path="/services/:data" element={<Category />} />
+        <Route path="/service/:subcategory" element={<Subcategory />} />
 
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>
