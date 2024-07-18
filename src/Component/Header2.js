@@ -43,7 +43,12 @@ export default function NavbarCompo() {
     >
       <Container>
         <Navbar.Brand className="fnt rounded-lg brd p-1" href="/">
-          <img src="./images/vhs.png" alt="" width={40} height={40} />
+          <img
+            src="https://vijayahomeservices.b-cdn.net/vhs-lgo.png"
+            alt=""
+            width={40}
+            height={40}
+          />
           <span className="clrrdd boldt mx-2 poppins-medium">
             Vijay Home Services
           </span>
@@ -60,7 +65,7 @@ export default function NavbarCompo() {
           >
             <div className="">
               <img
-                src="./assests/new.gif"
+                src="https://vijayahomeservices.b-cdn.net/new.gif"
                 alt="loading...."
                 style={{ width: "25px", height: "25px" }}
               />
@@ -82,7 +87,7 @@ export default function NavbarCompo() {
           >
             <div className="">
               <img
-                src="./assests/new.gif"
+                src="https://vijayahomeservices.b-cdn.net/new.gif"
                 alt="loading...."
                 style={{ width: "25px", height: "25px" }}
               />
@@ -104,7 +109,7 @@ export default function NavbarCompo() {
           >
             <div className="">
               <img
-                src="./assests/new.gif"
+                src="https://vijayahomeservices.b-cdn.net/new.gif"
                 alt="loading...."
                 style={{ width: "25px", height: "25px" }}
               />

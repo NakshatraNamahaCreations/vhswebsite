@@ -13,7 +13,7 @@ function Footer() {
     >
       <div className="d-flex">
         <img
-          src="./images/vhs.png"
+          src="https://vijayahomeservices.b-cdn.net/vhs-lgo.png"
           alt="loading...."
           style={{ width: "60px", height: "55px" }}
         />

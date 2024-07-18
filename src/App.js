@@ -35,6 +35,7 @@ import Completeddetails from "./Component/Completeddetails";
 import Category from "./Component/Category";
 import Homecity from "./Component/Homecity";
 import Subcategory from "./Component/Subcategory";
+import Serviceviewdetails from "./Component/Serviceviewdetails";
 
 function App() {
   return (
@@ -70,6 +71,10 @@ function App() {
         <Route path="/completeddetails" element={<Completeddetails />} />
         <Route path="/services/:data" element={<Category />} />
         <Route path="/service/:subcategory" element={<Subcategory />} />
+        <Route
+          path="/serviceview/:ServiceName"
+          element={<Serviceviewdetails />}
+        />
 
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>

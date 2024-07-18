@@ -1,19 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import NabarCompo from "./navbar";
-import { Button, Modal } from "react-bootstrap";
-import "../Component/Servicedetails.css";
-import CheckIcon from "@mui/icons-material/Check";
-import { Link } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
-import StarIcon from "@mui/icons-material/Star";
-import { SpinnerCircular } from "spinners-react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import NavbarCompo from "./navbar";
 import Footer from "./Footer";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import ReactPlayer from "react-player";
-import { addToCart, clearCart } from "../Redux1/MyCartSlice";
-import Header1 from "./Header1";
 import call from "../assests/call.gif";
 import web from "../assests/web.gif";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -24,94 +14,47 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Faq from "react-faq-component";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, clearCart } from "../Redux1/MyCartSlice";
+import { Button, Modal } from "react-bootstrap";
+import AddIcon from "@mui/icons-material/Add";
+import StarIcon from "@mui/icons-material/Star";
+import CheckIcon from "@mui/icons-material/Check";
 
-function Subcategory() {
+const Subcategory = () => {
   const [subcategoryData, setSubcategoryData] = useState([]);
   const { subcategory } = useParams();
   const [allSubcat, setAllSubcat] = useState([]);
   const [sub, setSub] = useState("");
-  const location = useLocation();
-  const { data } = location.state || {};
-  const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+  const [subcategoryVideo, setsubcategoryVideo] = useState([]);
+  const [offerBannerdata, setofferBannerdata] = useState([]);
+  const [vshow, setvShow] = useState(false);
   const [show, setShow] = useState(false);
   const MyCartItmes = useSelector((state) => state.cart);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+  const [Item, setItem] = useState([]);
+  const dispatch = useDispatch();
+  const [Bannermidledata, setBannermidledata] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const dispatch = useDispatch();
-  const [serviceData, setserviceData] = useState([]);
-  const [subModel, setsubModel] = useState(false);
-  // const [filtersub, setfiltersub] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [Item, setItem] = useState([]);
-  // const [City, setCity] = useState(null);
-  const [OpenViewCartModal, setOpenViewCartModal] = useState(false);
-  const [Price, setPrices] = useState(null);
-  const [PriceId, setPriceId] = useState(null);
-  const [DefaultPrice, setDefaultPrice] = useState(null);
-  const [ServiceID, setServiceID] = useState(null);
-  const [ServiceIDD, setServiceIDD] = useState(null);
-  const [subcategoryVideo, setsubcategoryVideo] = useState([]);
-  const [viewmoreCategory, setViewMoreCategory] = useState(false);
   const [ModalSubcategoryView, setModalSubcategoryView] = useState(false);
-  const [SelectService, setSelectService] = useState(null);
   const [SelectedCategory, setSelectedCategory] = useState([]);
-  const [Added, setAdded] = useState(true);
   const [SelectedIndex, setSelectedIndex] = useState(null);
+  const [SelectService, setSelectService] = useState(null);
+  const [Added, setAdded] = useState(true);
+  const [OpenViewCartModal, setOpenViewCartModal] = useState(false);
+  const [serviceData, setserviceData] = useState([]);
   const [Quantity, setQuantity] = useState(1);
-  const [offerBannerdata, setofferBannerdata] = useState([]);
-  const [postsubdata, setpostsubdata] = useState([]);
-  const [Servicedata, setServicedata] = useState([]);
-  const [pricesdata, setpricesdata] = useState([]);
-  const [ITEM_HEIGHT, setItemHeight] = useState(350);
-  const [vshow, setvShow] = useState(false);
-  const [modalbanner, setmodalbanner] = useState([]);
-  const [allcategory, setallcategory] = useState([]);
-  const [vhspromise, setvhspromise] = useState([]);
-  const [whychooseus, setwhychooseus] = useState([]);
-  const [allcamparison, setallcamparison] = useState([]);
-  const [faq, setfaq] = useState([]);
-  const [review, setreview] = useState([]);
-  const navigate = useNavigate();
-  const [city, setCity] = useState("");
+
+  const vhandleClose = () => setvShow(false);
+  const vhandleShow = () => setvShow(true);
 
   useEffect(() => {
     getSubcategories();
   }, []);
 
-  const transformedFaqData = {
-    rows: faq.map((f) => ({
-      title: <div className="poppins-black">{f.question}</div>,
-      content: <div className="poppins-regular">{f.answer}</div>,
-    })),
-  };
-
-  const toSlug = (str) => {
-    return str.toLowerCase().replace(/\s+/g, "-");
-  };
-
-  const styles = {
-    // bgColor: 'white',
-    titleTextColor: "darkred",
-    rowTitleColor: "darkred",
-    // rowContentColor: 'grey',
-    // arrowColor: "red",
-  };
-
-  useEffect(() => {
-    getallfaq();
-  }, [subcategoryData[0]?.category]);
-
-  const getallfaq = async () => {
-    let res = await axios.get(
-      "https://api.vijayhomeservice.com/api/faq/getallvhsfaq"
-    );
-    if ((res.status = 200)) {
-      setfaq(
-        res.data?.data.filter(
-          (i) => i?.category === subcategoryData[0]?.category
-        )
-      );
-    }
+  const handleCloseSubcategoryView = () => {
+    setModalSubcategoryView(false);
   };
 
   useEffect(() => {
@@ -129,8 +72,6 @@ function Subcategory() {
       console.log("Found fullServiceName:", fullServiceName);
 
       if (fullServiceName) {
-        const city = parts.slice(3).join("-");
-        setCity(city);
         setSub(fullServiceName.subcategory);
         getSubcategory(fullServiceName.subcategory);
       } else {
@@ -141,10 +82,81 @@ function Subcategory() {
 
   const localstoragecitys = localStorage.getItem("city");
 
-  const TotalPrice = MyCartItmes.reduce(
-    (acc, cur) => acc + Number(cur.offerprice) * cur.qty, // Calculate total price considering quantity
-    0
-  );
+  const getSubcategories = async () => {
+    try {
+      const res = await axios.get(
+        `https://api.vijayhomesuperadmin.in/api/userapp/getappsubcat`
+      );
+      if (res.status === 200) {
+        setAllSubcat(res.data.subcategory);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getbannerdatamiddle();
+  }, []);
+
+  const getbannerdatamiddle = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomesuperadmin.in/api/userapp/getallSpotlightSP"
+    );
+    if ((res.status = 200)) {
+      setBannermidledata(
+        res.data?.SpotlightSP.filter((i) => i?.service === sub)
+      );
+    }
+  };
+
+  const getSubcategory = async (category) => {
+    try {
+      const res = await axios.post(
+        `http://localhost:8080/api/userapp/postsubcatservice`,
+        { Subcategory: category }
+      );
+      if (res.status === 200) {
+        console.log("servuce data ", res.data.subcatdata);
+        setSubcategoryData(res.data.subcatdata);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  useEffect(() => {
+    getsubcategoryVideo();
+  }, []);
+
+  const getsubcategoryVideo = async () => {
+    try {
+      let res = await axios.get(
+        "https://api.vijayhomesuperadmin.in/api/userapp/getappsubcat"
+      );
+      if ((res.status = 200)) {
+        let subcategorys = subcategoryData?.subcategory?.toLowerCase();
+        let filteredData = res?.data?.subcategory?.filter((Ele) => {
+          let videoLink = Ele?.subcategory?.toLowerCase();
+
+          return subcategorys?.includes(videoLink);
+        });
+        // console.log(res.data.subcategory);
+        setsubcategoryVideo(filteredData);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleCloseCart = () => {
+    // e.preventDefault();
+    setOpenViewCartModal(false);
+  };
 
   let SelectedService = serviceData
     .map((serivice) =>
@@ -163,35 +175,18 @@ function Subcategory() {
   };
 
   useEffect(() => {
-    getallwhychooseus();
+    getbannerimg();
   }, []);
 
-  const getallwhychooseus = async () => {
+  const getbannerimg = async () => {
     let res = await axios.get(
-      "https://api.vijayhomeservice.com/api/whychoose/getallwhychoose"
+      "https://api.vijayhomesuperadmin.in/api/userapp/getallofferbanner"
     );
-    if (res.status === 200) {
-      setwhychooseus(res.data?.data);
-    }
-  };
-
-  const getSubcategory = async (category) => {
-    try {
-      const res = await axios.post(
-        `https://api.vijayhomesuperadmin.in/api/userapp/postsubcatservice`,
-        { Subcategory: category }
+    if ((res.status = 200)) {
+      setofferBannerdata(
+        res.data?.offerbanner.filter((i) => i.subcategory === sub)
       );
-      if (res.status === 200) {
-        console.log("servuce data ", res.data.subcatdata);
-        setSubcategoryData(res.data.subcatdata);
-      }
-    } catch (err) {
-      console.log(err);
     }
-  };
-
-  const capitalizeFirstLetter = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   const [selectedData, setSelectedData] = useState([]);
@@ -203,133 +198,17 @@ function Subcategory() {
 
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const getSubcategories = async () => {
-    try {
-      const res = await axios.get(
-        `https://api.vijayhomesuperadmin.in/api/userapp/getappsubcat`
-      );
-      if (res.status === 200) {
-        setAllSubcat(res.data.subcategory);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const TotalPrice = MyCartItmes.reduce(
+    (acc, cur) => acc + Number(cur.offerprice) * cur.qty, // Calculate total price considering quantity
+    0
+  );
+  const dispatchService = useDispatch();
+  const cartItems = useSelector((state) => state.viewCart);
 
-  useEffect(() => {
-    getsubcategory();
-  }, [postsubdata]);
-
-  const getsubcategory = async () => {
-    let res = await axios.post(
-      `https://api.vijayhomesuperadmin.in/api/userapp/postappresubcat/`,
-      {
-        subcategory: sub,
-      }
-    );
-
-    if ((res.status = 200)) {
-      setpostsubdata(res.data?.subcategory);
-    }
-  };
-
-  useEffect(() => {
-    getsubcategoryVideo();
-  }, [subcategoryVideo]);
-
-  const getsubcategoryVideo = async () => {
-    try {
-      let res = await axios.get(
-        "https://api.vijayhomesuperadmin.in/api/userapp/getappsubcat"
-      );
-      if ((res.status = 200)) {
-        let subcategorys = sub?.toLowerCase();
-        let filteredData = res?.data?.subcategory?.filter((Ele) => {
-          let videoLink = Ele?.subcategory?.toLowerCase();
-
-          return subcategorys?.includes(videoLink);
-        });
-        // console.log(res.data.subcategory);
-        setsubcategoryVideo(filteredData);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getmodalbanner();
-  }, [subcategoryData[0]?.category]);
-
-  const getmodalbanner = async () => {
-    let res = await axios.get(
-      "https://api.vijayhomeservice.com/api/pbanner/getallpopupbanner"
-    );
-    if ((res.status = 200)) {
-      setmodalbanner(
-        res.data?.data.filter(
-          (i) => i?.category === subcategoryData[0]?.category
-        )
-      );
-    }
-  };
-
-  useEffect(() => {
-    getallvhspromises();
-  }, []);
-
-  const getallvhspromises = async () => {
-    let res = await axios.get(
-      "https://api.vijayhomeservice.com/api/vhspromise/getallvhspromise"
-    );
-    if ((res.status = 200)) {
-      setvhspromise(res.data?.data);
-    }
-  };
-
-  useEffect(() => {
-    getreview();
-  }, [subcategoryData[0]?.category]);
-
-  const getreview = async () => {
-    let res = await axios.get(
-      "https://api.vijayhomeservice.com/api/review/getallvhsreview"
-    );
-    if ((res.status = 200)) {
-      setreview(
-        res.data?.data.filter(
-          (i) => i?.category === subcategoryData[0]?.category
-        )
-      );
-    }
-  };
-
-  useEffect(() => {
-    getallcomparison();
-  }, [subcategoryData[0]?.category]);
-
-  const getallcomparison = async () => {
-    let res = await axios.get(
-      "https://api.vijayhomeservice.com/api/comparison/getallvhscomparison"
-    );
-    if ((res.status = 200)) {
-      setallcamparison(
-        res.data?.data.filter(
-          (i) => i?.category === subcategoryData[0]?.category
-        )
-      );
-    }
-  };
-
-  const vhandleClose = () => setvShow(false);
-  const vhandleShow = () => setvShow(true);
+  const navigate = useNavigate();
 
   const handleViewCartClick = () => {
     navigate("/cart");
-  };
-
-  const handleCloseSubcategoryView = () => {
-    setModalSubcategoryView(false);
   };
 
   const [catType, setcatType] = useState(null);
@@ -340,11 +219,6 @@ function Subcategory() {
     setcatType(cate);
     setActiveIndex(!activeIndex);
     setActiveIndex2(index);
-  };
-
-  const handleCloseCart = () => {
-    // e.preventDefault();
-    setOpenViewCartModal(false);
   };
 
   const handleItemClick = (item, index) => {
@@ -385,11 +259,28 @@ function Subcategory() {
     });
   };
 
-  console.log("postsubdata", postsubdata);
+  const scrollToService = (index) => {
+    const section = document.getElementById(`service-${index}`);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div>
-      <Header1 />
+      <NavbarCompo />
+      {/* <div className="container">
+        <div className="row mt-3">
+          <h1 className="poppins-semibold">{subcategory}</h1>
+          <ul>
+            {subcategoryData.map((data, index) => (
+              <li key={index} style={{ color: "black" }}>
+                {data?.serviceName}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div> */}
       <div className="container">
         <div className="row">
           <div className="col-md-6">
@@ -403,12 +294,11 @@ function Subcategory() {
                   marginTop: "25px",
                 }}
               >
-                {/* {sub} */}
                 {subcategory}
               </h2>
             </div>
             <div className="row" style={{}}>
-              {postsubdata
+              {subcategoryData
                 .sort((a, b) => parseInt(a.order) - parseInt(b.order))
                 .map((data, index) => (
                   <div
@@ -465,7 +355,7 @@ function Subcategory() {
           className="poppins-semibold mt-3"
           style={{ color: "black", fontSize: "20px", fontWeight: "bold" }}
         >
-          {sub}
+          {subcategory}
         </div>
         <div className="col-md-6">
           <div className="d-flex mt-2">
@@ -562,7 +452,7 @@ function Subcategory() {
                     height={20}
                     width={20}
                     alt=""
-                    src={`https://api.vijayhomesuperadmin.in/offerbanner/${data.icon}`}
+                    src={`http://localhost:8080/offerbanner/${data.icon}`}
                   />
                 </div>
                 <div className="col-md-10 mt-3">
@@ -765,10 +655,8 @@ function Subcategory() {
                   <div className="row">
                     <div className="col-md-3">
                       <Link
-                        to={{
-                          pathname: `/serviceview/${toSlug(data?.serviceName)}`,
-                          state: { data: data },
-                        }}
+                        to="/viewdetails"
+                        state={{ subcategory: data }}
                         style={{ textDecoration: "none" }}
                       >
                         <div
@@ -872,7 +760,7 @@ function Subcategory() {
             display: "flex",
           }}
         >
-          {/* {Bannermidledata.map((data) => (
+          {Bannermidledata.map((data) => (
             <div
               key={data._id}
               style={{
@@ -891,10 +779,9 @@ function Subcategory() {
                 src={`https://api.vijayhomesuperadmin.in/spotlightSP/${data.img}`}
               />
             </div>
-          ))} */}
+          ))}
         </div>
       </div>
-
       <Footer />
 
       {/* POP UP */}
@@ -1291,7 +1178,7 @@ function Subcategory() {
       </Modal>
 
       {/* V Modal */}
-      <Modal
+      {/* <Modal
         aria-labelledby="contained-modal-title-vcenter"
         centered
         show={vshow}
@@ -1512,9 +1399,9 @@ function Subcategory() {
             />
           </div>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
     </div>
   );
-}
+};
 
 export default Subcategory;
