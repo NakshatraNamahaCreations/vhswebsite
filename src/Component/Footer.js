@@ -44,9 +44,35 @@ function Footer() {
             </a>
           </div>
 
-          <div className="f-desc poppins-regular">Terms & conditions</div>
-          <div className="f-desc poppins-regular">Privacy policy</div>
-          <div className="f-desc poppins-regular">Cancellation policy</div>
+          <div className="f-desc poppins-regular">
+            <a
+              href="/terms"
+              className="poppins-regular"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Terms & conditions
+            </a>
+          </div>
+          <div className="f-desc poppins-regular">
+            <a
+              href="/privacy"
+              className="poppins-regular"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Privacy policy
+            </a>
+          </div>
+
+          <div className="f-desc poppins-regular">
+            {" "}
+            <a
+              href="/cancellation"
+              className="poppins-regular"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Cancellation policy
+            </a>
+          </div>
           <div className="f-desc poppins-regular">
             {" "}
             <a
@@ -69,7 +95,15 @@ function Footer() {
 
           <div className="f-desc poppins-regular">Categories</div>
           <div className="f-desc poppins-regular">Blog</div>
-          <div className="f-desc poppins-regular">Contact Us</div>
+          <div className="f-desc poppins-regular">
+            <a
+              className="poppins-regular"
+              href="/contact"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Contact Us
+            </a>
+          </div>
         </div>
 
         <div className="col-md-3">

@@ -36,6 +36,10 @@ import Category from "./Component/Category";
 import Homecity from "./Component/Homecity";
 import Subcategory from "./Component/Subcategory";
 import Serviceviewdetails from "./Component/Serviceviewdetails";
+import Terms from "./Component/Terms";
+import Privacy from "./Component/Privacy";
+import Cancellation from "./Component/Cancellation";
+import Contact from "./Component/Contact";
 
 function App() {
   return (
@@ -75,6 +79,10 @@ function App() {
           path="/serviceview/:ServiceName"
           element={<Serviceviewdetails />}
         />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/cancellation" element={<Cancellation />} />
+        <Route path="/contact" element={<Contact />} />
 
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>

@@ -86,6 +86,7 @@ function Subcategory() {
   };
 
   const toSlug = (str) => {
+    console.log("str", str);
     return str.toLowerCase().replace(/\s+/g, "-");
   };
 
@@ -387,6 +388,18 @@ function Subcategory() {
 
   console.log("postsubdata", postsubdata);
 
+  const navigateToServiceViewPage = (sub) => {
+    {
+      console.log("sub", sub);
+    }
+    navigate(
+      `/serviceview/${toSlug(sub?.serviceName)}-in-${city
+        .toLowerCase()
+        .replace(/ /g, "-")}`,
+      { state: { sub: sub } }
+    );
+  };
+
   return (
     <div>
       <Header1 />
@@ -446,13 +459,15 @@ function Subcategory() {
             {subcategoryVideo &&
               subcategoryVideo.map((Ele) => {
                 return (
-                  <ReactPlayer
-                    url={Ele.videolink}
-                    playing={true}
-                    loop={true}
-                    width={"100%"}
-                    className="react-player-rounded"
-                    height="auto"
+                  <video
+                    key={Ele.id} // Ensure each video has a unique key if iterating over an array
+                    src={Ele.videolink}
+                    style={{ width: "250px", height: "250px" }} // Fixed width and height
+                    className="video-player"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
                   />
                 );
               })}
@@ -764,13 +779,16 @@ function Subcategory() {
 
                   <div className="row">
                     <div className="col-md-3">
-                      <Link
+                      {/* <Link
                         to={{
-                          pathname: `/serviceview/${toSlug(data?.serviceName)}`,
-                          state: { data: data },
+                          pathname: `/serviceview/${toSlug(
+                            data?.serviceName
+                          )}-in-${city.toLowerCase().replace(/ /g, "-")}`,
+                          state: { serviceData: data },
                         }}
                         style={{ textDecoration: "none" }}
-                      >
+                      > */}
+                      <div onClick={() => navigateToServiceViewPage(data)}>
                         <div
                           className="poppins-regular mt-4 mb-3"
                           style={{
@@ -781,7 +799,8 @@ function Subcategory() {
                         >
                           View details
                         </div>
-                      </Link>
+                      </div>
+                      {/* </Link> */}
                     </div>
                     <div
                       className="col-md-3 mt-4 mb-3"

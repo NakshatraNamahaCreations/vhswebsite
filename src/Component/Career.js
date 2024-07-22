@@ -1,227 +1,145 @@
-// import React from "react";
-// import NabarCompo from "./navbar";
+import React, { useState } from "react";
+import Footer from "./Footer";
+import hbanner1 from "../../src/assests/hbanner1.jpg";
+import { Modal } from "react-bootstrap";
 
-// function Career() {
-//   return (
-//     <div className="row">
-//       <NabarCompo />
-//     </div>
-//   );
-// }
+function Career() {
+  const [show, setShow] = useState(false);
+  const [name, setname] = useState("");
+  const [email, setemail] = useState("");
+  const [phone, setphone] = useState("");
+  const [message, setmessage] = useState("");
+  const [resume, setresume] = useState("");
 
-// export default Career;
-
-// Auto Play
-
-import React, { useState, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
-import "swiper/css/autoplay";
-import "swiper/css/navigation"; // Import navigation CSS
-
-import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
-import axios from "axios";
-
-export default function Career() {
-  const [testimonialdata, settestimonialdata] = useState([]);
-  useEffect(() => {
-    getalltestimonial();
-  }, []);
-  const getalltestimonial = async () => {
-    let res = await axios.get(
-      "https://api.vijayhomeservice.com/api/testimonial/getalltestimonial"
-    );
-    if ((res.status = 200)) {
-      settestimonialdata(res.data?.data);
-    }
-  };
-  const getEmbedUrl = (videoUrl) => {
-    if (videoUrl.includes("youtube.com/shorts")) {
-      const videoId = videoUrl.split("/").pop();
-      return `https://www.youtube.com/embed/${videoId}`;
-    } else if (videoUrl.includes("youtube.com/watch")) {
-      const videoId = new URLSearchParams(new URL(videoUrl).search).get("v");
-      return `https://www.youtube.com/embed/${videoId}`;
-    }
-    return videoUrl;
-  };
-
-  console.log("testimonialdata=====", testimonialdata);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
-    <div className="container">
-      <div className="row">
-        <Swiper
-          slidesPerView={3}
-          spaceBetween={30}
-          freeMode={true}
-          pagination={{
-            clickable: true,
-          }}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          modules={[FreeMode, Pagination, Autoplay]}
-          className="mySwiper"
-        >
-          <div className="col-md-4">
-            {testimonialdata.map((testimonial) => (
-              <SwiperSlide
-                key={testimonial._id}
-                style={{
-                  // height: "500px",
-                  // width: "500px",
-                  backgroundColor: "white",
-                  padding: "0px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                }}
-              >
-                {testimonial.videolink && (
-                  <iframe
-                    width="100%"
-                    height="200"
-                    src={getEmbedUrl(testimonial.videolink)}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                )}
-                <div className="poppins-medium mt-2">{testimonial.title}</div>
-
-                <div className="poppins-medium">
-                  {testimonial.Testimonialname}
-                </div>
-
-                <div className="poppins-regular mt-2">{testimonial.review}</div>
-              </SwiperSlide>
-            ))}
-          </div>
-        </Swiper>
+    <div>
+      <div
+        className="row"
+        style={{ backgroundColor: "aliceblue", padding: "20px" }}
+      >
+        <div className="col-md-6">
+          <div className="poppins-black">Career@Vijay Home Services</div>
+        </div>
+        <div className="col-md-6">
+          <div className="poppins-black">Home</div>
+        </div>
       </div>
+      <div className="container">
+        <div
+          className="row"
+          style={{ backgroundColor: "white", padding: "45px" }}
+        >
+          <div className="col-md-6">
+            <div className="poppins-semibold">WE ARE HIRING!</div>
+            <div className="poppins-thin-italic mt-2">Let's grow together.</div>
+            <div className="poppins-regular mt-2">
+              We are the fastest growing home cleaning service brand in the
+              country, and we offer the best cleaning, painting & pest control
+              services. We also make sure to 100% satisfy our customers with the
+              best services. You can join us in our journey. just find the best
+              positions in the given vacancies below.
+            </div>
+
+            <div
+              onClick={handleShow}
+              className="poppins-semibold mt-3"
+              style={{
+                backgroundColor: "orange",
+                padding: "7px",
+                textAlign: "center",
+                width: "40%",
+                borderRadius: "5px",
+              }}
+            >
+              Apply
+            </div>
+          </div>
+          <div
+            className="col-md-6"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={hbanner1}
+              alt="hbanner3"
+              style={{ width: "100%", height: "250px", borderRadius: "10px" }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <Modal centered show={show} onHide={handleClose}>
+        <Modal.Body>
+          <div className="poppins-semibold">Form</div>
+
+          <div className="mt-2">
+            <div className="poppins-light">Name</div>
+            <input
+              type="text"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setname(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Email</div>
+            <input
+              type="text"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setemail(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Mobile Number</div>
+            <input
+              type="number"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setphone(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Message</div>
+            <input
+              type="text"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setmessage(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Upload Resume</div>
+            <input
+              type="file"
+              className="input  mt-2 "
+              onChange={(e) => setresume(e.target.value)}
+            />
+          </div>
+
+          <div
+            onClick={handleClose}
+            className="poppins-black"
+            style={{
+              backgroundColor: "darkred",
+              padding: "7px",
+              borderRadius: "5px",
+              marginTop: "20px",
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            Submit
+          </div>
+        </Modal.Body>
+      </Modal>
+      <Footer />
     </div>
   );
 }
-
-// import React, { useState, useEffect } from "react";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/css";
-// import "swiper/css/free-mode";
-// import "swiper/css/pagination";
-// import "swiper/css/autoplay";
-// import "swiper/css/navigation"; // Import navigation CSS
-
-// import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
-// import axios from "axios";
-
-// export default function Career() {
-//   const [testimonialdata, settestimonialdata] = useState([]);
-//   useEffect(() => {
-//     getalltestimonial();
-//   }, []);
-//   const getalltestimonial = async () => {
-//     let res = await axios.get(
-//       "https://api.vijayhomeservice.com/api/testimonial/getalltestimonial"
-//     );
-//     if ((res.status = 200)) {
-//       settestimonialdata(res.data?.data);
-//     }
-//   };
-//   const getEmbedUrl = (videoUrl) => {
-//     if (videoUrl.includes("youtube.com/shorts")) {
-//       const videoId = videoUrl.split("/").pop();
-//       return `https://www.youtube.com/embed/${videoId}`;
-//     } else if (videoUrl.includes("youtube.com/watch")) {
-//       const videoId = new URLSearchParams(new URL(videoUrl).search).get("v");
-//       return `https://www.youtube.com/embed/${videoId}`;
-//     }
-//     return videoUrl;
-//   };
-
-//   console.log("testimonialdata=====", testimonialdata);
-
-//   return (
-//     <div className="container">
-//       <div className="row">
-//         <div className="swiper-container">
-// <Swiper
-//   slidesPerView={3}
-//   spaceBetween={30}
-//   freeMode={true}
-//   pagination={{
-//     clickable: true,
-//     el: ".swiper-pagination",
-//   }}
-//   // autoplay={
-//   //   {
-//   //     delay: 1500,
-//   //     disableOnInteraction: false,
-//   //   }
-//   // }
-//   navigation={{
-//     nextEl: ".swiper-button-next",
-//     prevEl: ".swiper-button-prev",
-//   }}
-//   modules={[FreeMode, Pagination, Autoplay, Navigation]}
-//   className="mySwiper"
-// >
-//             <div className="col-md-4">
-//               {testimonialdata.map((testimonial) => (
-// <SwiperSlide
-//   key={testimonial._id}
-//   style={{
-//     // height: "500px",
-//     // width: "500px",
-//     backgroundColor: "white",
-//     padding: "0px",
-//     display: "flex",
-//     flexDirection: "column",
-//     justifyContent: "center",
-//     alignItems: "flex-start",
-//   }}
-// >
-//                   {testimonial.videolink && (
-//                     <iframe
-//                       width="100%"
-//                       height="200"
-//                       src={getEmbedUrl(testimonial.videolink)}
-//                       title="YouTube video player"
-//                       frameBorder="0"
-//                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-//                       allowFullScreen
-//                     ></iframe>
-//                   )}
-//                   <div className="poppins-medium mt-2">{testimonial.title}</div>
-
-//                   <div className="poppins-medium">
-//                     {testimonial.Testimonialname}
-//                   </div>
-
-//                   <div className="poppins-regular mt-2">
-//                     {testimonial.review}
-//                   </div>
-//                 </SwiperSlide>
-//               ))}
-//             </div>
-//           </Swiper>
-
-//           {/* Custom navigation buttons */}
-//           <div className="swiper-button-prev">
-//             <i className="fa-solid fa-arrow-left"></i>
-//           </div>
-//           <div className="swiper-button-next">
-//             <i className="fa-solid fa-arrow-right"></i>
-//           </div>
-
-//           {/* Hide pagination dots */}
-//           <div className="swiper-pagination"></div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
+export default Career;

@@ -30,20 +30,25 @@ import { SpinnerCircular } from "spinners-react";
 function Serviceviewdetails() {
   const [servicedata, setservicedata] = useState([]);
   const { ServiceName, city } = useParams();
+
   const fromSlug = (slug) => {
     return slug.replace(/-/g, " ");
   };
 
-  // Format serviceName for display
   const readableServiceName = fromSlug(ServiceName);
 
-  console.log("readableServiceName", readableServiceName);
+  const formattedServiceName = city
+    ? readableServiceName.split(` in ${fromSlug(city)}`)[0]
+    : readableServiceName;
+
+  console.log("formattedServiceName", formattedServiceName);
   const [svideodata, setsvideodata] = useState([]);
   const [ReviewVideodata, setReviewVideodata] = useState([]);
   const [feqdata, setfeqdata] = useState([]);
   const [whychooseus, setwhychooseus] = useState([]);
   const location = useLocation();
-
+  const { sub } = location.state || {};
+  console.log("sub=====", sub);
   const localstoragecitys = localStorage.getItem("city");
   console.log("localstoragecitys======", localstoragecitys);
   const MyCartItmes = useSelector((state) => state.cart);
@@ -61,8 +66,8 @@ function Serviceviewdetails() {
   console.log("ser", ser);
 
   useEffect(() => {
-    if (readableServiceName && allserviceName.length > 0) {
-      const parts = readableServiceName.split("-");
+    if (sub?.serviceName && allserviceName.length > 0) {
+      const parts = sub?.serviceName.split("-");
 
       const fullServiceName = allserviceName.find((service) =>
         service?.serviceName
