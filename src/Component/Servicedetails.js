@@ -496,9 +496,7 @@ function Servicedetails() {
         </div>
       ) : (
         <>
-          {" "}
-          {/* <NabarCompo /> */}
-          <Header1 />
+          {/* <Header1 /> */}
           <div className="container">
             <div className="row">
               <div className="col-md-6">
@@ -510,6 +508,7 @@ function Servicedetails() {
                       fontWeight: "bold",
                       fontSize: "18px",
                       marginTop: "25px",
+                      textAlign: "left",
                     }}
                   >
                     {data?.subcategory}
@@ -521,7 +520,7 @@ function Servicedetails() {
                     .map((data, index) => (
                       <div
                         key={index}
-                        className="col-md-4 mt-4 text-center"
+                        className="col-md-4 subcat-row text-center"
                         onClick={() => scrollToService(index + 1)}
                       >
                         <img
@@ -567,87 +566,82 @@ function Servicedetails() {
               </div>
             </div>
           </div>
+
           <div className="row"></div>
           <div className="container">
             <div
-              className="poppins-semibold mt-3"
-              style={{ color: "black", fontSize: "20px", fontWeight: "bold" }}
+              className="poppins-semibold"
+              style={{
+                color: "black",
+                fontSize: "20px",
+                fontWeight: "bold",
+                textAlign: "left",
+              }}
             >
               {data?.subcategory}
             </div>
-            <div className="col-md-6">
-              <div className="d-flex mt-2">
-                <div className="poppins-regular" style={{ color: "black" }}>
-                  4.9
-                </div>
-                <div className="mx-2" style={{ marginTop: "-5px" }}>
-                  <i
-                    class="fa-solid fa-star"
-                    style={{ color: "gold", fontSize: "14px" }}
-                  ></i>
-                  <i
-                    class="fa-solid fa-star"
-                    style={{ color: "gold", fontSize: "14px" }}
-                  ></i>
-                  <i
-                    class="fa-solid fa-star"
-                    style={{ color: "gold", fontSize: "14px" }}
-                  ></i>
-                  <i
-                    class="fa-solid fa-star"
-                    style={{ color: "gold", fontSize: "14px" }}
-                  ></i>
-                  <i
-                    class="fa-solid fa-star"
-                    style={{ color: "gold", fontSize: "14px" }}
-                  ></i>
-                </div>
-                <div className="poppins-regular" style={{ color: "black" }}>
-                  (9.1T)
-                </div>
-                <div
-                  className="d-flex mx-5 px-5"
-                  style={{ marginTop: "-50px" }}
-                >
-                  <div>
-                    <img
-                      src={call}
-                      alt="loading....."
-                      style={{ width: "80px", height: "80px" }}
-                    />
-                    <div
-                      className="poppins-black shadow-lg"
-                      style={{
-                        backgroundColor: "white",
-                        padding: "3px 8px",
-                        marginTop: "-11px",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      Call Now
-                    </div>
+            <div className="col-md-6 mt-4">
+              <div className="d-flex">
+                <div className="col-md-7 d-flex">
+                  <div className="poppins-regular" style={{ color: "black" }}>
+                    4.9
                   </div>
+                  <div className="" style={{ marginTop: "-5px" }}>
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "gold", fontSize: "14px" }}
+                    ></i>
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "gold", fontSize: "14px" }}
+                    ></i>
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "gold", fontSize: "14px" }}
+                    ></i>
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "gold", fontSize: "14px" }}
+                    ></i>
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "gold", fontSize: "14px" }}
+                    ></i>
+                  </div>
+                  <div className="poppins-regular" style={{ color: "black" }}>
+                    (9.1T)
+                  </div>
+                </div>
+                <div className="col-md-5 mx-4 callimg_row">
+                  <div className="d-flex" style={{ marginTop: "-50px" }}>
+                    <div>
+                      <img src={call} alt="loading....." className="callimg" />
+                      <div
+                        className="poppins-black shadow-lg"
+                        style={{
+                          backgroundColor: "white",
+                          padding: "3px 8px",
+                          marginTop: "-11px",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        Call Now
+                      </div>
+                    </div>
 
-                  <div style={{ marginLeft: "40px" }}>
-                    <img
-                      src={web}
-                      alt="loading....."
-                      style={{
-                        width: "80px",
-                        height: "80px",
-                        marginLeft: "15px",
-                      }}
-                    />
-                    <div
-                      className="poppins-black shadow-lg"
-                      style={{
-                        backgroundColor: "white",
-                        padding: "3px 8px",
-                        marginTop: "-11px",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      Wtsup us
+                    <div style={{ marginLeft: "40px" }}>
+                      <img src={web} alt="loading....." className="webimg" />
+                      <div
+                        className="poppins-black shadow-lg"
+                        style={{
+                          backgroundColor: "white",
+                          padding: "3px 8px",
+                          marginTop: "-11px",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        Wtsup us
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -662,7 +656,7 @@ function Servicedetails() {
                     style={{ backgroundColor: "darkred", borderRadius: "5px" }}
                   >
                     <div
-                      className="col-md-2"
+                      className="col-md-2 mx-1"
                       style={{
                         display: "flex",
                         justifyContent: "center",
@@ -676,7 +670,7 @@ function Servicedetails() {
                         src={`https://api.vijayhomesuperadmin.in/offerbanner/${data.icon}`}
                       />
                     </div>
-                    <div className="col-md-10 mt-3">
+                    <div className="col-md-10 mt-3 mx-1">
                       <div
                         className="poppins-regular"
                         style={{
@@ -859,14 +853,7 @@ function Servicedetails() {
                               ></i>
                             </div>
                             <div className="col-md-11">
-                              <div
-                                className="poppins-regular mt-1"
-                                style={{
-                                  color: "black",
-                                  fontSize: "14px",
-                                  marginLeft: "-16px",
-                                }}
-                              >
+                              <div className="poppins-regular mt-1 service-desc">
                                 {desc.text}
                               </div>
                             </div>
@@ -875,7 +862,7 @@ function Servicedetails() {
                       ))}
                     </div>
 
-                    <div className="row">
+                    <div className="d-flex">
                       <div className="col-md-3">
                         <Link
                           to="/viewdetails"
@@ -894,10 +881,7 @@ function Servicedetails() {
                           </div>
                         </Link>
                       </div>
-                      <div
-                        className="col-md-3 mt-4 mb-3"
-                        style={{ marginLeft: "-50px" }}
-                      >
+                      <div className="col-md-3 mt-4 mb-3 ">
                         <div
                           onClick={vhandleShow}
                           className="poppins-regular mx-2"
@@ -913,15 +897,7 @@ function Servicedetails() {
                       </div>
                     </div>
                   </div>
-                  <div
-                    className="col-md-6 mt-4"
-                    style={{
-                      textAlign: "end",
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      alignItems: "center",
-                    }}
-                  >
+                  <div className="col-md-6 mt-4 servicedata_row">
                     <div className="">
                       <img
                         style={{

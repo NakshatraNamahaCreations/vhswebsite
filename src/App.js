@@ -40,6 +40,7 @@ import Terms from "./Component/Terms";
 import Privacy from "./Component/Privacy";
 import Cancellation from "./Component/Cancellation";
 import Contact from "./Component/Contact";
+import Interiorcompany from "./Component/Interiorcompany";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/cancellation" element={<Cancellation />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/interiorcompany" element={<Interiorcompany />} />
 
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>

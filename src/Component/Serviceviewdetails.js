@@ -26,6 +26,7 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import { SpinnerCircular } from "spinners-react";
+import moment from "moment";
 
 function Serviceviewdetails() {
   const [servicedata, setservicedata] = useState([]);
@@ -63,28 +64,109 @@ function Serviceviewdetails() {
   const [ser, setser] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("ser", ser);
+  const [name, setname] = useState("");
+  const [contact1, setcontact1] = useState("");
+  const [email, setemail] = useState("");
+  const [comment, setcomment] = useState("");
+  const [enquirydate, setenquirydate] = useState(moment().format("MM-DD-YYYY"));
+  const [show, setShow] = useState(false);
+  const [City, setCity] = useState("");
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
-    if (sub?.serviceName && allserviceName.length > 0) {
-      const parts = sub?.serviceName.split("-");
+    if (ServiceName && allserviceName.length > 0) {
+      const parts = ServiceName.split("-");
+      const category1 = capitalizeFirstLetter(parts[0]);
+
+      console.log("Searching for:", category1);
+      console.log("Available subcategories:", allserviceName);
 
       const fullServiceName = allserviceName.find((service) =>
-        service?.serviceName
-          .toLowerCase()
-          .includes(parts.join(" ").toLowerCase())
+        service.serviceName.toLowerCase().includes(category1.toLowerCase())
       );
 
-      console.log("fullServiceName", fullServiceName);
+      console.log("Found fullServiceName:", fullServiceName);
 
       if (fullServiceName) {
-        setser(fullServiceName?.serviceName);
+        const city = parts.slice(1).join("-");
+        setCity(city);
+        setser(fullServiceName.serviceName); // Ensure correct property name
         getSubcategory(fullServiceName.serviceName);
       } else {
         console.error("Service not found");
       }
     }
-  }, [readableServiceName, allserviceName]);
+  }, [ServiceName, allserviceName]);
+
+  useEffect(() => {
+    console.log("Updated ser:", ser);
+  }, [ser]);
+
+  const addEnquiry = async (e) => {
+    e.preventDefault();
+
+    if (!name) {
+      alert("Please enter all fields");
+    } else {
+      try {
+        const config = {
+          url: "/addnewenquiry",
+          method: "post",
+          baseURL: "https://api.vijayhomeservicebengaluru.in/api",
+          // baseURL: "http://localhost:8080/api",
+          headers: { "content-type": "application/json" },
+          data: {
+            date: enquirydate,
+            name: name,
+            time: moment().format("h:mm:ss a"),
+            mobile: contact1,
+            email: email,
+            category: sub?.category,
+            reference2: "website",
+            city: localstoragecitys,
+            comment: comment,
+            // interestedFor: serviceName,
+            // serviceID: serviceId,
+            // responseType: getTemplateDetails, // Ensure this matches your data structure
+          },
+        };
+
+        const response = await axios(config);
+
+        if (response.status === 200) {
+          const data = response.data.data;
+          alert("Enquiry added successfully:", data);
+          setShow(false);
+          // window.location.assign("/");
+        }
+      } catch (error) {
+        console.error("Error adding enquiry:", error);
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   if (sub?.serviceName && allserviceName.length > 0) {
+  //     const parts = sub?.serviceName.split("-");
+
+  //     const fullServiceName = allserviceName.find((service) =>
+  //       service?.serviceName
+  //         .toLowerCase()
+  //         .includes(parts.join(" ").toLowerCase())
+  //     );
+
+  //     console.log("fullServiceName", fullServiceName);
+
+  //     if (fullServiceName) {
+  //       setser(fullServiceName?.serviceName);
+  //       getSubcategory(fullServiceName.serviceName);
+  //     } else {
+  //       console.error("Service not found");
+  //     }
+  //   }
+  // }, [readableServiceName, allserviceName]);
 
   const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -141,6 +223,8 @@ function Serviceviewdetails() {
   const isItemInCart = (itemId) => {
     return MyCartItmes.some((cartItem) => cartItem.id === itemId);
   };
+
+  console.log("servicedata====", servicedata);
 
   const getItemQuantityById = (itemId) => {
     const cartItem = MyCartItmes.find((item) => item.id === itemId);
@@ -1107,6 +1191,63 @@ function Serviceviewdetails() {
               </div>
             </div>
           </div>
+
+          <Modal centered show={show} onHide={handleClose}>
+            <Modal.Body>
+              <div className="poppins-semibold">Enquiry Add</div>
+
+              <div className="mt-2">
+                <div className="poppins-light">Name</div>
+                <input
+                  type="text"
+                  className="input col-md-12 mt-2 vhs-input-value"
+                  onChange={(e) => setname(e.target.value)}
+                />
+              </div>
+
+              <div className="">
+                <div className="poppins-light">Email</div>
+                <input
+                  type="text"
+                  className="input col-md-12 mt-2 vhs-input-value"
+                  onChange={(e) => setemail(e.target.value)}
+                />
+              </div>
+
+              <div className="">
+                <div className="poppins-light">Contact</div>
+                <input
+                  type="number"
+                  className="input col-md-12 mt-2 vhs-input-value"
+                  onChange={(e) => setcontact1(e.target.value)}
+                />
+              </div>
+
+              <div className="">
+                <div className="poppins-light">Discription</div>
+                <input
+                  type="text"
+                  className="input col-md-12 mt-2 vhs-input-value"
+                  onChange={(e) => setcomment(e.target.value)}
+                />
+              </div>
+
+              <div
+                onClick={addEnquiry}
+                className="poppins-black"
+                style={{
+                  backgroundColor: "darkred",
+                  padding: "7px",
+                  borderRadius: "5px",
+                  marginTop: "20px",
+                  color: "white",
+                  textAlign: "center",
+                }}
+              >
+                Submit
+              </div>
+            </Modal.Body>
+          </Modal>
           <Footer />
         </div>
       )}

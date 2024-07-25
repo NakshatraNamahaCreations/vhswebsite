@@ -50,132 +50,149 @@ function Cart() {
   console.log("MyCartItmes=====123", MyCartItmes);
 
   return (
-    <div className="row" style={{ justifyContent: "center" }}>
-      {/* <NabarCompo /> */}
-      <Header1 />
-      <div className="col-md-8 mt-2" style={{ paddingTop: "45px" }}>
-        {MyCartItmes?.map((item) => (
-          <div
-            className="row shadow-sm"
-            style={{
-              backgroundColor: "white",
-              padding: "10px",
-              marginBottom: "15px",
-              borderRadius: "5px",
-            }}
-          >
-            <div className="col-md-10">
-              <div className="poppins-regular mb-1">{item?.planName}</div>
-              <div className="poppins-regular mb-1">{item?.category}</div>
-              <div className="d-flex">
-                <div
-                  className="poppins-regular mb-1"
-                  style={{ textDecoration: "line-through" }}
-                >
-                  ₹{item.planPrice}
-                </div>
-                <div className="mx-2 poppins-regular">₹{item?.offerprice}</div>
-              </div>
-            </div>
-            <div className="col-md-2">
-              <div className="poppins-regular" style={{ textAlign: "center" }}>
-                ₹{item?.offerprice}
-              </div>
-              <div className="d-flex mt-2" style={{ justifyContent: "center" }}>
-                <div
-                  className=""
-                  style={{}}
-                  onClick={() => {
-                    if (item.qty > 1) {
-                      dispatch(removeMyCartItem(item));
-                    } else {
-                      dispatch(deleteMyCartItem(item.id));
-                    }
-                  }}
-                >
-                  <i
-                    class="fa-solid fa-minus"
-                    style={{
-                      color: "white",
-                      fontSize: "14px",
-                      backgroundColor: "green",
-                      padding: "5px",
-                      borderRadius: "50px",
-                    }}
-                  ></i>
-                </div>
-                <div
-                  className="mx-2"
-                  style={{ color: "black", fontSize: "14px", marginTop: "3px" }}
-                >
-                  {item?.qty}
-                </div>
-                <div className="" onClick={() => handle(item)}>
-                  <i
-                    class="fa-solid fa-plus"
-                    style={{
-                      color: "white",
-                      fontSize: "14px",
-                      backgroundColor: "green",
-                      padding: "5px",
-                      borderRadius: "50px",
-                    }}
-                  ></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-
-        <div className="row mt-5">
-          <div className="col-md-6 d-flex">
-            <p
-              className="poppins-extrabold"
-              style={{ color: "black", fontSize: 18, fontWeight: "bold" }}
-            >
-              Total :
-            </p>
-            <p
-              className="mx-2 poppins-extrabold"
-              style={{ fontSize: 18, fontWeight: "bold", color: "black" }}
-            >
-              {Carttotal}
-            </p>
-          </div>
-          <div
-            className="col-md-6"
-            style={{ display: "flex", justifyContent: "end" }}
-          >
-            {MyCartItmes !== undefined ? (
-              <button
-                onClick={handleChange}
+    <>
+      {/* <Header1 /> */}
+      <div className="container">
+        <div className="row" style={{ justifyContent: "center" }}>
+          {/* <NabarCompo /> */}
+          {/* <Header1 /> */}
+          <div className="col-md-8 mt-2" style={{ paddingTop: "45px" }}>
+            {MyCartItmes?.map((item) => (
+              <div
+                className=" shadow-sm"
                 style={{
-                  backgroundColor: "darkred",
-                  padding: 5,
-                  borderRadius: 5,
-                  width: 130,
+                  backgroundColor: "white",
+                  padding: "10px",
+                  marginBottom: "15px",
+                  borderRadius: "5px",
+                  display: "flex",
+                  justifyContent: "space-between",
                 }}
               >
-                <span
-                  className="poppins-extrabold"
-                  style={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: 17,
-                    textAlign: "center",
-                  }}
-                >
-                  Continue
-                </span>
-              </button>
-            ) : (
-              <></>
-            )}
-          </div>
-        </div>
-      </div>
+                <div className="col-md-10">
+                  <div className="poppins-regular mb-1">{item?.planName}</div>
+                  <div className="poppins-regular mb-1">{item?.category}</div>
+                  <div className="d-flex">
+                    <div
+                      className="poppins-regular mb-1"
+                      style={{ textDecoration: "line-through" }}
+                    >
+                      ₹{item.planPrice}
+                    </div>
+                    <div className="mx-2 poppins-regular">
+                      ₹{item?.offerprice}
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-2">
+                  <div
+                    className="poppins-regular"
+                    style={{ textAlign: "center" }}
+                  >
+                    ₹{item?.offerprice}
+                  </div>
+                  <div
+                    className="d-flex mt-2"
+                    style={{ justifyContent: "center" }}
+                  >
+                    <div
+                      className=""
+                      style={{}}
+                      onClick={() => {
+                        if (item.qty > 1) {
+                          dispatch(removeMyCartItem(item));
+                        } else {
+                          dispatch(deleteMyCartItem(item.id));
+                        }
+                      }}
+                    >
+                      <i
+                        class="fa-solid fa-minus"
+                        style={{
+                          color: "white",
+                          fontSize: "14px",
+                          backgroundColor: "green",
+                          padding: "5px",
+                          borderRadius: "50px",
+                        }}
+                      ></i>
+                    </div>
+                    <div
+                      className="mx-2"
+                      style={{
+                        color: "black",
+                        fontSize: "14px",
+                        marginTop: "3px",
+                      }}
+                    >
+                      {item?.qty}
+                    </div>
+                    <div className="" onClick={() => handle(item)}>
+                      <i
+                        class="fa-solid fa-plus"
+                        style={{
+                          color: "white",
+                          fontSize: "14px",
+                          backgroundColor: "green",
+                          padding: "5px",
+                          borderRadius: "50px",
+                        }}
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
 
-      {/* <div className="col-md-8 mt-5 ">
+            <div className="row mt-5">
+              <div className="col-md-6 d-flex">
+                <p
+                  className="poppins-extrabold"
+                  style={{ color: "black", fontSize: 18, fontWeight: "bold" }}
+                >
+                  Total :
+                </p>
+                <p
+                  className="mx-2 poppins-extrabold"
+                  style={{ fontSize: 18, fontWeight: "bold", color: "black" }}
+                >
+                  {Carttotal}
+                </p>
+              </div>
+              <div
+                className="col-md-6"
+                style={{ display: "flex", justifyContent: "end" }}
+              >
+                {MyCartItmes !== undefined ? (
+                  <button
+                    onClick={handleChange}
+                    style={{
+                      backgroundColor: "darkred",
+                      padding: 5,
+                      borderRadius: 5,
+                      width: 130,
+                    }}
+                  >
+                    <span
+                      className="poppins-extrabold"
+                      style={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: 17,
+                        textAlign: "center",
+                      }}
+                    >
+                      Continue
+                    </span>
+                  </button>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="col-md-8 mt-5 ">
         {MyCartItmes.map((item) => (
           <div
             className="row shadow-lg"
@@ -196,7 +213,9 @@ function Cart() {
           </div>
         ))}
       </div> */}
-    </div>
+        </div>
+      </div>
+    </>
   );
 }
 export default Cart;

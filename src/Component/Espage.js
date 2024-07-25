@@ -904,6 +904,7 @@ function Espage() {
                       color: "black",
                       fontSize: "20px",
                       fontWeight: "bold",
+                      textAlign: "left",
                     }}
                   >
                     Service Details
@@ -950,7 +951,10 @@ function Espage() {
                   </div>
 
                   <div className="scheduleservice mb-5">
-                    <div className="title poppins-semibold">
+                    <div
+                      className="title poppins-semibold"
+                      style={{ textAlign: "left" }}
+                    >
                       Schedule Service
                     </div>
                     <div className="select_date">
@@ -1038,6 +1042,7 @@ function Espage() {
                       color: "black",
                       fontSize: "20px",
                       fontWeight: "bold",
+                      textAlign: "left",
                     }}
                   >
                     Select the address
@@ -1120,7 +1125,7 @@ function Espage() {
                           </div>
                         )}
                       </div>
-                      <div className="col-md-6">
+                      {/* <div className="col-md-6">
                         <div
                           className="poppins-black"
                           onClick={handlePayment}
@@ -1136,7 +1141,7 @@ function Espage() {
                         >
                           Payment
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   )}
                 </>
@@ -1248,51 +1253,49 @@ function Espage() {
             <Modal.Body>
               <div className="row mb-2">
                 {customeraddress.map((item, index) => (
-                  <React.Fragment key={index}>
-                    <div
-                      key={index}
-                      className="col-md-1"
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <input
-                        type="radio"
-                        value={item._id}
-                        id={item._id}
-                        checked={selectedAddress._id === item._id}
-                        onChange={() => handleSelectAddress(item)}
-                      />
-                    </div>
-                    <div className="col-md-11 mb-3">
-                      <div
-                        className="poppins-black"
-                        style={{
-                          color: "black",
-                          fontSize: "15px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {item.saveAs}
+                  <div className="d-flex">
+                    <React.Fragment key={index}>
+                      <div key={index} className="col-md-1">
+                        <input
+                          type="radio"
+                          value={item._id}
+                          id={item._id}
+                          checked={selectedAddress._id === item._id}
+                          onChange={() => handleSelectAddress(item)}
+                        />
                       </div>
-                      <div
-                        className="poppins-regular"
-                        style={{
-                          color: "black",
-                          fontSize: "14px",
-                        }}
-                      >
-                        {item.platNo},{item.address}
+                      <div className="col-md-11 mb-3 mx-1">
+                        <div
+                          className="poppins-black"
+                          style={{
+                            color: "black",
+                            fontSize: "15px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {item.saveAs}
+                        </div>
+                        <div
+                          className="poppins-regular"
+                          style={{
+                            color: "black",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {item.platNo},{item.address}
+                        </div>
+                        <div
+                          className="poppins-regular"
+                          style={{
+                            color: "black",
+                            fontSize: "13px",
+                          }}
+                        >
+                          Landmark : {item.landmark}
+                        </div>
                       </div>
-                      <div
-                        className="poppins-regular"
-                        style={{
-                          color: "black",
-                          fontSize: "13px",
-                        }}
-                      >
-                        Landmark : {item.landmark}
-                      </div>
-                    </div>
-                  </React.Fragment>
+                    </React.Fragment>
+                  </div>
                 ))}
               </div>
 
@@ -1422,7 +1425,7 @@ function Espage() {
                             transform: "translateX(-50%)",
                             zIndex: 2,
                             backgroundColor: "darkblue",
-                            width: "350px",
+                            // width: "350px",
                           }}
                         />
                       </Autocomplete>
@@ -1439,7 +1442,7 @@ function Espage() {
                       cursor: "pointer",
                       padding: "8px",
                       fontSize: "14px",
-                      width: "50%",
+                      // width: "50%",
                     }}
                   >
                     Use My Current Location
@@ -1533,7 +1536,7 @@ function Espage() {
                         </div>
                       </div>
                       <div className="col-md-1"></div>
-                      <div className="col-md-3">
+                      <div className="col-md-3 mx-2">
                         <div
                           className="poppins-regular"
                           style={{

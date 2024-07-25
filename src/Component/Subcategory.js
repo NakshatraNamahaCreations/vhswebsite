@@ -74,6 +74,8 @@ function Subcategory() {
   const navigate = useNavigate();
   const [city, setCity] = useState("");
 
+  console.log("city====suman", city, subcategory);
+
   useEffect(() => {
     getSubcategories();
   }, []);
@@ -141,6 +143,8 @@ function Subcategory() {
   }, [subcategory, allSubcat]);
 
   const localstoragecitys = localStorage.getItem("city");
+
+  console.log("localstoragecitys====", localstoragecitys);
 
   const TotalPrice = MyCartItmes.reduce(
     (acc, cur) => acc + Number(cur.offerprice) * cur.qty, // Calculate total price considering quantity

@@ -69,6 +69,24 @@ export default function Home() {
   const distpatch = useDispatch();
   const location = useLocation();
   const pathName = location.pathname;
+
+  const [slidesPerView, setSlidesPerView] = useState(5);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setSlidesPerView(2);
+      } else {
+        setSlidesPerView(5);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -747,23 +765,7 @@ export default function Home() {
       ) : (
         <>
           <NabarCompo />
-          {/* Carousel-----------slider */}
-          {/* 
-          <button
-            onClick={getCurrentLocation}
-            style={{
-              backgroundColor: "orange",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-              padding: "8px",
-              fontSize: "14px",
-              width: "50%",
-            }}
-          >
-            Use My Current Location
-          </button> */}
+
           <div className="">
             <div id="carouselExample" className="carousel slide">
               <div className="carousel-inner">
@@ -962,61 +964,9 @@ export default function Home() {
               <div className="poppins-medium-italic mt-1 mb-4">
                 Of our finest experiences
               </div>
-              {/* <Swiper
-                slidesPerView={5}
-                spaceBetween={30}
-                freeMode={true}
-                pagination={{
-                  clickable: true,
-                }}
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
-                }}
-                modules={[FreeMode, Pagination, Autoplay]}
-                className="mySwiper"
-              >
-                <div className="col-md-4" style={{ width: "100%" }}>
-                  {thoughtfull.map((data) => (
-                    <SwiperSlide
-                      key={data._id}
-                      style={{
-                        backgroundColor: "white",
-                        padding: "0px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <iframe
-                        src={getEmbedUrl1(data.creationslink)}
-                        title={data.category}
-                        width="200px"
-                        height="300px"
-                        style={{ borderRadius: 10 }}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
-                      <iframe
-                        src={`${getEmbedUrl1(
-                          data.creationslink
-                        )}?autoplay=1&controls=0`}
-                        title={data.category}
-                        width="200px"
-                        height="300px"
-                        style={{ borderRadius: 10 }}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
-                    </SwiperSlide>
-                  ))}
-                </div>
-              </Swiper> */}
+
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{

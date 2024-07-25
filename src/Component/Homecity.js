@@ -71,6 +71,57 @@ export default function Homecity() {
   const location = useLocation();
   const pathName = location.pathname;
   const [show, setShow] = useState(false);
+  const [slidesPerView, setSlidesPerView] = useState(5);
+  const [slidesthoughtfull1, setslidesthoughtfull1] = useState(5);
+  const [slidesbanner, setslidesbanner] = useState(5);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setSlidesPerView(2);
+      } else {
+        setSlidesPerView(5);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleResize1 = () => {
+      if (window.innerWidth <= 768) {
+        setslidesthoughtfull1(2);
+      } else {
+        setslidesthoughtfull1(5);
+      }
+    };
+
+    handleResize1();
+
+    window.addEventListener("resize", handleResize1);
+
+    return () => window.removeEventListener("resize", handleResize1);
+  }, []);
+
+  useEffect(() => {
+    const handlebanner = () => {
+      if (window.innerWidth <= 768) {
+        setslidesbanner(1);
+      } else {
+        setslidesbanner(3);
+      }
+    };
+
+    handlebanner();
+
+    window.addEventListener("resize", handlebanner);
+
+    return () => window.removeEventListener("resize", handlebanner);
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -946,68 +997,25 @@ export default function Homecity() {
           </div>
 
           <div className="container mt-3">
-            <div className="row">
-              <div className="poppins-semibold" style={{ fontSize: "20px" }}>
+            <div
+              className="row"
+              style={{ justifyContent: "center", alignItems: "center" }}
+            >
+              <div
+                className="poppins-semibold"
+                style={{ fontSize: "20px", textAlign: "left" }}
+              >
                 Thoughtful Curations
               </div>
-              <div className="poppins-medium-italic mt-1 mb-4">
+              <div
+                className="poppins-medium-italic mt-1 mb-4"
+                style={{ textAlign: "left" }}
+              >
                 Of our finest experiences
               </div>
-              {/* <Swiper
-                slidesPerView={5}
-                spaceBetween={30}
-                freeMode={true}
-                pagination={{
-                  clickable: true,
-                }}
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
-                }}
-                modules={[FreeMode, Pagination, Autoplay]}
-                className="mySwiper"
-              >
-                <div className="col-md-4" style={{ width: "100%" }}>
-                  {thoughtfull.map((data) => (
-                    <SwiperSlide
-                      key={data._id}
-                      style={{
-                        backgroundColor: "white",
-                        padding: "0px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <iframe
-                        src={getEmbedUrl1(data.creationslink)}
-                        title={data.category}
-                        width="200px"
-                        height="300px"
-                        style={{ borderRadius: 10 }}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
-                      <iframe
-                        src={`${getEmbedUrl1(
-                          data.creationslink
-                        )}?autoplay=1&controls=0`}
-                        title={data.category}
-                        width="200px"
-                        height="300px"
-                        style={{ borderRadius: 10 }}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
-                    </SwiperSlide>
-                  ))}
-                </div>
-              </Swiper> */}
+
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesthoughtfull1}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1020,7 +1028,10 @@ export default function Homecity() {
                 modules={[FreeMode, Pagination, Autoplay]}
                 className="mySwiper"
               >
-                <div className="col-md-4" style={{ width: "100%" }}>
+                <div
+                  className="col-md-4"
+                  style={{ width: "100%", padding: "15px" }}
+                >
                   {thoughtfull.map((data) => (
                     <SwiperSlide
                       key={data._id}
@@ -1035,13 +1046,14 @@ export default function Homecity() {
                     >
                       <video
                         src={data.creationslink}
-                        width="200px"
-                        height="300px"
-                        style={{ borderRadius: 10 }}
+                        // width="200px"
+                        // height="300px"
+                        style={{ borderRadius: "10px" }}
                         autoPlay
                         muted
                         loop
                         playsInline
+                        className="thoughtfull-img"
                       ></video>
                     </SwiperSlide>
                   ))}
@@ -1052,10 +1064,15 @@ export default function Homecity() {
 
           <div className="container mt-3">
             <div className="row">
-              <div className="poppins-semibold mb-4">Category </div>
+              <div
+                className="poppins-semibold mb-4"
+                style={{ textAlign: "left" }}
+              >
+                Category
+              </div>
 
               <Swiper
-                slidesPerView={3}
+                slidesPerView={slidesbanner}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1084,12 +1101,8 @@ export default function Homecity() {
                       onClick={() => scrollToSection(data.section)}
                     >
                       <img
+                        className="category_banner"
                         src={data.images}
-                        style={{
-                          width: "350px",
-                          height: "200px",
-                          borderRadius: "10px",
-                        }}
                         alt="loading...."
                       />
                     </SwiperSlide>
@@ -1103,6 +1116,7 @@ export default function Homecity() {
             <div
               ref={cleaningServicesRef}
               className="poppins-semibold mt-4 mb-2"
+              style={{ textAlign: "left" }}
             >
               Cleaning Services
               <span
@@ -1111,14 +1125,14 @@ export default function Homecity() {
                   padding: "3px 25px",
                   borderRadius: "20px",
                 }}
-                className="poppins-black mx-2"
+                className="poppins-black mx-2 offertext"
               >
                 up to 50% off
               </span>
             </div>
             <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1198,6 +1212,7 @@ export default function Homecity() {
             <div
               ref={paintingServicesRef}
               className="poppins-semibold mt-2 mb-2"
+              style={{ textAlign: "left" }}
             >
               Painting Services{" "}
               <span
@@ -1206,14 +1221,14 @@ export default function Homecity() {
                   padding: "3px 25px",
                   borderRadius: "20px",
                 }}
-                className="poppins-black mx-2"
+                className="poppins-black mx-2 offertext"
               >
                 100 % In House Staff
               </span>
             </div>
             <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1293,14 +1308,14 @@ export default function Homecity() {
                   padding: "3px 25px",
                   borderRadius: "20px",
                 }}
-                className="poppins-black mx-2"
+                className="poppins-black mx-2 offertext"
               >
                 Licensed Company
               </span>
             </div>
             <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1384,7 +1399,7 @@ export default function Homecity() {
 
             <div className="row mt-3">
               <Swiper
-                slidesPerView={4}
+                slidesPerView={slidesbanner}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1414,12 +1429,7 @@ export default function Homecity() {
                         <img
                           src={data.offer}
                           alt="loading..."
-                          style={{
-                            width: "100%",
-                            height: "150px",
-                            borderRadius: "10px",
-                            cursor: "pointer",
-                          }}
+                          className="category_banner"
                         />
                       </div>
                     </SwiperSlide>
@@ -1437,14 +1447,14 @@ export default function Homecity() {
                   padding: "3px 25px",
                   borderRadius: "20px",
                 }}
-                className="poppins-black mx-2"
+                className="poppins-black mx-2 offertext"
               >
                 Shine Like New
               </span>
             </div>
             <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1524,14 +1534,14 @@ export default function Homecity() {
                   padding: "3px 25px",
                   borderRadius: "20px",
                 }}
-                className="poppins-black mx-2"
+                className="poppins-black mx-2 offertext"
               >
                 1Lakh + Happy Customer
               </span>
             </div>
             <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1614,14 +1624,14 @@ export default function Homecity() {
                   padding: "3px 25px",
                   borderRadius: "20px",
                 }}
-                className="poppins-black mx-2"
+                className="poppins-black mx-2 offertext"
               >
                 Amazon prime Partner
               </span>
             </div>
             <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1704,14 +1714,14 @@ export default function Homecity() {
                   padding: "3px 25px",
                   borderRadius: "20px",
                 }}
-                className="poppins-black mx-2"
+                className="poppins-black mx-2 offertext"
               >
                 Amazon prime Partner
               </span>
             </div>
             <div className="mt-4" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1788,7 +1798,7 @@ export default function Homecity() {
             </div>
             <div className="mt-3" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={5}
+                slidesPerView={slidesPerView}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -1862,7 +1872,7 @@ export default function Homecity() {
             {/* suman */}
             <div className="poppins-semibold mb-4 mt-5">TestiMonial</div>
             <Swiper
-              slidesPerView={3}
+              slidesPerView={slidesPerView}
               spaceBetween={40}
               freeMode={true}
               pagination={{
@@ -1922,7 +1932,7 @@ export default function Homecity() {
             </div>
 
             <Swiper
-              slidesPerView={5}
+              slidesPerView={slidesPerView}
               spaceBetween={30}
               freeMode={true}
               pagination={{
@@ -1984,7 +1994,7 @@ export default function Homecity() {
             </div>
 
             <Swiper
-              slidesPerView={5}
+              slidesPerView={slidesPerView}
               spaceBetween={30}
               freeMode={true}
               pagination={{

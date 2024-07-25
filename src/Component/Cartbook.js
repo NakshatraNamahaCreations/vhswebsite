@@ -836,1372 +836,1345 @@ function Cartbook() {
   console.log("responseData======", responseData);
 
   return (
-    <div className="row" style={{ justifyContent: "center" }}>
+    <>
       <Header1 />
-      <div className="col-md-10 mt-3">
-        {!show1 && (
-          <>
-            <div
-              className="mb-3 poppins-semibold"
-              style={{
-                color: "black",
-                fontSize: "20px",
-                fontWeight: "bold",
-              }}
-            >
-              Service Details
-            </div>
-            {MyCartItmes.map((item) => (
-              <div
-                className="row"
-                style={{
-                  backgroundColor: "white",
-                  padding: "10px",
-                  marginBottom: "15px",
-                  border: "1px solid black",
-                  borderRadius: "10px",
-                }}
-              >
-                <div className="col-md-10">
-                  <div
-                    className="poppins-regular"
-                    style={{
-                      color: "darkred",
-                      fontSize: "15px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {item.planName}
-                  </div>
-                  <div className="poppins-regular">{item.category}</div>
-                  <div className="d-flex">
-                    <div
-                      className="poppins-regular"
-                      style={{ textDecoration: "line-through" }}
-                    >
-                      ₹{item.planPrice}
-                    </div>
-                    <div className="mx-2 poppins-regular">
-                      ₹{item.offerprice}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-2">
-                  <div
-                    className="poppins-regular"
-                    style={{ textAlign: "center" }}
-                  >
-                    ₹ {item.qty * item.offerprice}
-                  </div>
-                  <div
-                    className="d-flex mt-2"
-                    style={{ justifyContent: "center" }}
-                  >
-                    <div
-                      className=""
-                      style={{}}
-                      onClick={() => {
-                        if (item.qty > 1) {
-                          dispatch(removeMyCartItem(item));
-                        } else {
-                          dispatch(deleteMyCartItem(item.id));
-                        }
-                      }}
-                    >
-                      <i
-                        class="fa-solid fa-minus"
-                        style={{
-                          color: "white",
-                          fontSize: "14px",
-                          backgroundColor: "green",
-                          padding: "5px",
-                          borderRadius: "50px",
-                        }}
-                      ></i>
-                    </div>
-                    <div
-                      className="mx-2 poppins-regular"
-                      style={{
-                        color: "black",
-                        fontSize: "14px",
-                        marginTop: "3px",
-                      }}
-                    >
-                      {item.qty}
-                    </div>
-                    <div className="" onClick={() => handleServiceQty(item)}>
-                      <i
-                        class="fa-solid fa-plus"
-                        style={{
-                          color: "white",
-                          fontSize: "14px",
-                          backgroundColor: "green",
-                          padding: "5px",
-                          borderRadius: "50px",
-                        }}
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            <div
-              className="mb-3 poppins-semibold"
-              style={{
-                color: "black",
-                fontSize: "20px",
-                fontWeight: "bold",
-              }}
-            >
-              Frequently Added Together
-            </div>
-
-            <div className="row">
-              {addondata.map((i) => {
-                const cartItem = Array.isArray(MyCartaddonItmes)
-                  ? MyCartaddonItmes.find((cartItem) => cartItem.id === i._id)
-                  : null;
-                const isItemInCart = !!cartItem;
-
-                return (
-                  <div className="col-md-4 mb-4">
-                    <div
-                      className="d-flex"
-                      style={{
-                        backgroundColor: "#E4D3BE",
-                        borderRadius: "10px",
-                      }}
-                    >
-                      <div className="col-md-6 p-0">
-                        <img
-                          src={`https://api.vijayhomesuperadmin.in/addOns/${i.addOnsImage}`}
-                          alt="loading...."
-                          style={{
-                            width: "100%",
-                            height: "-webkit-fill-available",
-                            borderRadius: "10px",
-                            height: "185px",
-                          }}
-                        />
-                      </div>
-                      <div className="col-md-6 p-3 mt-2">
-                        <div
-                          className="poppins-regular"
-                          style={{
-                            color: "black",
-                            fontSize: "14px",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {i.addOnsName}
-                        </div>
-                        <div
-                          className="poppins-light"
-                          style={{
-                            color: "black",
-                            fontSize: "12px",
-                            marginTop: "3px",
-                            whiteSpace: "normal",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 3,
-                          }}
-                        >
-                          {i.addOnsDescription}
-                        </div>
-
-                        <div className="d-flex poppins-regular">
-                          <div
-                            className="poppins-regular"
-                            style={{ textDecoration: "line-through" }}
-                          >
-                            {" "}
-                            {cartItem?.qty
-                              ? cartItem?.qty * i.addOnsPrice
-                              : i.addOnsPrice}
-                          </div>
-                          <div className="mx-2 poppins-regular">
-                            {" "}
-                            ₹
-                            {cartItem?.qty
-                              ? cartItem?.qty * i.addOnsOfferPrice
-                              : i.addOnsOfferPrice}
-                          </div>
-                        </div>
-                        {isItemInCart ? (
-                          <div className="d-flex mt-2">
-                            <div
-                              className=""
-                              onClick={() => {
-                                if (cartItem.qty > 1) {
-                                  dispatch(removeMyCartItemaddon(cartItem));
-                                } else {
-                                  dispatch(deleteMyCartItemaddon(cartItem.id));
-                                }
-                              }}
-                              style={{}}
-                            >
-                              <i
-                                class="fa-solid fa-minus"
-                                style={{
-                                  color: "white",
-                                  fontSize: "14px",
-                                  backgroundColor: "green",
-                                  padding: "5px",
-                                  borderRadius: "50px",
-                                }}
-                              ></i>
-                            </div>
-                            <div
-                              className="mx-2"
-                              style={{
-                                color: "black",
-                                fontSize: "14px",
-                                marginTop: "3px",
-                              }}
-                            >
-                              {cartItem.qty}
-                            </div>
-                            <div
-                              className=""
-                              onClick={() => increaseQuantity(cartItem)}
-                            >
-                              <i
-                                class="fa-solid fa-plus"
-                                style={{
-                                  color: "white",
-                                  fontSize: "14px",
-                                  backgroundColor: "green",
-                                  padding: "5px",
-                                  borderRadius: "50px",
-                                }}
-                              ></i>
-                            </div>
-                          </div>
-                        ) : (
-                          <div
-                            className="poppins-extrabold"
-                            style={{
-                              backgroundColor: "green",
-                              padding: "2px",
-                              textAlign: "center",
-                              fontSize: "14px",
-                              color: "white",
-                              width: "83px",
-                              borderRadius: "10px",
-                              marginTop: "10px",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => addQuantity(i)}
-                          >
-                            Add
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="scheduleservice mb-5">
-              <div className="title poppins-semibold">Schedule Service</div>
-              <div className="select_date ">
-                <div className="text poppins-medium">Select the date</div>
-
-                <div className="date_selection">
-                  {fourDates?.map((day, index) => {
-                    const isDefaultChecked = isDateSelected(day);
-
-                    return (
-                      <label htmlFor={index} key={index}>
-                        <input type="checkbox" name="" id={day?.day} />
-
-                        <span
-                          className={`inpt poppins-medium ${
-                            isDefaultChecked ? "matching" : ""
-                          }`}
-                          onClick={() => handleCheckboxSelect(day)}
-                        >
-                          {day?.dayName}- {day?.day}
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-                <div className="date">
-                  <button
-                    className="poppins-light"
-                    onClick={DatePicker}
-                    style={{ cursor: "pointer", fontWeight: "bold" }}
-                  >
-                    Pick Date{" "}
-                    <span>
-                      {selectedDate && (
-                        <div
-                          className="selected_date mx-2 poppins-light"
-                          style={{
-                            color: "darkred",
-                            fontSize: "16px",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {moment(selectedDate).format("YYYY-MM-DD")}
-                        </div>
-                      )}
-                    </span>
-                  </button>
-                  <div className="date_picker"></div>
-                </div>
-                {datepicker && (
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "100vh",
-                      zIndex: "100",
-                      marginTop: "-250px",
-                    }}
-                  >
-                    <div>
-                      <Calendar
-                        onChange={(date) => handleCalendarSelect(date)}
-                        value={selectedDate}
-                        calendarType="US"
-                        tileDisabled={tileDisabled}
-                        tileClassName={tileClassName}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="select_date">
-                <div className="text poppins-medium">Select the Slot</div>
-
-                {renderSlots()}
-              </div>
-            </div>
-
-            <div
-              className="poppins-semibold"
-              style={{
-                color: "black",
-                fontSize: "20px",
-                fontWeight: "bold",
-              }}
-            >
-              Select the address
-            </div>
-
-            <div
-              className="shadow-sm mt-2 mb-2"
-              style={{
-                backgroundColor: "white",
-                padding: "10px",
-                borderRadius: "10px",
-              }}
-            >
-              {Object.keys(selectedAddress).length > 0 && (
-                <>
-                  {selectedAddress.platNo},{selectedAddress.address}
-                  <p>{selectedAddress.landmark}</p>
-                </>
-              )}
-            </div>
-
-            {user?.customerName || user?.email ? (
-              <></>
-            ) : (
+      <div className="container">
+        <div className="row" style={{ justifyContent: "center" }}>
+          <div className="col-md-10 mt-3">
+            {!show1 && (
               <>
                 <div
-                  className="mt-3 poppins-semibold"
+                  className="mb-3 poppins-semibold"
                   style={{
                     color: "black",
                     fontSize: "20px",
                     fontWeight: "bold",
+                    textAlign: "left",
                   }}
                 >
-                  Customer details
+                  Service Details
                 </div>
-                <div className="mt-3 mb-2 poppins-light">Customer Name</div>
-
-                <div className="">
-                  <input
-                    type="text"
-                    className="poppins-light"
-                    onChange={(e) => setcustomerName(e.target.value)}
-                    value={customerName}
-                    placeholder="Customer Name"
-                    style={{ border: "1px solid grey", height: "45px" }}
-                  />
-                </div>
-
-                <div className="mb-2 poppins-light">Email</div>
-
-                <div className="">
-                  <input
-                    type="text"
+                {MyCartItmes.map((item) => (
+                  <div
                     className=""
-                    onChange={(e) => setemail(e.target.value)}
-                    value={email}
-                    placeholder="Email"
-                    style={{ border: "1px solid grey", height: "45px" }}
-                  />
+                    style={{
+                      backgroundColor: "white",
+                      padding: "10px",
+                      marginBottom: "15px",
+                      border: "1px solid black",
+                      borderRadius: "10px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div className="col-md-10">
+                      <div
+                        className="poppins-regular"
+                        style={{
+                          color: "darkred",
+                          fontSize: "15px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {item.planName}
+                      </div>
+                      <div className="poppins-regular">{item.category}</div>
+                      <div className="d-flex">
+                        <div
+                          className="poppins-regular"
+                          style={{ textDecoration: "line-through" }}
+                        >
+                          ₹{item.planPrice}
+                        </div>
+                        <div className="mx-2 poppins-regular">
+                          ₹{item.offerprice}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-2">
+                      <div
+                        className="poppins-regular"
+                        style={{ textAlign: "center" }}
+                      >
+                        ₹ {item.qty * item.offerprice}
+                      </div>
+                      <div
+                        className="d-flex mt-2"
+                        style={{ justifyContent: "center" }}
+                      >
+                        <div
+                          className=""
+                          style={{}}
+                          onClick={() => {
+                            if (item.qty > 1) {
+                              dispatch(removeMyCartItem(item));
+                            } else {
+                              dispatch(deleteMyCartItem(item.id));
+                            }
+                          }}
+                        >
+                          <i
+                            class="fa-solid fa-minus"
+                            style={{
+                              color: "white",
+                              fontSize: "14px",
+                              backgroundColor: "green",
+                              padding: "5px",
+                              borderRadius: "50px",
+                            }}
+                          ></i>
+                        </div>
+                        <div
+                          className="mx-2 poppins-regular"
+                          style={{
+                            color: "black",
+                            fontSize: "14px",
+                            marginTop: "3px",
+                          }}
+                        >
+                          {item.qty}
+                        </div>
+                        <div
+                          className=""
+                          onClick={() => handleServiceQty(item)}
+                        >
+                          <i
+                            class="fa-solid fa-plus"
+                            style={{
+                              color: "white",
+                              fontSize: "14px",
+                              backgroundColor: "green",
+                              padding: "5px",
+                              borderRadius: "50px",
+                            }}
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                <div
+                  className="mb-3 poppins-semibold"
+                  style={{
+                    color: "black",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    textAlign: "left",
+                  }}
+                >
+                  Frequently Added Together
                 </div>
+
+                <div className="row">
+                  {addondata.map((i) => {
+                    const cartItem = Array.isArray(MyCartaddonItmes)
+                      ? MyCartaddonItmes.find(
+                          (cartItem) => cartItem.id === i._id
+                        )
+                      : null;
+                    const isItemInCart = !!cartItem;
+
+                    return (
+                      <div className="col-md-4 mb-4">
+                        <div
+                          className="d-flex"
+                          style={{
+                            backgroundColor: "#E4D3BE",
+                            borderRadius: "10px",
+                          }}
+                        >
+                          <div className="col-md-6 p-0">
+                            <img
+                              src={`https://api.vijayhomesuperadmin.in/addOns/${i.addOnsImage}`}
+                              alt="loading...."
+                              style={{
+                                width: "150px",
+                                borderRadius: "10px",
+                                height: "185px",
+                              }}
+                            />
+                          </div>
+                          <div className="col-md-6 p-3 mt-2">
+                            <div
+                              className="poppins-regular"
+                              style={{
+                                color: "black",
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {i.addOnsName}
+                            </div>
+                            <div
+                              className="poppins-light"
+                              style={{
+                                color: "black",
+                                fontSize: "12px",
+                                marginTop: "3px",
+                                whiteSpace: "normal",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                display: "-webkit-box",
+                                WebkitBoxOrient: "vertical",
+                                WebkitLineClamp: 3,
+                              }}
+                            >
+                              {i.addOnsDescription}
+                            </div>
+
+                            <div className="d-flex poppins-regular">
+                              <div
+                                className="poppins-regular"
+                                style={{ textDecoration: "line-through" }}
+                              >
+                                {" "}
+                                {cartItem?.qty
+                                  ? cartItem?.qty * i.addOnsPrice
+                                  : i.addOnsPrice}
+                              </div>
+                              <div className="mx-2 poppins-regular">
+                                {" "}
+                                ₹
+                                {cartItem?.qty
+                                  ? cartItem?.qty * i.addOnsOfferPrice
+                                  : i.addOnsOfferPrice}
+                              </div>
+                            </div>
+                            {isItemInCart ? (
+                              <div className="d-flex mt-2">
+                                <div
+                                  className=""
+                                  onClick={() => {
+                                    if (cartItem.qty > 1) {
+                                      dispatch(removeMyCartItemaddon(cartItem));
+                                    } else {
+                                      dispatch(
+                                        deleteMyCartItemaddon(cartItem.id)
+                                      );
+                                    }
+                                  }}
+                                  style={{}}
+                                >
+                                  <i
+                                    class="fa-solid fa-minus"
+                                    style={{
+                                      color: "white",
+                                      fontSize: "14px",
+                                      backgroundColor: "green",
+                                      padding: "5px",
+                                      borderRadius: "50px",
+                                    }}
+                                  ></i>
+                                </div>
+                                <div
+                                  className="mx-2"
+                                  style={{
+                                    color: "black",
+                                    fontSize: "14px",
+                                    marginTop: "3px",
+                                  }}
+                                >
+                                  {cartItem.qty}
+                                </div>
+                                <div
+                                  className=""
+                                  onClick={() => increaseQuantity(cartItem)}
+                                >
+                                  <i
+                                    class="fa-solid fa-plus"
+                                    style={{
+                                      color: "white",
+                                      fontSize: "14px",
+                                      backgroundColor: "green",
+                                      padding: "5px",
+                                      borderRadius: "50px",
+                                    }}
+                                  ></i>
+                                </div>
+                              </div>
+                            ) : (
+                              <div
+                                className="poppins-extrabold"
+                                style={{
+                                  backgroundColor: "green",
+                                  padding: "2px",
+                                  textAlign: "center",
+                                  fontSize: "14px",
+                                  color: "white",
+                                  width: "83px",
+                                  borderRadius: "10px",
+                                  marginTop: "10px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => addQuantity(i)}
+                              >
+                                Add
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="scheduleservice mb-5">
+                  <div
+                    className="title poppins-semibold"
+                    style={{ textAlign: "left" }}
+                  >
+                    Schedule Service
+                  </div>
+                  <div className="select_date ">
+                    <div className="text poppins-medium">Select the date</div>
+
+                    <div className="date_selection">
+                      {fourDates?.map((day, index) => {
+                        const isDefaultChecked = isDateSelected(day);
+
+                        return (
+                          <label htmlFor={index} key={index}>
+                            <input type="checkbox" name="" id={day?.day} />
+
+                            <span
+                              className={`inpt poppins-medium ${
+                                isDefaultChecked ? "matching" : ""
+                              }`}
+                              onClick={() => handleCheckboxSelect(day)}
+                            >
+                              {day?.dayName}- {day?.day}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                    <div className="date">
+                      <button
+                        className="poppins-light"
+                        onClick={DatePicker}
+                        style={{ cursor: "pointer", fontWeight: "bold" }}
+                      >
+                        Pick Date{" "}
+                        <span>
+                          {selectedDate && (
+                            <div
+                              className="selected_date mx-2 poppins-light"
+                              style={{
+                                color: "darkred",
+                                fontSize: "16px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {moment(selectedDate).format("YYYY-MM-DD")}
+                            </div>
+                          )}
+                        </span>
+                      </button>
+                      <div className="date_picker"></div>
+                    </div>
+                    {datepicker && (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          height: "100vh",
+                          zIndex: "100",
+                          marginTop: "-250px",
+                        }}
+                      >
+                        <div>
+                          <Calendar
+                            onChange={(date) => handleCalendarSelect(date)}
+                            value={selectedDate}
+                            calendarType="US"
+                            tileDisabled={tileDisabled}
+                            tileClassName={tileClassName}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="select_date">
+                    <div className="text poppins-medium">Select the Slot</div>
+
+                    {renderSlots()}
+                  </div>
+                </div>
+
+                <div
+                  className="poppins-semibold"
+                  style={{
+                    color: "black",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    textAlign: "left",
+                  }}
+                >
+                  Select the address
+                </div>
+
+                <div
+                  className="shadow-sm mt-2 mb-2"
+                  style={{
+                    backgroundColor: "white",
+                    padding: "10px",
+                    borderRadius: "10px",
+                  }}
+                >
+                  {Object.keys(selectedAddress).length > 0 && (
+                    <>
+                      {selectedAddress.platNo},{selectedAddress.address}
+                      <p>{selectedAddress.landmark}</p>
+                    </>
+                  )}
+                </div>
+
+                {user?.customerName || user?.email ? (
+                  <></>
+                ) : (
+                  <>
+                    <div
+                      className="mt-3 poppins-semibold"
+                      style={{
+                        color: "black",
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Customer details
+                    </div>
+                    <div className="mt-3 mb-2 poppins-light">Customer Name</div>
+
+                    <div className="">
+                      <input
+                        type="text"
+                        className="poppins-light"
+                        onChange={(e) => setcustomerName(e.target.value)}
+                        value={customerName}
+                        placeholder="Customer Name"
+                        style={{ border: "1px solid grey", height: "45px" }}
+                      />
+                    </div>
+
+                    <div className="mb-2 poppins-light">Email</div>
+
+                    <div className="">
+                      <input
+                        type="text"
+                        className=""
+                        onChange={(e) => setemail(e.target.value)}
+                        value={email}
+                        placeholder="Email"
+                        style={{ border: "1px solid grey", height: "45px" }}
+                      />
+                    </div>
+                  </>
+                )}
+
+                <div
+                  className="mt-5 poppins-semibold"
+                  style={{
+                    color: "black",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    textAlign: "left",
+                  }}
+                >
+                  Coupons & Offers
+                </div>
+
+                <div className="row mt-3">
+                  <div className="col-md-4">
+                    <input
+                      type="text"
+                      className="poppins-regular"
+                      style={{
+                        border: "1px solid grey",
+                        padding: "8px",
+                        borderRadius: "10px",
+                      }}
+                      value={voucherCodeValue}
+                      placeholder="Enter Voucher Code"
+                      onChange={(e) => setVoucherCodeValue(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <div
+                      className="poppins-black"
+                      style={{
+                        backgroundColor: "darkred",
+                        padding: "8px",
+                        color: "white",
+                        textAlign: "center",
+                        borderRadius: "10px",
+                        cursor: "pointer",
+                        fontSize: "15px",
+                      }}
+                      onClick={applyVoucherCode}
+                    >
+                      Apply
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  className="mt-3 poppins-black"
+                  style={{
+                    color: "#40A2D8",
+                    fontWeight: "900",
+                    textAlign: "auto",
+                  }}
+                >
+                  * Book Over Rs 1500 to use wallet , upto 10% From your wallet
+                  Account !
+                </div>
+                <div
+                  className="mt-1 mb-3 poppins-black"
+                  style={{
+                    color: "#40A2D8",
+                    fontWeight: "900",
+                    textAlign: "auto",
+                  }}
+                >
+                  * Book over Rs 1500, get 2% cashback in your wallet !
+                </div>
+
+                <div
+                  className="poppins-semibold"
+                  style={{
+                    color: "darkred",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Payment Summary
+                </div>
+
+                <div
+                  className="d-flex mt-3"
+                  style={{ justifyContent: "space-between" }}
+                >
+                  <div className="col-md-4 poppins-black">Total Amount</div>
+                  <div
+                    className="col-md-4 poppins-light"
+                    style={{
+                      textDecoration: "line-through",
+                      fontWeight: "500",
+                    }}
+                  >
+                    ₹ {Carttotal}
+                  </div>
+                </div>
+
+                <div
+                  className="d-flex mt-3"
+                  style={{ justifyContent: "space-between" }}
+                >
+                  <div className="col-md-4 poppins-black">Discount</div>
+                  <div
+                    className="col-md-4 poppins-light"
+                    style={{ fontWeight: "500" }}
+                  >
+                    {couponPercentage}%
+                  </div>
+                </div>
+
+                <div
+                  className="d-flex mt-3"
+                  style={{ justifyContent: "space-between" }}
+                >
+                  <div className="col-md-4 poppins-black">Saved</div>
+                  <div
+                    className="col-md-4 poppins-light"
+                    style={{ color: "#40A2D8", fontWeight: "500" }}
+                  >
+                    ₹ {SavedAmount}
+                  </div>
+                </div>
+
+                <div
+                  className="d-flex mt-3"
+                  style={{ justifyContent: "space-between" }}
+                >
+                  <div className="col-md-4 poppins-black">Grand Total</div>
+                  <div
+                    className="col-md-4 poppins-light"
+                    style={{ color: "#40A2D8", fontWeight: "500" }}
+                  >
+                    ₹ {DiscountAmount}
+                  </div>
+                </div>
+
+                {/* Book Button */}
+
+                <div
+                  onClick={handleShow6}
+                  className="col-md-12 mt-3 shadow poppins-black"
+                  style={{
+                    // backgroundColor: "darkred",
+                    padding: "8px",
+                    color: "orange",
+                    fontSize: "14px",
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    width: "51%",
+                    marginLeft: "-10px",
+                    width: "70%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  Cancellation Policy
+                </div>
+
+                {!showbutton ? (
+                  <div className="row mt-3 mb-5">
+                    <div
+                      onClick={() => setshowbutton(true)}
+                      className="col-md-12 poppins-black"
+                      style={{
+                        backgroundColor: "darkred",
+                        padding: "8px",
+                        color: "white",
+                        fontSize: "14px",
+                        textAlign: "center",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        width: "70%",
+                      }}
+                    >
+                      Book Now
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="d-flex mt-5 mb-5"
+                    style={{ justifyContent: "space-between" }}
+                  >
+                    <div className="col-md-6">
+                      <div
+                        onClick={addtreatmentdetails}
+                        className="col-md-12 poppins-black"
+                        style={{
+                          backgroundColor: "darkred",
+                          padding: "8px 20px",
+                          color: "white",
+                          fontSize: "14px",
+                          textAlign: "center",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        After Service
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div
+                        onClick={handlePayment}
+                        className="col-md-12 poppins-black"
+                        style={{
+                          backgroundColor: "#040458db",
+                          padding: "8px 40px",
+                          color: "white",
+                          fontSize: "14px",
+                          textAlign: "center",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Pay Now
+                      </div>
+                    </div>
+                  </div>
+                )}
               </>
             )}
 
-            <div
-              className="mt-5 poppins-semibold"
-              style={{
-                color: "black",
-                fontSize: "20px",
-                fontWeight: "bold",
-              }}
-            >
-              Coupons & Offers
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-4">
-                <input
-                  type="text"
-                  className="poppins-regular"
+            {/* old address select */}
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header>
+                <Modal.Title
+                  className="poppins-medium"
                   style={{
-                    border: "1px solid grey",
-                    padding: "8px",
-                    borderRadius: "10px",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    textAlign: "left",
                   }}
-                  value={voucherCodeValue}
-                  placeholder="Enter Voucher Code"
-                  onChange={(e) => setVoucherCodeValue(e.target.value)}
-                />
-              </div>
-              <div className="col-md-3">
+                >
+                  Select your address
+                </Modal.Title>
+                <div onClick={handleClose}>
+                  <i
+                    class="fa-solid fa-xmark"
+                    style={{
+                      backgroundColor: "darkred",
+                      padding: "5px",
+                      color: "white",
+                      borderRadius: "50px",
+                      width: "25px",
+                      textAlign: "left",
+                      fontSize: "14px",
+                    }}
+                  ></i>
+                </div>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="row mb-2">
+                  {customeraddress.map((item, index) => (
+                    <div className="d-flex">
+                      <React.Fragment key={index}>
+                        <div key={index} className="col-md-1">
+                          <input
+                            type="radio"
+                            value={item._id}
+                            id={item._id}
+                            checked={selectedAddress._id === item._id}
+                            onChange={() => handleSelectAddress(item)}
+                          />
+                        </div>
+                        <div className="col-md-11 mb-3 mx-1">
+                          <div
+                            className="poppins-black"
+                            style={{
+                              color: "black",
+                              fontSize: "15px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {item.saveAs}
+                          </div>
+                          <div
+                            className="poppins-regular"
+                            style={{
+                              color: "black",
+                              fontSize: "14px",
+                            }}
+                          >
+                            {item.platNo},{item.address}
+                          </div>
+                          <div
+                            className="poppins-regular"
+                            style={{
+                              color: "black",
+                              fontSize: "13px",
+                            }}
+                          >
+                            Landmark : {item.landmark}
+                          </div>
+                        </div>
+                      </React.Fragment>
+                    </div>
+                  ))}
+                </div>
+
+                <hr />
+
+                <div className="d-flex">
+                  <i className="fa-solid fa-plus mt-1"></i>
+                  <div
+                    onClick={handleShow1}
+                    className="mx-3 poppins-black mt-2"
+                    style={{
+                      color: "darkred",
+                      fontSize: "15px",
+                      fontWeight: "bold",
+                      textAlign: "left",
+                    }}
+                  >
+                    Add new address
+                  </div>
+                </div>
+
                 <div
                   className="poppins-black"
                   style={{
                     backgroundColor: "darkred",
                     padding: "8px",
-                    color: "white",
-                    textAlign: "center",
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    fontSize: "15px",
-                  }}
-                  onClick={applyVoucherCode}
-                >
-                  Apply
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="mt-3 poppins-black"
-              style={{
-                color: "#40A2D8",
-                fontWeight: "900",
-                textAlign: "auto",
-              }}
-            >
-              * Book Over Rs 1500 to use wallet , upto 10% From your wallet
-              Account !
-            </div>
-            <div
-              className="mt-1 mb-3 poppins-black"
-              style={{
-                color: "#40A2D8",
-                fontWeight: "900",
-                textAlign: "auto",
-              }}
-            >
-              * Book over Rs 1500, get 2% cashback in your wallet !
-            </div>
-
-            <div
-              className="poppins-semibold"
-              style={{ color: "darkred", fontSize: "18px", fontWeight: "bold" }}
-            >
-              Payment Summary
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-4 poppins-black">Total Amount</div>
-              <div
-                className="col-md-4 poppins-light"
-                style={{ textDecoration: "line-through", fontWeight: "500" }}
-              >
-                ₹ {Carttotal}
-              </div>
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-4 poppins-black">Discount</div>
-              <div
-                className="col-md-4 poppins-light"
-                style={{ fontWeight: "500" }}
-              >
-                {couponPercentage}%
-              </div>
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-4 poppins-black">Saved</div>
-              <div
-                className="col-md-4 poppins-light"
-                style={{ color: "#40A2D8", fontWeight: "500" }}
-              >
-                ₹ {SavedAmount}
-              </div>
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-4 poppins-black">Grand Total</div>
-              <div
-                className="col-md-4 poppins-light"
-                style={{ color: "#40A2D8", fontWeight: "500" }}
-              >
-                ₹ {DiscountAmount}
-              </div>
-            </div>
-
-            {/* Book Button */}
-
-            <div
-              onClick={handleShow6}
-              className="col-md-12 mt-3 shadow poppins-black"
-              style={{
-                // backgroundColor: "darkred",
-                padding: "8px",
-                color: "orange",
-                fontSize: "14px",
-                textAlign: "center",
-                borderRadius: "5px",
-                cursor: "pointer",
-                width: "51%",
-                marginLeft: "-10px",
-                width: "250px",
-              }}
-            >
-              Cancellation Policy
-            </div>
-
-            {!showbutton ? (
-              <div className="row mt-3 mb-5">
-                <div
-                  onClick={() => setshowbutton(true)}
-                  className="col-md-12 poppins-black"
-                  style={{
-                    backgroundColor: "darkred",
-                    padding: "8px",
-                    color: "white",
-                    fontSize: "14px",
-                    textAlign: "center",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    width: "50%",
-                  }}
-                >
-                  Book Now
-                </div>
-              </div>
-            ) : (
-              <div className="row mt-5 mb-5">
-                <div className="col-md-6">
-                  <div
-                    onClick={addtreatmentdetails}
-                    className="col-md-8 poppins-black"
-                    style={{
-                      backgroundColor: "darkred",
-                      padding: "8px",
-                      color: "white",
-                      fontSize: "14px",
-                      textAlign: "center",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    After Service
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div
-                    onClick={handlePayment}
-                    className="col-md-8 poppins-black"
-                    style={{
-                      backgroundColor: "#040458db",
-                      padding: "8px",
-                      color: "white",
-                      fontSize: "14px",
-                      textAlign: "center",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Pay Now
-                  </div>
-                </div>
-              </div>
-            )}
-          </>
-        )}
-
-        {/* old address select */}
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header>
-            <Modal.Title
-              className="poppins-medium"
-              style={{ fontSize: "20px", fontWeight: "bold" }}
-            >
-              Select your address
-            </Modal.Title>
-            <div onClick={handleClose}>
-              <i
-                class="fa-solid fa-xmark"
-                style={{
-                  backgroundColor: "darkred",
-                  padding: "5px",
-                  color: "white",
-                  borderRadius: "50px",
-                  width: "25px",
-                  textAlign: "center",
-                  fontSize: "14px",
-                }}
-              ></i>
-            </div>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="row mb-2">
-              {customeraddress.map((item, index) => (
-                <React.Fragment key={index}>
-                  <div
-                    key={index}
-                    className="col-md-1"
-                    style={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <input
-                      type="radio"
-                      value={item._id}
-                      id={item._id}
-                      checked={selectedAddress._id === item._id}
-                      onChange={() => handleSelectAddress(item)}
-                    />
-                  </div>
-                  <div className="col-md-11 mb-3">
-                    <div
-                      className="poppins-black"
-                      style={{
-                        color: "black",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {item.saveAs}
-                    </div>
-                    <div
-                      className="poppins-regular"
-                      style={{
-                        color: "black",
-                        fontSize: "14px",
-                      }}
-                    >
-                      {item.platNo},{item.address}
-                    </div>
-                    <div
-                      className="poppins-regular"
-                      style={{
-                        color: "black",
-                        fontSize: "13px",
-                      }}
-                    >
-                      Landmark : {item.landmark}
-                    </div>
-                  </div>
-                </React.Fragment>
-              ))}
-            </div>
-
-            <hr />
-
-            <div className="d-flex">
-              <i className="fa-solid fa-plus mt-1"></i>
-              <div
-                onClick={handleShow1}
-                className="mx-3 poppins-black mt-2"
-                style={{
-                  color: "darkred",
-                  fontSize: "15px",
-                  fontWeight: "bold",
-                }}
-              >
-                Add new address
-              </div>
-            </div>
-
-            <div
-              className="poppins-black"
-              style={{
-                backgroundColor: "darkred",
-                padding: "8px",
-                textAlign: "center",
-                color: "white",
-                fontSize: "14px",
-                borderRadius: "5px",
-                marginTop: "30px",
-                cursor: "pointer",
-              }}
-              onClick={ProceedAddress}
-            >
-              Proceed
-            </div>
-          </Modal.Body>
-        </Modal>
-
-        {/* showing google map after add addresss=========================== */}
-
-        {show1 && isLoaded && (
-          <div
-            className="row mt-5 mb-2 p-2"
-            style={{ justifyContent: "center" }}
-          >
-            <i
-              onClick={() => {
-                setShow1(false);
-                setShow(true);
-              }}
-              className="fa-solid fa-x"
-              style={{
-                backgroundColor: "darkred",
-                padding: "10px",
-                width: "35px",
-                textAlign: "center",
-                color: "white",
-                fontSize: "15px",
-                borderRadius: "50px",
-                position: "absolute",
-                top: "70px",
-              }}
-            ></i>
-            <div
-              className="row col-md-10"
-              style={{
-                backgroundColor: "#80808036",
-                padding: "20px",
-                borderRadius: "5px",
-              }}
-            >
-              <div className="col-md-8">
-                <div
-                  className=""
-                  style={{
-                    width: "100%",
-                    height: "320px",
-                    position: "relative",
-                  }}
-                >
-                  <GoogleMap
-                    ref={mapRef}
-                    center={{ lat: 12.9716, lng: 77.5946 }}
-                    zoom={10}
-                    mapContainerStyle={{
-                      height: "100%",
-                      width: "100%",
-                      zIndex: 111,
-                    }}
-                  >
-                    {selectedLocation && (
-                      <Marker
-                        position={{
-                          lat: selectedLocation.latitude,
-                          lng: selectedLocation.longitude,
-                        }}
-                      />
-                    )}
-                    <Autocomplete
-                      onLoad={(autocomplete) => {
-                        autocompleteRef.current = autocomplete;
-                      }}
-                      options={{
-                        fields: ["formatted_address", "geometry", "name"],
-                        types: ["geocode"],
-                      }}
-                      onPlaceChanged={handlePlaceSelect}
-                    >
-                      <input
-                        type="text"
-                        placeholder="Search for a location"
-                        className="map_input"
-                        style={{
-                          boxSizing: "border-box",
-                          border: "1px solid transparent",
-                          width: "240px",
-                          height: "32px",
-                          padding: "0 12px",
-                          borderRadius: "3px",
-                          boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
-                          fontSize: "14px",
-                          outline: "none",
-                          textOverflow: "ellipsis",
-                          position: "absolute",
-                          top: "10px",
-                          left: "50%",
-                          transform: "translateX(-50%)",
-                          zIndex: 2,
-                          backgroundColor: "orange",
-                          width: "350px",
-                        }}
-                      />
-                    </Autocomplete>
-                  </GoogleMap>
-                </div>
-                <button
-                  onClick={getCurrentLocation}
-                  style={{
-                    backgroundColor: "orange",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    padding: "8px",
-                    fontSize: "14px",
-                    width: "50%",
-                  }}
-                >
-                  Use My Current Location
-                </button>
-                <div style={{ textAlign: "center", marginTop: "10px" }}>
-                  {selectedPlaceAddress && (
-                    <p>Searched Location: {selectedPlaceAddress}</p>
-                  )}
-                </div>
-              </div>
-
-              <div className="col-md-4">
-                <div className="mt-3">
-                  <div
-                    className="mb-1"
-                    style={{
-                      color: "black",
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    House/Flat/Block No <span style={{ color: "red" }}>*</span>
-                  </div>
-                  <input
-                    type="text"
-                    style={{
-                      border: "1px solid grey",
-                      borderRadius: "5px",
-                      height: "40px",
-                    }}
-                    onChange={(e) => setHouseFlat(e.target.value)}
-                  />
-                </div>
-                <div className="">
-                  <div
-                    className="mb-1"
-                    style={{
-                      color: "black",
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Landmark / Society name{" "}
-                    <span style={{ color: "red" }}>*</span>
-                  </div>
-                  <input
-                    type="text"
-                    style={{
-                      border: "1px solid grey",
-                      borderRadius: "5px",
-                      height: "40px",
-                    }}
-                    onChange={(e) => setLandmark(e.target.value)}
-                  />
-                </div>
-                <div className="">
-                  <div
-                    className="mb-1"
-                    style={{
-                      color: "black",
-                      fontSize: "14px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Save as <span style={{ color: "red" }}>*</span>
-                  </div>
-                  <div className="d-flex">
-                    <div className="col-md-3">
-                      <div
-                        className=""
-                        style={{
-                          border: "1px solid grey",
-                          padding: "3px",
-                          textAlign: "center",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                          color: home ? "white" : "black",
-                          backgroundColor: home ? "darkred" : "white",
-                        }}
-                        onClick={() => {
-                          setHome(true);
-                          setOthers(false);
-                        }}
-                      >
-                        Home
-                      </div>
-                    </div>
-                    <div className="col-md-1"></div>
-                    <div className="col-md-3">
-                      <div
-                        className=""
-                        style={{
-                          border: "1px solid grey",
-                          padding: "3px",
-                          textAlign: "center",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                          color: others ? "white" : "black",
-                          backgroundColor: others ? "darkred" : "white",
-                        }}
-                        onClick={() => {
-                          setHome(false);
-                          setOthers(true);
-                        }}
-                      >
-                        Others
-                      </div>
-                    </div>
-                    {others && (
-                      <div className="col-md-3 ms-2">
-                        <input
-                          style={{ border: "1px solid black" }}
-                          onChange={(e) => setOthersPlace(e.target.value)}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div
-                  className=""
-                  style={{
-                    backgroundColor: "darkred",
-                    padding: "8px",
                     textAlign: "center",
                     color: "white",
                     fontSize: "14px",
                     borderRadius: "5px",
-                    marginTop: "25px",
+                    marginTop: "30px",
                     cursor: "pointer",
                   }}
+                  onClick={ProceedAddress}
+                >
+                  Proceed
+                </div>
+              </Modal.Body>
+            </Modal>
+
+            {/* showing google map after add addresss=========================== */}
+
+            {show1 && isLoaded && (
+              <div
+                className="row mt-5 mb-2 p-2"
+                style={{ justifyContent: "center" }}
+              >
+                <i
                   onClick={() => {
-                    saveAddress();
-                    saveAddress1();
                     setShow1(false);
                     setShow(true);
                   }}
-                >
-                  Save
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Success Modal */}
-
-        <Modal show={show2} centered onHide={handleClose2}>
-          <Modal.Body>
-            <div className="d-flex justify-content-center">
-              <video
-                className="p-0"
-                style={{ objectFit: "cover", width: "200px", height: "200px" }}
-                autoPlay
-                loop
-                src={require("../Assets/Images/a.mp4")}
-              ></video>
-            </div>
-            <div className="row">
-              <div className="col-md-5 text-center">Category</div>
-              <div className="col-md-1 ">:</div>
-              <div className="col-md-6 ">{responseData?.data.category}</div>
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-5 text-center">Service</div>
-              <div className="col-md-1 ">:</div>
-              <div className="col-md-6 ">{responseData?.data.service}</div>
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-5 text-center">Description</div>
-              <div className="col-md-1 ">:</div>
-              <div className="col-md-6 ">{responseData?.data.desc}</div>
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-5 text-center">Date of Service</div>
-              <div className="col-md-1 ">:</div>
-              <div className="col-md-6 ">
-                {responseData?.data.dateofService}
-              </div>
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-5 text-center">Service Charge</div>
-              <div className="col-md-1 ">:</div>
-              <div className="col-md-6 ">
-                {responseData?.data.serviceCharge}
-              </div>
-            </div>
-
-            {responseData?.data.GrandTotal >= 1500 ? (
-              <div>
-                <p
-                  className="poppins-regular mt-3"
+                  className="fa-solid fa-x"
                   style={{
-                    padding: 10,
-                    color: "green",
-                    fontWeight: "bold",
-                    fontSize: 15,
+                    backgroundColor: "darkred",
+                    padding: "10px",
+                    width: "35px",
                     textAlign: "center",
+                    color: "white",
+                    fontSize: "15px",
+                    borderRadius: "50px",
+                    position: "absolute",
+                    top: "70px",
+                  }}
+                ></i>
+                <div
+                  className="row"
+                  style={{
+                    backgroundColor: "#80808036",
+                    padding: "20px",
+                    borderRadius: "5px",
                   }}
                 >
-                  Congratulations !!! You won a reward of Rs{" "}
-                  {(responseData?.data.GrandTotal * 0.02).toFixed(2)}/- in your
-                  Wallet..!!
-                </p>
+                  <div className="col-md-8">
+                    <div
+                      className=""
+                      style={{
+                        width: "100%",
+                        height: "320px",
+                        position: "relative",
+                      }}
+                    >
+                      <GoogleMap
+                        ref={mapRef}
+                        center={{ lat: 12.9716, lng: 77.5946 }}
+                        zoom={10}
+                        mapContainerStyle={{
+                          height: "100%",
+                          width: "100%",
+                          zIndex: 111,
+                        }}
+                      >
+                        {selectedLocation && (
+                          <Marker
+                            position={{
+                              lat: selectedLocation.latitude,
+                              lng: selectedLocation.longitude,
+                            }}
+                          />
+                        )}
+                        <Autocomplete
+                          onLoad={(autocomplete) => {
+                            autocompleteRef.current = autocomplete;
+                          }}
+                          options={{
+                            fields: ["formatted_address", "geometry", "name"],
+                            types: ["geocode"],
+                          }}
+                          onPlaceChanged={handlePlaceSelect}
+                        >
+                          <input
+                            type="text"
+                            placeholder="Search for a location"
+                            className="map_input"
+                            style={{
+                              boxSizing: "border-box",
+                              border: "1px solid transparent",
+                              width: "240px",
+                              height: "32px",
+                              padding: "0 12px",
+                              borderRadius: "3px",
+                              boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
+                              fontSize: "14px",
+                              outline: "none",
+                              textOverflow: "ellipsis",
+                              position: "absolute",
+                              top: "10px",
+                              left: "50%",
+                              transform: "translateX(-50%)",
+                              zIndex: 2,
+                              backgroundColor: "orange",
+                              // width: "350px",
+                            }}
+                          />
+                        </Autocomplete>
+                      </GoogleMap>
+                    </div>
+                    <button
+                      className=""
+                      onClick={getCurrentLocation}
+                      style={{
+                        backgroundColor: "darkblue",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        padding: "8px",
+                        fontSize: "14px",
+                        // width: "80%",
+                      }}
+                    >
+                      Use My Current Location
+                    </button>
+                    <div style={{ textAlign: "center", marginTop: "10px" }}>
+                      {selectedPlaceAddress && (
+                        <p>Searched Location: {selectedPlaceAddress}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="col-md-4">
+                    <div className="mt-3">
+                      <div
+                        className="mb-1 poppins-regular"
+                        style={{
+                          color: "black",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        House/Flat/Block No{" "}
+                        <span style={{ color: "red" }}>*</span>
+                      </div>
+                      <input
+                        type="text"
+                        style={{
+                          border: "1px solid grey",
+                          borderRadius: "5px",
+                          height: "40px",
+                        }}
+                        onChange={(e) => setHouseFlat(e.target.value)}
+                      />
+                    </div>
+                    <div className="">
+                      <div
+                        className="mb-1 poppins-regular"
+                        style={{
+                          color: "black",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Landmark / Society name{" "}
+                        <span style={{ color: "red" }}>*</span>
+                      </div>
+                      <input
+                        type="text"
+                        style={{
+                          border: "1px solid grey",
+                          borderRadius: "5px",
+                          height: "40px",
+                        }}
+                        onChange={(e) => setLandmark(e.target.value)}
+                      />
+                    </div>
+                    <div className="poppins-regular">
+                      <div
+                        className="mb-1"
+                        style={{
+                          color: "black",
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Save as <span style={{ color: "red" }}>*</span>
+                      </div>
+                      <div className="d-flex">
+                        <div className="col-md-3">
+                          <div
+                            className="poppins-regular"
+                            style={{
+                              border: "1px solid grey",
+                              padding: "3px",
+                              textAlign: "center",
+                              borderRadius: "5px",
+                              cursor: "pointer",
+                              color: home ? "white" : "black",
+                              backgroundColor: home ? "darkred" : "white",
+                            }}
+                            onClick={() => {
+                              setHome(true);
+                              setOthers(false);
+                            }}
+                          >
+                            Home
+                          </div>
+                        </div>
+                        <div className="col-md-1"></div>
+                        <div className="col-md-3 mx-2">
+                          <div
+                            className="poppins-regular"
+                            style={{
+                              border: "1px solid grey",
+                              padding: "3px",
+                              textAlign: "center",
+                              borderRadius: "5px",
+                              cursor: "pointer",
+                              color: others ? "white" : "black",
+                              backgroundColor: others ? "darkred" : "white",
+                            }}
+                            onClick={() => {
+                              setHome(false);
+                              setOthers(true);
+                            }}
+                          >
+                            Others
+                          </div>
+                        </div>
+                        {others && (
+                          <div className="col-md-3 ms-2">
+                            <input
+                              style={{ border: "1px solid black" }}
+                              onChange={(e) => setOthersPlace(e.target.value)}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      className="poppins-black"
+                      style={{
+                        backgroundColor: "darkred",
+                        padding: "8px",
+                        textAlign: "center",
+                        color: "white",
+                        fontSize: "14px",
+                        borderRadius: "5px",
+                        marginTop: "25px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        saveAddress();
+                        saveAddress1();
+                        setShow1(false);
+                        setShow(true);
+                      }}
+                    >
+                      Save
+                    </div>
+                  </div>
+                </div>
               </div>
-            ) : (
-              <></>
             )}
 
-            <div className="d-flex justify-content-center mt-3 mb-3">
-              <Button
-                variant="secondary"
-                onClick={handleClose2}
-                style={{ width: "200px", backgroundColor: "darkred" }}
-              >
-                Close
-              </Button>
-            </div>
-          </Modal.Body>
-        </Modal>
+            {/* Success Modal */}
 
-        {/* payment getway */}
-        <Modal show={paymentModel} centered onHide={handleClose}>
-          <Modal.Header>
-            <Modal.Title
-              style={{ fontSize: "20px", color: "black", fontWeight: "bold" }}
-            >
-              Confirm Payment
+            <Modal show={show2} centered onHide={handleClose2}>
+              <Modal.Body>
+                <div className="d-flex justify-content-center">
+                  <video
+                    className="p-0"
+                    style={{
+                      objectFit: "cover",
+                      width: "200px",
+                      height: "200px",
+                    }}
+                    autoPlay
+                    loop
+                    src={require("../Assets/Images/a.mp4")}
+                  ></video>
+                </div>
+                <div className="row">
+                  <div className="col-md-5 text-center">Category</div>
+                  <div className="col-md-1 ">:</div>
+                  <div className="col-md-6 ">{responseData?.data.category}</div>
+                </div>
+
+                <div className="row mt-3">
+                  <div className="col-md-5 text-center">Service</div>
+                  <div className="col-md-1 ">:</div>
+                  <div className="col-md-6 ">{responseData?.data.service}</div>
+                </div>
+
+                <div className="row mt-3">
+                  <div className="col-md-5 text-center">Description</div>
+                  <div className="col-md-1 ">:</div>
+                  <div className="col-md-6 ">{responseData?.data.desc}</div>
+                </div>
+
+                <div className="row mt-3">
+                  <div className="col-md-5 text-center">Date of Service</div>
+                  <div className="col-md-1 ">:</div>
+                  <div className="col-md-6 ">
+                    {responseData?.data.dateofService}
+                  </div>
+                </div>
+
+                <div className="row mt-3">
+                  <div className="col-md-5 text-center">Service Charge</div>
+                  <div className="col-md-1 ">:</div>
+                  <div className="col-md-6 ">
+                    {responseData?.data.serviceCharge}
+                  </div>
+                </div>
+
+                {responseData?.data.GrandTotal >= 1500 ? (
+                  <div>
+                    <p
+                      className="poppins-regular mt-3"
+                      style={{
+                        padding: 10,
+                        color: "green",
+                        fontWeight: "bold",
+                        fontSize: 15,
+                        textAlign: "center",
+                      }}
+                    >
+                      Congratulations !!! You won a reward of Rs{" "}
+                      {(responseData?.data.GrandTotal * 0.02).toFixed(2)}/- in
+                      your Wallet..!!
+                    </p>
+                  </div>
+                ) : (
+                  <></>
+                )}
+
+                <div className="d-flex justify-content-center mt-3 mb-3">
+                  <Button
+                    variant="secondary"
+                    onClick={handleClose2}
+                    style={{ width: "200px", backgroundColor: "darkred" }}
+                  >
+                    Close
+                  </Button>
+                </div>
+              </Modal.Body>
+            </Modal>
+
+            {/* payment getway */}
+            <Modal show={paymentModel} centered onHide={handleClose}>
+              <Modal.Header>
+                <Modal.Title
+                  style={{
+                    fontSize: "20px",
+                    color: "black",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Confirm Payment
+                  <i
+                    onClick={handleClose3}
+                    className="fa-solid fa-x"
+                    style={{
+                      backgroundColor: "darkred",
+                      padding: "10px",
+                      width: "30px",
+                      textAlign: "center",
+                      color: "white",
+                      fontSize: "10px",
+                      borderRadius: "50px",
+                      position: "absolute",
+                      right: "18px",
+                    }}
+                  ></i>
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body style={{ textAlign: "center", fontSize: "16px" }}>
+                <p>
+                  <i
+                    className="fa fa-exclamation-circle"
+                    style={{ fontSize: "24px", color: "darkred" }}
+                  ></i>
+                </p>
+                <p>Are you sure you want to proceed with the payment?</p>
+                <a
+                  href={Url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none" }}
+                  className="mt-3"
+                >
+                  <Button
+                    variant="primary"
+                    style={{ backgroundColor: "darkred" }}
+                  >
+                    Yes, proceed
+                  </Button>
+                </a>
+              </Modal.Body>
+            </Modal>
+
+            {/* Cancel Policy */}
+
+            <Modal show={show6} centered style={{ padding: "15px" }}>
+              <Modal.Header>
+                <Modal.Title
+                  className="poppins-semibold"
+                  id="contained-modal-title-vcenter"
+                >
+                  Cancellation Policy
+                </Modal.Title>
+              </Modal.Header>
               <i
-                onClick={handleClose3}
+                onClick={handleClose6}
                 className="fa-solid fa-x"
                 style={{
                   backgroundColor: "darkred",
-                  padding: "10px",
+                  padding: "8px",
                   width: "30px",
                   textAlign: "center",
                   color: "white",
-                  fontSize: "10px",
+                  fontSize: "15px",
                   borderRadius: "50px",
                   position: "absolute",
-                  right: "18px",
+                  right: "15px",
+                  top: "15px",
+                  fontSize: "14px",
+                  // top: "70px",
                 }}
               ></i>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body style={{ textAlign: "center", fontSize: "16px" }}>
-            <p>
-              <i
-                className="fa fa-exclamation-circle"
-                style={{ fontSize: "24px", color: "darkred" }}
-              ></i>
-            </p>
-            <p>Are you sure you want to proceed with the payment?</p>
-            <a
-              href={Url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: "none" }}
-              className="mt-3"
-            >
-              <Button variant="primary" style={{ backgroundColor: "darkred" }}>
-                Yes, proceed
-              </Button>
-            </a>
-          </Modal.Body>
-        </Modal>
+              <Modal.Body>
+                <div className="poppins-regular" style={{}}>
+                  We understand that plans can change. Our cancellation policy
+                  is designed to be fair and transparent for all our customers.
+                </div>
 
-        {/* Cancel Policy */}
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    No Cancellation Charges !!
+                  </div>
+                </div>
 
-        <Modal show={show6} centered style={{ padding: "15px" }}>
-          <Modal.Header>
-            <Modal.Title
-              className="poppins-semibold"
-              id="contained-modal-title-vcenter"
-            >
-              Cancellation Policy
-            </Modal.Title>
-          </Modal.Header>
-          <i
-            onClick={handleClose6}
-            className="fa-solid fa-x"
-            style={{
-              backgroundColor: "darkred",
-              padding: "8px",
-              width: "30px",
-              textAlign: "center",
-              color: "white",
-              fontSize: "15px",
-              borderRadius: "50px",
-              position: "absolute",
-              right: "15px",
-              top: "15px",
-              fontSize: "14px",
-              // top: "70px",
-            }}
-          ></i>
-          <Modal.Body>
-            <div className="poppins-regular" style={{}}>
-              We understand that plans can change. Our cancellation policy is
-              designed to be fair and transparent for all our customers.
-            </div>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    Cancellation Charges !!
+                  </div>
+                </div>
 
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                No Cancellation Charges !!
-              </div>
-            </div>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    Within 4 Hours to 1 Hour Before Scheduled Slot: Full House
+                    Cleaning: ₹500
+                  </div>
+                </div>
 
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                Cancellation Charges !!
-              </div>
-            </div>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹100
+                  </div>
+                </div>
 
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                Within 4 Hours to 1 Hour Before Scheduled Slot: Full House
-                Cleaning: ₹500
-              </div>
-            </div>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    Home Repair Services : 200
+                  </div>
+                </div>
 
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹100
-              </div>
-            </div>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    Appliances Services : 200
+                  </div>
+                </div>
 
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                Home Repair Services : 200
-              </div>
-            </div>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    Within 1 Hour and After Scheduled Slot: Full House Cleaning:
+                    ₹700
+                  </div>
+                </div>
 
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                Appliances Services : 200
-              </div>
-            </div>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹150
+                  </div>
+                </div>
 
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                Within 1 Hour and After Scheduled Slot: Full House Cleaning:
-                ₹700
-              </div>
-            </div>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    We appreciate your understanding and cooperation.
+                  </div>
+                </div>
 
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹150
-              </div>
-            </div>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    Please contact us as soon as possible if you need to cancel
+                    or reschedule your service to avoid any charges.
+                  </div>
+                </div>
 
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                We appreciate your understanding and cooperation.
-              </div>
-            </div>
-
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                Please contact us as soon as possible if you need to cancel or
-                reschedule your service to avoid any charges.
-              </div>
-            </div>
-
-            <div className="row mt-2">
-              <div className="col-md-1">
-                <i
-                  class="fa-solid fa-star"
-                  style={{ color: "green", fontSize: "16px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 mt-1 poppins-regular"
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontWeight: "500",
-                  marginLeft: "-15px",
-                }}
-              >
-                Before 4 Hours: If you cancel your service more than 4 hours
-                before the scheduled slot, there will be no cancellation
-                charges.
-              </div>
-            </div>
-          </Modal.Body>
-        </Modal>
+                <div className="d-flex mt-2">
+                  <div className="col-md-1">
+                    <i
+                      class="fa-solid fa-star"
+                      style={{ color: "green", fontSize: "16px" }}
+                    ></i>
+                  </div>
+                  <div className="col-md-11 mt-1 poppins-regular cancellation_text">
+                    Before 4 Hours: If you cancel your service more than 4 hours
+                    before the scheduled slot, there will be no cancellation
+                    charges.
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

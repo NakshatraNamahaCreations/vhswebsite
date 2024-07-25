@@ -26,7 +26,7 @@ function Footer() {
       </div>
 
       <div className="row mt-4">
-        <div className="col-md-3">
+        <div className="col-md-3 mb-3">
           <div
             className="poppins-black"
             style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
@@ -85,7 +85,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="col-md-3">
+        <div className="col-md-3 mb-3">
           <div
             className="poppins-black"
             style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
@@ -106,7 +106,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="col-md-3">
+        <div className="col-md-3 mb-3">
           <div
             className="poppins-black"
             style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}
@@ -136,7 +136,7 @@ function Footer() {
           <div className="f-desc">
             <a
               className="poppins-regular"
-              href="/"
+              href="/interiorcompany"
               style={{ textDecoration: "none", color: "black" }}
             >
               Interior Company Collaboration
@@ -153,7 +153,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="col-md-3 ">
+        <div className="col-md-3 mb-3">
           <div
             className="poppins-black"
             style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}

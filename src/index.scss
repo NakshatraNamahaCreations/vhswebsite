@@ -838,6 +838,7 @@ background: rgb(255, 68, 68) !important;
   font-family: "Poppins", sans-serif;
   font-weight: 800;
   font-style: normal;
+ 
 }
 
 .poppins-black {
@@ -1024,9 +1025,8 @@ background: rgb(255, 68, 68) !important;
 
 .city-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+  grid-template-columns: repeat(5, 1fr); 
   gap: 20px;
-  // justify-content: center; /* Center the grid items */
 }
 
 .city-item {
@@ -1097,4 +1097,232 @@ background: rgb(255, 68, 68) !important;
   height: 32px;
   outline: none;
   padding-left: 5px;
+}
+.thoughtfull-img{
+  width: 200px;
+  height: 300px;
+}
+.category_banner{
+  width:350px !important;
+  height: 200px !important;
+  border-radius: 10px;
+  cursor: pointer !important;
+}
+
+.callimg{
+  width: 80px !important;
+  height: 80px !important;
+}
+.webimg{
+  width: 80px !important;
+  height: 80px !important;
+}
+.service-desc{
+  color: black;
+  font-size: 14px;
+  margin-left: -16px !important;
+}
+.servicedata_row{
+  text-align: end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.subcat-row{
+  flex: 0 0 33.3333% !important;
+  max-width: 33.3333% !important;
+}
+
+.viewetial-text{
+  color: black;
+  font-size: 14px;
+  margin-left: -26px !important;
+}
+.cancellation_text{
+  color: black;
+  font-size: 17px;
+  font-weight: 500;
+  margin-left: -15px !important;
+}
+
+
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px; /* Reduce padding for smaller screens */
+  }
+
+  .mySwiper .col-md-4 {
+    padding: 5px; /* Reduce padding around Swiper slides */
+  }
+  .poppins-semibold {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .poppins-medium-italic {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+
+  .swiper-slide-custom {
+    width: 100%;
+    padding: 10px;
+    align-items: center;
+  }
+
+  .thoughtfull-img {
+    width: 100%;
+    height: auto;
+  }
+  .category_banner{
+    width:350px !important;
+    height: 200px !important;
+    border-radius: 10px;
+  }
+  .city-item {
+    padding: 5px;
+    flex-direction: column !important;
+    width: "100%";
+  }
+  .city-name p {
+    font-size: 14px; 
+    text-align: center; 
+  }
+  .city-name {
+    justify-content: center; 
+  }
+  .city-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 20px;
+  }
+  .navbar-homecity{
+    display: none !important;
+  }
+  .callimg{
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .webimg{
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .callimg_row{
+    margin-top: 40px !important;
+  }
+  .service-desc{
+    color: black;
+    font-size: 14px;
+    margin-left: 5px !important;
+  }
+  .servicedata_row{
+    text-align: end;
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+  }
+  .subcat-row{
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    margin-top: 10px !important;
+  }
+  .viewetial-text{
+    color: black;
+    font-size: 14px;
+    margin-left: 5px !important;
+  }
+  .offertext{
+    font-size: 7px !important;
+  }
+  .cancellation_text{
+    color: black;
+    font-size: 17px;
+    font-weight: 500;
+    margin-left: 5px !important;
+  }
+  .date_selection{
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 25px; 
+  }
+
+  .mySwiper .col-md-4 {
+    padding: 5px;
+  }
+  .poppins-semibold {
+    font-size: 16px;
+  }
+
+  .swiper-slide-custom {
+    padding: 5px;
+  }
+   .category_banner{
+    width:350px !important;
+    height: 200px;
+    border-radius: 10px;
+  }
+  .city-item {
+    padding: 5px;
+  }
+
+  .city-name p {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .city-name {
+    justify-content: center;
+  }
+  .city-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 20px;
+  }
+  .navbar-homecity{
+    display: none !important;
+  }
+  .callimg_row{
+    margin-top: 40px !important;
+  }
+  .service-desc{
+    color: black;
+    font-size: 14px;
+    margin-left: 5px !important;
+  } 
+  .servicedata_row{
+    text-align: end;
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+  }
+  .subcat-row{
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    margin-top: 10px !important;
+  }
+  .viewetial-text{
+    color: black;
+    font-size: 14px;
+    margin-left: 5px !important;
+  }
+  .offertext{
+    font-size: 7px !important;
+  }
+  .cancellation_text{
+    color: black;
+    font-size: 17px;
+    font-weight: 500;
+    margin-left: 5px !important;
+  }
+  .date_selection{
+    display: flex !important;
+    flex-direction: column !important;
+  }
 }

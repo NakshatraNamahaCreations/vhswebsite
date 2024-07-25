@@ -25,6 +25,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
+import moment from "moment";
 
 function Viewdetails() {
   const [svideodata, setsvideodata] = useState([]);
@@ -43,6 +44,32 @@ function Viewdetails() {
   const [certificatedata, setcertificatedata] = useState([]);
   const [modalbanner, setmodalbanner] = useState([]);
   const [paintingbanner, setpaintingbanner] = useState([]);
+  const [name, setname] = useState("");
+  const [contact1, setcontact1] = useState("");
+  const [email, setemail] = useState("");
+  const [comment, setcomment] = useState("");
+  const [enquirydate, setenquirydate] = useState(moment().format("MM-DD-YYYY"));
+  const [show, setShow] = useState(false);
+  const [slidesbanner, setslidesbanner] = useState(4);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    const handlebanner = () => {
+      if (window.innerWidth <= 768) {
+        setslidesbanner(2);
+      } else {
+        setslidesbanner(4);
+      }
+    };
+
+    handlebanner();
+
+    window.addEventListener("resize", handlebanner);
+
+    return () => window.removeEventListener("resize", handlebanner);
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -56,6 +83,49 @@ function Viewdetails() {
   useEffect(() => {
     getsvideo();
   }, []);
+
+  const addEnquiry = async (e) => {
+    e.preventDefault();
+
+    if (!name) {
+      alert("Please enter all fields");
+    } else {
+      try {
+        const config = {
+          url: "/addnewenquiry",
+          method: "post",
+          baseURL: "https://api.vijayhomeservicebengaluru.in/api",
+          // baseURL: "http://localhost:8080/api",
+          headers: { "content-type": "application/json" },
+          data: {
+            date: enquirydate,
+            name: name,
+            time: moment().format("h:mm:ss a"),
+            mobile: contact1,
+            email: email,
+            category: subcategory?.category,
+            reference2: "website",
+            city: localstoragecitys,
+            comment: comment,
+            // interestedFor: serviceName,
+            // serviceID: serviceId,
+            // responseType: getTemplateDetails, // Ensure this matches your data structure
+          },
+        };
+
+        const response = await axios(config);
+
+        if (response.status === 200) {
+          const data = response.data.data;
+          alert("Enquiry added successfully:", data);
+          setShow(false);
+          // window.location.assign("/");
+        }
+      } catch (error) {
+        console.error("Error adding enquiry:", error);
+      }
+    }
+  };
 
   const isItemInCart = (itemId) => {
     return MyCartItmes.some((cartItem) => cartItem.id === itemId);
@@ -280,7 +350,7 @@ function Viewdetails() {
 
   return (
     <div className="row">
-      <Header1 />
+      {/* <Header1 /> */}
       <div className="col-md-12">
         <div className="container">
           <img
@@ -300,7 +370,7 @@ function Viewdetails() {
             >
               {subcategory?.servicetitle}
             </div>
-            <div className="poppins-semibold" style={{}}>
+            <div className="poppins-semibold" style={{ textAlign: "left" }}>
               {subcategory?.serviceName}
             </div>
             <div
@@ -315,7 +385,12 @@ function Viewdetails() {
 
             <div
               className="poppins-semibold mt-4"
-              style={{ color: "black", fontSize: "16px", fontWeight: "bold" }}
+              style={{
+                color: "black",
+                fontSize: "16px",
+                fontWeight: "bold",
+                textAlign: "left",
+              }}
             >
               Service Description
             </div>
@@ -348,6 +423,7 @@ function Viewdetails() {
                 {paintingbanner.map((data, index) => (
                   <div key={index} className="mb-2">
                     <img
+                      onClick={handleShow}
                       src={data?.banner}
                       alt="painting"
                       style={{
@@ -494,6 +570,8 @@ function Viewdetails() {
                                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
                                   borderRadius: 5,
                                   padding: "0px",
+                                  alignItems: "center",
+                                  justifyContent: "center",
                                 }}
                               >
                                 <div className="col-md-5">
@@ -533,7 +611,7 @@ function Viewdetails() {
                                       // marginLeft: 5,
                                       fontSize: "14px",
                                       textAlign: "center",
-                                      marginTop: "8px",
+
                                       fontWeight: "bold",
                                     }}
                                   >
@@ -594,7 +672,7 @@ function Viewdetails() {
                     alignSelf: "center",
                     justifyContent: "center",
                     textAlign: "center",
-                    width: "60%",
+                    width: "90%",
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "row" }}>
@@ -633,7 +711,7 @@ function Viewdetails() {
                       backgroundColor: "darkred",
                       color: "white",
                       padding: 10,
-                      width: "61%",
+                      width: "92%",
                       textAlign: "center",
                       flexDirection: "row",
                       justifyContent: "space-between",
@@ -681,13 +759,14 @@ function Viewdetails() {
                     color: "black",
                     fontSize: "16px",
                     fontWeight: "bold",
+                    textAlign: "left",
                   }}
                 >
                   Service Includes
                 </div>
                 <div className="row">
                   {subcategory.serviceIncludes.map((data) => (
-                    <>
+                    <div className="d-flex">
                       <div className="col-md-1">
                         <img
                           style={{ width: "16px", height: "16px" }}
@@ -696,18 +775,11 @@ function Viewdetails() {
                         />
                       </div>
                       <div className="col-md-11">
-                        <div
-                          className="poppins-regular  mt-1"
-                          style={{
-                            color: "black",
-                            fontSize: "14px",
-                            marginLeft: "-26px",
-                          }}
-                        >
+                        <div className="poppins-regular viewetial-text mt-1">
                           {data.text}
                         </div>
                       </div>
-                    </>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -718,13 +790,14 @@ function Viewdetails() {
                     color: "black",
                     fontSize: "16px",
                     fontWeight: "bold",
+                    textAlign: "left",
                   }}
                 >
                   Service Excludes
                 </div>
                 <div className="row">
                   {subcategory.serviceExcludes.map((data) => (
-                    <>
+                    <div className="d-flex">
                       <div className="col-md-1">
                         <img
                           style={{ width: "16px", height: "16px" }}
@@ -733,18 +806,11 @@ function Viewdetails() {
                         />
                       </div>
                       <div className="col-md-11">
-                        <div
-                          className="poppins-regular mt-1"
-                          style={{
-                            color: "black",
-                            fontSize: "14px",
-                            marginLeft: "-26px",
-                          }}
-                        >
+                        <div className="poppins-regular viewetial-text mt-1">
                           {data.text}
                         </div>
                       </div>
-                    </>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -758,6 +824,7 @@ function Viewdetails() {
                     color: "darkred",
                     fontSize: "16px",
                     fontWeight: "bold",
+                    textAlign: "left",
                   }}
                 >
                   Thoughtful curations
@@ -775,14 +842,22 @@ function Viewdetails() {
                   Of our finest experiences
                 </div>
 
-                <div className="row d-flex mt-4">
-                  <div className="col-md-6">
+                <div
+                  className="row mt-4"
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                  }}
+                >
+                  <div className="col-md-6 d-flex justify-content-center align-items-center mb-2">
                     <video
                       className="p-0"
                       style={{
                         objectFit: "contain",
                         width: "200px",
                         borderRadius: "10px",
+                        textAlign: "center",
                       }}
                       height={300}
                       autoPlay
@@ -790,7 +865,7 @@ function Viewdetails() {
                       src={`https://api.vijayhomesuperadmin.in/sVideo/${svideodata[0]?.serviceVideo}`}
                     ></video>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-6 mb-2 d-flex justify-content-center align-items-center">
                     <video
                       className="p-0"
                       style={{
@@ -850,7 +925,7 @@ function Viewdetails() {
 
               <div className="row mb-3">
                 <Swiper
-                  slidesPerView={4}
+                  slidesPerView={slidesbanner}
                   spaceBetween={30}
                   freeMode={true}
                   pagination={{
@@ -917,13 +992,6 @@ function Viewdetails() {
                     </SwiperSlide>
                   ))}
                 </Swiper>
-                <div className="swiper-button-prev swiper-button-prev-cleaning">
-                  <i className="fa-solid fa-arrow-left left-icon"></i>
-                </div>
-                <div className="swiper-button-next swiper-button-next-cleaning">
-                  <i className="fa-solid fa-arrow-right right-icon"></i>
-                </div>
-                <div className="swiper-pagination swiper-pagination-cleaning"></div>
               </div>
             </div>
 
@@ -935,7 +1003,7 @@ function Viewdetails() {
 
             <div className="mt-1 mb-3" style={{ position: "relative" }}>
               <Swiper
-                slidesPerView={4}
+                slidesPerView={slidesbanner}
                 spaceBetween={30}
                 freeMode={true}
                 pagination={{
@@ -982,17 +1050,67 @@ function Viewdetails() {
                   </SwiperSlide>
                 ))}
               </Swiper>
-              <div className="swiper-button-prev swiper-button-prev-cleaning">
-                <i className="fa-solid fa-arrow-left left-icon"></i>
-              </div>
-              <div className="swiper-button-next swiper-button-next-cleaning">
-                <i className="fa-solid fa-arrow-right right-icon"></i>
-              </div>
-              <div className="swiper-pagination swiper-pagination-cleaning"></div>
             </div>
           </div>
         </div>
       </div>
+
+      <Modal centered show={show} onHide={handleClose}>
+        <Modal.Body>
+          <div className="poppins-semibold">Enquiry Add</div>
+
+          <div className="mt-2">
+            <div className="poppins-light">Name</div>
+            <input
+              type="text"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setname(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Email</div>
+            <input
+              type="text"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setemail(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Contact</div>
+            <input
+              type="number"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setcontact1(e.target.value)}
+            />
+          </div>
+
+          <div className="">
+            <div className="poppins-light">Discription</div>
+            <input
+              type="text"
+              className="input col-md-12 mt-2 vhs-input-value"
+              onChange={(e) => setcomment(e.target.value)}
+            />
+          </div>
+
+          <div
+            onClick={addEnquiry}
+            className="poppins-black"
+            style={{
+              backgroundColor: "darkred",
+              padding: "7px",
+              borderRadius: "5px",
+              marginTop: "20px",
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+            Submit
+          </div>
+        </Modal.Body>
+      </Modal>
       <Footer />
     </div>
   );

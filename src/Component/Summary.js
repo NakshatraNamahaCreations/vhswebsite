@@ -751,6 +751,7 @@ function Summary() {
                   color: "black",
                   fontSize: "20px",
                   fontWeight: "bold",
+                  textAlign: "left",
                 }}
               >
                 Service Details
@@ -829,7 +830,12 @@ function Summary() {
               </div>
 
               <div className="scheduleservice mb-5">
-                <div className="title poppins-semibold">Schedule Service</div>
+                <div
+                  className="title poppins-semibold"
+                  style={{ textAlign: "left" }}
+                >
+                  Schedule Service
+                </div>
                 <div className="select_date ">
                   <div className="text poppins-medium">Select the date</div>
 
@@ -913,6 +919,7 @@ function Summary() {
                   color: "black",
                   fontSize: "20px",
                   fontWeight: "bold",
+                  textAlign: "left",
                 }}
               >
                 Select the address
@@ -942,6 +949,7 @@ function Summary() {
                     color: "black",
                     fontSize: "20px",
                     fontWeight: "bold",
+                    textAlign: "left",
                   }}
                 >
                   Coupons & Offers
@@ -1063,7 +1071,10 @@ function Summary() {
                 Payment Summary
               </div>
 
-              <div className="row mt-3">
+              <div
+                className="d-flex mt-3"
+                style={{ justifyContent: "space-between" }}
+              >
                 <div className="col-md-4 poppins-black">Total Amount</div>
                 <div
                   className="col-md-4 poppins-light"
@@ -1073,14 +1084,20 @@ function Summary() {
                 </div>
               </div>
 
-              <div className="row mt-3">
+              <div
+                className="d-flex mt-3"
+                style={{ justifyContent: "space-between" }}
+              >
                 <div className="col-md-4 poppins-black">Discount</div>
                 <div className="col-md-4 poppins-light">
                   {couponPercentage}%
                 </div>
               </div>
 
-              <div className="row mt-3">
+              <div
+                className="d-flex mt-3"
+                style={{ justifyContent: "space-between" }}
+              >
                 <div className="col-md-4 poppins-black">Saved</div>
                 <div
                   className="col-md-4 poppins-light"
@@ -1090,7 +1107,10 @@ function Summary() {
                 </div>
               </div>
 
-              <div className="row mt-3">
+              <div
+                className="d-flex mt-3"
+                style={{ justifyContent: "space-between" }}
+              >
                 <div className="col-md-4 poppins-black">Grand Total</div>
                 <div
                   className="col-md-4 poppins-light"
@@ -1138,14 +1158,17 @@ function Summary() {
                   </div>
                 </div>
               ) : (
-                <div className="row mt-5 mb-5">
+                <div
+                  className="d-flex mt-5 mb-5"
+                  style={{ justifyContent: "space-between" }}
+                >
                   <div className="col-md-6">
                     <div
                       onClick={addtreatmentdetails}
                       className="col-md-8 poppins-black"
                       style={{
                         backgroundColor: "darkred",
-                        padding: "8px",
+                        padding: "8px 20px",
                         color: "white",
                         fontSize: "14px",
                         textAlign: "center",
@@ -1162,7 +1185,7 @@ function Summary() {
                       className="col-md-8 poppins-black"
                       style={{
                         backgroundColor: "#040458db",
-                        padding: "8px",
+                        padding: "8px 25px",
                         color: "white",
                         fontSize: "14px",
                         textAlign: "center",
@@ -1175,42 +1198,6 @@ function Summary() {
                   </div>
                 </div>
               )}
-
-              {/* <div className="row mt-5 mb-5">
-                <div
-              onClick={handlePayment}
-                  className="col-md-8"
-                  style={{
-                    backgroundColor: "darkred",
-                    padding: "8px",
-                    color: "white",
-                    fontSize: "14px",
-                    textAlign: "center",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Book
-                </div>
-              </div>
-
-              <div className="row mt-5 mb-5">
-                <div
-                  onClick={handlePayment}
-                  className="col-md-8"
-                  style={{
-                    backgroundColor: "darkred",
-                    padding: "8px",
-                    color: "white",
-                    fontSize: "14px",
-                    textAlign: "center",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Payment
-                </div>
-              </div> */}
             </>
           )}
 
@@ -1241,51 +1228,49 @@ function Summary() {
             <Modal.Body>
               <div className="row mb-2">
                 {customeraddress.map((item, index) => (
-                  <React.Fragment key={index}>
-                    <div
-                      key={index}
-                      className="col-md-1"
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <input
-                        type="radio"
-                        value={item._id}
-                        id={item._id}
-                        checked={selectedAddress._id === item._id}
-                        onChange={() => handleSelectAddress(item)}
-                      />
-                    </div>
-                    <div className="col-md-11 mb-3">
-                      <div
-                        className="poppins-black"
-                        style={{
-                          color: "black",
-                          fontSize: "15px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {item.saveAs}
+                  <div className="d-flex">
+                    <React.Fragment key={index}>
+                      <div key={index} className="col-md-1">
+                        <input
+                          type="radio"
+                          value={item._id}
+                          id={item._id}
+                          checked={selectedAddress._id === item._id}
+                          onChange={() => handleSelectAddress(item)}
+                        />
                       </div>
-                      <div
-                        className="poppins-regular"
-                        style={{
-                          color: "black",
-                          fontSize: "14px",
-                        }}
-                      >
-                        {item.platNo},{item.address}
+                      <div className="col-md-11 mb-3 mx-1">
+                        <div
+                          className="poppins-black"
+                          style={{
+                            color: "black",
+                            fontSize: "15px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {item.saveAs}
+                        </div>
+                        <div
+                          className="poppins-regular"
+                          style={{
+                            color: "black",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {item.platNo},{item.address}
+                        </div>
+                        <div
+                          className="poppins-regular"
+                          style={{
+                            color: "black",
+                            fontSize: "13px",
+                          }}
+                        >
+                          Landmark : {item.landmark}
+                        </div>
                       </div>
-                      <div
-                        className="poppins-regular"
-                        style={{
-                          color: "black",
-                          fontSize: "13px",
-                        }}
-                      >
-                        Landmark : {item.landmark}
-                      </div>
-                    </div>
-                  </React.Fragment>
+                    </React.Fragment>
+                  </div>
                 ))}
               </div>
 
@@ -1350,7 +1335,7 @@ function Summary() {
                 }}
               ></i>
               <div
-                className="row col-md-10"
+                className="row"
                 style={{
                   backgroundColor: "#80808036",
                   padding: "20px",
@@ -1397,7 +1382,7 @@ function Summary() {
                         <input
                           type="text"
                           placeholder="Search for a location"
-                          className="map_input poppins-black"
+                          className="map_input"
                           style={{
                             boxSizing: "border-box",
                             border: "1px solid transparent",
@@ -1414,16 +1399,16 @@ function Summary() {
                             left: "50%",
                             transform: "translateX(-50%)",
                             zIndex: 2,
-                            backgroundColor: "darkblue",
-                            width: "350px",
+                            backgroundColor: "orange",
+                            // width: "350px",
                           }}
                         />
                       </Autocomplete>
                     </GoogleMap>
                   </div>
                   <button
+                    className=""
                     onClick={getCurrentLocation}
-                    className="poppins-black"
                     style={{
                       backgroundColor: "darkblue",
                       color: "white",
@@ -1432,16 +1417,14 @@ function Summary() {
                       cursor: "pointer",
                       padding: "8px",
                       fontSize: "14px",
-                      width: "50%",
+                      // width: "80%",
                     }}
                   >
                     Use My Current Location
                   </button>
                   <div style={{ textAlign: "center", marginTop: "10px" }}>
                     {selectedPlaceAddress && (
-                      <p className="poppins-regular">
-                        Searched Location: {selectedPlaceAddress}
-                      </p>
+                      <p>Searched Location: {selectedPlaceAddress}</p>
                     )}
                   </div>
                 </div>
@@ -1461,7 +1444,6 @@ function Summary() {
                     </div>
                     <input
                       type="text"
-                      className="poppins-regular"
                       style={{
                         border: "1px solid grey",
                         borderRadius: "5px",
@@ -1484,7 +1466,6 @@ function Summary() {
                     </div>
                     <input
                       type="text"
-                      className="poppins-regular"
                       style={{
                         border: "1px solid grey",
                         borderRadius: "5px",
@@ -1493,9 +1474,9 @@ function Summary() {
                       onChange={(e) => setLandmark(e.target.value)}
                     />
                   </div>
-                  <div className="">
+                  <div className="poppins-regular">
                     <div
-                      className="mb-1 poppins-regular"
+                      className="mb-1"
                       style={{
                         color: "black",
                         fontSize: "14px",
@@ -1526,7 +1507,7 @@ function Summary() {
                         </div>
                       </div>
                       <div className="col-md-1"></div>
-                      <div className="col-md-3">
+                      <div className="col-md-3 mx-2">
                         <div
                           className="poppins-regular"
                           style={{
@@ -1743,225 +1724,137 @@ function Summary() {
                 designed to be fair and transparent for all our customers.
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   No Cancellation Charges !!
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   Cancellation Charges !!
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   Within 4 Hours to 1 Hour Before Scheduled Slot: Full House
                   Cleaning: ₹500
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹100
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   Home Repair Services : 200
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   Appliances Services : 200
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   Within 1 Hour and After Scheduled Slot: Full House Cleaning:
                   ₹700
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹150
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   We appreciate your understanding and cooperation.
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   Please contact us as soon as possible if you need to cancel or
                   reschedule your service to avoid any charges.
                 </div>
               </div>
 
-              <div className="row mt-2">
+              <div className="d-flex mt-2">
                 <div className="col-md-1">
                   <i
                     class="fa-solid fa-star"
                     style={{ color: "green", fontSize: "16px" }}
                   ></i>
                 </div>
-                <div
-                  className="col-md-11 mt-1 poppins-regular"
-                  style={{
-                    color: "black",
-                    fontSize: "17px",
-                    fontWeight: "500",
-                    marginLeft: "-15px",
-                  }}
-                >
+                <div className="col-md-11 mt-1 poppins-regular cancellation_text">
                   Before 4 Hours: If you cancel your service more than 4 hours
                   before the scheduled slot, there will be no cancellation
                   charges.
