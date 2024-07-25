@@ -7,6 +7,7 @@ import NabarCompo from "./navbar";
 
 import { useNavigate, Link } from "react-router-dom";
 import Header1 from "./Header1";
+import Cartnavbar from "./Cartnavbar";
 
 function Cart() {
   const navigate = useNavigate();
@@ -51,12 +52,13 @@ function Cart() {
 
   return (
     <>
-      {/* <Header1 /> */}
+      <Header1 />
+      <Cartnavbar />
       <div className="container">
         <div className="row" style={{ justifyContent: "center" }}>
           {/* <NabarCompo /> */}
           {/* <Header1 /> */}
-          <div className="col-md-8 mt-2" style={{ paddingTop: "45px" }}>
+          <div className="col-md-8 mt-4" style={{}}>
             {MyCartItmes?.map((item) => (
               <div
                 className=" shadow-sm"

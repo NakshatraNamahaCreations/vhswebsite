@@ -27,6 +27,7 @@ import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import { SpinnerCircular } from "spinners-react";
 import moment from "moment";
+import Cartnavbar from "./Cartnavbar";
 
 function Serviceviewdetails() {
   const [servicedata, setservicedata] = useState([]);
@@ -49,9 +50,9 @@ function Serviceviewdetails() {
   const [whychooseus, setwhychooseus] = useState([]);
   const location = useLocation();
   const { sub } = location.state || {};
-  console.log("sub=====", sub);
+  // console.log("sub=====", sub);
   const localstoragecitys = localStorage.getItem("city");
-  console.log("localstoragecitys======", localstoragecitys);
+  // console.log("localstoragecitys======", localstoragecitys);
   const MyCartItmes = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [Item, setItem] = useState([]);
@@ -74,26 +75,30 @@ function Serviceviewdetails() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  console.log("sumanSurveice", ServiceName.split("--")[0].replace(/-/g, " "));
+  const sername = ServiceName?.split("--")[0].replace(/-/g, " ");
+  console.log("sername====", sername);
   useEffect(() => {
-    if (ServiceName && allserviceName.length > 0) {
-      const parts = ServiceName.split("-");
+    // if(ServiceName == allserviceName.)
+    if (sername && allserviceName.length > 0) {
+      const parts = sername?.split("-");
       const category1 = capitalizeFirstLetter(parts[0]);
+      console.log("parts>>>>", parts?.join(" "));
 
-      console.log("Searching for:", category1);
+      // console.log("Searching for:", category1);
       console.log("Available subcategories:", allserviceName);
 
-      const fullServiceName = allserviceName.find((service) =>
+      const fullServiceName = allserviceName?.find((service) =>
         service.serviceName.toLowerCase().includes(category1.toLowerCase())
       );
 
       console.log("Found fullServiceName:", fullServiceName);
 
       if (fullServiceName) {
-        const city = parts.slice(1).join("-");
+        const city = parts.slice(10).join("-");
         setCity(city);
-        setser(fullServiceName.serviceName); // Ensure correct property name
-        getSubcategory(fullServiceName.serviceName);
+        setser(fullServiceName?.serviceName);
+        getSubcategory(fullServiceName?.serviceName);
       } else {
         console.error("Service not found");
       }
@@ -103,6 +108,8 @@ function Serviceviewdetails() {
   useEffect(() => {
     console.log("Updated ser:", ser);
   }, [ser]);
+
+  console.log("ser====123", ser);
 
   const addEnquiry = async (e) => {
     e.preventDefault();
@@ -123,7 +130,7 @@ function Serviceviewdetails() {
             time: moment().format("h:mm:ss a"),
             mobile: contact1,
             email: email,
-            category: sub?.category,
+            category: servicedata?.category,
             reference2: "website",
             city: localstoragecitys,
             comment: comment,
@@ -147,27 +154,6 @@ function Serviceviewdetails() {
     }
   };
 
-  // useEffect(() => {
-  //   if (sub?.serviceName && allserviceName.length > 0) {
-  //     const parts = sub?.serviceName.split("-");
-
-  //     const fullServiceName = allserviceName.find((service) =>
-  //       service?.serviceName
-  //         .toLowerCase()
-  //         .includes(parts.join(" ").toLowerCase())
-  //     );
-
-  //     console.log("fullServiceName", fullServiceName);
-
-  //     if (fullServiceName) {
-  //       setser(fullServiceName?.serviceName);
-  //       getSubcategory(fullServiceName.serviceName);
-  //     } else {
-  //       console.error("Service not found");
-  //     }
-  //   }
-  // }, [readableServiceName, allserviceName]);
-
   const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
@@ -182,7 +168,7 @@ function Serviceviewdetails() {
 
   const citys = useSelector((state) => state.city);
 
-  const getSubcategory = async (ser) => {
+  const getSubcategory = async () => {
     try {
       let res = await axios.get(
         `https://api.vijayhomesuperadmin.in/api/userapp/getservicenamesforSEO/${ser}`
@@ -224,7 +210,7 @@ function Serviceviewdetails() {
     return MyCartItmes.some((cartItem) => cartItem.id === itemId);
   };
 
-  console.log("servicedata====", servicedata);
+  // console.log("servicedata====suman", servicedata);
 
   const getItemQuantityById = (itemId) => {
     const cartItem = MyCartItmes.find((item) => item.id === itemId);
@@ -232,7 +218,7 @@ function Serviceviewdetails() {
   };
 
   const handleviewselect = (selectedItem) => {
-    console.log("selectedYogi", selectedItem);
+    // console.log("selectedYogi", selectedItem);
     setItem(selectedItem);
   };
 
@@ -249,9 +235,9 @@ function Serviceviewdetails() {
     }
   };
 
-  console.log("select=====", selectedItem);
+  // console.log("select=====", selectedItem);
 
-  console.log("whychooseus", whychooseus);
+  // console.log("whychooseus", whychooseus);
 
   const CartSavedtotal = MyCartItmes.reduce((accumulator, item) => {
     const offerPrice = parseFloat(item?.offerprice);
@@ -370,7 +356,7 @@ function Serviceviewdetails() {
     }
   };
 
-  console.log("paintingbanner", paintingbanner);
+  // console.log("paintingbanner", paintingbanner);
 
   console.log("subcategory====kanmani", servicedata);
 
@@ -379,8 +365,8 @@ function Serviceviewdetails() {
   const [selectedPlan, setselectedPlan] = useState(pricesdata[0]);
 
   const handleItemClick = (item, index) => {
-    console.log("Item Yogi", item);
-    console.log("Item====", Item);
+    // console.log("Item Yogi", item);
+    // console.log("Item====", Item);
 
     setSelectedItemIndex(index);
     setselectedPlan(item);
@@ -465,6 +451,7 @@ function Serviceviewdetails() {
       ) : (
         <div className="row">
           <Header1 />
+          <Cartnavbar />
           <div className="col-md-12">
             <div className="container">
               <img

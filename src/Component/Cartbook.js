@@ -32,6 +32,7 @@ import Form from "react-bootstrap/Form";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import Header1 from "./Header1";
+import Cartnavbar from "./Cartnavbar";
 
 function Cartbook() {
   const [addondata, setaddondata] = useState([]);
@@ -261,9 +262,11 @@ function Cartbook() {
     "Friday",
     "Saturday",
   ];
+
   useEffect(() => {
     const getNextDays = () => {
       const nextDays = [];
+      const currentDate = new Date();
       for (let i = 0; i < 12; i++) {
         const date = new Date();
         date.setDate(currentDate.getDate() + i);
@@ -284,15 +287,15 @@ function Cartbook() {
   }, []);
 
   const monthsMap = {
-    "01": "January",
-    "02": "February",
-    "03": "March",
-    "04": "April",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "August",
-    "09": "September",
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
     10: "October",
     11: "November",
     12: "December",
@@ -305,13 +308,14 @@ function Cartbook() {
     const monthName = monthsMap[month];
 
     if (!monthName) {
+      console.error("Invalid month:", month);
       return false;
     }
 
     const formattedDay = moment(
-      `${monthName} ${dayNumber}, ${year}`,
-      "MMMM D, YYYY"
-    ).format("LL");
+      `${year}-${month}-${dayNumber}`,
+      "YYYY-M-D"
+    ).format("YYYY-MM-DD");
 
     return formattedDay === selectedDate;
   };
@@ -838,6 +842,7 @@ function Cartbook() {
   return (
     <>
       <Header1 />
+      <Cartnavbar />
       <div className="container">
         <div className="row" style={{ justifyContent: "center" }}>
           <div className="col-md-10 mt-3">
@@ -1411,7 +1416,7 @@ function Cartbook() {
 
                 <div
                   onClick={handleShow6}
-                  className="col-md-12 mt-3 shadow poppins-black"
+                  className="col-md-12 mt-4 shadow poppins-black"
                   style={{
                     // backgroundColor: "darkred",
                     padding: "8px",
@@ -1420,9 +1425,8 @@ function Cartbook() {
                     textAlign: "center",
                     borderRadius: "5px",
                     cursor: "pointer",
-                    width: "51%",
-                    marginLeft: "-10px",
-                    width: "70%",
+
+                    width: "100%",
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1431,7 +1435,10 @@ function Cartbook() {
                 </div>
 
                 {!showbutton ? (
-                  <div className="row mt-3 mb-5">
+                  <div
+                    className="flex mt-3 mb-5"
+                    style={{ alignItems: "center" }}
+                  >
                     <div
                       onClick={() => setshowbutton(true)}
                       className="col-md-12 poppins-black"
@@ -1443,7 +1450,7 @@ function Cartbook() {
                         textAlign: "center",
                         borderRadius: "5px",
                         cursor: "pointer",
-                        width: "70%",
+                        width: "100%",
                       }}
                     >
                       Book Now
@@ -1457,7 +1464,7 @@ function Cartbook() {
                     <div className="col-md-6">
                       <div
                         onClick={addtreatmentdetails}
-                        className="col-md-12 poppins-black"
+                        className="col-md-12 poppins-black afterbutton"
                         style={{
                           backgroundColor: "darkred",
                           padding: "8px 20px",
@@ -1474,7 +1481,7 @@ function Cartbook() {
                     <div className="col-md-6">
                       <div
                         onClick={handlePayment}
-                        className="col-md-12 poppins-black"
+                        className="col-md-12 poppins-black paybutton"
                         style={{
                           backgroundColor: "#040458db",
                           padding: "8px 40px",
@@ -1865,82 +1872,120 @@ function Cartbook() {
 
             <Modal show={show2} centered onHide={handleClose2}>
               <Modal.Body>
-                <div className="d-flex justify-content-center">
-                  <video
-                    className="p-0"
-                    style={{
-                      objectFit: "cover",
-                      width: "200px",
-                      height: "200px",
-                    }}
-                    autoPlay
-                    loop
-                    src={require("../Assets/Images/a.mp4")}
-                  ></video>
-                </div>
-                <div className="row">
-                  <div className="col-md-5 text-center">Category</div>
-                  <div className="col-md-1 ">:</div>
-                  <div className="col-md-6 ">{responseData?.data.category}</div>
-                </div>
-
-                <div className="row mt-3">
-                  <div className="col-md-5 text-center">Service</div>
-                  <div className="col-md-1 ">:</div>
-                  <div className="col-md-6 ">{responseData?.data.service}</div>
-                </div>
-
-                <div className="row mt-3">
-                  <div className="col-md-5 text-center">Description</div>
-                  <div className="col-md-1 ">:</div>
-                  <div className="col-md-6 ">{responseData?.data.desc}</div>
-                </div>
-
-                <div className="row mt-3">
-                  <div className="col-md-5 text-center">Date of Service</div>
-                  <div className="col-md-1 ">:</div>
-                  <div className="col-md-6 ">
-                    {responseData?.data.dateofService}
-                  </div>
-                </div>
-
-                <div className="row mt-3">
-                  <div className="col-md-5 text-center">Service Charge</div>
-                  <div className="col-md-1 ">:</div>
-                  <div className="col-md-6 ">
-                    {responseData?.data.serviceCharge}
-                  </div>
-                </div>
-
-                {responseData?.data.GrandTotal >= 1500 ? (
-                  <div>
-                    <p
-                      className="poppins-regular mt-3"
+                <div
+                  className="row"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="d-flex justify-content-center">
+                    <video
+                      className="p-0"
                       style={{
-                        padding: 10,
-                        color: "green",
-                        fontWeight: "bold",
-                        fontSize: 15,
-                        textAlign: "center",
+                        objectFit: "cover",
+                        width: "200px",
+                        height: "200px",
                       }}
-                    >
-                      Congratulations !!! You won a reward of Rs{" "}
-                      {(responseData?.data.GrandTotal * 0.02).toFixed(2)}/- in
-                      your Wallet..!!
-                    </p>
+                      autoPlay
+                      loop
+                      src={require("../Assets/Images/a.mp4")}
+                    ></video>
                   </div>
-                ) : (
-                  <></>
-                )}
+                  <div className="d-flex align-items-center justify-content-center mt-2">
+                    <div
+                      className="col-md-5 text-center poppins-black"
+                      style={{ fontSize: "14px" }}
+                    >
+                      Category
+                    </div>
+                    <div className="col-md-1 mx-2">:</div>
+                    <div
+                      className="col-md-6 poppins-black"
+                      style={{ textAlign: "center" }}
+                    >
+                      {responseData?.data.category}
+                    </div>
+                  </div>
 
-                <div className="d-flex justify-content-center mt-3 mb-3">
-                  <Button
-                    variant="secondary"
-                    onClick={handleClose2}
-                    style={{ width: "200px", backgroundColor: "darkred" }}
-                  >
-                    Close
-                  </Button>
+                  <div className="d-flex align-items-center justify-content-center mt-2">
+                    <div
+                      className="col-md-5 text-center poppins-black"
+                      style={{ fontSize: "14px" }}
+                    >
+                      Service
+                    </div>
+                    <div className="col-md-1 mx-2">:</div>
+                    <div className="col-md-6 poppins-black">
+                      {responseData?.data.service}
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-center justify-content-center mt-2">
+                    <div className="col-md-5 text-center poppins-black">
+                      Description
+                    </div>
+                    <div className="col-md-1 mx-2">:</div>
+                    <div className="col-md-6 poppins-black">
+                      {responseData?.data.desc}
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-center justify-content-center mt-2">
+                    <div
+                      className="col-md-5 text-center poppins-black"
+                      style={{ fontSize: "14px" }}
+                    >
+                      Date of Service
+                    </div>
+                    <div className="col-md-1 mx-2">:</div>
+                    <div className="col-md-6 poppins-black">
+                      {responseData?.data.dateofService}
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-center justify-content-center mt-2">
+                    <div
+                      className="col-md-5 text-center poppins-black"
+                      style={{ fontSize: "14px" }}
+                    >
+                      Service Charge
+                    </div>
+                    <div className="col-md-1 mx-2">:</div>
+                    <div className="col-md-6 poppins-black">
+                      {responseData?.data.serviceCharge}
+                    </div>
+                  </div>
+
+                  {responseData?.data.GrandTotal >= 1500 && (
+                    <div>
+                      <p
+                        className="poppins-regular mt-3"
+                        style={{
+                          padding: 10,
+                          color: "green",
+                          fontWeight: "bold",
+                          fontSize: 15,
+                          textAlign: "center",
+                        }}
+                      >
+                        Congratulations !!! You won a reward of Rs{" "}
+                        {(responseData?.data.GrandTotal * 0.02).toFixed(2)}/- in
+                        your Wallet..!!
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="d-flex justify-content-center mt-3 mb-3">
+                    <Button
+                      variant="secondary"
+                      onClick={handleClose2}
+                      style={{ width: "200px", backgroundColor: "darkred" }}
+                    >
+                      Close
+                    </Button>
+                  </div>
                 </div>
               </Modal.Body>
             </Modal>

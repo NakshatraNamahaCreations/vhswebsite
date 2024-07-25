@@ -16,6 +16,7 @@ import Modal from "react-bootstrap/Modal";
 import Calendar from "react-calendar";
 import { Button } from "react-bootstrap";
 import Header2 from "./Header2";
+import Homenavbar from "./Homenavbar";
 
 function Espage() {
   const location = useLocation();
@@ -891,7 +892,7 @@ function Espage() {
   return (
     <div className="">
       <Header2 />
-
+      <Homenavbar />
       <div className="container mt-5 pt-2">
         <div className="row">
           {value?.mainContact ? (
@@ -1067,7 +1068,7 @@ function Espage() {
                     )}
                   </div>
 
-                  {!showbutton ? (
+                  {/* {!showbutton ? (
                     <div
                       className="row mt-5 mb-5"
                       style={{ justifyContent: "center" }}
@@ -1088,44 +1089,44 @@ function Espage() {
                         Book Now
                       </div>
                     </div>
-                  ) : (
-                    <div className="row mt-5 mb-5">
-                      <div className="col-md-6">
-                        {sdata.serviceDirection === "Survey" ? (
-                          <div
-                            className="poppins-black"
-                            onClick={addsurvey}
-                            style={{
-                              backgroundColor: "darkred",
-                              padding: "8px",
-                              color: "white",
-                              fontSize: "14px",
-                              textAlign: "center",
-                              borderRadius: "5px",
-                              cursor: "pointer",
-                            }}
-                          >
-                            Book Now
-                          </div>
-                        ) : (
-                          <div
-                            className="poppins-black"
-                            onClick={addenquiry}
-                            style={{
-                              backgroundColor: "darkred",
-                              padding: "8px",
-                              color: "white",
-                              fontSize: "14px",
-                              textAlign: "center",
-                              borderRadius: "5px",
-                              cursor: "pointer",
-                            }}
-                          >
-                            Book Now
-                          </div>
-                        )}
-                      </div>
-                      {/* <div className="col-md-6">
+                  ) : ( */}
+                  <div className="row mt-5 mb-5">
+                    <div className="col-md-6">
+                      {sdata.serviceDirection === "Survey" ? (
+                        <div
+                          className="poppins-black"
+                          onClick={addsurvey}
+                          style={{
+                            backgroundColor: "darkred",
+                            padding: "8px",
+                            color: "white",
+                            fontSize: "14px",
+                            textAlign: "center",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Book Now
+                        </div>
+                      ) : (
+                        <div
+                          className="poppins-black"
+                          onClick={addenquiry}
+                          style={{
+                            backgroundColor: "darkred",
+                            padding: "8px",
+                            color: "white",
+                            fontSize: "14px",
+                            textAlign: "center",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Book Now
+                        </div>
+                      )}
+                    </div>
+                    {/* <div className="col-md-6">
                         <div
                           className="poppins-black"
                           onClick={handlePayment}
@@ -1142,8 +1143,8 @@ function Espage() {
                           Payment
                         </div>
                       </div> */}
-                    </div>
-                  )}
+                  </div>
+                  {/* )} */}
                 </>
               )}
             </div>

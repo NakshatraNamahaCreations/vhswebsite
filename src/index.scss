@@ -1144,7 +1144,31 @@ background: rgb(255, 68, 68) !important;
   font-weight: 500;
   margin-left: -15px !important;
 }
-
+.afterbutton{
+  background-color: darkred;
+  padding: 8px 40px;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.paybutton{
+  background-color: #040458db;
+  padding: 8px 40px;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 25px !important;
+}
+.navbar-cart{
+  display: none !important;
+}
+.date_label.selected {
+  background-color: darkred; /* Background color for selected dates */
+}
 
 
 @media (max-width: 768px) {
@@ -1246,6 +1270,27 @@ background: rgb(255, 68, 68) !important;
     display: flex !important;
     flex-direction: column !important;
   }
+  .afterbutton{
+    background-color: darkred;
+    padding: 8px 40px;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .paybutton{
+    background-color: #040458db;
+    padding: 8px 40px;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .navbar-cart{
+    display: flex !important;
+  }
 }
 
 @media (max-width: 576px) {
@@ -1324,5 +1369,23 @@ background: rgb(255, 68, 68) !important;
   .date_selection{
     display: flex !important;
     flex-direction: column !important;
+  }
+  .afterbutton{
+    background-color: darkred;
+    padding: 8px 40px;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .paybutton{
+    background-color: #040458db;
+    padding: 8px 40px;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
   }
 }

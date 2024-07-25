@@ -6,6 +6,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Header2 from "./Header2";
 import Completed from "./Completed";
 import Enquiry from "./Enquiry";
+import Homenavbar from "./Homenavbar";
 function NoAnimationExample() {
   const [allorder, setAllorder] = useState([]);
   const [value, setValue] = useState("");
@@ -76,7 +77,8 @@ function NoAnimationExample() {
   return (
     <div className="">
       <Header2 />
-      <div className="row mt-5 pt-5" style={{ justifyContent: "center" }}>
+      <Homenavbar />
+      <div className="row mt-5" style={{ justifyContent: "center" }}>
         <div className="col-md-8">
           <Tabs
             defaultActiveKey="home"

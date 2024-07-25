@@ -2,11 +2,13 @@ import React from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import NavbarCompo from "./navbar";
+import Homenavbar from "./Homenavbar";
 
 function Terms() {
   return (
     <div>
       <NavbarCompo />
+      <Homenavbar />
       <div className="container">
         <div className="row mt-4 mb-4">
           <div

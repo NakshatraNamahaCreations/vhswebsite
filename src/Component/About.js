@@ -18,12 +18,13 @@ import a13 from "../../src/assests/a13.jpg";
 import a14 from "../../src/assests/a14.jpg";
 import a15 from "../../src/assests/a15.jpg";
 import a16 from "../../src/assests/a16.jpg";
+import Homenavbar from "./Homenavbar";
 
 function About() {
   return (
     <div className="">
       <NabarCompo />
-
+      <Homenavbar />
       <div className="container">
         <div className="row">
           <img src={a} alt="vhs about image" />

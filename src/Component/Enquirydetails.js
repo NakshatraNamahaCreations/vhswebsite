@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header2 from "./Header2";
 import axios from "axios";
+import Homenavbar from "./Homenavbar";
 
 function Enquirydetails() {
   const location = useLocation();
@@ -41,7 +42,8 @@ function Enquirydetails() {
   return (
     <div className="">
       <Header2 />
-      <div className="row mt-5 pt-2" style={{ justifyContent: "center" }}>
+      <Homenavbar />
+      <div className="row  pt-3" style={{ justifyContent: "center" }}>
         <div className="col-md-7">
           <div
             style={{

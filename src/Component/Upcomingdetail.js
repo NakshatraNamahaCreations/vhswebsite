@@ -6,6 +6,7 @@ import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import moment from "moment/moment";
 import { Button } from "react-bootstrap";
+import Homenavbar from "./Homenavbar";
 
 function Upcomingdetail() {
   const location = useLocation();
@@ -107,7 +108,8 @@ function Upcomingdetail() {
   return (
     <div className="">
       <Header2 />
-      <div className="row mt-5 pt-3" style={{ justifyContent: "center" }}>
+      <Homenavbar />
+      <div className="row  pt-3" style={{ justifyContent: "center" }}>
         <div className="col-md-8">
           <p
             className="poppins-semibold mt-4"

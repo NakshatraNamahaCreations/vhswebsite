@@ -37,6 +37,8 @@ import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import { useLocation } from "react-router-dom";
 import deal from "../../src/assests/deal.png";
 import moment from "moment";
+import Cartnavbar from "./Cartnavbar";
+import Homenavbar from "./Homenavbar";
 
 // updated home
 export default function Homecity() {
@@ -789,6 +791,7 @@ export default function Homecity() {
       ) : (
         <>
           <NabarCompo />
+          <Homenavbar />
           {/* Carousel-----------slider */}
           {/* 
           <button
@@ -996,9 +999,17 @@ export default function Homecity() {
             )}
           </div>
 
-          <div className="container mt-3">
+          {/* <div className="container mt-3">
+          
+          </div> */}
+
+          {/* <div className="container">
+          
+          </div> */}
+
+          <div className="container">
             <div
-              className="row"
+              className="row mt-4"
               style={{ justifyContent: "center", alignItems: "center" }}
             >
               <div
@@ -1060,10 +1071,7 @@ export default function Homecity() {
                 </div>
               </Swiper>
             </div>
-          </div>
-
-          <div className="container mt-3">
-            <div className="row">
+            <div className="row mt-4">
               <div
                 className="poppins-semibold mb-4"
                 style={{ textAlign: "left" }}
@@ -1110,9 +1118,6 @@ export default function Homecity() {
                 </div>
               </Swiper>
             </div>
-          </div>
-
-          <div className="container">
             <div
               ref={cleaningServicesRef}
               className="poppins-semibold mt-4 mb-2"
@@ -1300,7 +1305,11 @@ export default function Homecity() {
             </div>
 
             {/* Pest Control */}
-            <div ref={PestControlRef} className="poppins-semibold mt-4 mb-2">
+            <div
+              ref={PestControlRef}
+              className="poppins-semibold mt-4 mb-2"
+              style={{ textAlign: "left" }}
+            >
               Pest Control{" "}
               <span
                 style={{
@@ -1439,7 +1448,11 @@ export default function Homecity() {
             </div>
 
             {/* Floor Polishing */}
-            <div ref={FloorPolishingRef} className="poppins-semibold mt-4 mb-2">
+            <div
+              ref={FloorPolishingRef}
+              className="poppins-semibold mt-4 mb-2"
+              style={{ textAlign: "left" }}
+            >
               Floor Polishing{" "}
               <span
                 style={{
@@ -1526,7 +1539,11 @@ export default function Homecity() {
             </div>
 
             {/* Packers & Movers */}
-            <div ref={PackersMoversRef} className="poppins-semibold mt-4 mb-2">
+            <div
+              ref={PackersMoversRef}
+              style={{ textAlign: "left" }}
+              className="poppins-semibold mt-4 mb-2"
+            >
               Packers & Movers{" "}
               <span
                 style={{
@@ -1616,6 +1633,7 @@ export default function Homecity() {
             <div
               ref={ApplianceServicesRef}
               className="poppins-semibold mt-4 mb-2"
+              style={{ textAlign: "left" }}
             >
               Appliance Services{" "}
               <span
@@ -1706,6 +1724,7 @@ export default function Homecity() {
             <div
               ref={HomeRepairingServicesRef}
               className="poppins-semibold mt-4 mb-2"
+              style={{ textAlign: "left" }}
             >
               Home Repairing Services
               <span
@@ -1793,7 +1812,10 @@ export default function Homecity() {
             </div>
 
             {/* Facility man agement Services */}
-            <div className="poppins-semibold mt-4">
+            <div
+              className="poppins-semibold mt-4"
+              style={{ textAlign: "left" }}
+            >
               Corporate Facility Management
             </div>
             <div className="mt-3" style={{ position: "relative" }}>
@@ -1870,7 +1892,12 @@ export default function Homecity() {
             </div>
 
             {/* suman */}
-            <div className="poppins-semibold mb-4 mt-5">TestiMonial</div>
+            <div
+              className="poppins-semibold mb-4 mt-5"
+              style={{ textAlign: "left" }}
+            >
+              TestiMonial
+            </div>
             <Swiper
               slidesPerView={slidesPerView}
               spaceBetween={40}
@@ -1927,7 +1954,10 @@ export default function Homecity() {
               </div>
             </Swiper>
 
-            <div className="poppins-semibold mt-4 mb-4">
+            <div
+              className="poppins-semibold mt-4 mb-4"
+              style={{ textAlign: "left" }}
+            >
               {homepagetitledata[0]?.title}
             </div>
 
@@ -1989,7 +2019,10 @@ export default function Homecity() {
                 ))}
             </Swiper>
 
-            <div className="poppins-semibold mt-4 mb-4">
+            <div
+              className="poppins-semibold mt-4 mb-4"
+              style={{ textAlign: "left" }}
+            >
               {homepagetitledata[1]?.title}
             </div>
 

@@ -24,6 +24,7 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Faq from "react-faq-component";
+import Cartnavbar from "./Cartnavbar";
 
 function Subcategory() {
   const [subcategoryData, setSubcategoryData] = useState([]);
@@ -407,6 +408,7 @@ function Subcategory() {
   return (
     <div>
       <Header1 />
+      <Cartnavbar />
       <div className="container">
         <div className="row">
           <div className="col-md-6">

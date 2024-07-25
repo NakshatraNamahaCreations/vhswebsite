@@ -16,6 +16,7 @@ import Modal from "react-bootstrap/Modal";
 import Calendar from "react-calendar";
 import { Button } from "react-bootstrap";
 import Header2 from "./Header2";
+import Homenavbar from "./Homenavbar";
 
 function Summary() {
   const location = useLocation();
@@ -66,7 +67,7 @@ function Summary() {
   const userString = localStorage.getItem("user");
   const user = JSON.parse(userString);
 
-  console.log("laksi", user._id);
+  console.log("laksi", user?._id);
 
   const [validationMessage, setValidationMessage] = useState("");
 
@@ -194,13 +195,6 @@ function Summary() {
     return formattedDay === selectedDate;
   };
 
-  // const handleCheckboxSelect = (day) => {
-  //   const formattedDate = `${day.year}-${day.month}-${day.day}`;
-  //   const selectedDate = moment(formattedDate, "YYYY-MM-DD");
-
-  //   setSelectedDate(selectedDate.format("YYYY-MM-DD"));
-  // };
-
   const handleCheckboxSelect = (day) => {
     const formattedDate = `${day.year}-${day.month}-${day.day}`;
     const selectedDate = moment(formattedDate, "YYYY-MM-DD");
@@ -301,7 +295,7 @@ function Summary() {
         baseURL: "https://api.vijayhomeservicebengaluru.in/api",
         headers: { "content-type": "application/json" },
         data: {
-          userId: value._id,
+          userId: value?._id,
           address: selectedPlaceAddress,
           saveAs: home ? "Home" : others ? othersPlace : "",
           landmark: landmark,
@@ -508,7 +502,7 @@ function Summary() {
     } else {
       try {
         const config = {
-          url: "http://api.vijayhomeservicebengaluru.in/api/addservicedetails",
+          url: "https://api.vijayhomeservicebengaluru.in/api/addservicedetails",
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {
@@ -539,9 +533,9 @@ function Summary() {
             discAmt: 0,
             GrandTotal: a,
             paymentMode: "cash",
-            TotalAmt: plan.pPrice,
+            TotalAmt: plan?.pPrice,
             couponCode: voucherCodeValue,
-            totalSaved: Math.abs(plan.pofferprice - plan.pPrice),
+            totalSaved: Math.abs(plan?.pofferprice - plan?.pPrice),
             markerCoordinate: selectedLocation,
             deliveryAddress: selectedAddress,
           },
@@ -740,6 +734,7 @@ function Summary() {
   return (
     <div className="">
       <Header2 />
+      <Homenavbar />
 
       <div className="container mt-1">
         <div className="row">
@@ -1043,7 +1038,7 @@ function Summary() {
                 style={{
                   color: "#40A2D8",
                   fontWeight: "900",
-                  textAlign: "auto",
+                  textAlign: "left",
                 }}
               >
                 * Book Over Rs 1500 to use wallet , upto 10% From your wallet
@@ -1054,7 +1049,7 @@ function Summary() {
                 style={{
                   color: "#40A2D8",
                   fontWeight: "900",
-                  textAlign: "auto",
+                  textAlign: "left",
                 }}
               >
                 * Book over Rs 1500, get 2% cashback in your wallet !
@@ -1075,10 +1070,15 @@ function Summary() {
                 className="d-flex mt-3"
                 style={{ justifyContent: "space-between" }}
               >
-                <div className="col-md-4 poppins-black">Total Amount</div>
+                <div
+                  className="col-md-4 poppins-black"
+                  style={{ textAlign: "left" }}
+                >
+                  Total Amount
+                </div>
                 <div
                   className="col-md-4 poppins-light"
-                  style={{ textDecoration: "line-through" }}
+                  style={{ textDecoration: "line-through", textAlign: "left" }}
                 >
                   ₹{plan.pPrice}
                 </div>
@@ -1088,8 +1088,16 @@ function Summary() {
                 className="d-flex mt-3"
                 style={{ justifyContent: "space-between" }}
               >
-                <div className="col-md-4 poppins-black">Discount</div>
-                <div className="col-md-4 poppins-light">
+                <div
+                  className="col-md-4 poppins-black"
+                  style={{ textAlign: "left" }}
+                >
+                  Discount
+                </div>
+                <div
+                  className="col-md-4 poppins-light"
+                  style={{ textAlign: "left" }}
+                >
                   {couponPercentage}%
                 </div>
               </div>
@@ -1098,10 +1106,15 @@ function Summary() {
                 className="d-flex mt-3"
                 style={{ justifyContent: "space-between" }}
               >
-                <div className="col-md-4 poppins-black">Saved</div>
+                <div
+                  className="col-md-4 poppins-black"
+                  style={{ textAlign: "left" }}
+                >
+                  Saved
+                </div>
                 <div
                   className="col-md-4 poppins-light"
-                  style={{ color: "#40A2D8" }}
+                  style={{ color: "#40A2D8", textAlign: "left" }}
                 >
                   ₹{Math.abs(plan.pofferprice - plan.pPrice)}
                 </div>
@@ -1111,10 +1124,15 @@ function Summary() {
                 className="d-flex mt-3"
                 style={{ justifyContent: "space-between" }}
               >
-                <div className="col-md-4 poppins-black">Grand Total</div>
+                <div
+                  className="col-md-4 poppins-black"
+                  style={{ textAlign: "left" }}
+                >
+                  Grand Total
+                </div>
                 <div
                   className="col-md-4 poppins-light"
-                  style={{ color: "#40A2D8" }}
+                  style={{ color: "#40A2D8", textAlign: "left" }}
                 >
                   ₹{a}
                 </div>
@@ -1246,6 +1264,7 @@ function Summary() {
                             color: "black",
                             fontSize: "15px",
                             fontWeight: "bold",
+                            textAlign: "left",
                           }}
                         >
                           {item.saveAs}
@@ -1566,76 +1585,112 @@ function Summary() {
 
           <Modal show={show2} centered onHide={handleClose2}>
             <Modal.Body>
-              <div className="d-flex justify-content-center">
-                <video
-                  className="p-0"
-                  style={{
-                    objectFit: "cover",
-                    width: "200px",
-                    height: "200px",
-                  }}
-                  autoPlay
-                  loop
-                  src={require("../Assets/Images/a.mp4")}
-                ></video>
-              </div>
-              <div className="row">
-                <div className="col-md-5 text-center">Category</div>
-                <div className="col-md-1 ">:</div>
-                <div className="col-md-6 ">{responseData?.data.category}</div>
-              </div>
-
-              <div className="row mt-3">
-                <div className="col-md-5 text-center">Service</div>
-                <div className="col-md-1 ">:</div>
-                <div className="col-md-6 ">{responseData?.data.service}</div>
-              </div>
-
-              <div className="row mt-3">
-                <div className="col-md-5 text-center">Date of Service</div>
-                <div className="col-md-1 ">:</div>
-                <div className="col-md-6 ">
-                  {responseData?.data.dateofService}
-                </div>
-              </div>
-
-              <div className="row mt-3">
-                <div className="col-md-5 text-center">Service Charge</div>
-                <div className="col-md-1 ">:</div>
-                <div className="col-md-6 ">
-                  {responseData?.data.serviceCharge}
-                </div>
-              </div>
-
-              {responseData?.data.GrandTotal >= 1500 ? (
-                <div>
-                  <p
-                    className="poppins-regular mt-3"
+              <div
+                className="row"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <div className="d-flex justify-content-center">
+                  <video
+                    className="p-0"
                     style={{
-                      padding: 10,
-                      color: "green",
-                      fontWeight: "bold",
-                      fontSize: 15,
-                      textAlign: "center",
+                      objectFit: "cover",
+                      width: "200px",
+                      height: "200px",
                     }}
-                  >
-                    Congratulations !!! You won a reward of Rs{" "}
-                    {(responseData?.data.GrandTotal * 0.02).toFixed(2)}/- in
-                    your Wallet..!!
-                  </p>
+                    autoPlay
+                    loop
+                    src={require("../Assets/Images/a.mp4")}
+                  ></video>
                 </div>
-              ) : (
-                <></>
-              )}
+                <div className="d-flex align-items-center justify-content-center mt-2">
+                  <div
+                    className="col-md-5 text-center poppins-black"
+                    style={{ fontSize: "14px" }}
+                  >
+                    Category
+                  </div>
+                  <div className="col-md-1  mx-2">:</div>
+                  <div className="col-md-6 poppins-black">
+                    {responseData?.data.category}
+                  </div>
+                </div>
 
-              <div className="d-flex justify-content-center mt-3 mb-3">
-                <Button
-                  variant="secondary"
-                  onClick={handleClose2}
-                  style={{ width: "200px", backgroundColor: "darkred" }}
-                >
-                  Close
-                </Button>
+                <div className="d-flex align-items-center justify-content-center mt-2">
+                  <div
+                    className="col-md-5 text-center poppins-black"
+                    style={{ fontSize: "14px" }}
+                  >
+                    Service
+                  </div>
+                  <div className="col-md-1 mx-2">:</div>
+                  <div
+                    className="col-md-6 poppins-black"
+                    style={{ textAlign: "center" }}
+                  >
+                    {responseData?.data.service}
+                  </div>
+                </div>
+
+                <div className="d-flex align-items-center justify-content-center mt-2">
+                  <div
+                    className="col-md-5 text-center poppins-black"
+                    style={{ fontSize: "14px" }}
+                  >
+                    Date of Service
+                  </div>
+                  <div className="col-md-1 mx-2">:</div>
+                  <div className="col-md-6 poppins-black">
+                    {responseData?.data.dateofService}
+                  </div>
+                </div>
+
+                <div className="d-flex align-items-center justify-content-center mt-2">
+                  <div
+                    className="col-md-5 text-center poppins-black"
+                    style={{ fontSize: "14px" }}
+                  >
+                    Service Charge
+                  </div>
+                  <div className="col-md-1 mx-2">:</div>
+                  <div className="col-md-6 poppins-black">
+                    {responseData?.data.serviceCharge}
+                  </div>
+                </div>
+
+                {responseData?.data.GrandTotal >= 1500 ? (
+                  <div>
+                    <p
+                      className="poppins-regular mt-3"
+                      style={{
+                        padding: 10,
+                        color: "green",
+                        fontWeight: "bold",
+                        fontSize: 15,
+                        textAlign: "center",
+                      }}
+                    >
+                      Congratulations !!! You won a reward of Rs{" "}
+                      {(responseData?.data.GrandTotal * 0.02).toFixed(2)}/- in
+                      your Wallet..!!
+                    </p>
+                  </div>
+                ) : (
+                  <></>
+                )}
+
+                <div className="d-flex justify-content-center mt-3 mb-3">
+                  <Button
+                    variant="secondary"
+                    onClick={handleClose2}
+                    style={{ width: "200px", backgroundColor: "darkred" }}
+                  >
+                    Close
+                  </Button>
+                </div>
               </div>
             </Modal.Body>
           </Modal>

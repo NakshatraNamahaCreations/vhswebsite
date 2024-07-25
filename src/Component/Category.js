@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Footer from "./Footer";
 import NavbarCompo from "./navbar";
+import Homenavbar from "./Homenavbar";
 
 const Category = () => {
   const { data } = useParams();
@@ -61,6 +62,7 @@ const Category = () => {
   return (
     <div>
       <NavbarCompo />
+      <Homenavbar />
       <div className="container">
         <div className="row mb-4 justify-content-center">
           <h1 className="poppins-semibold mt-4">{data}</h1>

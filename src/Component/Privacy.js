@@ -1,11 +1,13 @@
 import React from "react";
 import NavbarCompo from "./navbar";
 import Footer from "./Footer";
+import Homenavbar from "./Homenavbar";
 
 function Privacy() {
   return (
     <div>
       <NavbarCompo />
+      <Homenavbar />
       <div className="container">
         <div className="row">
           <div

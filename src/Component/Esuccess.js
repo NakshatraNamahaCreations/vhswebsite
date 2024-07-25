@@ -21,10 +21,17 @@ function Esuccess() {
   };
   return (
     <div className="container">
-      <div className="row justify-content-center">
+      <div
+        className="row mb-3"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <div
           className="col-md-5 shadow-lg p-3"
-          style={{ borderRadius: "5px", marginTop: "100px" }}
+          style={{ borderRadius: "5px", marginTop: "40px" }}
         >
           <div className="d-flex justify-content-center">
             <video
@@ -35,32 +42,58 @@ function Esuccess() {
               src={require("../Assets/Images/a.mp4")}
             ></video>
           </div>
-          <div className="row">
-            <div className="col-md-5 text-center">Category</div>
-            <div className="col-md-1 ">:</div>
-            <div className="col-md-6 ">{data.category}</div>
+          <div className="d-flex align-items-center justify-content-center mt-2">
+            <div
+              className="col-md-5 text-center poppins-black"
+              style={{ fontSize: "14px" }}
+            >
+              Category
+            </div>
+            <div className="col-md-1 mx-2">:</div>
+            <div className="col-md-6 poppins-black">{data.category}</div>
           </div>
 
-          <div className="row mt-2">
-            <div className="col-md-5 text-center">Subcategory</div>
-            <div className="col-md-1 ">:</div>
-            <div className="col-md-6 ">{data.Subcategory}</div>
+          <div className="d-flex align-items-center justify-content-center mt-2">
+            <div
+              className="col-md-5 text-center poppins-black"
+              style={{ fontSize: "14px" }}
+            >
+              Subcategory
+            </div>
+            <div className="col-md-1 mx-2">:</div>
+            <div className="col-md-6 poppins-black">{data.Subcategory}</div>
           </div>
 
-          <div className="row mt-2">
-            <div className="col-md-5 text-center"> Service Name</div>
-            <div className="col-md-1 ">:</div>
-            <div className="col-md-6 ">{data.serviceName}</div>
+          <div className="d-flex align-items-center justify-content-center mt-2">
+            <div
+              className="col-md-5 text-center poppins-black"
+              style={{ fontSize: "14px" }}
+            >
+              {" "}
+              Service Name
+            </div>
+            <div className="col-md-1 mx-2">:</div>
+            <div className="col-md-6 poppins-black">{data.serviceName}</div>
           </div>
-          <div className="row mt-2">
-            <div className="col-md-5 text-center">appoTime</div>
-            <div className="col-md-1 ">:</div>
-            <div className="col-md-6 ">{appoTime}</div>
+          <div className="d-flex align-items-center justify-content-center mt-2">
+            <div
+              className="col-md-5 text-center poppins-black"
+              style={{ fontSize: "14px" }}
+            >
+              appoTime
+            </div>
+            <div className="col-md-1 mx-2">:</div>
+            <div className="col-md-6 poppins-black">{appoTime}</div>
           </div>
-          <div className="row mt-2">
-            <div className="col-md-5 text-center">appoDate</div>
-            <div className="col-md-1 ">:</div>
-            <div className="col-md-6 ">{appoDate}</div>
+          <div className="d-flex align-items-center justify-content-center mt-2">
+            <div
+              className="col-md-5 text-center poppins-black"
+              style={{ fontSize: "14px" }}
+            >
+              appoDate
+            </div>
+            <div className="col-md-1 mx-2">:</div>
+            <div className="col-md-6 poppins-black">{appoDate}</div>
           </div>
 
           <div className="d-flex justify-content-center mt-3 mb-3">

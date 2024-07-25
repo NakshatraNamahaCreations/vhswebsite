@@ -24,6 +24,7 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Faq from "react-faq-component";
+import Cartnavbar from "./Cartnavbar";
 
 function Servicedetails() {
   const location = useLocation();
@@ -496,7 +497,8 @@ function Servicedetails() {
         </div>
       ) : (
         <>
-          {/* <Header1 /> */}
+          <Header1 />
+          <Cartnavbar />
           <div className="container">
             <div className="row">
               <div className="col-md-6">
@@ -1099,7 +1101,11 @@ function Servicedetails() {
           </div>
           <div
             className="d-flex"
-            style={{ backgroundColor: "darkred", padding: "10px" }}
+            style={{
+              backgroundColor: "darkred",
+              padding: "10px",
+              justifyContent: "space-between",
+            }}
           >
             <div
               className="col-md-3 poppins-extrabold"

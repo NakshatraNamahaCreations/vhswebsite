@@ -4,6 +4,7 @@ import Header2 from "./Header2";
 import vhslogo from "../assests/vhs-lgo.png";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
+import Homenavbar from "./Homenavbar";
 
 function Completeddetails() {
   const location = useLocation();
@@ -49,7 +50,8 @@ function Completeddetails() {
   return (
     <div className="">
       <Header2 />
-      <div className="row mt-5 pt-2" style={{ justifyContent: "center" }}>
+      <Homenavbar />
+      <div className="row  pt-3" style={{ justifyContent: "center" }}>
         <div className="col-md-8">
           <p
             className="poppins-semibold mt-4"

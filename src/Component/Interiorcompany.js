@@ -7,11 +7,13 @@ import casestudy from "../../src/assests/casestudy.jpeg";
 import picture2 from "../../src/assests/Picture1.jpg";
 import picture6 from "../../src/assests/Picture6.jpg";
 import picture3 from "../../src/assests/Picture3.jpg";
+import Homenavbar from "./Homenavbar";
 
 function Interiorcompany() {
   return (
     <div>
       <NabarCompo />
+      <Homenavbar />
       <div className="container">
         <img
           src={picture6}

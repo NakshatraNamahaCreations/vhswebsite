@@ -29,6 +29,7 @@ export default function NavbarCompo() {
     <Navbar
       expand="lg"
       // className="fixed-top"
+      className="navbar-homecity"
       style={{ backgroundColor: "aliceblue", padding: "5px" }}
     >
       <Container>

@@ -1,11 +1,13 @@
 import React from "react";
 import NavbarCompo from "./navbar";
 import Footer from "./Footer";
+import Homenavbar from "./Homenavbar";
 
 function Cancellation() {
   return (
     <div>
       <NavbarCompo />
+      <Homenavbar />
       <div className="container">
         <div className="row mb-4">
           <div

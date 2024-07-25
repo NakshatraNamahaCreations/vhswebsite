@@ -26,6 +26,7 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import moment from "moment";
+import Cartnavbar from "./Cartnavbar";
 
 function Viewdetails() {
   const [svideodata, setsvideodata] = useState([]);
@@ -350,7 +351,8 @@ function Viewdetails() {
 
   return (
     <div className="row">
-      {/* <Header1 /> */}
+      <Header1 />
+      <Cartnavbar />
       <div className="col-md-12">
         <div className="container">
           <img

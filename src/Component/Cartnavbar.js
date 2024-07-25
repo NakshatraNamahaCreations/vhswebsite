@@ -1,0 +1,159 @@
+import React from "react";
+import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import "../Component/layout.css";
+
+function Cartnavbar() {
+  const location = useLocation();
+  const MyCartItems = useSelector((state) => state.cart);
+  const pathName = location.pathname;
+  const cartShow = !(
+    pathName === "/servicedetails" || pathName === "/ViewCart"
+  );
+
+  const userDataString = localStorage.getItem("user");
+  const userData = JSON.parse(userDataString);
+
+  const handleremove = () => {
+    alert("Account deleted");
+    localStorage.removeItem("user");
+    window.location.assign("/");
+  };
+  return (
+    <div
+      className="d-flex navbar-cart"
+      style={{
+        backgroundColor: "aliceblue",
+        padding: "15px",
+        justifyContent: "space-between",
+      }}
+    >
+      <div className="col-md-10 ">
+        <img
+          src="https://vijayahomeservices.b-cdn.net/vhs-lgo.png"
+          alt=""
+          width={25}
+          height={25}
+        />
+        <span
+          className="poppins-medium mx-2"
+          style={{
+            color: "black",
+            fontSize: "13px",
+            fontWeight: "bold",
+            textAlign: "left",
+          }}
+        >
+          Vijay Home Services
+        </span>
+      </div>
+      <div
+        className="col-md-2 d-flex"
+        style={{ justifyContent: "center", alignItems: "center" }}
+      >
+        {userData !== null && userData !== undefined ? (
+          <div className="">
+            <div
+              className="dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              data-bs-auto-close="true"
+              aria-expanded="false"
+              style={{
+                // backgroundColor: "white",
+                borderRadius: "50px",
+                border: "white",
+                display: "flex",
+              }}
+            >
+              <i
+                className="fa-solid fa-user-large"
+                style={{
+                  fontSize: "16px",
+                  //   backgroundColor: "darkred",
+                  //   padding: "9px",
+                  color: "black",
+                  //   borderRadius: "100%",
+                }}
+              ></i>
+              <span
+                className="mx-1 poppins-medium"
+                style={{ fontSize: "12px" }}
+              >
+                {userData?.customerName}
+              </span>
+            </div>
+            <ul className="dropdown-menu">
+              <li>
+                <a
+                  className="dropdown-item poppins-regular"
+                  style={{ fontSize: "12px" }}
+                  href="/mybooking"
+                >
+                  My Bookings
+                </a>
+              </li>
+              <li onClick={handleremove}>
+                <a
+                  className="poppins-regular dropdown-item"
+                  style={{ fontSize: "12px" }}
+                  href="#"
+                >
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <>
+            <Link
+              className="mx-2"
+              to="/login"
+              style={{ textDecoration: "none" }}
+            >
+              <div
+                className="poppins-black mx-1"
+                style={{ color: "darkred", fontSize: "15px" }}
+              >
+                Login / Signup
+              </div>
+            </Link>
+          </>
+        )}
+
+        {cartShow && (
+          <div className="mx-2">
+            <i
+              className="fa-solid fa-cart-shopping"
+              style={{ fontSize: "18px" }}
+            ></i>
+            <div
+              className="text-center"
+              style={{
+                width: "15px",
+                height: "15px",
+                borderRadius: "100%",
+                backgroundColor: "darkred",
+                color: "white",
+                fontSize: "8px",
+                paddingTop: "1px",
+                position: "absolute",
+                fontWeight: "bold",
+                top: 10,
+                right: 13,
+              }}
+            >
+              {MyCartItems.length}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+export default Cartnavbar;
