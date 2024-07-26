@@ -292,6 +292,35 @@ function Viewdetails() {
     setselectedPlan(item);
     setItem(selectedItem);
     const itemToAdd = {
+      _id: item?._id,
+      category: subcategory?.category,
+      service: subcategory,
+      pName: item?.pName,
+      pPrice: item?.pPrice,
+      pofferprice: item?.pofferprice,
+      pservices: item?.pservices,
+    };
+
+    if (!item.pservices) {
+      const existingCartItem = MyCartItmes.find(
+        (cartItem) => cartItem?.category === subcategory?.category
+      );
+
+      if (existingCartItem) {
+        dispatch(addToCart({ ...itemToAdd, id: existingCartItem?.id }));
+      } else {
+        dispatch(clearCart());
+        dispatch(addToCart(itemToAdd));
+      }
+    } else {
+      navigate("/summary", { state: { plan: item, sdata: Item } });
+    }
+  };
+
+  const handleItemClick1 = (item, index) => {
+    setSelectedItemIndex(index);
+    setselectedPlan(item);
+    const itemToAdd = {
       _id: item._id,
       category: subcategory?.category,
       service: subcategory,
@@ -303,37 +332,7 @@ function Viewdetails() {
 
     if (!item.pservices) {
       const existingCartItem = MyCartItmes.find(
-        (cartItem) => cartItem.category === subcategory?.category
-      );
-
-      if (existingCartItem) {
-        dispatch(addToCart({ ...itemToAdd, id: existingCartItem.id }));
-      } else {
-        dispatch(clearCart());
-        dispatch(addToCart(itemToAdd));
-      }
-    } else {
-      // alert("This is AMC services ")
-      navigate("/summary", { state: { plan: item, sdata: Item } });
-    }
-  };
-
-  const handleItemClick1 = (item, index) => {
-    setSelectedItemIndex(index);
-    setselectedPlan(item);
-    const itemToAdd = {
-      _id: item._id,
-      category: subcategory,
-      service: selectedItem,
-      pName: item.pName,
-      pPrice: item.pPrice,
-      pofferprice: item.pofferprice,
-      pservices: item.pservices,
-    };
-
-    if (!item.pservices) {
-      const existingCartItem = MyCartItmes.find(
-        (cartItem) => cartItem.category === subcategory.category
+        (cartItem) => cartItem?.category === subcategory?.category
       );
 
       if (existingCartItem) {
@@ -346,6 +345,10 @@ function Viewdetails() {
       navigate("/summary", { state: { plan: item, sdata: subcategory } });
     }
   };
+
+  const filteredPrices = subcategory?.morepriceData?.filter(
+    (ele) => ele.pricecity === localstoragecitys
+  );
 
   console.log("selectedItem====12", selectedItem, Item);
 
@@ -439,7 +442,7 @@ function Viewdetails() {
               </div>
             </div>
 
-            <div className="row mt-2">
+            <div className="row offerbannerdata_div mt-2">
               {(() => {
                 const filteredPrices = subcategory?.morepriceData?.filter(
                   (ele) => ele.pricecity === localstoragecitys
@@ -543,7 +546,7 @@ function Viewdetails() {
                             <button
                               className="poppins-black"
                               onClick={() => {
-                                handleviewselect(selectedItem);
+                                handleviewselect(subcategory);
                                 handleItemClick1(price);
                               }}
                               style={{
@@ -656,6 +659,225 @@ function Viewdetails() {
               })()}
             </div>
 
+            <div className="row offerbannerdata_div1 mt-2">
+              <Swiper
+                slidesPerView={2}
+                spaceBetween={20}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                }}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                modules={[FreeMode, Pagination, Autoplay]}
+                className="mySwiper"
+              >
+                {filteredPrices.map((price, index) => (
+                  <SwiperSlide key={price._id} className="col-md-2 mt-3">
+                    <div
+                      className="shadow-lg"
+                      style={{
+                        backgroundColor: "white",
+                        padding: "10px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          textAlign: "center",
+                          color: "green",
+                          fontSize: "16px",
+                          fontWeight: "bold",
+                          fontFamily: "sans-serif",
+                        }}
+                      >
+                        {price.pName && (
+                          <p className="poppins-black">{price.pName}</p>
+                        )}
+                      </div>
+
+                      <div className="d-flex justify-content-center">
+                        <div
+                          className="poppins-regular"
+                          style={{
+                            color: "black",
+                            fontSize: "14px",
+                            textDecoration: "line-through",
+                            textAlign: "center",
+                          }}
+                        >
+                          {price.pPrice && (
+                            <p className="poppins-black">₹{price.pPrice}</p>
+                          )}
+                        </div>
+                        <div
+                          className="poppins-regular mx-2"
+                          style={{
+                            color: "black",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            textAlign: "center",
+                          }}
+                        >
+                          {price.pofferprice && (
+                            <p className="poppins-black">
+                              ₹{price.pofferprice}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          textAlign: "center",
+                          color: "black",
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                          fontFamily: "sans-serif",
+                        }}
+                      >
+                        {price.pservices && (
+                          <p className="poppins-black">
+                            Services - {price.pservices}
+                          </p>
+                        )}
+                      </div>
+
+                      <div
+                        className="poppins-regular"
+                        style={{
+                          color: "orange",
+                          fontSize: "14px",
+                          textAlign: "center",
+                        }}
+                      >
+                        {(
+                          ((price.pPrice - price.pofferprice) / price.pPrice) *
+                          100
+                        ).toFixed(0)}
+                        % discount
+                      </div>
+
+                      {isItemInCart(price._id) ? (
+                        <span> </span>
+                      ) : (
+                        <button
+                          className="poppins-black"
+                          onClick={() => {
+                            handleviewselect(selectedItem);
+                            handleItemClick1(price);
+                          }}
+                          style={{
+                            bottom: 10,
+                            width: "100%",
+                            padding: 5,
+                            color: "white",
+                            textAlign: "center",
+                            borderRadius: 3,
+                            marginTop: 15,
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            backgroundColor: "darkred",
+                          }}
+                        >
+                          Book
+                        </button>
+                      )}
+
+                      {isItemInCart(price._id) && (
+                        <div style={{ marginTop: "5px" }}>
+                          <div
+                            className="d-flex m-auto"
+                            style={{
+                              backgroundColor: "green",
+                              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)",
+                              borderRadius: 5,
+                              padding: "0px",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <div className="col-md-5">
+                              <button
+                                className="poppins-regular"
+                                onClick={() => {
+                                  const cartItem = MyCartItmes.find(
+                                    (cartItem) => cartItem.id === price._id
+                                  );
+                                  if (cartItem && cartItem.qty > 1) {
+                                    dispatch(deleteMyCartItem(price._id));
+                                  } else {
+                                    dispatch(deleteMyCartItem(price._id));
+                                  }
+                                }}
+                                style={{
+                                  backgroundColor: "transparent",
+                                  border: "none",
+                                  cursor: "pointer",
+                                  height: "20px",
+                                }}
+                              >
+                                <i
+                                  className="fa-solid fa-circle-minus"
+                                  style={{
+                                    color: "white",
+                                    fontSize: "18px",
+                                  }}
+                                ></i>
+                              </button>
+                            </div>
+
+                            <div className="col-md-2">
+                              <div
+                                style={{
+                                  color: "white",
+                                  fontSize: "14px",
+                                  textAlign: "center",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {getItemQuantityById(price._id)}
+                              </div>
+                            </div>
+
+                            <div className="col-md-5">
+                              <button
+                                onClick={() => handleItemClick(price)}
+                                style={{
+                                  backgroundColor: "transparent",
+                                  border: "none",
+                                  cursor: "pointer",
+                                  height: "20px",
+                                }}
+                              >
+                                <i
+                                  className="fa-solid fa-circle-plus"
+                                  style={{
+                                    color: "white",
+                                    fontSize: "18px",
+                                  }}
+                                ></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </SwiperSlide>
+                ))}
+                {filteredPrices.length === 0 && (
+                  <SwiperSlide>
+                    <div className="col-md-12 poppins-regular">
+                      <p>No prices available for this city</p>
+                    </div>
+                  </SwiperSlide>
+                )}
+              </Swiper>
+            </div>
+
             {subcategory?.category === "Painting" ? (
               ""
             ) : Carttotal > 0 ? (
@@ -744,7 +966,7 @@ function Viewdetails() {
                       className="poppins-extrabold"
                       style={{ color: "white", fontWeight: "bold" }}
                     >
-                      View Cart
+                      Proceed
                     </span>
                   </div>
                 </div>
@@ -839,13 +1061,14 @@ function Viewdetails() {
                     color: "black",
                     fontWeight: "bold",
                     marginTop: "5px",
+                    textAlign: "left",
                   }}
                 >
                   Of our finest experiences
                 </div>
 
                 <div
-                  className="row mt-4"
+                  className="mt-4"
                   style={{
                     justifyContent: "center",
                     alignItems: "center",
@@ -854,7 +1077,7 @@ function Viewdetails() {
                 >
                   <div className="col-md-6 d-flex justify-content-center align-items-center mb-2">
                     <video
-                      className="p-0"
+                      className="p-2"
                       style={{
                         objectFit: "contain",
                         width: "200px",
@@ -869,7 +1092,7 @@ function Viewdetails() {
                   </div>
                   <div className="col-md-6 mb-2 d-flex justify-content-center align-items-center">
                     <video
-                      className="p-0"
+                      className="p-2"
                       style={{
                         objectFit: "contain",
                         width: "200px",
@@ -890,6 +1113,7 @@ function Viewdetails() {
                     color: "black",
                     fontSize: "16px",
                     fontWeight: "bold",
+                    textAlign: "left",
                   }}
                 >
                   Testimonial Videos

@@ -584,47 +584,64 @@ function Servicedetails() {
             </div>
             <div className="col-md-6 mt-4">
               <div className="d-flex">
-                <div className="col-md-7 d-flex">
-                  <div className="poppins-regular" style={{ color: "black" }}>
+                <div className="col-md-8 d-flex">
+                  <div
+                    className="poppins-regular "
+                    style={{ color: "black", fontSize: "10px" }}
+                  >
                     4.9
                   </div>
                   <div className="" style={{ marginTop: "-5px" }}>
                     <i
                       class="fa-solid fa-star"
-                      style={{ color: "gold", fontSize: "14px" }}
+                      style={{ color: "gold", fontSize: "7px" }}
                     ></i>
                     <i
                       class="fa-solid fa-star"
-                      style={{ color: "gold", fontSize: "14px" }}
+                      style={{ color: "gold", fontSize: "7px" }}
                     ></i>
                     <i
                       class="fa-solid fa-star"
-                      style={{ color: "gold", fontSize: "14px" }}
+                      style={{ color: "gold", fontSize: "7px" }}
                     ></i>
                     <i
                       class="fa-solid fa-star"
-                      style={{ color: "gold", fontSize: "14px" }}
+                      style={{ color: "gold", fontSize: "7px" }}
                     ></i>
                     <i
                       class="fa-solid fa-star"
-                      style={{ color: "gold", fontSize: "14px" }}
+                      style={{ color: "gold", fontSize: "7px" }}
                     ></i>
                   </div>
-                  <div className="poppins-regular" style={{ color: "black" }}>
+                  <div
+                    className="poppins-regular"
+                    style={{ color: "black", fontSize: "10px" }}
+                  >
                     (9.1T)
                   </div>
                 </div>
-                <div className="col-md-5 mx-4 callimg_row">
+                <div className="col-md-4 mx-4 callimg_row">
                   <div className="d-flex" style={{ marginTop: "-50px" }}>
                     <div>
-                      <img src={call} alt="loading....." className="callimg" />
                       <div
-                        className="poppins-black shadow-lg"
+                        className="d-flex"
+                        style={{ justifyContent: "center" }}
+                      >
+                        <img
+                          src={call}
+                          alt="loading....."
+                          className="callimg"
+                        />
+                      </div>
+
+                      <div
+                        className="poppins-regular shadow-lg"
                         style={{
                           backgroundColor: "white",
                           padding: "3px 8px",
                           marginTop: "-11px",
                           borderRadius: "5px",
+                          fontSize: "6px",
                         }}
                       >
                         Call Now
@@ -632,14 +649,20 @@ function Servicedetails() {
                     </div>
 
                     <div style={{ marginLeft: "40px" }}>
-                      <img src={web} alt="loading....." className="webimg" />
                       <div
-                        className="poppins-black shadow-lg"
+                        className="d-flex"
+                        style={{ justifyContent: "center" }}
+                      >
+                        <img src={web} alt="loading....." className="webimg" />
+                      </div>
+                      <div
+                        className="poppins-regular shadow-lg"
                         style={{
                           backgroundColor: "white",
                           padding: "3px 8px",
                           marginTop: "-11px",
                           borderRadius: "5px",
+                          fontSize: "6px",
                         }}
                       >
                         Wtsup us
@@ -650,7 +673,7 @@ function Servicedetails() {
               </div>
             </div>
 
-            <div className="row mt-3">
+            <div className="row offerbannerdata_div mt-3">
               {offerBannerdata.map((data) => (
                 <div className="col-md-3 mt-3">
                   <div
@@ -703,12 +726,82 @@ function Servicedetails() {
                 </div>
               ))}
             </div>
+            <div className=" offerbannerdata_div1 mt-3">
+              <Swiper
+                slidesPerView={1}
+                spaceBetween={30}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                }}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                modules={[FreeMode, Pagination, Autoplay]}
+                className="mySwiper"
+              >
+                {offerBannerdata.map((data, index) => (
+                  <SwiperSlide key={data._id}>
+                    <div
+                      className="d-flex"
+                      style={{
+                        backgroundColor: "darkred",
+                        padding: "6px",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      <div
+                        className="col-md-1"
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        <img
+                          style={{ width: "20px", height: "20px" }}
+                          alt=""
+                          src={`https://api.vijayhomesuperadmin.in/offerbanner/${data.icon}`}
+                        />
+                      </div>
+                      <div className="col-md-11 pt-3 mx-2">
+                        <div
+                          className="poppins-regular"
+                          style={{
+                            color: "white",
+                            fontWeight: "bold",
+                            fontSize: "14px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {data.header}
+                        </div>
+                        <p
+                          className="poppins-regular mt-1"
+                          style={{
+                            color: "white",
+                            fontSize: "11px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {data.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
 
-            <div className="row mt-5">
+            <div
+              className="row mt-5"
+              style={{ justifyContent: "space-between" }}
+            >
               {Servicedata.sort(
                 (a, b) => parseInt(a.order) - parseInt(b.order)
               ).map((data, index) => (
-                <>
+                <div className="d-flex">
                   <div
                     key={index}
                     id={`service-${index}`}
@@ -899,15 +992,10 @@ function Servicedetails() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-6 mt-4 servicedata_row">
+                  <div className="col-md-6 mt-4 mx-2 servicedata_row">
                     <div className="">
                       <img
-                        style={{
-                          width: "250px",
-                          height: "250px",
-                          borderRadius: "10px",
-                        }}
-                        className="mb-2"
+                        className="mb-2 servicedata_img"
                         alt={`${data.category} images`}
                         src={data.imglink}
                       />
@@ -917,6 +1005,7 @@ function Servicedetails() {
                         style={{
                           display: "flex",
                           justifyContent: "center",
+                          alignItems: "center",
                           // marginRight: "30px",
                           // marginTop: "-20px",
                         }}
@@ -949,7 +1038,7 @@ function Servicedetails() {
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               ))}
             </div>
 
@@ -971,11 +1060,13 @@ function Servicedetails() {
                   }}
                 >
                   <img
-                    style={{
-                      width: "50%",
-                      height: "250px",
-                    }}
-                    className="mb-2"
+                    className="service_gif mb-2"
+                    style={
+                      {
+                        // width: "50%",
+                        // height: "250px",
+                      }
+                    }
                     alt=""
                     src={`https://api.vijayhomesuperadmin.in/spotlightSP/${data.img}`}
                   />

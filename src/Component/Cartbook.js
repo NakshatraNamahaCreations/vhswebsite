@@ -16,7 +16,15 @@ import { deleteMyCartItemaddon } from "../Redux/MyCartSlice";
 import moment from "moment";
 import Calendar from "react-calendar";
 import "../Pages/ViewCart/Components/CartDetails/cartdetails.scss";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import "swiper/css/navigation";
+import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Modal from "react-bootstrap/Modal";
 
 import {
@@ -267,7 +275,7 @@ function Cartbook() {
     const getNextDays = () => {
       const nextDays = [];
       const currentDate = new Date();
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 10; i++) {
         const date = new Date();
         date.setDate(currentDate.getDate() + i);
 
@@ -535,6 +543,56 @@ function Cartbook() {
                 fontSize: "14px",
                 textAlign: "center",
                 padding: "5px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                color: selectedSlotIndex === index ? "white" : "black",
+                backgroundColor: selectedSlotIndex === index ? "darkred" : "",
+              }}
+              onClick={() => handleSlotClick1(index, slot.startTime)}
+            >
+              {slot.startTime}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderSlots1 = () => {
+    if (!selectedDate) {
+      return null;
+    }
+
+    const currentDate = new Date();
+    const dateToCompare = new Date(selectedDate);
+
+    let slots;
+
+    if (currentDate == dateToCompare) {
+      slots = filteredData || [];
+    } else if (currentDate > dateToCompare) {
+      slots = filteredData1 || [];
+    } else {
+      slots = filteredData || [];
+    }
+
+    slots.sort((a, b) => {
+      const startTimeA = moment(a.startTime, "hA");
+      const startTimeB = moment(b.startTime, "hA");
+      return startTimeA.diff(startTimeB);
+    });
+
+    return (
+      <div className="renderslots" style={{}}>
+        {slots.map((slot, index) => (
+          <div key={index} className="col-md-2">
+            <div
+              className="mt-3 poppins-light"
+              style={{
+                border: "1px solid grey",
+                fontSize: "14px",
+                textAlign: "center",
+                padding: "5px 5px",
                 borderRadius: "5px",
                 cursor: "pointer",
                 color: selectedSlotIndex === index ? "white" : "black",
@@ -971,7 +1029,7 @@ function Cartbook() {
                   Frequently Added Together
                 </div>
 
-                <div className="row">
+                <div className="row offerbannerdata_div">
                   {addondata.map((i) => {
                     const cartItem = Array.isArray(MyCartaddonItmes)
                       ? MyCartaddonItmes.find(
@@ -1124,6 +1182,162 @@ function Cartbook() {
                   })}
                 </div>
 
+                <div className="row offerbannerdata_div1">
+                  <Swiper
+                    slidesPerView={1} // Adjust the number of slides per view based on your design
+                    spaceBetween={30} // Adjust space between slides
+                    freeMode={true}
+                    pagination={{ clickable: true }}
+                    autoplay={{ delay: 2500, disableOnInteraction: false }}
+                    modules={[FreeMode, Pagination, Autoplay]}
+                    className="mySwiper"
+                  >
+                    {addondata.map((i) => {
+                      const cartItem = Array.isArray(MyCartaddonItmes)
+                        ? MyCartaddonItmes.find(
+                            (cartItem) => cartItem.id === i._id
+                          )
+                        : null;
+                      const isItemInCart = !!cartItem;
+
+                      return (
+                        <SwiperSlide key={i._id} className="col-md-4 mb-4">
+                          <div
+                            className="d-flex"
+                            style={{
+                              backgroundColor: "#E4D3BE",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            <div className="col-md-6 p-0">
+                              <img
+                                src={`https://api.vijayhomesuperadmin.in/addOns/${i.addOnsImage}`}
+                                alt="loading...."
+                                style={{
+                                  width: "150px",
+                                  borderRadius: "10px",
+                                  height: "185px",
+                                }}
+                              />
+                            </div>
+                            <div className="col-md-6 p-3 mt-2">
+                              <div
+                                className="poppins-regular"
+                                style={{
+                                  color: "black",
+                                  fontSize: "14px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {i.addOnsName}
+                              </div>
+                              <div
+                                className="poppins-light"
+                                style={{
+                                  color: "black",
+                                  fontSize: "12px",
+                                  marginTop: "3px",
+                                  whiteSpace: "normal",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  display: "-webkit-box",
+                                  WebkitBoxOrient: "vertical",
+                                  WebkitLineClamp: 3,
+                                }}
+                              >
+                                {i.addOnsDescription}
+                              </div>
+
+                              <div className="d-flex poppins-regular">
+                                <div
+                                  className="poppins-regular"
+                                  style={{ textDecoration: "line-through" }}
+                                >
+                                  {cartItem?.qty
+                                    ? cartItem?.qty * i.addOnsPrice
+                                    : i.addOnsPrice}
+                                </div>
+                                <div className="mx-2 poppins-regular">
+                                  ₹
+                                  {cartItem?.qty
+                                    ? cartItem?.qty * i.addOnsOfferPrice
+                                    : i.addOnsOfferPrice}
+                                </div>
+                              </div>
+                              {isItemInCart ? (
+                                <div className="d-flex mt-2">
+                                  <div
+                                    onClick={() => {
+                                      if (cartItem.qty > 1) {
+                                        removeMyCartItemaddon(cartItem);
+                                      } else {
+                                        deleteMyCartItemaddon(cartItem.id);
+                                      }
+                                    }}
+                                  >
+                                    <i
+                                      className="fa-solid fa-minus"
+                                      style={{
+                                        color: "white",
+                                        fontSize: "14px",
+                                        backgroundColor: "green",
+                                        padding: "5px",
+                                        borderRadius: "50px",
+                                      }}
+                                    ></i>
+                                  </div>
+                                  <div
+                                    className="mx-2"
+                                    style={{
+                                      color: "black",
+                                      fontSize: "14px",
+                                      marginTop: "3px",
+                                    }}
+                                  >
+                                    {cartItem.qty}
+                                  </div>
+                                  <div
+                                    onClick={() => increaseQuantity(cartItem)}
+                                  >
+                                    <i
+                                      className="fa-solid fa-plus"
+                                      style={{
+                                        color: "white",
+                                        fontSize: "14px",
+                                        backgroundColor: "green",
+                                        padding: "5px",
+                                        borderRadius: "50px",
+                                      }}
+                                    ></i>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div
+                                  className="poppins-extrabold"
+                                  style={{
+                                    backgroundColor: "green",
+                                    padding: "2px",
+                                    textAlign: "center",
+                                    fontSize: "14px",
+                                    color: "white",
+                                    width: "83px",
+                                    borderRadius: "10px",
+                                    marginTop: "10px",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => addQuantity(i)}
+                                >
+                                  Add
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                      );
+                    })}
+                  </Swiper>
+                </div>
+
                 <div className="scheduleservice mb-5">
                   <div
                     className="title poppins-semibold"
@@ -1131,10 +1345,10 @@ function Cartbook() {
                   >
                     Schedule Service
                   </div>
-                  <div className="select_date ">
+                  <div className="select_date">
                     <div className="text poppins-medium">Select the date</div>
 
-                    <div className="date_selection">
+                    {/* <div className="date_selection">
                       {fourDates?.map((day, index) => {
                         const isDefaultChecked = isDateSelected(day);
 
@@ -1151,6 +1365,37 @@ function Cartbook() {
                               {day?.dayName}- {day?.day}
                             </span>
                           </label>
+                        );
+                      })}
+                    </div> */}
+                    <div className="date_grid_container">
+                      {fourDates?.map((day, index) => {
+                        const isDefaultChecked = isDateSelected(day);
+
+                        return (
+                          <div className="date_label row col-md-2">
+                            <label
+                              htmlFor={index}
+                              key={index}
+                              // className="date_label"
+                            >
+                              <input
+                                type="checkbox"
+                                name=""
+                                id={day?.day}
+                                className="date_checkbox"
+                              />
+                              <span
+                                className={`inpt poppins-medium ${
+                                  isDefaultChecked ? "matching" : ""
+                                }`}
+                                style={{}}
+                                onClick={() => handleCheckboxSelect(day)}
+                              >
+                                {day?.dayName} - {day?.day}
+                              </span>
+                            </label>
+                          </div>
                         );
                       })}
                     </div>
@@ -1201,10 +1446,24 @@ function Cartbook() {
                       </div>
                     )}
                   </div>
-                  <div className="select_date">
-                    <div className="text poppins-medium">Select the Slot</div>
 
-                    {renderSlots()}
+                  <div className="select_date">
+                    <div className="cartrenderslot">
+                      <div className="text poppins-medium">Select the Slot</div>
+                      {renderSlots()}
+                    </div>
+                  </div>
+
+                  <div className="select_date">
+                    <div className="cartrenderslot1">
+                      <div
+                        className="poppins-medium"
+                        style={{ fontSize: "18px" }}
+                      >
+                        Slots
+                      </div>
+                      <div className="mt-4 mb-3">{renderSlots1()}</div>
+                    </div>
                   </div>
                 </div>
 

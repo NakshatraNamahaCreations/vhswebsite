@@ -109,68 +109,69 @@ function Upcomingdetail() {
     <div className="">
       <Header2 />
       <Homenavbar />
-      <div className="row  pt-3" style={{ justifyContent: "center" }}>
-        <div className="col-md-8">
-          <p
-            className="poppins-semibold mt-4"
-            style={{ color: "darkred", fontSize: 18, fontWeight: 600 }}
-          >
-            {allorder?.category}
-          </p>
-
-          <div className="row" style={{ justifyContent: "space-between" }}>
-            <div
-              className="col-md-6"
-              style={{ display: "flex", justifyContent: "center" }}
+      <div className="container">
+        <div className="row  pt-3" style={{ justifyContent: "center" }}>
+          <div className="col-md-8">
+            <p
+              className="poppins-semibold mt-4"
+              style={{ color: "darkred", fontSize: 18, fontWeight: 600 }}
             >
-              {allorder && allorder.paymentMode === "online" ? (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    padding: 15,
-                    boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
-                    backgroundColor: "white",
-                    margin: 10,
-                    borderRadius: 5,
-                    width: "100%", // Make it take the full width of the column
-                  }}
-                >
-                  <div style={{ flex: 0.7 }}>
-                    <div
-                      className="poppins-black"
-                      style={{ color: "black", fontSize: "15px" }}
-                    >
-                      Thanks for Choosing Vijay Home Servicess
-                    </div>
+              {allorder?.category}
+            </p>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        marginTop: 5,
-                      }}
-                    >
+            <div className="row" style={{ justifyContent: "space-between" }}>
+              <div
+                className="col-md-6"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                {allorder && allorder.paymentMode === "online" ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      padding: 15,
+                      boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
+                      backgroundColor: "white",
+                      margin: 10,
+                      borderRadius: 5,
+                      width: "100%", // Make it take the full width of the column
+                    }}
+                  >
+                    <div style={{ flex: 0.7 }}>
                       <div
-                        className="poppins-regular"
-                        style={{ color: "green", fontSize: 17 }}
+                        className="poppins-black"
+                        style={{ color: "black", fontSize: "15px" }}
                       >
-                        {" "}
-                        ● Paid
+                        Thanks for Choosing Vijay Home Servicess
                       </div>
+
                       <div
-                        className="poppins-regular"
                         style={{
-                          color: "green",
-                          fontSize: 17,
-                          marginLeft: 5,
+                          display: "flex",
+                          flexDirection: "row",
+                          marginTop: 5,
                         }}
                       >
-                        ₹ {allorder.serviceCharge}
+                        <div
+                          className="poppins-regular"
+                          style={{ color: "green", fontSize: 17 }}
+                        >
+                          {" "}
+                          ● Paid
+                        </div>
+                        <div
+                          className="poppins-regular"
+                          style={{
+                            color: "green",
+                            fontSize: 17,
+                            marginLeft: 5,
+                          }}
+                        >
+                          ₹ {allorder.serviceCharge}
+                        </div>
                       </div>
-                    </div>
 
-                    {/* <button
+                      {/* <button
                         onClick={toggleModal}
                         style={{
                           borderWidth: 1,
@@ -188,16 +189,16 @@ function Upcomingdetail() {
                           View Receipt
                         </span>
                       </button> */}
-                  </div>
-                  <div
-                    style={{
-                      flex: 0.3,
-                      display: "flex",
-                      alignItems: "flex-end",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {/* <video
+                    </div>
+                    <div
+                      style={{
+                        flex: 0.3,
+                        display: "flex",
+                        alignItems: "flex-end",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {/* <video
                         src={"/path-to-your-video/a.mp4"}
                         style={{
                           width: 80,
@@ -207,231 +208,270 @@ function Upcomingdetail() {
                         autoPlay
                         loop
                       /> */}
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div
-                  className="row  p-3"
-                  style={{
-                    backgroundColor: "white",
-                    borderRadius: "5px",
-                    width: "100%",
-                    boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
-                  }}
-                >
-                  <div className="col-md-10">
+                ) : (
+                  <div
+                    className="row  p-3"
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: "5px",
+                      width: "100%",
+                      boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
+                    }}
+                  >
+                    <div className="col-md-10">
+                      <div
+                        className="poppins-black"
+                        style={{ color: "black", fontSize: "15px" }}
+                      >
+                        Thanks for Choosing Vijay Home Servicess
+                      </div>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          marginTop: 5,
+                        }}
+                      >
+                        <div
+                          className="poppins-regular"
+                          style={{ color: "black" }}
+                        >
+                          {" "}
+                          ● Service Charge
+                        </div>
+                        <div
+                          className="poppins-regular"
+                          style={{
+                            color: "black",
+                            marginLeft: "5px",
+                            fontSize: "15px",
+                          }}
+                        >
+                          ₹ {allorder?.serviceCharge}
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="col-md-2"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        src={vhslogo}
+                        style={{ width: "30px", height: "30px" }}
+                        alt="VHS"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div
+                className="col-md-6"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                {technisian[0]?.vhsname ? (
+                  <div
+                    className="row  p-3"
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: "5px",
+                      width: "100%",
+                      boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
+                    }}
+                  >
                     <div
                       className="poppins-black"
-                      style={{ color: "black", fontSize: "15px" }}
+                      style={{
+                        fontSize: 15,
+                        color: "darkred",
+                        fontWeight: 700,
+                      }}
                     >
-                      Thanks for Choosing Vijay Home Servicess
+                      Technician Details
                     </div>
 
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "row",
-                        marginTop: 5,
+                        flexWrap: "wrap",
                       }}
                     >
                       <div
                         className="poppins-regular"
-                        style={{ color: "black" }}
+                        style={{ color: "black", fontSize: "12px" }}
                       >
-                        {" "}
-                        ● Service Charge
+                        Name :{" "}
                       </div>
                       <div
                         className="poppins-regular"
                         style={{
                           color: "black",
-                          marginLeft: "5px",
-                          fontSize: "15px",
+                          fontSize: "12px",
+                          marginLeft: "3px",
+                          marginTop: "2px",
                         }}
                       >
-                        ₹ {allorder?.serviceCharge}
+                        {technisian[0]?.vhsname}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <div
+                        className="poppins-regular"
+                        style={{ color: "black", fontSize: "12px" }}
+                      >
+                        Exp :{" "}
+                      </div>
+                      <div
+                        className="poppins-regular"
+                        style={{
+                          color: "black",
+                          fontSize: "12px",
+                          marginLeft: "3px",
+                          marginTop: "2px",
+                        }}
+                      >
+                        {technisian[0]?.experiance}
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <div
+                        className="poppins-regular"
+                        style={{ color: "black", fontSize: "12px" }}
+                      >
+                        Languages know :{" "}
+                      </div>
+                      <div
+                        className="poppins-regular"
+                        style={{
+                          color: "black",
+                          fontSize: "12px",
+                          marginLeft: "3px",
+                          marginTop: "2px",
+                        }}
+                      >
+                        {technisian[0]?.languagesknow}
                       </div>
                     </div>
                   </div>
-                  <div
-                    className="col-md-2"
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <img
-                      src={vhslogo}
-                      style={{ width: "30px", height: "30px" }}
-                      alt="VHS"
-                    />
-                  </div>
-                </div>
-              )}
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
 
             <div
-              className="col-md-6"
-              style={{ display: "flex", justifyContent: "center" }}
+              className="row mt-3"
+              style={{ justifyContent: "space-between" }}
             >
-              {technisian[0]?.vhsname ? (
-                <div
-                  className="row  p-3"
-                  style={{
-                    backgroundColor: "white",
-                    borderRadius: "5px",
-                    width: "100%",
-                    boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
-                  }}
-                >
+              <div
+                className="col-md-6 "
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                {allorder?.dividedDates?.map((dateInfo) => (
                   <div
-                    className="poppins-black"
+                    //   className="shadow-lg"
                     style={{
-                      fontSize: 15,
-                      color: "darkred",
-                      fontWeight: 700,
-                    }}
-                  >
-                    Technician Details
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
                       flexDirection: "row",
-                      flexWrap: "wrap",
+                      padding: 15,
+                      boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
+                      backgroundColor: "white",
+                      borderRadius: 5,
+                      width: "100%",
                     }}
                   >
                     <div
-                      className="poppins-regular"
-                      style={{ color: "black", fontSize: "12px" }}
-                    >
-                      Name :{" "}
-                    </div>
-                    <div
-                      className="poppins-regular"
+                      className="poppins-black"
                       style={{
-                        color: "black",
-                        fontSize: "12px",
-                        marginLeft: "3px",
-                        marginTop: "2px",
+                        fontSize: 15,
+                        color: "darkred",
+                        fontWeight: 700,
                       }}
                     >
-                      {technisian[0]?.vhsname}
+                      Service Dates
                     </div>
+                    {allorder?.dividedDates?.map((dateInfo) => (
+                      <div
+                        className="poppins-regular"
+                        style={{ color: "grey", fontSize: 14, marginTop: 5 }}
+                        key={dateInfo.id}
+                      >
+                        {formatDate(dateInfo.date)}
+                      </div>
+                    ))}
                   </div>
+                ))}
+              </div>
 
+              <div
+                className="col-md-6 "
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                {allorder?.dividedDates?.map((dateInfo) => (
                   <div
                     style={{
-                      display: "flex",
                       flexDirection: "row",
-                      flexWrap: "wrap",
+                      padding: 15,
+                      boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
+                      backgroundColor: "white",
+
+                      borderRadius: 5,
+                      width: "100%",
                     }}
                   >
                     <div
-                      className="poppins-regular"
-                      style={{ color: "black", fontSize: "12px" }}
-                    >
-                      Exp :{" "}
-                    </div>
-                    <div
-                      className="poppins-regular"
+                      className="poppins-black"
                       style={{
-                        color: "black",
-                        fontSize: "12px",
-                        marginLeft: "3px",
-                        marginTop: "2px",
+                        fontSize: 15,
+                        color: "darkred",
+                        fontWeight: 700,
                       }}
                     >
-                      {technisian[0]?.experiance}
+                      Service slot
                     </div>
-                  </div>
 
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <div
-                      className="poppins-regular"
-                      style={{ color: "black", fontSize: "12px" }}
-                    >
-                      Languages know :{" "}
-                    </div>
-                    <div
-                      className="poppins-regular"
-                      style={{
-                        color: "black",
-                        fontSize: "12px",
-                        marginLeft: "3px",
-                        marginTop: "2px",
-                      }}
-                    >
-                      {technisian[0]?.languagesknow}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
-
-          <div className="row mt-3" style={{ justifyContent: "space-between" }}>
-            <div
-              className="col-md-6 "
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              {allorder?.dividedDates?.map((dateInfo) => (
-                <div
-                  //   className="shadow-lg"
-                  style={{
-                    flexDirection: "row",
-                    padding: 15,
-                    boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
-                    backgroundColor: "white",
-                    borderRadius: 5,
-                    width: "100%",
-                  }}
-                >
-                  <div
-                    className="poppins-black"
-                    style={{
-                      fontSize: 15,
-                      color: "darkred",
-                      fontWeight: 700,
-                    }}
-                  >
-                    Service Dates
-                  </div>
-                  {allorder?.dividedDates?.map((dateInfo) => (
                     <div
                       className="poppins-regular"
                       style={{ color: "grey", fontSize: 14, marginTop: 5 }}
                       key={dateInfo.id}
                     >
-                      {formatDate(dateInfo.date)}
+                      {allorder?.selectedSlotText}
                     </div>
-                  ))}
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div
-              className="col-md-6 "
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              {allorder?.dividedDates?.map((dateInfo) => (
+            {allorder ? (
+              <>
                 <div
+                  className="mt-3"
                   style={{
                     flexDirection: "row",
                     padding: 15,
                     boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
                     backgroundColor: "white",
-
                     borderRadius: 5,
                     width: "100%",
                   }}
@@ -444,328 +484,305 @@ function Upcomingdetail() {
                       fontWeight: 700,
                     }}
                   >
-                    Service slot
+                    Services details
                   </div>
-
-                  <div
-                    className="poppins-regular"
-                    style={{ color: "grey", fontSize: 14, marginTop: 5 }}
-                    key={dateInfo.id}
-                  >
-                    {allorder?.selectedSlotText}
+                  <div style={{ flexDirection: "row", marginTop: "7px" }}>
+                    <div className="poppins-regular" style={{ color: "black" }}>
+                      {allorder.desc.replace(/,/g, "\n")}
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
+              </>
+            ) : (
+              ""
+            )}
 
-          {allorder ? (
-            <>
+            <div
+              className="mt-3"
+              style={{
+                flexDirection: "row",
+                padding: 15,
+                boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
+                backgroundColor: "white",
+                borderRadius: 5,
+                width: "100%",
+              }}
+            >
               <div
-                className="mt-3"
+                className="poppins-black"
                 style={{
-                  flexDirection: "row",
-                  padding: 15,
-                  boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                  width: "100%",
+                  fontSize: 15,
+                  color: "darkred",
+                  fontWeight: 700,
                 }}
               >
+                Payment Summary
+              </div>
+
+              {allorder && allorder.TotalAmt ? (
+                <>
+                  <div className="row mt-2">
+                    <div className="col-md-8" style={{}}>
+                      <div className="poppins-black">Total Amount</div>
+                    </div>
+                    <div
+                      className="col-md-4"
+                      style={{ alignItems: "flex-end" }}
+                    >
+                      <div
+                        className="poppins-regular"
+                        style={{
+                          color: "black",
+                          fontSize: "16px",
+                          textDecorationLine: "line-through",
+                          textAlign: "end",
+                        }}
+                      >
+                        ₹ {allorder?.TotalAmt}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
+
+              {allorder && allorder.discAmt ? (
+                <>
+                  <div className="row mt-2">
+                    <div className="col-md-8" style={{}}>
+                      <div className="poppins-black">Discount</div>
+                    </div>
+                    <div
+                      className="col-md-4"
+                      style={{ alignItems: "flex-end" }}
+                    >
+                      <div
+                        className="poppins-regular"
+                        style={{
+                          color: "black",
+                          fontSize: "16px",
+
+                          textAlign: "end",
+                        }}
+                      >
+                        ₹ {allorder?.discAmt}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
+
+              {allorder && allorder.totalSaved ? (
+                <>
+                  <div className="row mt-2">
+                    <div className="col-md-8" style={{}}>
+                      <div className="poppins-black" style={{ color: "green" }}>
+                        Saved
+                      </div>
+                    </div>
+                    <div
+                      className="col-md-4"
+                      style={{ alignItems: "flex-end" }}
+                    >
+                      <div
+                        className="poppins-regular"
+                        style={{
+                          color: "green",
+                          fontSize: "16px",
+
+                          textAlign: "end",
+                        }}
+                      >
+                        ₹ {allorder?.totalSaved}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
+
+              {allorder && allorder.couponCode ? (
+                <>
+                  <div className="row mt-2">
+                    <div className="col-md-8" style={{}}>
+                      <div className="poppins-black" style={{ color: "green" }}>
+                        Coupons
+                      </div>
+                    </div>
+                    <div
+                      className="col-md-4"
+                      style={{ alignItems: "flex-end" }}
+                    >
+                      <div
+                        className="poppins-regular"
+                        style={{
+                          color: "green",
+                          fontSize: "16px",
+
+                          textAlign: "end",
+                        }}
+                      >
+                        ₹ {allorder?.couponCode}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
+
+              {allorder?.GrandTotal ? (
+                <div className="row mt-2">
+                  <div className="col-md-8" style={{}}>
+                    <div className="poppins-black" style={{ color: "green" }}>
+                      GrandTotal
+                    </div>
+                  </div>
+                  <div className="col-md-4" style={{ alignItems: "flex-end" }}>
+                    <div
+                      className="poppins-regular"
+                      style={{
+                        color: "green",
+                        fontSize: "16px",
+
+                        textAlign: "end",
+                      }}
+                    >
+                      ₹ {allorder?.GrandTotal}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="row mt-2">
+                  <div className="col-md-8" style={{}}>
+                    <div className="poppins-black" style={{ color: "green" }}>
+                      GrandTotal
+                    </div>
+                  </div>
+                  <div className="col-md-4" style={{ alignItems: "flex-end" }}>
+                    <div
+                      className="poppins-regular"
+                      style={{
+                        color: "green",
+                        fontSize: "16px",
+
+                        textAlign: "end",
+                      }}
+                    >
+                      ₹ {allorder?.serviceCharge}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div
+              className="mt-3 mb-3"
+              style={{
+                flexDirection: "row",
+                padding: 15,
+                boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
+                backgroundColor: "white",
+                borderRadius: 5,
+                width: "100%",
+              }}
+            >
+              <div
+                className="poppins-black"
+                style={{
+                  fontSize: 15,
+                  color: "darkred",
+                  fontWeight: 700,
+                }}
+              >
+                Booking Details
+              </div>
+
+              <div className="d-flex mt-3">
+                <div className="col-md-1">
+                  <i
+                    className="fa-solid fa-money-bill"
+                    style={{ fontSize: "20px" }}
+                  ></i>
+                </div>
                 <div
-                  className="poppins-black"
-                  style={{
-                    fontSize: 15,
-                    color: "darkred",
-                    fontWeight: 700,
-                  }}
+                  className="col-md-11 poppins-regular mx-2"
+                  style={{ fontSize: "14px" }}
                 >
-                  Services details
-                </div>
-                <div style={{ flexDirection: "row", marginTop: "7px" }}>
-                  <div className="poppins-regular" style={{ color: "black" }}>
-                    {allorder.desc.replace(/,/g, "\n")}
-                  </div>
+                  {/* marginLeft: "-30px" */}
+                  Amount : ₹ {allorder?.serviceCharge}
                 </div>
               </div>
-            </>
-          ) : (
-            ""
-          )}
 
-          <div
-            className="mt-3"
-            style={{
-              flexDirection: "row",
-              padding: 15,
-              boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
-              backgroundColor: "white",
-              borderRadius: 5,
-              width: "100%",
-            }}
-          >
-            <div
-              className="poppins-black"
-              style={{
-                fontSize: 15,
-                color: "darkred",
-                fontWeight: 700,
-              }}
-            >
-              Payment Summary
+              <div className="d-flex mt-3">
+                <div className="col-md-1">
+                  <i
+                    className="fa-solid fa-location-dot"
+                    style={{ fontSize: "20px" }}
+                  ></i>
+                </div>
+                <div className="col-md-11 poppins-regular mx-2">
+                  {/* style={{ fontSize: "14px", }} */}
+                  {allorder?.deliveryAddress?.platNo} ,
+                  {allorder?.deliveryAddress?.landmark} ,
+                  {allorder?.deliveryAddress?.address}
+                </div>
+              </div>
+
+              <div className="d-flex mt-3">
+                <div className="col-md-1">
+                  <i
+                    className="fa-regular fa-clock"
+                    style={{ fontSize: "20px" }}
+                  ></i>
+                </div>
+                <div
+                  className="col-md-11 poppins-regular mx-2"
+                  style={{ fontSize: "14px" }}
+                >
+                  {/* marginLeft: "-30px" */}
+                  {allorder?.date}
+                </div>
+              </div>
             </div>
 
-            {allorder && allorder.TotalAmt ? (
-              <>
-                <div className="row mt-2">
-                  <div className="col-md-8" style={{}}>
-                    <div className="poppins-black">Total Amount</div>
-                  </div>
-                  <div className="col-md-4" style={{ alignItems: "flex-end" }}>
-                    <div
-                      className="poppins-regular"
-                      style={{
-                        color: "black",
-                        fontSize: "16px",
-                        textDecorationLine: "line-through",
-                        textAlign: "end",
-                      }}
-                    >
-                      ₹ {allorder?.TotalAmt}
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
-
-            {allorder && allorder.discAmt ? (
-              <>
-                <div className="row mt-2">
-                  <div className="col-md-8" style={{}}>
-                    <div className="poppins-black">Discount</div>
-                  </div>
-                  <div className="col-md-4" style={{ alignItems: "flex-end" }}>
-                    <div
-                      className="poppins-regular"
-                      style={{
-                        color: "black",
-                        fontSize: "16px",
-
-                        textAlign: "end",
-                      }}
-                    >
-                      ₹ {allorder?.discAmt}
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
-
-            {allorder && allorder.totalSaved ? (
-              <>
-                <div className="row mt-2">
-                  <div className="col-md-8" style={{}}>
-                    <div className="poppins-black" style={{ color: "green" }}>
-                      Saved
-                    </div>
-                  </div>
-                  <div className="col-md-4" style={{ alignItems: "flex-end" }}>
-                    <div
-                      className="poppins-regular"
-                      style={{
-                        color: "green",
-                        fontSize: "16px",
-
-                        textAlign: "end",
-                      }}
-                    >
-                      ₹ {allorder?.totalSaved}
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
-
-            {allorder && allorder.couponCode ? (
-              <>
-                <div className="row mt-2">
-                  <div className="col-md-8" style={{}}>
-                    <div className="poppins-black" style={{ color: "green" }}>
-                      Coupons
-                    </div>
-                  </div>
-                  <div className="col-md-4" style={{ alignItems: "flex-end" }}>
-                    <div
-                      className="poppins-regular"
-                      style={{
-                        color: "green",
-                        fontSize: "16px",
-
-                        textAlign: "end",
-                      }}
-                    >
-                      ₹ {allorder?.couponCode}
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
-
-            {allorder?.GrandTotal ? (
-              <div className="row mt-2">
-                <div className="col-md-8" style={{}}>
-                  <div className="poppins-black" style={{ color: "green" }}>
-                    GrandTotal
-                  </div>
-                </div>
-                <div className="col-md-4" style={{ alignItems: "flex-end" }}>
-                  <div
-                    className="poppins-regular"
-                    style={{
-                      color: "green",
-                      fontSize: "16px",
-
-                      textAlign: "end",
-                    }}
-                  >
-                    ₹ {allorder?.GrandTotal}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="row mt-2">
-                <div className="col-md-8" style={{}}>
-                  <div className="poppins-black" style={{ color: "green" }}>
-                    GrandTotal
-                  </div>
-                </div>
-                <div className="col-md-4" style={{ alignItems: "flex-end" }}>
-                  <div
-                    className="poppins-regular"
-                    style={{
-                      color: "green",
-                      fontSize: "16px",
-
-                      textAlign: "end",
-                    }}
-                  >
-                    ₹ {allorder?.serviceCharge}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div
-            className="mt-3 mb-3"
-            style={{
-              flexDirection: "row",
-              padding: 15,
-              boxShadow: "0px 1px 3px rgba(0,0,0,0.12)",
-              backgroundColor: "white",
-              borderRadius: 5,
-              width: "100%",
-            }}
-          >
             <div
-              className="poppins-black"
-              style={{
-                fontSize: 15,
-                color: "darkred",
-                fontWeight: 700,
-              }}
+              className="row mt-4 mb-2 mb-2"
+              style={{ display: "flex", justifyContent: "space-between" }}
             >
-              Booking Details
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-1">
-                <i
-                  className="fa-solid fa-money-bill"
-                  style={{ fontSize: "20px" }}
-                ></i>
-              </div>
               <div
-                className="col-md-11 poppins-regular"
-                style={{ fontSize: "14px", marginLeft: "-30px" }}
+                onClick={handleShow6}
+                className="col-md-5 poppins-black"
+                style={{
+                  backgroundColor: "darkred",
+                  padding: "8px",
+                  color: "white",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
               >
-                Amount : ₹ {allorder?.serviceCharge}
+                Cancellation Policy
               </div>
-            </div>
 
-            <div className="row mt-3">
-              <div className="col-md-1">
-                <i
-                  className="fa-solid fa-location-dot"
-                  style={{ fontSize: "20px" }}
-                ></i>
-              </div>
               <div
-                className="col-md-11 poppins-regular"
-                style={{ fontSize: "14px", marginLeft: "-30px" }}
+                onClick={handlePayment}
+                className="col-md-5  poppins-black"
+                style={{
+                  backgroundColor: "darkred",
+                  padding: "8px",
+                  color: "white",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
               >
-                {allorder?.deliveryAddress?.platNo} ,
-                {allorder?.deliveryAddress?.landmark} ,
-                {allorder?.deliveryAddress?.address}
+                Pay Now
               </div>
-            </div>
-
-            <div className="row mt-3">
-              <div className="col-md-1">
-                <i
-                  className="fa-regular fa-clock"
-                  style={{ fontSize: "20px" }}
-                ></i>
-              </div>
-              <div
-                className="col-md-11 poppins-regular"
-                style={{ fontSize: "14px", marginLeft: "-30px" }}
-              >
-                {allorder?.date}
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="row mt-4 mb-5"
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <div
-              onClick={handleShow6}
-              className="col-md-5 poppins-black"
-              style={{
-                backgroundColor: "darkred",
-                padding: "8px",
-                color: "white",
-                textAlign: "center",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Cancellation Policy
-            </div>
-
-            <div
-              onClick={handlePayment}
-              className="col-md-5 poppins-black"
-              style={{
-                backgroundColor: "darkred",
-                padding: "8px",
-                color: "white",
-                textAlign: "center",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Pay Now
             </div>
           </div>
         </div>
@@ -806,224 +823,136 @@ function Upcomingdetail() {
             designed to be fair and transparent for all our customers.
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               No Cancellation Charges !!
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               Cancellation Charges !!
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               Within 4 Hours to 1 Hour Before Scheduled Slot: Full House
               Cleaning: ₹500
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹100
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               Home Repair Services : 200
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               Appliances Services : 200
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               Within 1 Hour and After Scheduled Slot: Full House Cleaning: ₹700
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               Sofa/Kitchen/Bathroom/Mini-Services Cleaning: ₹150
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               We appreciate your understanding and cooperation.
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               Please contact us as soon as possible if you need to cancel or
               reschedule your service to avoid any charges.
             </div>
           </div>
 
-          <div className="row mt-2">
+          <div className="d-flex mt-2">
             <div className="col-md-1">
               <i
                 class="fa-solid fa-star"
                 style={{ color: "green", fontSize: "16px" }}
               ></i>
             </div>
-            <div
-              className="col-md-11 mt-1 poppins-regular"
-              style={{
-                color: "black",
-                fontSize: "17px",
-                fontWeight: "500",
-                marginLeft: "-15px",
-              }}
-            >
+            <div className="col-md-11 mt-1 poppins-regular cancellation_text">
               Before 4 Hours: If you cancel your service more than 4 hours
               before the scheduled slot, there will be no cancellation charges.
             </div>

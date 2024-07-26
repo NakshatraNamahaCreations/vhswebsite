@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Footer from "./Footer";
 import hbanner1 from "../../src/assests/hbanner1.jpg";
 import { Modal } from "react-bootstrap";
+import careerimg from "../../src/assests/careerimg.jpg";
 
 function Career() {
   const [show, setShow] = useState(false);
@@ -23,7 +24,15 @@ function Career() {
           <div className="poppins-black">Career@Vijay Home Services</div>
         </div>
         <div className="col-md-6">
-          <div className="poppins-black">Home</div>
+          <div className="poppins-black">
+            <a
+              className="poppins-black"
+              href="/"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Home
+            </a>
+          </div>
         </div>
       </div>
       <div className="container">
@@ -44,16 +53,18 @@ function Career() {
 
             <div
               onClick={handleShow}
-              className="poppins-semibold mt-3"
+              className="poppins-black mt-3"
               style={{
-                backgroundColor: "orange",
+                backgroundColor: "blue",
                 padding: "7px",
                 textAlign: "center",
-                width: "40%",
+                width: "50%",
                 borderRadius: "5px",
+                color: "white",
+                fontSize: "14px",
               }}
             >
-              Apply
+              See all Opportunity
             </div>
           </div>
           <div
@@ -65,9 +76,9 @@ function Career() {
             }}
           >
             <img
-              src={hbanner1}
+              src={careerimg}
               alt="hbanner3"
-              style={{ width: "100%", height: "250px", borderRadius: "10px" }}
+              style={{ width: "100%", height: "100%" }}
             />
           </div>
         </div>

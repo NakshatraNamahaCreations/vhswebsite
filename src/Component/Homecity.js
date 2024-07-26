@@ -76,6 +76,7 @@ export default function Homecity() {
   const [slidesPerView, setSlidesPerView] = useState(5);
   const [slidesthoughtfull1, setslidesthoughtfull1] = useState(5);
   const [slidesbanner, setslidesbanner] = useState(5);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -107,6 +108,22 @@ export default function Homecity() {
     window.addEventListener("resize", handleResize1);
 
     return () => window.removeEventListener("resize", handleResize1);
+  }, []);
+
+  useEffect(() => {
+    // Function to check screen width
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    // Check screen size on component mount and on window resize
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", checkScreenSize);
+    };
   }, []);
 
   useEffect(() => {
@@ -601,14 +618,28 @@ export default function Homecity() {
     filterappliance,
   ]);
   const MODAL_TYPE = {
-    CLEANING: "CLEANING",
-    PAINT: "PAINT",
-    PEST_CONTROL: "PEST_CONTROL",
-    MARBEL: "MARBEL",
-    REPAIRING: "REPAIRING",
-    PACKERS: "PACKERS",
-    APPLIANCE: "APPLIANCE",
+    cleaning: "Cleaning",
+    painting: "Painting",
+    "Pest Control": "Pest Control",
+    "Floor Polishing": "Floor Polishing",
+    "Home Repair Services": "Home Repair Services",
+    "Packers & Movers": "Packers & Movers",
+    "Appliance Service": "Appliance Service",
+    "Facility Management": "Facility Management",
   };
+  const [selectedCategoryy, setSelectedCategoryy] = useState("");
+
+  const searchcategory1 = {
+    Cleaning: "Cleaning",
+    Painting: "Painting",
+    "Pest Control": "Pest Control",
+    "Floor Polishing": "Floor Polishing",
+    "Home Repair Services": "Home Repair Services",
+    "Packers & Movers": "Packers & Movers",
+    "Appliance Service": "Appliance Service",
+    "Facility Management": "Facility Management",
+  };
+
   const [filteredData, setFilteredData] = useState([]);
   const [ModalSubcategoryView, setModalSubcategoryView] = useState(false);
   const [CateGoryName, setCateGoryName] = useState(null);
@@ -872,7 +903,11 @@ export default function Homecity() {
               <input
                 type="text"
                 className="col-md-12 poppins-regular"
-                placeholder="Search for Services"
+                placeholder={
+                  selectedCategoryy
+                    ? `Search for ${searchcategory1}`
+                    : "Search for Services"
+                }
                 style={{
                   height: "45px",
                   paddingLeft: "140px",
@@ -1144,6 +1179,9 @@ export default function Homecity() {
                   clickable: true,
                   el: ".swiper-pagination-cleaning",
                 }}
+                autoplay={
+                  isMobile ? { delay: 2500, disableOnInteraction: true } : false
+                }
                 navigation={{
                   nextEl: ".swiper-button-next-cleaning",
                   prevEl: ".swiper-button-prev-cleaning",
@@ -1240,6 +1278,9 @@ export default function Homecity() {
                   clickable: true,
                   el: ".swiper-pagination-painting",
                 }}
+                autoplay={
+                  isMobile ? { delay: 2500, disableOnInteraction: true } : false
+                }
                 navigation={{
                   nextEl: ".swiper-button-next-painting",
                   prevEl: ".swiper-button-prev-painting",
@@ -1331,6 +1372,9 @@ export default function Homecity() {
                   clickable: true,
                   el: ".swiper-pagination-pest",
                 }}
+                autoplay={
+                  isMobile ? { delay: 2500, disableOnInteraction: true } : false
+                }
                 navigation={{
                   nextEl: ".swiper-button-next-pest",
                   prevEl: ".swiper-button-prev-pest",
@@ -1474,6 +1518,9 @@ export default function Homecity() {
                   clickable: true,
                   el: ".swiper-pagination-polishing",
                 }}
+                autoplay={
+                  isMobile ? { delay: 2500, disableOnInteraction: true } : false
+                }
                 navigation={{
                   nextEl: ".swiper-button-next-polishing",
                   prevEl: ".swiper-button-prev-polishing",
@@ -1565,6 +1612,9 @@ export default function Homecity() {
                   clickable: true,
                   el: ".swiper-pagination-packers",
                 }}
+                autoplay={
+                  isMobile ? { delay: 2500, disableOnInteraction: true } : false
+                }
                 navigation={{
                   nextEl: ".swiper-button-next-packers",
                   prevEl: ".swiper-button-prev-packers",
@@ -1656,6 +1706,9 @@ export default function Homecity() {
                   clickable: true,
                   el: ".swiper-pagination-appliance",
                 }}
+                autoplay={
+                  isMobile ? { delay: 2500, disableOnInteraction: true } : false
+                }
                 navigation={{
                   nextEl: ".swiper-button-next-appliance",
                   prevEl: ".swiper-button-prev-appliance",
@@ -1747,6 +1800,9 @@ export default function Homecity() {
                   clickable: true,
                   el: ".swiper-pagination-repairing",
                 }}
+                autoplay={
+                  isMobile ? { delay: 2500, disableOnInteraction: true } : false
+                }
                 navigation={{
                   nextEl: ".swiper-button-next-repairing",
                   prevEl: ".swiper-button-prev-repairing",
@@ -1827,6 +1883,9 @@ export default function Homecity() {
                   clickable: true,
                   el: ".swiper-pagination-appliance",
                 }}
+                autoplay={
+                  isMobile ? { delay: 2500, disableOnInteraction: true } : false
+                }
                 navigation={{
                   nextEl: ".swiper-button-next-appliance",
                   prevEl: ".swiper-button-prev-appliance",

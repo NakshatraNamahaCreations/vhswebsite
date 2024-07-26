@@ -140,7 +140,7 @@ function Summary() {
       const nextDays = [];
       const currentDate = new Date();
 
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 10; i++) {
         // Changed to 12 dates
         const date = new Date(currentDate);
         date.setDate(currentDate.getDate() + i);
@@ -422,7 +422,55 @@ function Summary() {
       </div>
     );
   };
+  const renderSlots1 = () => {
+    if (!selectedDate) {
+      return null;
+    }
 
+    const currentDate = new Date();
+    const dateToCompare = new Date(selectedDate);
+
+    let slots;
+
+    if (currentDate == dateToCompare) {
+      slots = filteredData || [];
+    } else if (currentDate > dateToCompare) {
+      slots = filteredData1 || [];
+    } else {
+      slots = filteredData || [];
+    }
+
+    slots.sort((a, b) => {
+      const startTimeA = moment(a.startTime, "hA");
+      const startTimeB = moment(b.startTime, "hA");
+      return startTimeA.diff(startTimeB);
+    });
+
+    return (
+      <div className="renderslots" style={{}}>
+        {slots.map((slot, index) => (
+          <div key={index} className="col-md-2">
+            <div
+              className="mt-3 poppins-light"
+              style={{
+                border: "1px solid grey",
+                fontSize: "14px",
+                textAlign: "center",
+                padding: "5px 5px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                color: selectedSlotIndex === index ? "white" : "black",
+                backgroundColor: selectedSlotIndex === index ? "darkred" : "",
+              }}
+              onClick={() => handleSlotClick1(index, slot.startTime)}
+            >
+              {slot.startTime}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
   // bOOKING dETAILS
 
   const calculateExpiryDate = (selectedDate, servicePeriod) => {
@@ -831,10 +879,12 @@ function Summary() {
                 >
                   Schedule Service
                 </div>
-                <div className="select_date ">
-                  <div className="text poppins-medium">Select the date</div>
+                <div className="select_date">
+                  <div className="text poppins-medium mt-2">
+                    Select the date
+                  </div>
 
-                  <div className="date_selection">
+                  {/* <div className="date_selection">
                     {fourDates?.map((day, index) => {
                       const isDefaultChecked = isDateSelected(day);
 
@@ -853,7 +903,40 @@ function Summary() {
                         </label>
                       );
                     })}
+                  </div> */}
+
+                  <div className="date_grid_container">
+                    {fourDates?.map((day, index) => {
+                      const isDefaultChecked = isDateSelected(day);
+
+                      return (
+                        <div className="date_label row col-md-2">
+                          <label
+                            htmlFor={index}
+                            key={index}
+                            // className="date_label"
+                          >
+                            <input
+                              type="checkbox"
+                              name=""
+                              id={day?.day}
+                              className="date_checkbox"
+                            />
+                            <span
+                              className={`inpt poppins-medium ${
+                                isDefaultChecked ? "matching" : ""
+                              }`}
+                              style={{}}
+                              onClick={() => handleCheckboxSelect(day)}
+                            >
+                              {day?.dayName} - {day?.day}
+                            </span>
+                          </label>
+                        </div>
+                      );
+                    })}
                   </div>
+
                   <div className="date">
                     <button
                       className="poppins-light"
@@ -901,10 +984,28 @@ function Summary() {
                     </div>
                   )}
                 </div>
-                <div className="select_date">
+                {/* <div className="select_date">
                   <div className="text poppins-medium">Select the Slot</div>
 
                   {renderSlots()}
+                </div> */}
+                <div className="select_date">
+                  <div className="cartrenderslot">
+                    <div className="text poppins-medium">Select the Slot</div>
+                    {renderSlots()}
+                  </div>
+                </div>
+
+                <div className="select_date">
+                  <div className="cartrenderslot1">
+                    <div
+                      className="poppins-medium"
+                      style={{ fontSize: "18px" }}
+                    >
+                      Slots
+                    </div>
+                    <div className="mt-4 mb-3">{renderSlots1()}</div>
+                  </div>
                 </div>
               </div>
 

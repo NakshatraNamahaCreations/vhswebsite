@@ -186,12 +186,11 @@ function Serviceviewdetails() {
     getallservice();
   }, []);
 
-  const getallservice = async (category) => {
+  const getallservice = async () => {
     try {
       let res = await axios.get(
         `https://api.vijayhomesuperadmin.in/api/userapp/getserviceNameManagement`
       );
-
       if (res.status === 200) {
         setallserviceName(res.data.services);
       }

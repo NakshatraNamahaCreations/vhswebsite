@@ -162,36 +162,63 @@ function Footer() {
           </div>
 
           <div className="d-flex mt-3">
-            <img
-              src="../assests/insta.webp"
-              alt="loading..."
-              style={{ width: "30px", height: "30px", borderRadius: "20px" }}
-            />
-            <img
-              className="mx-3"
-              src="../assests/youtube.png"
-              alt="loading..."
-              style={{ width: "30px", height: "30px", borderRadius: "20px" }}
-            />
-            <img
-              // className="mx-3"
-              src="../assests/facebook.png"
-              alt="loading..."
-              style={{ width: "30px", height: "30px", borderRadius: "20px" }}
-            />
+            <a href="https://www.instagram.com/vijayhomeservices/">
+              <img
+                src="../assests/insta.webp"
+                alt="loading..."
+                style={{ width: "30px", height: "30px", borderRadius: "20px" }}
+              />
+            </a>
+
+            <a href="https://www.youtube.com/channel/UC72EHMng8A2mr0Xs7YnoH4g">
+              <img
+                className="mx-3"
+                src="../assests/youtube.png"
+                alt="loading..."
+                style={{ width: "30px", height: "30px", borderRadius: "20px" }}
+              />
+            </a>
+
+            <a href="https://www.linkedin.com/company/vijay-home-services/?viewAsMember=true">
+              <img
+                // className="mx-3"
+                src="../assests/linkdin.jpeg"
+                alt="loading..."
+                style={{ width: "30px", height: "30px", borderRadius: "20px" }}
+              />
+            </a>
+
+            <a href="https://x.com/vijay_home_serv">
+              <img
+                className="mx-3"
+                src="../assests/twitter.jpeg"
+                alt="loading..."
+                style={{ width: "30px", height: "30px", borderRadius: "20px" }}
+              />
+            </a>
           </div>
-          <img
-            src={social}
-            alt="loading...."
-            style={{ width: "140px", height: "40px", marginTop: "10px" }}
-          />
+          <a href="https://play.google.com/store/apps/details?id=com.vhs1">
+            <img
+              src={social}
+              alt="loading...."
+              style={{ width: "140px", height: "40px", marginTop: "10px" }}
+            />
+          </a>
+
           <br />
-          <img
-            src={socialone}
-            alt="loading...."
-            style={{ width: "140px", height: "40px", marginTop: "10px" }}
-          />
+          <a href="https://play.google.com/store/apps/details?id=com.vhs1">
+            <img
+              src={socialone}
+              alt="loading...."
+              style={{ width: "140px", height: "40px", marginTop: "10px" }}
+            />
+          </a>
         </div>
+      </div>
+
+      <div className="text-center poppins-black">
+        ©2024 Vijay Home Services .All rights reserved. Designed and Developed
+        By Nakshatra Namaha Creations
       </div>
     </div>
   );
