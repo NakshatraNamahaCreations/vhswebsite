@@ -11,6 +11,7 @@ function Signup() {
   const [success, setSuccess] = useState("");
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const [name, setname] = useState("");
 
   useEffect(() => {
     if (timer > 0) {
@@ -32,7 +33,7 @@ function Signup() {
     try {
       const response = await axios.post(
         "https://api.vijayhomeservicebengaluru.in/api/sendotp/sendByCartBook",
-        { mainContact: mainContact }
+        { mainContact: mainContact, customerName: name }
       );
       if (response.status === 200) {
         alert("Successful login");
@@ -95,6 +96,19 @@ function Signup() {
 
                 <input
                   type="text"
+                  value={name}
+                  onChange={(e) => setname(e.target.value)}
+                  placeholder="Enter Name"
+                  style={{
+                    border: "1px solid grey",
+                    height: "45px",
+                    width: "60%",
+                    marginTop: "15px",
+                  }}
+                />
+
+                <input
+                  type="text"
                   value={mainContact}
                   onChange={(e) => setMainContact(e.target.value)}
                   placeholder="Enter Mobile Number"
@@ -102,7 +116,6 @@ function Signup() {
                     border: "1px solid grey",
                     height: "45px",
                     width: "60%",
-                    marginTop: "15px",
                   }}
                 />
 

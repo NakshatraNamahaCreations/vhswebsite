@@ -508,6 +508,55 @@ function Cartbook() {
     addAddress();
   };
 
+  // const renderSlots = () => {
+  //   if (!selectedDate) {
+  //     return null;
+  //   }
+
+  //   const currentDate = new Date();
+  //   const dateToCompare = new Date(selectedDate);
+
+  //   let slots;
+
+  //   if (currentDate == dateToCompare) {
+  //     slots = filteredData || [];
+  //   } else if (currentDate > dateToCompare) {
+  //     slots = filteredData1 || [];
+  //   } else {
+  //     slots = filteredData || [];
+  //   }
+
+  //   slots.sort((a, b) => {
+  //     const startTimeA = moment(a.startTime, "hA");
+  //     const startTimeB = moment(b.startTime, "hA");
+  //     return startTimeA.diff(startTimeB);
+  //   });
+
+  //   return (
+  //     <div className="row">
+  //       {slots.map((slot, index) => (
+  //         <div key={index} className="col-md-2">
+  //           <div
+  //             className="mt-3 poppins-light"
+  //             style={{
+  //               border: "1px solid grey",
+  //               fontSize: "14px",
+  //               textAlign: "center",
+  //               padding: "5px",
+  //               borderRadius: "5px",
+  //               cursor: "pointer",
+  //               color: selectedSlotIndex === index ? "white" : "black",
+  //               backgroundColor: selectedSlotIndex === index ? "darkred" : "",
+  //             }}
+  //             onClick={() => handleSlotClick1(index, slot.startTime)}
+  //           >
+  //             {slot.startTime}
+  //           </div>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
   const renderSlots = () => {
     if (!selectedDate) {
       return null;
@@ -518,7 +567,7 @@ function Cartbook() {
 
     let slots;
 
-    if (currentDate == dateToCompare) {
+    if (currentDate.toDateString() === dateToCompare.toDateString()) {
       slots = filteredData || [];
     } else if (currentDate > dateToCompare) {
       slots = filteredData1 || [];
@@ -526,7 +575,18 @@ function Cartbook() {
       slots = filteredData || [];
     }
 
-    slots.sort((a, b) => {
+    // Remove duplicate slots based on startTime
+    const uniqueSlots = [];
+    const seenTimes = new Set();
+
+    for (const slot of slots) {
+      if (!seenTimes.has(slot.startTime)) {
+        uniqueSlots.push(slot);
+        seenTimes.add(slot.startTime);
+      }
+    }
+
+    uniqueSlots.sort((a, b) => {
       const startTimeA = moment(a.startTime, "hA");
       const startTimeB = moment(b.startTime, "hA");
       return startTimeA.diff(startTimeB);
@@ -534,7 +594,7 @@ function Cartbook() {
 
     return (
       <div className="row">
-        {slots.map((slot, index) => (
+        {uniqueSlots.map((slot, index) => (
           <div key={index} className="col-md-2">
             <div
               className="mt-3 poppins-light"
@@ -568,7 +628,7 @@ function Cartbook() {
 
     let slots;
 
-    if (currentDate == dateToCompare) {
+    if (currentDate.toDateString() === dateToCompare.toDateString()) {
       slots = filteredData || [];
     } else if (currentDate > dateToCompare) {
       slots = filteredData1 || [];
@@ -576,7 +636,18 @@ function Cartbook() {
       slots = filteredData || [];
     }
 
-    slots.sort((a, b) => {
+    // Remove duplicate slots based on startTime
+    const uniqueSlots = [];
+    const seenTimes = new Set();
+
+    for (const slot of slots) {
+      if (!seenTimes.has(slot.startTime)) {
+        uniqueSlots.push(slot);
+        seenTimes.add(slot.startTime);
+      }
+    }
+
+    uniqueSlots.sort((a, b) => {
       const startTimeA = moment(a.startTime, "hA");
       const startTimeB = moment(b.startTime, "hA");
       return startTimeA.diff(startTimeB);
@@ -584,7 +655,7 @@ function Cartbook() {
 
     return (
       <div className="renderslots" style={{}}>
-        {slots.map((slot, index) => (
+        {uniqueSlots.map((slot, index) => (
           <div key={index} className="col-md-2">
             <div
               className="mt-3 poppins-light"
@@ -714,7 +785,7 @@ function Cartbook() {
 
     try {
       const res = await axios.post(
-        "https://api.vijayhomeservicebengaluru.in/api/payment/yogipayment",
+        "http://localhost:8080/api/payment/yogipayment",
         updateddata
       );
       console.log("Response:", res.data);

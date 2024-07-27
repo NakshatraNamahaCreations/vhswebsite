@@ -798,6 +798,15 @@ export default function Homecity() {
     }
   };
 
+  const bannerimagedata = [
+    { images: "https://vijayahomeservices.b-cdn.net/2607.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/2608.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/2609.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/2610.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/2611.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/2612.jpg" },
+  ];
+
   console.log("FilterCleaningWithImages=====", FilterCleaningWithImages);
 
   return (
@@ -883,6 +892,50 @@ export default function Homecity() {
               </button>
             </div>
           </div>
+
+          {/* <div className="imagebanner1">
+            <div id="carouselExample" className="carousel slide">
+              <div className="carousel-inner">
+                {bannerimagedata.map((data, index) => (
+                  <div
+                    key={index}
+                    className={`carousel-item ${index === 0 ? "active" : ""}`}
+                  >
+                    <img
+                      src={data.images}
+                      className="d-block w-100"
+                      alt={`Banner ${index + 1}`}
+                      style={{ height: "250px", width: "350px" }}
+                    />
+                  </div>
+                ))}
+              </div>
+              <button
+                className="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="prev"
+              >
+                <span
+                  className="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button
+                className="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="next"
+              >
+                <span
+                  className="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span className="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div> */}
 
           <div
             className="row"

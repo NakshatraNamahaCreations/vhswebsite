@@ -74,8 +74,9 @@ function App() {
         <Route path="/upcomingdetail" element={<Upcomingdetail />} />
         <Route path="/enquirydetails" element={<Enquirydetails />} />
         <Route path="/completeddetails" element={<Completeddetails />} />
-        <Route path="/services/:data" element={<Category />} />
-        <Route path="/service/:subcategory" element={<Subcategory />} />
+        {/* <Route path="/services/:data" element={<Category />} /> */}
+
+        <Route path="/services/:subcategory" element={<Subcategory />} />
         <Route
           path="/serviceview/:ServiceName"
           element={<Serviceviewdetails />}

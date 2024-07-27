@@ -623,50 +623,66 @@ function Servicedetails() {
                 <div className="col-md-4 mx-4 callimg_row">
                   <div className="d-flex" style={{ marginTop: "-50px" }}>
                     <div>
-                      <div
-                        className="d-flex"
-                        style={{ justifyContent: "center" }}
+                      <a
+                        href="tel:9344533703"
+                        style={{ textDecoration: "none", color: "inherit" }}
                       >
-                        <img
-                          src={call}
-                          alt="loading....."
-                          className="callimg"
-                        />
-                      </div>
+                        <div
+                          className="d-flex"
+                          style={{ justifyContent: "center" }}
+                        >
+                          <img
+                            src={call}
+                            alt="loading....."
+                            className="callimg"
+                          />
+                        </div>
 
-                      <div
-                        className="poppins-regular shadow-lg"
-                        style={{
-                          backgroundColor: "white",
-                          padding: "3px 8px",
-                          marginTop: "-11px",
-                          borderRadius: "5px",
-                          fontSize: "6px",
-                        }}
-                      >
-                        Call Now
-                      </div>
+                        <div
+                          className="poppins-regular shadow-lg"
+                          style={{
+                            backgroundColor: "white",
+                            padding: "3px 8px",
+                            marginTop: "-11px",
+                            borderRadius: "5px",
+                            fontSize: "6px",
+                          }}
+                        >
+                          Call Now
+                        </div>
+                      </a>
                     </div>
 
                     <div style={{ marginLeft: "40px" }}>
-                      <div
-                        className="d-flex"
-                        style={{ justifyContent: "center" }}
+                      <a
+                        href="https://wa.me/919344533703" // Replace with the appropriate country code and number
+                        style={{ textDecoration: "none", color: "inherit" }}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
-                        <img src={web} alt="loading....." className="webimg" />
-                      </div>
-                      <div
-                        className="poppins-regular shadow-lg"
-                        style={{
-                          backgroundColor: "white",
-                          padding: "3px 8px",
-                          marginTop: "-11px",
-                          borderRadius: "5px",
-                          fontSize: "6px",
-                        }}
-                      >
-                        Wtsup us
-                      </div>
+                        <div
+                          className="d-flex"
+                          style={{ justifyContent: "center" }}
+                        >
+                          <img
+                            src={web}
+                            alt="loading....."
+                            className="webimg"
+                          />
+                        </div>
+                        <div
+                          className="poppins-regular shadow-lg"
+                          style={{
+                            backgroundColor: "white",
+                            padding: "3px 8px",
+                            marginTop: "-11px",
+                            borderRadius: "5px",
+                            fontSize: "6px",
+                          }}
+                        >
+                          Wtsup us
+                        </div>
+                      </a>
                     </div>
                   </div>
                 </div>

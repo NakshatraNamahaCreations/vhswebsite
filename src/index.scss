@@ -1167,6 +1167,9 @@ background: rgb(255, 68, 68) !important;
   height: 250px;
   border-radius: 10px;
 }
+.imagebanner1{
+  display: none !important;
+}
 .offerbannerdata_div1{
   display: none !important;
 }
@@ -1384,6 +1387,12 @@ background: rgb(255, 68, 68) !important;
     height: 100px !important;
     border-radius: 10px !important;
   }
+  .imagebanner{
+    display: none !important;
+  }
+  .imagebanner1{
+    display: flex !important;
+  }
   .offerbannerdata_div{
     display: none !important;
   }
@@ -1567,6 +1576,12 @@ background: rgb(255, 68, 68) !important;
     display: none !important;
   }
   .cartrenderslot1{
+    display: flex !important;
+  }
+  .imagebanner{
+    display: none !important;
+  }
+  .imagebanner1{
     display: flex !important;
   }
 }

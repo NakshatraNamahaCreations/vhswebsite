@@ -216,10 +216,10 @@ function Footer() {
         </div>
       </div>
 
-      <div className="text-center poppins-black">
+      {/* <div className="text-center poppins-black">
         ©2024 Vijay Home Services .All rights reserved. Designed and Developed
         By Nakshatra Namaha Creations
-      </div>
+      </div> */}
     </div>
   );
 }

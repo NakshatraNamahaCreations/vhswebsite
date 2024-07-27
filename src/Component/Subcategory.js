@@ -25,6 +25,8 @@ import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Faq from "react-faq-component";
 import Cartnavbar from "./Cartnavbar";
+import NavbarCompo from "./Header1";
+import Homenavbar from "./Homenavbar";
 
 function Subcategory() {
   const [subcategoryData, setSubcategoryData] = useState([]);
@@ -42,7 +44,7 @@ function Subcategory() {
   const [serviceData, setserviceData] = useState([]);
   const [subModel, setsubModel] = useState(false);
   // const [filtersub, setfiltersub] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [Item, setItem] = useState([]);
   // const [City, setCity] = useState(null);
   const [OpenViewCartModal, setOpenViewCartModal] = useState(false);
@@ -74,8 +76,15 @@ function Subcategory() {
   const [review, setreview] = useState([]);
   const navigate = useNavigate();
   const [city, setCity] = useState("");
+  const [Bannermidledata, setBannermidledata] = useState([]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // 2 seconds
 
-  console.log("city====suman", city, subcategory);
+    // Clean up the timer if the component is unmounted before the timer ends
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     getSubcategories();
@@ -118,30 +127,64 @@ function Subcategory() {
     }
   };
 
+  const [Cat, setCat] = useState(false);
+  const [categorynewData, setcategorynewData] = useState([]);
+
   useEffect(() => {
     if (subcategory && allSubcat.length > 0) {
       const parts = subcategory.split("-");
       const category1 = capitalizeFirstLetter(parts[0]);
 
-      console.log("Searching for:", category1);
-      console.log("Available subcategories:", allSubcat);
+      const services = [
+        "Cleaning",
+        "Painting",
+        "Pest Control",
+        "Floor Polishing",
+        "Home Repair Services",
+        "Packers & Movers",
+        "Appliance Service",
+        "Facility Management",
+      ];
 
-      const fullServiceName = allSubcat.find((service) =>
-        service.subcategory.toLowerCase().includes(category1.toLowerCase())
+      const categoryNamecheck = services.find((service) =>
+        service.toLowerCase().includes(category1.toLowerCase())
       );
 
-      console.log("Found fullServiceName:", fullServiceName);
-
-      if (fullServiceName) {
+      if (categoryNamecheck) {
         const city = parts.slice(3).join("-");
         setCity(city);
-        setSub(fullServiceName.subcategory);
-        getSubcategory(fullServiceName.subcategory);
+        setCat(true);
+        categoryData(categoryNamecheck);
       } else {
-        console.error("Service not found");
+        const fullServiceName = allSubcat.find((service) =>
+          service.subcategory.toLowerCase().includes(category1.toLowerCase())
+        );
+        if (fullServiceName) {
+          const city = parts.slice(3).join("-");
+          setCity(city);
+          setSub(fullServiceName.subcategory);
+          getSubcategory(fullServiceName.subcategory);
+        } else {
+          console.error("Service not found");
+        }
       }
     }
   }, [subcategory, allSubcat]);
+
+  const categoryData = async (category) => {
+    try {
+      let res = await axios.post(
+        `https://api.vijayhomesuperadmin.in/api/userapp/postappsubcat`,
+        { category: category }
+      );
+
+      if (res.status === 200) {
+        setcategorynewData(res.data.subcategory);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const localstoragecitys = localStorage.getItem("city");
 
@@ -391,7 +434,37 @@ function Subcategory() {
     });
   };
 
-  console.log("postsubdata", postsubdata);
+  useEffect(() => {
+    getbannerimg();
+  }, []);
+
+  const getbannerimg = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomesuperadmin.in/api/userapp/getallofferbanner"
+    );
+    if ((res.status = 200)) {
+      setofferBannerdata(
+        res.data?.offerbanner.filter((i) => i.subcategory === sub)
+      );
+    }
+  };
+
+  useEffect(() => {
+    getbannerdatamiddle();
+  }, []);
+
+  const getbannerdatamiddle = async () => {
+    let res = await axios.get(
+      "https://api.vijayhomesuperadmin.in/api/userapp/getallSpotlightSP"
+    );
+    if ((res.status = 200)) {
+      setBannermidledata(
+        res.data?.SpotlightSP.filter((i) => i?.subcategory === sub)
+      );
+    }
+  };
+
+  console.log("bannerimg===12983", offerBannerdata);
 
   const navigateToServiceViewPage = (sub) => {
     {
@@ -407,1137 +480,1353 @@ function Subcategory() {
 
   return (
     <div>
-      <Header1 />
-      <Cartnavbar />
-      <div className="container">
-        <div className="row">
-          <div className="col-md-6">
-            <div>
-              <h2
-                className="poppins-semibold"
-                style={{
-                  color: "black",
-                  fontWeight: "bold",
-                  fontSize: "18px",
-                  marginTop: "25px",
-                }}
-              >
-                {/* {sub} */}
-                {subcategory}
-              </h2>
+      {isLoading ? (
+        <>
+          <div className="row m-auto text-center" style={{ height: "100vh" }}>
+            <div className="col-md-4"></div>
+            <div className="col-md-4 m-auto ">
+              <SpinnerCircular
+                size={90}
+                thickness={87}
+                speed={80}
+                color="rgba(27, 22, 22, 1)"
+                secondaryColor="rgba(214, 191, 91, 1)"
+              />
             </div>
-            <div className="row" style={{}}>
-              {postsubdata
-                .sort((a, b) => parseInt(a.order) - parseInt(b.order))
-                .map((data, index) => (
-                  <div
-                    key={index}
-                    className="col-md-4 mt-4 text-center"
-                    // onClick={() => scrollToService(index + 1)}
-                  >
-                    <img
-                      style={{
-                        width: "90px",
-                        height: "90px",
-                        borderRadius: "10px",
-                      }}
-                      className="mb-2"
-                      alt={`${data.subcategory} images`}
-                      src={data.imglink}
-                    />
-                    <div
-                      className="poppins-medium pb-2"
-                      style={{
-                        color: "black",
-                        fontSize: "10px",
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      {data.sub_subcategory}
+
+            <div className="col-md-4"></div>
+          </div>
+        </>
+      ) : (
+        <>
+          {Cat ? (
+            <div>
+              <NavbarCompo />
+              <Homenavbar />
+              <div className="container">
+                <div className="row mb-4 justify-content-center">
+                  <h1 className="poppins-semibold mt-4">{data}</h1>
+                  {categorynewData.map((ele, index) => (
+                    <div className="col-md-3 mt-3" key={index}>
+                      <Link
+                        to={{
+                          pathname: `/services/${ele.subcategory
+                            .toLowerCase()
+                            .replace(/ /g, "-")}-in-${city
+                            .toLowerCase()
+                            .replace(/ /g, "-")}`,
+                          state: { data: ele },
+                        }}
+                        onClick={() => setCat(false)}
+                        className="text-decoration-none text-black"
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <img
+                            src={ele.imglink}
+                            alt={`${ele.category} images`}
+                            className="img-fluid"
+                            style={{
+                              width: "150px",
+                              height: "150px",
+                              borderRadius: "10px",
+                            }}
+                          />
+                        </div>
+                        <div className="poppins-medium mt-3 text-center">
+                          {ele.subcategory}
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <Footer />
+            </div>
+          ) : (
+            <div>
+              <Header1 />
+              <Cartnavbar />
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div>
+                      <h2
+                        className="poppins-semibold"
+                        style={{
+                          color: "black",
+                          fontWeight: "bold",
+                          fontSize: "18px",
+                          marginTop: "25px",
+                        }}
+                      >
+                        {/* {sub} */}
+                        {subcategory}
+                      </h2>
+                    </div>
+                    <div className="row" style={{}}>
+                      {postsubdata
+                        .sort((a, b) => parseInt(a.order) - parseInt(b.order))
+                        .map((data, index) => (
+                          <div
+                            key={index}
+                            className="col-md-4 mt-4 subcat-row text-center"
+                            // onClick={() => scrollToService(index + 1)}
+                          >
+                            <img
+                              style={{
+                                width: "90px",
+                                height: "90px",
+                                borderRadius: "10px",
+                              }}
+                              className="mb-2"
+                              alt={`${data.subcategory} images`}
+                              src={data.imglink}
+                            />
+                            <div
+                              className="poppins-medium pb-2"
+                              style={{
+                                color: "black",
+                                fontSize: "10px",
+                                fontWeight: "bold",
+                                textAlign: "center",
+                              }}
+                            >
+                              {data.sub_subcategory}
+                            </div>
+                          </div>
+                        ))}
                     </div>
                   </div>
-                ))}
-            </div>
-          </div>
 
-          <div className="col-md-6 mt-5">
-            {subcategoryVideo &&
-              subcategoryVideo.map((Ele) => {
-                return (
-                  <video
-                    key={Ele.id} // Ensure each video has a unique key if iterating over an array
-                    src={Ele.videolink}
-                    style={{ width: "250px", height: "250px" }} // Fixed width and height
-                    className="video-player"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                  />
-                );
-              })}
-          </div>
-        </div>
-      </div>
-      <div className="row"></div>
-      <div className="container">
-        <div
-          className="poppins-semibold mt-3"
-          style={{ color: "black", fontSize: "20px", fontWeight: "bold" }}
-        >
-          {sub}
-        </div>
-        <div className="col-md-6">
-          <div className="d-flex mt-2">
-            <div className="poppins-regular" style={{ color: "black" }}>
-              4.9
-            </div>
-            <div className="mx-2" style={{ marginTop: "-5px" }}>
-              <i
-                class="fa-solid fa-star"
-                style={{ color: "gold", fontSize: "14px" }}
-              ></i>
-              <i
-                class="fa-solid fa-star"
-                style={{ color: "gold", fontSize: "14px" }}
-              ></i>
-              <i
-                class="fa-solid fa-star"
-                style={{ color: "gold", fontSize: "14px" }}
-              ></i>
-              <i
-                class="fa-solid fa-star"
-                style={{ color: "gold", fontSize: "14px" }}
-              ></i>
-              <i
-                class="fa-solid fa-star"
-                style={{ color: "gold", fontSize: "14px" }}
-              ></i>
-            </div>
-            <div className="poppins-regular" style={{ color: "black" }}>
-              (9.1T)
-            </div>
-            <div className="d-flex mx-5 px-5" style={{ marginTop: "-50px" }}>
-              <div>
-                <img
-                  src={call}
-                  alt="loading....."
-                  style={{ width: "80px", height: "80px" }}
-                />
-                <div
-                  className="poppins-black shadow-lg"
-                  style={{
-                    backgroundColor: "white",
-                    padding: "3px 8px",
-                    marginTop: "-11px",
-                    borderRadius: "5px",
-                  }}
-                >
-                  Call Now
+                  <div className="col-md-6 mt-5">
+                    {subcategoryVideo &&
+                      subcategoryVideo.map((Ele) => {
+                        return (
+                          <video
+                            key={Ele.id} // Ensure each video has a unique key if iterating over an array
+                            src={Ele.videolink}
+                            style={{ width: "250px", height: "250px" }} // Fixed width and height
+                            className="video-player"
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                          />
+                        );
+                      })}
+                  </div>
                 </div>
               </div>
-
-              <div style={{ marginLeft: "40px" }}>
-                <img
-                  src={web}
-                  alt="loading....."
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    marginLeft: "15px",
-                  }}
-                />
+              <div className="row"></div>
+              <div className="container">
                 <div
-                  className="poppins-black shadow-lg"
+                  className="poppins-semibold mt-3"
                   style={{
-                    backgroundColor: "white",
-                    padding: "3px 8px",
-                    marginTop: "-11px",
-                    borderRadius: "5px",
+                    color: "black",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    textAlign: "left",
                   }}
                 >
-                  Wtsup us
+                  {sub}
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                <div className="col-md-6 mt-4">
+                  <div className="d-flex">
+                    <div className="col-md-8 d-flex">
+                      <div
+                        className="poppins-regular "
+                        style={{ color: "black", fontSize: "10px" }}
+                      >
+                        4.9
+                      </div>
+                      <div className="" style={{ marginTop: "-5px" }}>
+                        <i
+                          class="fa-solid fa-star"
+                          style={{ color: "gold", fontSize: "7px" }}
+                        ></i>
+                        <i
+                          class="fa-solid fa-star"
+                          style={{ color: "gold", fontSize: "7px" }}
+                        ></i>
+                        <i
+                          class="fa-solid fa-star"
+                          style={{ color: "gold", fontSize: "7px" }}
+                        ></i>
+                        <i
+                          class="fa-solid fa-star"
+                          style={{ color: "gold", fontSize: "7px" }}
+                        ></i>
+                        <i
+                          class="fa-solid fa-star"
+                          style={{ color: "gold", fontSize: "7px" }}
+                        ></i>
+                      </div>
+                      <div
+                        className="poppins-regular"
+                        style={{ color: "black", fontSize: "10px" }}
+                      >
+                        (9.1T)
+                      </div>
+                    </div>
+                    <div className="col-md-4 mx-4 callimg_row">
+                      <div className="d-flex" style={{ marginTop: "-50px" }}>
+                        <div>
+                          <a
+                            href="tel:9344533703"
+                            style={{ textDecoration: "none", color: "inherit" }}
+                          >
+                            <div
+                              className="d-flex"
+                              style={{ justifyContent: "center" }}
+                            >
+                              <img
+                                src={call}
+                                alt="loading....."
+                                className="callimg"
+                              />
+                            </div>
 
-        <div className="row mt-3">
-          {offerBannerdata.map((data) => (
-            <div className="col-md-3 mt-3">
-              <div
-                className="d-flex"
-                style={{ backgroundColor: "darkred", borderRadius: "5px" }}
-              >
+                            <div
+                              className="poppins-regular shadow-lg"
+                              style={{
+                                backgroundColor: "white",
+                                padding: "3px 8px",
+                                marginTop: "-11px",
+                                borderRadius: "5px",
+                                fontSize: "6px",
+                              }}
+                            >
+                              Call Now
+                            </div>
+                          </a>
+                        </div>
+
+                        <div style={{ marginLeft: "40px" }}>
+                          <a
+                            href="https://wa.me/919344533703" // Replace with the appropriate country code and number
+                            style={{ textDecoration: "none", color: "inherit" }}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <div
+                              className="d-flex"
+                              style={{ justifyContent: "center" }}
+                            >
+                              <img
+                                src={web}
+                                alt="loading....."
+                                className="webimg"
+                              />
+                            </div>
+                            <div
+                              className="poppins-regular shadow-lg"
+                              style={{
+                                backgroundColor: "white",
+                                padding: "3px 8px",
+                                marginTop: "-11px",
+                                borderRadius: "5px",
+                                fontSize: "6px",
+                              }}
+                            >
+                              Wtsup us
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row offerbannerdata_div mt-3">
+                  {offerBannerdata.map((data) => (
+                    <div className="col-md-3 mt-3">
+                      <div
+                        className="d-flex"
+                        style={{
+                          backgroundColor: "darkred",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <div
+                          className="col-md-2 mx-1"
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <img
+                            height={20}
+                            width={20}
+                            alt=""
+                            src={`https://api.vijayhomesuperadmin.in/offerbanner/${data.icon}`}
+                          />
+                        </div>
+                        <div className="col-md-10 mt-3 mx-1">
+                          <div
+                            className="poppins-regular"
+                            style={{
+                              color: "white",
+                              fontWeight: "bold",
+                              fontSize: "14px",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {data.header}
+                          </div>
+                          <p
+                            className="poppins-regular mt-1"
+                            style={{
+                              color: "white",
+                              fontSize: "11px",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {data.desc}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className=" offerbannerdata_div1 mt-3">
+                  <Swiper
+                    slidesPerView={1}
+                    spaceBetween={30}
+                    freeMode={true}
+                    pagination={{
+                      clickable: true,
+                    }}
+                    autoplay={{
+                      delay: 2500,
+                      disableOnInteraction: false,
+                    }}
+                    modules={[FreeMode, Pagination, Autoplay]}
+                    className="mySwiper"
+                  >
+                    {offerBannerdata.map((data, index) => (
+                      <SwiperSlide key={data._id}>
+                        <div
+                          className="d-flex"
+                          style={{
+                            backgroundColor: "darkred",
+                            padding: "6px",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          <div
+                            className="col-md-1"
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            <img
+                              style={{ width: "20px", height: "20px" }}
+                              alt=""
+                              src={`https://api.vijayhomesuperadmin.in/offerbanner/${data.icon}`}
+                            />
+                          </div>
+                          <div className="col-md-11 pt-3 mx-2">
+                            <div
+                              className="poppins-regular"
+                              style={{
+                                color: "white",
+                                fontWeight: "bold",
+                                fontSize: "14px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              {data.header}
+                            </div>
+                            <p
+                              className="poppins-regular mt-1"
+                              style={{
+                                color: "white",
+                                fontSize: "11px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              {data.desc}
+                            </p>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+
                 <div
-                  className="col-md-2"
+                  className="row mt-5"
+                  style={{ justifyContent: "space-between" }}
+                >
+                  {subcategoryData
+                    .sort((a, b) => parseInt(a.order) - parseInt(b.order))
+                    .map((data, index) => (
+                      <div className="d-flex">
+                        <div
+                          key={index}
+                          id={`service-${index}`}
+                          className="col-md-6 mt-4"
+                          style={{ borderBottom: "1px solid grey" }}
+                        >
+                          <div
+                            className="poppins-regular"
+                            style={{
+                              backgroundColor: "#E6B45C",
+                              padding: "10px",
+                              color: "black",
+                              fontWeight: "bold",
+                              fontSize: "17px",
+                              borderTopRightRadius: "50px",
+                            }}
+                          >
+                            {data.servicetitle}
+                          </div>
+                          <div
+                            className="poppins-regular mt-2"
+                            style={{
+                              color: "black",
+                              fontSize: "15px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {data.serviceName}
+                          </div>
+                          <div
+                            className="poppins-regular"
+                            style={{
+                              color: "green",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {data.servicebelow}
+                          </div>
+
+                          <div className="d-flex mt-2">
+                            <i
+                              class="fa-solid fa-star"
+                              style={{ color: "gold" }}
+                            ></i>
+                            <div
+                              className="poppins-regular mx-2"
+                              style={{ color: "black", fontSize: "14px" }}
+                            >
+                              4.9
+                            </div>
+                            <div
+                              className="poppins-regular"
+                              style={{ color: "black", fontSize: "14px" }}
+                            >
+                              (328.8k)
+                            </div>
+                          </div>
+
+                          <div className="d-flex mt-2">
+                            {(() => {
+                              // Filtered prices
+                              const filteredPrices =
+                                data?.morepriceData?.filter(
+                                  (ele) => ele.pricecity === localstoragecitys
+                                );
+
+                              console.log(
+                                "filteredPrices12334===",
+                                filteredPrices
+                              );
+
+                              // high price
+                              let highPrice = null;
+                              if (filteredPrices.length > 0) {
+                                highPrice = filteredPrices.reduce(
+                                  (minPrice, ele) =>
+                                    Math.min(minPrice, parseFloat(ele.pPrice)),
+                                  parseFloat(filteredPrices[0].pPrice)
+                                );
+                              }
+
+                              // Lowest price
+                              let lowestPrice = null;
+                              if (filteredPrices.length > 0) {
+                                lowestPrice = filteredPrices.reduce(
+                                  (minPrice, ele) =>
+                                    Math.min(
+                                      minPrice,
+                                      parseFloat(ele.pofferprice)
+                                    ),
+                                  parseFloat(filteredPrices[0].pofferprice)
+                                );
+                              }
+
+                              // Render JSX
+                              return (
+                                <>
+                                  <div
+                                    className="poppins-regular"
+                                    style={{
+                                      color: "black",
+                                      fontSize: "14px",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    Start Price
+                                  </div>
+                                  <div
+                                    className="poppins-regular mx-2"
+                                    style={{
+                                      color: "grey",
+                                      fontWeight: "bold",
+                                      fontSize: "14px",
+                                      textDecoration: "line-through",
+                                    }}
+                                  >
+                                    {highPrice !== null && (
+                                      <p className="poppins-regular">
+                                        ₹{highPrice}
+                                      </p>
+                                    )}
+                                  </div>
+                                  <div
+                                    className="poppins-regular"
+                                    style={{
+                                      color: "black",
+                                      fontWeight: "bold",
+                                      fontSize: "14px",
+                                    }}
+                                  >
+                                    {lowestPrice !== null && (
+                                      <p className="poppins-regular">
+                                        ₹{lowestPrice}
+                                      </p>
+                                    )}
+                                    {filteredPrices.length === 0 && (
+                                      <p className="poppins-regular">
+                                        No prices available for this city
+                                      </p>
+                                    )}
+                                  </div>
+                                </>
+                              );
+                            })()}
+                          </div>
+
+                          <div className="row">
+                            {data.serviceDesc.slice(0, 3).map((desc, index) => (
+                              <div className="col-md-12" key={index}>
+                                <div className="d-flex mt-2">
+                                  <div className="col-md-1">
+                                    <i
+                                      className="fa-solid fa-star"
+                                      style={{
+                                        color: "green",
+                                        fontSize: "14px",
+                                      }}
+                                    ></i>
+                                  </div>
+                                  <div className="col-md-11">
+                                    <div className="poppins-regular mt-1 service-desc">
+                                      {desc.text}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="d-flex">
+                            <div className="col-md-3">
+                              <Link
+                                to="/viewdetails"
+                                state={{ subcategory: data }}
+                                style={{ textDecoration: "none" }}
+                              >
+                                <div
+                                  className="poppins-regular mt-4 mb-3"
+                                  style={{
+                                    color: "darkred",
+                                    fontSize: "17px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  View details
+                                </div>
+                              </Link>
+                            </div>
+                            <div className="col-md-3 mt-4 mb-3 ">
+                              <div
+                                onClick={vhandleShow}
+                                className="poppins-regular mx-2"
+                                style={{
+                                  color: "blue",
+                                  fontSize: "17px",
+                                  fontWeight: "bold",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                Show more
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-6 mt-4 mx-2 servicedata_row">
+                          <div className="">
+                            <img
+                              className="mb-2 servicedata_img"
+                              alt={`${data.category} images`}
+                              src={data.imglink}
+                            />
+                            <div
+                              // onClick={handleShow}
+                              className=""
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                // marginRight: "30px",
+                                // marginTop: "-20px",
+                              }}
+                            >
+                              <div
+                                className="poppins-black"
+                                style={{
+                                  color: "white",
+                                  fontSize: "13px",
+                                  backgroundColor: "darkred",
+                                  textAlign: "center",
+                                  // width: "80px",
+                                  padding: "4px",
+                                  borderRadius: "10px",
+                                  width: "50%",
+                                  marginTop: "-25px",
+                                }}
+                                // onClick={() => handleBook(data)}
+                                onClick={() => {
+                                  if (data.morepriceData.length > 0) {
+                                    handleBook(data);
+                                  } else {
+                                    // window.location.assign("/Espage");
+                                    navigate("/ESpage", {
+                                      state: { sdata: data },
+                                    });
+                                  }
+                                }}
+                              >
+                                Book
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+
+                <div
+                  className="row mt-5 mb-5 "
                   style={{
-                    display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    display: "flex",
                   }}
                 >
-                  <img
-                    height={20}
-                    width={20}
-                    alt=""
-                    src={`https://api.vijayhomesuperadmin.in/offerbanner/${data.icon}`}
-                  />
-                </div>
-                <div className="col-md-10 mt-3">
-                  <div
-                    className="poppins-regular"
-                    style={{
-                      color: "white",
-                      fontWeight: "bold",
-                      fontSize: "14px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {data.header}
-                  </div>
-                  <p
-                    className="poppins-regular mt-1"
-                    style={{
-                      color: "white",
-                      fontSize: "11px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {data.desc}
-                  </p>
+                  {Bannermidledata.map((data) => (
+                    <div
+                      key={data._id}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <img
+                        className="service_gif mb-2"
+                        style={
+                          {
+                            // width: "50%",
+                            // height: "250px",
+                          }
+                        }
+                        alt=""
+                        src={`https://api.vijayhomesuperadmin.in/spotlightSP/${data.img}`}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
 
-        <div className="row mt-5">
-          {subcategoryData
-            .sort((a, b) => parseInt(a.order) - parseInt(b.order))
-            .map((data, index) => (
-              <>
-                <div
-                  key={index}
-                  id={`service-${index}`}
-                  className="col-md-6 mt-4"
-                  style={{ borderBottom: "1px solid grey" }}
-                >
-                  <div
-                    className="poppins-regular"
-                    style={{
-                      backgroundColor: "#E6B45C",
-                      padding: "10px",
-                      color: "black",
-                      fontWeight: "bold",
-                      fontSize: "17px",
-                      borderTopRightRadius: "50px",
-                    }}
-                  >
-                    {data.servicetitle}
-                  </div>
-                  <div
-                    className="poppins-regular mt-2"
-                    style={{
-                      color: "black",
-                      fontSize: "15px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {data.serviceName}
-                  </div>
-                  <div
-                    className="poppins-regular"
-                    style={{
-                      color: "green",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {data.servicebelow}
-                  </div>
+              <Footer />
 
-                  <div className="d-flex mt-2">
-                    <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
-                    <div
-                      className="poppins-regular mx-2"
-                      style={{ color: "black", fontSize: "14px" }}
-                    >
-                      4.9
-                    </div>
-                    <div
-                      className="poppins-regular"
-                      style={{ color: "black", fontSize: "14px" }}
-                    >
-                      (328.8k)
-                    </div>
-                  </div>
+              {/* POP UP */}
 
-                  <div className="d-flex mt-2">
+              <Modal centered size="lg" show={show} onHide={handleClose}>
+                <Modal.Header>
+                  <Modal.Title>Select Option</Modal.Title>
+                  <div onClick={handleClose}>
+                    <i
+                      class="fa-solid fa-xmark"
+                      style={{
+                        backgroundColor: "darkred",
+                        padding: "9px",
+                        color: "white",
+                        borderRadius: "50px",
+                        width: "35px",
+                        textAlign: "center",
+                      }}
+                    ></i>
+                  </div>
+                </Modal.Header>
+                <Modal.Body>
+                  <div className="row mt-2">
                     {(() => {
                       // Filtered prices
-                      const filteredPrices = data?.morepriceData?.filter(
-                        (ele) => ele.pricecity === localstoragecitys
-                      );
-
-                      console.log("filteredPrices12334===", filteredPrices);
-
-                      // high price
-                      let highPrice = null;
-                      if (filteredPrices.length > 0) {
-                        highPrice = filteredPrices.reduce(
-                          (minPrice, ele) =>
-                            Math.min(minPrice, parseFloat(ele.pPrice)),
-                          parseFloat(filteredPrices[0].pPrice)
+                      const filteredPrices =
+                        selectedData?.morepriceData?.filter(
+                          (ele) => ele.pricecity === localstoragecitys
                         );
-                      }
 
-                      // Lowest price
-                      let lowestPrice = null;
-                      if (filteredPrices.length > 0) {
-                        lowestPrice = filteredPrices.reduce(
-                          (minPrice, ele) =>
-                            Math.min(minPrice, parseFloat(ele.pofferprice)),
-                          parseFloat(filteredPrices[0].pofferprice)
-                        );
-                      }
-
-                      // Render JSX
                       return (
                         <>
-                          <div
-                            className="poppins-regular"
-                            style={{
-                              color: "black",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Start Price
-                          </div>
-                          <div
-                            className="poppins-regular mx-2"
-                            style={{
-                              color: "grey",
-                              fontWeight: "bold",
-                              fontSize: "14px",
-                              textDecoration: "line-through",
-                            }}
-                          >
-                            {highPrice !== null && (
-                              <p className="poppins-regular">₹{highPrice}</p>
-                            )}
-                          </div>
-                          <div
-                            className="poppins-regular"
-                            style={{
-                              color: "black",
-                              fontWeight: "bold",
-                              fontSize: "14px",
-                            }}
-                          >
-                            {lowestPrice !== null && (
-                              <p className="poppins-regular">₹{lowestPrice}</p>
-                            )}
-                            {filteredPrices.length === 0 && (
-                              <p className="poppins-regular">
-                                No prices available for this city
-                              </p>
-                            )}
-                          </div>
+                          {filteredPrices?.map((price, index) => (
+                            <div
+                              key={index}
+                              className="col-md-3 mt-3"
+                              onClick={() => handleItemClick(price, index)}
+                            >
+                              <div
+                                className={` mt-3 ${
+                                  selectedItems[index]
+                                    ? "active12"
+                                    : "inactive12"
+                                }`}
+                              >
+                                <div
+                                  className=""
+                                  style={{
+                                    textAlign: "center",
+                                    color: "green",
+                                    fontSize: "16px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {price.pName && (
+                                    <p
+                                      className="poppins-bold"
+                                      style={{ color: "green" }}
+                                    >
+                                      {price.pName}
+                                    </p>
+                                  )}
+                                </div>
+
+                                <div
+                                  className="d-flex"
+                                  style={{ justifyContent: "center" }}
+                                >
+                                  <div
+                                    className=""
+                                    style={{
+                                      color: "black",
+                                      fontSize: "14px",
+                                      textDecoration: "line-through",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    {price.pPrice && (
+                                      <p className="poppins-regular">
+                                        ₹{price.pPrice}
+                                      </p>
+                                    )}
+                                  </div>
+                                  <div
+                                    className="mx-2"
+                                    style={{
+                                      color: "black",
+                                      fontSize: "14px",
+                                      fontWeight: "bold",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    {price.pofferprice && (
+                                      <p className="poppins-medium">
+                                        ₹{price.pofferprice}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </>
                       );
                     })()}
                   </div>
 
-                  <div className="row">
-                    {data.serviceDesc.slice(0, 3).map((desc, index) => (
-                      <div className="col-md-12" key={index}>
-                        <div className="d-flex mt-2">
-                          <div className="col-md-1">
-                            <i
-                              className="fa-solid fa-star"
-                              style={{ color: "green", fontSize: "14px" }}
-                            ></i>
-                          </div>
-                          <div className="col-md-11">
-                            <div
-                              className="poppins-regular mt-1"
-                              style={{
-                                color: "black",
-                                fontSize: "14px",
-                                marginLeft: "-16px",
-                              }}
-                            >
-                              {desc.text}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                  <div
+                    className="poppins-medium"
+                    style={{
+                      backgroundColor: "rgb(224, 206, 85)",
+                      padding: "5px",
+                      textAlign: "center",
+                      marginTop: "40px",
+                    }}
+                  >
+                    Congratulations! ₹ {TotalPrice}
+                    Saved so far!
                   </div>
-
-                  <div className="row">
-                    <div className="col-md-3">
-                      {/* <Link
-                        to={{
-                          pathname: `/serviceview/${toSlug(
-                            data?.serviceName
-                          )}-in-${city.toLowerCase().replace(/ /g, "-")}`,
-                          state: { serviceData: data },
-                        }}
-                        style={{ textDecoration: "none" }}
-                      > */}
-                      <div onClick={() => navigateToServiceViewPage(data)}>
-                        <div
-                          className="poppins-regular mt-4 mb-3"
-                          style={{
-                            color: "darkred",
-                            fontSize: "17px",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          View details
-                        </div>
-                      </div>
-                      {/* </Link> */}
-                    </div>
+                  <div
+                    className="d-flex"
+                    style={{ backgroundColor: "darkred", padding: "10px" }}
+                  >
                     <div
-                      className="col-md-3 mt-4 mb-3"
-                      style={{ marginLeft: "-50px" }}
-                    >
-                      <div
-                        onClick={vhandleShow}
-                        className="poppins-regular mx-2"
-                        style={{
-                          color: "blue",
-                          fontSize: "17px",
-                          fontWeight: "bold",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Show more
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="col-md-6 mt-4"
-                  style={{
-                    textAlign: "end",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                  }}
-                >
-                  <div className="">
-                    <img
+                      className="col-md-3 poppins-extrabold"
                       style={{
-                        width: "250px",
-                        height: "250px",
-                        borderRadius: "10px",
-                      }}
-                      className="mb-2"
-                      alt={`${data.category} images`}
-                      src={data.imglink}
-                    />
-                    <div
-                      // onClick={handleShow}
-                      className=""
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        // marginRight: "30px",
-                        // marginTop: "-20px",
+                        color: "white",
+                        fontSize: "15px",
+                        fontWeight: "bold",
                       }}
                     >
-                      <div
-                        className="poppins-black"
-                        style={{
-                          color: "white",
-                          fontSize: "13px",
-                          backgroundColor: "darkred",
-                          textAlign: "center",
-                          // width: "80px",
-                          padding: "4px",
-                          borderRadius: "10px",
-                          width: "50%",
-                          marginTop: "-25px",
-                        }}
-                        // onClick={() => handleBook(data)}
-                        onClick={() => {
-                          if (data.morepriceData.length > 0) {
-                            handleBook(data);
-                          } else {
-                            // window.location.assign("/Espage");
-                            navigate("/ESpage", { state: { sdata: data } });
-                          }
-                        }}
-                      >
-                        Book
-                      </div>
+                      Total ₹{TotalPrice}
+                    </div>
+                    <div
+                      className="col-md-9 poppins-extrabold"
+                      style={{
+                        color: "white",
+                        fontSize: "15px",
+                        fontWeight: "bold",
+                        textAlign: "end",
+                      }}
+                      onClick={handleViewCartClick}
+                    >
+                      View Cart
                     </div>
                   </div>
-                </div>
-              </>
-            ))}
-        </div>
+                </Modal.Body>
+              </Modal>
 
-        <div
-          className="row mt-5 mb-5 "
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            display: "flex",
-          }}
-        >
-          {/* {Bannermidledata.map((data) => (
-            <div
-              key={data._id}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img
-                style={{
-                  width: "50%",
-                  height: "250px",
-                }}
-                className="mb-2"
-                alt=""
-                src={`https://api.vijayhomesuperadmin.in/spotlightSP/${data.img}`}
-              />
-            </div>
-          ))} */}
-        </div>
-      </div>
-
-      <Footer />
-
-      {/* POP UP */}
-
-      <Modal centered size="lg" show={show} onHide={handleClose}>
-        <Modal.Header>
-          <Modal.Title>Select Option</Modal.Title>
-          <div onClick={handleClose}>
-            <i
-              class="fa-solid fa-xmark"
-              style={{
-                backgroundColor: "darkred",
-                padding: "9px",
-                color: "white",
-                borderRadius: "50px",
-                width: "35px",
-                textAlign: "center",
-              }}
-            ></i>
-          </div>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="row mt-2">
-            {(() => {
-              // Filtered prices
-              const filteredPrices = selectedData?.morepriceData?.filter(
-                (ele) => ele.pricecity === localstoragecitys
-              );
-
-              return (
-                <>
-                  {filteredPrices?.map((price, index) => (
-                    <div
-                      key={index}
-                      className="col-md-3 mt-3"
-                      onClick={() => handleItemClick(price, index)}
-                    >
-                      <div
-                        className={` mt-3 ${
-                          selectedItems[index] ? "active12" : "inactive12"
-                        }`}
-                      >
-                        <div
-                          className=""
-                          style={{
-                            textAlign: "center",
-                            color: "green",
-                            fontSize: "16px",
-                            fontWeight: "bold",
-                          }}
+              <Modal
+                size="lg"
+                className=""
+                show={ModalSubcategoryView}
+                onHide={handleCloseSubcategoryView}
+              >
+                <Modal.Header closeButton>
+                  {SelectedCategory.map((Ele) => (
+                    <Modal.Title className="container ">
+                      {" "}
+                      {Ele?.serviceName}
+                    </Modal.Title>
+                  ))}
+                </Modal.Header>
+                <Modal.Body className="bgclr">
+                  {SelectedCategory?.map((servi, index) => {
+                    return (
+                      <>
+                        <Link
+                          to="/servicedetails"
+                          state={{ subcategory: servi?.subcategory }}
+                          key={servi.subcategory}
+                          style={{ textDecoration: "none" }}
+                          className="text-decoration-none  text-black"
                         >
-                          {price.pName && (
-                            <p
-                              className="poppins-bold"
-                              style={{ color: "green" }}
-                            >
-                              {price.pName}
-                            </p>
-                          )}
-                        </div>
-
-                        <div
-                          className="d-flex"
-                          style={{ justifyContent: "center" }}
-                        >
-                          <div
-                            className=""
-                            style={{
-                              color: "black",
-                              fontSize: "14px",
-                              textDecoration: "line-through",
-                              textAlign: "center",
-                            }}
-                          >
-                            {price.pPrice && (
-                              <p className="poppins-regular">₹{price.pPrice}</p>
-                            )}
+                          {" "}
+                          <div className="row  justify-content-center">
+                            {servi.morepriceData.map((plan, innerindex) => (
+                              <div className="col-md-3 m-3 shadow-lg bg-white p-2 brdrd   mb-2 ">
+                                <div className="row  m-auto">
+                                  <p className="col-md-12 p-4 clrstr2  text-white shadow-sm ">
+                                    {plan.pName}
+                                  </p>
+                                </div>
+                                <p className="row">
+                                  <span>
+                                    {" "}
+                                    <StarIcon className="clrstr" /> 7k + Reviews
+                                  </span>{" "}
+                                </p>
+                                <div className="row mt-5 p-1">
+                                  <span className="col-md-6 m-auto   price fntbold">
+                                    Rs. {plan?.pPrice}
+                                  </span>
+                                  <span className="col-md-6 m-auto  fntbold  clrstr">
+                                    Rs. {plan?.pofferprice}
+                                  </span>
+                                </div>
+                                <div className="row">
+                                  <button
+                                    onClick={(e) =>
+                                      handleAdd(e, plan._id, innerindex)
+                                    }
+                                    className="col-md-6 m-auto  fntbold text-center p-1  fnts btn_clr   "
+                                  >
+                                    {Added || innerindex !== SelectedIndex ? (
+                                      <>
+                                        <span>
+                                          <AddIcon
+                                            style={{ fontSize: "14px" }}
+                                          />{" "}
+                                        </span>
+                                        <span>Add </span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <span>
+                                          {" "}
+                                          <CheckIcon
+                                            style={{ fontSize: "14px" }}
+                                          />{" "}
+                                        </span>
+                                        <span>Added </span>
+                                      </>
+                                    )}
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                          <div
-                            className="mx-2"
-                            style={{
-                              color: "black",
-                              fontSize: "14px",
-                              fontWeight: "bold",
-                              textAlign: "center",
-                            }}
-                          >
-                            {price.pofferprice && (
-                              <p className="poppins-medium">
-                                ₹{price.pofferprice}
+                        </Link>
+                        <div className="container redbrdr  mt-3 shadow-sm acordinss p-3">
+                          <div key={index} className="row  m-2">
+                            {servi?.serviceIncludes?.length > 0 && (
+                              <p
+                                className={`m-auto col-md-6 accordion ${
+                                  catType === "includes" && activeIndex2 === 0
+                                    ? "active"
+                                    : ""
+                                }`}
+                                onClick={(e) =>
+                                  toggleAccordion1(e, "includes", 0)
+                                }
+                              >
+                                <p
+                                  className="accordion__title clrpr"
+                                  style={{
+                                    fontWeight: "bold",
+                                    padding: "16px 0px 0px 6px",
+                                  }}
+                                >
+                                  Includes
+                                </p>
                               </p>
                             )}
+                            {servi?.serviceExcludes?.length > 0 && (
+                              <p
+                                className={`m-auto col-md-6 accordion ${
+                                  catType === "excludes" && activeIndex2 === 1
+                                    ? "active"
+                                    : ""
+                                }`}
+                                onClick={(e) =>
+                                  toggleAccordion1(e, "excludes", 1)
+                                }
+                              >
+                                <p
+                                  className="accordion__title clrpr"
+                                  style={{
+                                    fontWeight: "bold",
+                                    padding: "16px 0px 0px 6px",
+                                  }}
+                                >
+                                  Excludes
+                                </p>
+                              </p>
+                            )}
+
+                            <div className="row ">
+                              {catType === "includes" && activeIndex2 === 0 && (
+                                <div
+                                  style={{
+                                    maxHeight: `${
+                                      activeIndex ? "1000px" : "0px"
+                                    }`,
+                                  }}
+                                  className="accordion__content"
+                                >
+                                  {servi.serviceIncludes.map(
+                                    (dos, dosIndex) => (
+                                      <div
+                                        key={dosIndex}
+                                        className="accordion__text clrpr"
+                                      >
+                                        <li>{dos.text}</li>
+                                      </div>
+                                    )
+                                  )}
+                                </div>
+                              )}
+                              {catType === "excludes" && activeIndex2 === 1 && (
+                                <div
+                                  style={{
+                                    maxHeight: `${
+                                      activeIndex ? "1000px" : "0px"
+                                    }`,
+                                  }}
+                                  className="accordion__content"
+                                >
+                                  {servi?.serviceExcludes?.map(
+                                    (dos, dosIndex) => (
+                                      <div
+                                        key={dosIndex}
+                                        className="accordion__text clrpr"
+                                      >
+                                        <li>{dos.text}</li>
+                                      </div>
+                                    )
+                                  )}
+                                </div>
+                              )}{" "}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              );
-            })()}
-          </div>
+                      </>
+                    );
+                  })}
+                </Modal.Body>
+                <Modal.Footer className="container ">
+                  <Button
+                    className="col-md-2"
+                    variant="secondary"
+                    onClick={handleCloseSubcategoryView}
+                  >
+                    Close
+                  </Button>
+                </Modal.Footer>
+              </Modal>
 
-          <div
-            className="poppins-medium"
-            style={{
-              backgroundColor: "rgb(224, 206, 85)",
-              padding: "5px",
-              textAlign: "center",
-              marginTop: "40px",
-            }}
-          >
-            Congratulations! ₹ {TotalPrice}
-            Saved so far!
-          </div>
-          <div
-            className="d-flex"
-            style={{ backgroundColor: "darkred", padding: "10px" }}
-          >
-            <div
-              className="col-md-3 poppins-extrabold"
-              style={{ color: "white", fontSize: "15px", fontWeight: "bold" }}
-            >
-              Total ₹{TotalPrice}
-            </div>
-            <div
-              className="col-md-9 poppins-extrabold"
-              style={{
-                color: "white",
-                fontSize: "15px",
-                fontWeight: "bold",
-                textAlign: "end",
-              }}
-              onClick={handleViewCartClick}
-            >
-              View Cart
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+              <Modal
+                size="lg"
+                show={OpenViewCartModal}
+                onHide={handleCloseCart}
+              >
+                <Modal.Header closeButton>
+                  <h1 className=" clrstr fnt">Cart</h1>
+                </Modal.Header>
+                <Modal.Body>
+                  {SelectedService.map((price) => {
+                    return (
+                      <div className="row p-4">
+                        <span className="col-md-4 col-md-4 fs-5 m-auto  fntbold  ">
+                          {price.pName}
+                        </span>
 
-      <Modal
-        size="lg"
-        className=""
-        show={ModalSubcategoryView}
-        onHide={handleCloseSubcategoryView}
-      >
-        <Modal.Header closeButton>
-          {SelectedCategory.map((Ele) => (
-            <Modal.Title className="container ">
-              {" "}
-              {Ele?.serviceName}
-            </Modal.Title>
-          ))}
-        </Modal.Header>
-        <Modal.Body className="bgclr">
-          {SelectedCategory?.map((servi, index) => {
-            return (
-              <>
-                <Link
-                  to="/servicedetails"
-                  state={{ subcategory: servi?.subcategory }}
-                  key={servi.subcategory}
-                  style={{ textDecoration: "none" }}
-                  className="text-decoration-none  text-black"
-                >
-                  {" "}
-                  <div className="row  justify-content-center">
-                    {servi.morepriceData.map((plan, innerindex) => (
-                      <div className="col-md-3 m-3 shadow-lg bg-white p-2 brdrd   mb-2 ">
-                        <div className="row  m-auto">
-                          <p className="col-md-12 p-4 clrstr2  text-white shadow-sm ">
-                            {plan.pName}
-                          </p>
-                        </div>
-                        <p className="row">
-                          <span>
-                            {" "}
-                            <StarIcon className="clrstr" /> 7k + Reviews
-                          </span>{" "}
-                        </p>
-                        <div className="row mt-5 p-1">
-                          <span className="col-md-6 m-auto   price fntbold">
-                            Rs. {plan?.pPrice}
-                          </span>
-                          <span className="col-md-6 m-auto  fntbold  clrstr">
-                            Rs. {plan?.pofferprice}
-                          </span>
-                        </div>
-                        <div className="row">
-                          <button
-                            onClick={(e) => handleAdd(e, plan._id, innerindex)}
-                            className="col-md-6 m-auto  fntbold text-center p-1  fnts btn_clr   "
+                        <Button
+                          variant="secondary"
+                          className="col-md-2 m-auto  p-0"
+                        >
+                          <span
+                            onClick={() => {
+                              if (Quantity > 1) {
+                                setQuantity(Quantity - 1);
+                              }
+                            }}
+                            className="me-2 fs-5 p-0"
                           >
-                            {Added || innerindex !== SelectedIndex ? (
-                              <>
-                                <span>
-                                  <AddIcon style={{ fontSize: "14px" }} />{" "}
-                                </span>
-                                <span>Add </span>
-                              </>
-                            ) : (
-                              <>
-                                <span>
-                                  {" "}
-                                  <CheckIcon
-                                    style={{ fontSize: "14px" }}
-                                  />{" "}
-                                </span>
-                                <span>Added </span>
-                              </>
-                            )}
-                          </button>
-                        </div>
+                            -
+                          </span>
+                          <span className="me-2 ms-2 fs-5 p-0">
+                            {Quantity}{" "}
+                          </span>
+                          <span
+                            className="ms-2 fs-5 p-0"
+                            onClick={() => setQuantity(Quantity + 1)}
+                          >
+                            +
+                          </span>
+                        </Button>
+                        <span className="col-md-2"></span>
+                        <span span className="col-md-2 m-auto  ">
+                          <span className="fs-3 fntbold  clrstr">
+                            Rs.{price.pofferprice}
+                          </span>
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                </Link>
-                <div className="container redbrdr  mt-3 shadow-sm acordinss p-3">
-                  <div key={index} className="row  m-2">
-                    {servi?.serviceIncludes?.length > 0 && (
-                      <p
-                        className={`m-auto col-md-6 accordion ${
-                          catType === "includes" && activeIndex2 === 0
-                            ? "active"
-                            : ""
-                        }`}
-                        onClick={(e) => toggleAccordion1(e, "includes", 0)}
-                      >
-                        <p
-                          className="accordion__title clrpr"
-                          style={{
-                            fontWeight: "bold",
-                            padding: "16px 0px 0px 6px",
+                    );
+                  })}
+                </Modal.Body>
+                <Modal.Footer className="container p-3 ">
+                  {serviceData.flatMap((service) =>
+                    service.morepriceData
+                      .filter((plan) => plan._id === SelectService)
+
+                      .map((price) => (
+                        <Button
+                          className="col-md-10 m-auto clrstrs"
+                          onClick={() => {
+                            // e.preventDefault();
+                            setOpenViewCartModal(false);
                           }}
                         >
-                          Includes
-                        </p>
-                      </p>
-                    )}
-                    {servi?.serviceExcludes?.length > 0 && (
-                      <p
-                        className={`m-auto col-md-6 accordion ${
-                          catType === "excludes" && activeIndex2 === 1
-                            ? "active"
-                            : ""
-                        }`}
-                        onClick={(e) => toggleAccordion1(e, "excludes", 1)}
-                      >
-                        <p
-                          className="accordion__title clrpr"
-                          style={{
-                            fontWeight: "bold",
-                            padding: "16px 0px 0px 6px",
-                          }}
-                        >
-                          Excludes
-                        </p>
-                      </p>
-                    )}
+                          {" "}
+                          <Link
+                            to="/ViewCart"
+                            state={{
+                              ServiceIDD: service._id,
+                              PriceID: price._id,
+                              NumberOfQunt: Quantity,
+                            }}
+                            style={{
+                              textDecoration: "none",
+                              color: "white",
+                              border: "none",
+                            }}
+                          >
+                            <p className="row p-1 m-auto">
+                              <span className="col-md-6 m-auto p-0">
+                                View Cart
+                              </span>
+                              <span className="col-md-6 m-auto p-0">
+                                {" "}
+                                Rs.{price.pofferprice}
+                              </span>
+                            </p>
+                          </Link>
+                        </Button>
+                      ))
+                  )}
+                </Modal.Footer>
+              </Modal>
 
-                    <div className="row ">
-                      {catType === "includes" && activeIndex2 === 0 && (
-                        <div
-                          style={{
-                            maxHeight: `${activeIndex ? "1000px" : "0px"}`,
-                          }}
-                          className="accordion__content"
-                        >
-                          {servi.serviceIncludes.map((dos, dosIndex) => (
-                            <div
-                              key={dosIndex}
-                              className="accordion__text clrpr"
-                            >
-                              <li>{dos.text}</li>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      {catType === "excludes" && activeIndex2 === 1 && (
-                        <div
-                          style={{
-                            maxHeight: `${activeIndex ? "1000px" : "0px"}`,
-                          }}
-                          className="accordion__content"
-                        >
-                          {servi?.serviceExcludes?.map((dos, dosIndex) => (
-                            <div
-                              key={dosIndex}
-                              className="accordion__text clrpr"
-                            >
-                              <li>{dos.text}</li>
-                            </div>
-                          ))}
-                        </div>
-                      )}{" "}
-                    </div>
-                  </div>
-                </div>
-              </>
-            );
-          })}
-        </Modal.Body>
-        <Modal.Footer className="container ">
-          <Button
-            className="col-md-2"
-            variant="secondary"
-            onClick={handleCloseSubcategoryView}
-          >
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal size="lg" show={OpenViewCartModal} onHide={handleCloseCart}>
-        <Modal.Header closeButton>
-          <h1 className=" clrstr fnt">Cart</h1>
-        </Modal.Header>
-        <Modal.Body>
-          {SelectedService.map((price) => {
-            return (
-              <div className="row p-4">
-                <span className="col-md-4 col-md-4 fs-5 m-auto  fntbold  ">
-                  {price.pName}
-                </span>
-
-                <Button variant="secondary" className="col-md-2 m-auto  p-0">
-                  <span
-                    onClick={() => {
-                      if (Quantity > 1) {
-                        setQuantity(Quantity - 1);
-                      }
-                    }}
-                    className="me-2 fs-5 p-0"
-                  >
-                    -
-                  </span>
-                  <span className="me-2 ms-2 fs-5 p-0">{Quantity} </span>
-                  <span
-                    className="ms-2 fs-5 p-0"
-                    onClick={() => setQuantity(Quantity + 1)}
-                  >
-                    +
-                  </span>
-                </Button>
-                <span className="col-md-2"></span>
-                <span span className="col-md-2 m-auto  ">
-                  <span className="fs-3 fntbold  clrstr">
-                    Rs.{price.pofferprice}
-                  </span>
-                </span>
-              </div>
-            );
-          })}
-        </Modal.Body>
-        <Modal.Footer className="container p-3 ">
-          {serviceData.flatMap((service) =>
-            service.morepriceData
-              .filter((plan) => plan._id === SelectService)
-
-              .map((price) => (
-                <Button
-                  className="col-md-10 m-auto clrstrs"
-                  onClick={() => {
-                    // e.preventDefault();
-                    setOpenViewCartModal(false);
-                  }}
-                >
-                  {" "}
-                  <Link
-                    to="/ViewCart"
-                    state={{
-                      ServiceIDD: service._id,
-                      PriceID: price._id,
-                      NumberOfQunt: Quantity,
-                    }}
-                    style={{
-                      textDecoration: "none",
-                      color: "white",
-                      border: "none",
-                    }}
-                  >
-                    <p className="row p-1 m-auto">
-                      <span className="col-md-6 m-auto p-0">View Cart</span>
-                      <span className="col-md-6 m-auto p-0">
-                        {" "}
-                        Rs.{price.pofferprice}
-                      </span>
-                    </p>
-                  </Link>
-                </Button>
-              ))
-          )}
-        </Modal.Footer>
-      </Modal>
-
-      {/* V Modal */}
-      <Modal
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        show={vshow}
-        onHide={vhandleClose}
-        animation={false}
-        scrollable
-      >
-        <Modal.Body style={{ maxHeight: "80vh", overflowY: "auto" }}>
-          {modalbanner.map((data) => (
-            <div key={data._id}>
-              <img
-                src={data.image}
-                alt="vhs"
-                style={{ width: "100%", height: "150px", borderRadius: "5px" }}
-              />
-            </div>
-          ))}
-
-          <div className="poppins-black mt-2 mb-2"> Why choose us</div>
-          <div>
-            <Swiper
-              slidesPerView={3}
-              spaceBetween={30}
-              freeMode={true}
-              pagination={{
-                clickable: true,
-              }}
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-              }}
-              modules={[FreeMode, Pagination, Autoplay]}
-              className="mySwiper"
-            >
-              {whychooseus.map((data, index) => (
-                <SwiperSlide
-                  key={data._id}
-                  style={{
-                    backgroundColor: "white",
-                    padding: "0px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
-                >
-                  <div
-                    className="col-md-4"
-                    style={{
-                      width: "100%",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
+              {/* V Modal */}
+              <Modal
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                show={vshow}
+                onHide={vhandleClose}
+                animation={false}
+                scrollable
+              >
+                <Modal.Body style={{ maxHeight: "80vh", overflowY: "auto" }}>
+                  {modalbanner.map((data) => (
+                    <div key={data._id}>
                       <img
                         src={data.image}
-                        alt="loading...."
+                        alt="vhs"
                         style={{
-                          width: "50px",
-                          height: "50px",
+                          width: "100%",
+                          height: "150px",
+                          borderRadius: "5px",
                         }}
                       />
                     </div>
-                    <div
-                      className="poppins-thin mt-2"
-                      style={{ textAlign: "center" }}
+                  ))}
+
+                  <div className="poppins-black mt-2 mb-2"> Why choose us</div>
+                  <div>
+                    <Swiper
+                      slidesPerView={3}
+                      spaceBetween={30}
+                      freeMode={true}
+                      pagination={{
+                        clickable: true,
+                      }}
+                      autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                      }}
+                      modules={[FreeMode, Pagination, Autoplay]}
+                      className="mySwiper"
                     >
-                      {data.title}
-                    </div>
-                    <div
-                      className="poppins-extralight"
-                      style={{ textAlign: "center" }}
-                    >
-                      {data.discription}
-                    </div>
+                      {whychooseus.map((data, index) => (
+                        <SwiperSlide
+                          key={data._id}
+                          style={{
+                            backgroundColor: "white",
+                            padding: "0px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                          }}
+                        >
+                          <div
+                            className="col-md-4"
+                            style={{
+                              width: "100%",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <img
+                                src={data.image}
+                                alt="loading...."
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                }}
+                              />
+                            </div>
+                            <div
+                              className="poppins-thin mt-2"
+                              style={{ textAlign: "center" }}
+                            >
+                              {data.title}
+                            </div>
+                            <div
+                              className="poppins-extralight"
+                              style={{ textAlign: "center" }}
+                            >
+                              {data.discription}
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
                   </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
 
-          <div className="poppins-black mt-2 mb-2"> VHS Promise</div>
-          <div
-            className="row"
-            style={{ justifyContent: "center", alignItems: "center" }}
-          >
-            {vhspromise.map((data) => (
-              <div className="col-md-4" key={data._id}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img
-                    src={data.image}
-                    alt="vhs"
-                    style={{ width: "60px", height: "60px" }}
-                  />
-                </div>
-                <div
-                  className="poppins-thin mt-2"
-                  style={{ textAlign: "center" }}
-                >
-                  {data.title}
-                </div>
-                <div
-                  className="poppins-extralight"
-                  style={{ textAlign: "center" }}
-                >
-                  {data.discription}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="poppins-black mt-2 mb-2">Comparison </div>
-          {allcamparison.map((data) => (
-            <div key={data._id}>
-              <img
-                src={data.image}
-                alt="vhs"
-                style={{ width: "100%", height: "auto" }}
-              />
-            </div>
-          ))}
-
-          <div className="poppins-black mt-2 mb-2"> Review</div>
-
-          <div>
-            <Swiper
-              slidesPerView={2}
-              spaceBetween={30}
-              freeMode={true}
-              pagination={{
-                clickable: true,
-              }}
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-              }}
-              modules={[FreeMode, Pagination, Autoplay]}
-              className="mySwiper"
-            >
-              {review.map((data, index) => (
-                <SwiperSlide
-                  key={data._id}
-                  className="shadow"
-                  style={{
-                    backgroundColor: "white",
-                    padding: "0px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
-                >
+                  <div className="poppins-black mt-2 mb-2"> VHS Promise</div>
                   <div
-                    className="col-md-4"
-                    style={{
-                      width: "100%",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      border: "1px solid darkred",
-                      padding: "8px 8px",
-                      borderRadius: "5px",
-                    }}
+                    className="row"
+                    style={{ justifyContent: "center", alignItems: "center" }}
                   >
-                    <div
-                      className="poppins-black"
-                      style={{ textAlign: "justify" }}
-                    >
-                      {data.title}
-                    </div>
-                    <div
-                      className="poppins-thin mt-1"
-                      style={{
-                        textAlign: "justify",
-                        color: "darkred",
-                        fontSize: "13px",
-                      }}
-                    >
-                      {data.category}
-                    </div>
-
-                    <div
-                      className="poppins-extralight mt-2"
-                      style={{
-                        textAlign: "justify",
-                        color: "black",
-                        fontSize: "13px",
-                      }}
-                    >
-                      {data.discription}
-                    </div>
+                    {vhspromise.map((data) => (
+                      <div className="col-md-4" key={data._id}>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <img
+                            src={data.image}
+                            alt="vhs"
+                            style={{ width: "60px", height: "60px" }}
+                          />
+                        </div>
+                        <div
+                          className="poppins-thin mt-2"
+                          style={{ textAlign: "center" }}
+                        >
+                          {data.title}
+                        </div>
+                        <div
+                          className="poppins-extralight"
+                          style={{ textAlign: "center" }}
+                        >
+                          {data.discription}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
 
-          <div className="poppins-black mt-3">FAQ</div>
-          <div>
-            <Faq
-              data={transformedFaqData}
-              styles={styles}
-              // config={config}
-            />
-          </div>
-        </Modal.Body>
-      </Modal>
+                  <div className="poppins-black mt-2 mb-2">Comparison </div>
+                  {allcamparison.map((data) => (
+                    <div key={data._id}>
+                      <img
+                        src={data.image}
+                        alt="vhs"
+                        style={{ width: "100%", height: "auto" }}
+                      />
+                    </div>
+                  ))}
+
+                  <div className="poppins-black mt-2 mb-2"> Review</div>
+
+                  <div>
+                    <Swiper
+                      slidesPerView={2}
+                      spaceBetween={30}
+                      freeMode={true}
+                      pagination={{
+                        clickable: true,
+                      }}
+                      autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                      }}
+                      modules={[FreeMode, Pagination, Autoplay]}
+                      className="mySwiper"
+                    >
+                      {review.map((data, index) => (
+                        <SwiperSlide
+                          key={data._id}
+                          className="shadow"
+                          style={{
+                            backgroundColor: "white",
+                            padding: "0px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                          }}
+                        >
+                          <div
+                            className="col-md-4"
+                            style={{
+                              width: "100%",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              border: "1px solid darkred",
+                              padding: "8px 8px",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            <div
+                              className="poppins-black"
+                              style={{ textAlign: "justify" }}
+                            >
+                              {data.title}
+                            </div>
+                            <div
+                              className="poppins-thin mt-1"
+                              style={{
+                                textAlign: "justify",
+                                color: "darkred",
+                                fontSize: "13px",
+                              }}
+                            >
+                              {data.category}
+                            </div>
+
+                            <div
+                              className="poppins-extralight mt-2"
+                              style={{
+                                textAlign: "justify",
+                                color: "black",
+                                fontSize: "13px",
+                              }}
+                            >
+                              {data.discription}
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+
+                  <div className="poppins-black mt-3">FAQ</div>
+                  <div>
+                    <Faq
+                      data={transformedFaqData}
+                      styles={styles}
+                      // config={config}
+                    />
+                  </div>
+                </Modal.Body>
+              </Modal>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }
