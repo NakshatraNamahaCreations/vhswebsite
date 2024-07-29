@@ -8,6 +8,7 @@ import NabarCompo from "./navbar";
 import { useNavigate, Link } from "react-router-dom";
 import Header1 from "./Header1";
 import Cartnavbar from "./Cartnavbar";
+import Footer from "./Footer";
 
 function Cart() {
   const navigate = useNavigate();
@@ -193,6 +194,8 @@ function Cart() {
               </div>
             </div>
           </div>
+
+          <Footer />
 
           {/* <div className="col-md-8 mt-5 ">
         {MyCartItmes.map((item) => (

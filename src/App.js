@@ -41,6 +41,9 @@ import Privacy from "./Component/Privacy";
 import Cancellation from "./Component/Cancellation";
 import Contact from "./Component/Contact";
 import Interiorcompany from "./Component/Interiorcompany";
+import Categeries from "./Component/Categeries";
+import Cartpetcleaning from "./Component/Carpetcleaning";
+import Invest from "./Component/Invest";
 
 function App() {
   return (
@@ -64,7 +67,7 @@ function App() {
         <Route path="Esuccess" element={<Esuccess />} />
         <Route path="success" element={<Success />} />
         <Route path="/p" element={<Paymentgateway />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/about-us" element={<About />} />
         <Route path="/career" element={<Career />} />
         <Route path="/Paymentsuccess" element={<Paymentsuccess />} />
         <Route path="/Paymentfailure" element={<Paymentfailure />} />
@@ -81,11 +84,14 @@ function App() {
           path="/serviceview/:ServiceName"
           element={<Serviceviewdetails />}
         />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/cancellation" element={<Cancellation />} />
+        <Route path="/terms-and-condition" element={<Terms />} />
+        <Route path="/privacy-policy" element={<Privacy />} />
+        <Route path="/refund-and-cancellation" element={<Cancellation />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/interiorcompany" element={<Interiorcompany />} />
+        <Route path="/categories" element={<Categeries />} />
+        <Route path="/carpetcleaning" element={<Cartpetcleaning />} />
+        <Route path="/invest" element={<Invest />} />
 
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>

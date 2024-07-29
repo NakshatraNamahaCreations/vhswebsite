@@ -28,6 +28,14 @@ import Cartnavbar from "./Cartnavbar";
 import NavbarCompo from "./Header1";
 import Homenavbar from "./Homenavbar";
 
+function capitalizeFirstLetter1(string) {
+  if (typeof string !== "string" || string.length === 0) {
+    return string; // Return the original string if it's not a valid string or is empty
+  }
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function Subcategory() {
   const [subcategoryData, setSubcategoryData] = useState([]);
   const { subcategory } = useParams();
@@ -151,7 +159,14 @@ function Subcategory() {
       );
 
       if (categoryNamecheck) {
-        const city = parts.slice(3).join("-");
+        //         const city = parts.slice(3).join("-");
+        //         // Join everything except the last part for subcategory
+        // const subcategory = parts.slice(0, -1).join("-");
+
+        // Take the last part for the city
+        const city = parts[parts.length - 1];
+
+        console.log("c====", city);
         setCity(city);
         setCat(true);
         categoryData(categoryNamecheck);
@@ -171,6 +186,8 @@ function Subcategory() {
     }
   }, [subcategory, allSubcat]);
 
+  console.log("city=====", city);
+
   const categoryData = async (category) => {
     try {
       let res = await axios.post(
@@ -186,9 +203,9 @@ function Subcategory() {
     }
   };
 
-  const localstoragecitys = localStorage.getItem("city");
+  // const capitalizedCity = localStorage.getItem("city");
 
-  console.log("localstoragecitys====", localstoragecitys);
+  // console.log("capitalizedCity====", capitalizedCity);
 
   const TotalPrice = MyCartItmes.reduce(
     (acc, cur) => acc + Number(cur.offerprice) * cur.qty, // Calculate total price considering quantity
@@ -391,6 +408,9 @@ function Subcategory() {
     setActiveIndex2(index);
   };
 
+  const capitalizedCity = capitalizeFirstLetter(city);
+  console.log("city=====13", capitalizedCity);
+
   const handleCloseCart = () => {
     // e.preventDefault();
     setOpenViewCartModal(false);
@@ -478,6 +498,12 @@ function Subcategory() {
     );
   };
 
+  const generatePathname = (subcategory, city) => {
+    return `/services/${subcategory.toLowerCase().replace(/ /g, "-")}-in-${city
+      .toLowerCase()
+      .replace(/ /g, "-")}`;
+  };
+
   return (
     <div>
       {isLoading ? (
@@ -510,12 +536,7 @@ function Subcategory() {
                     <div className="col-md-3 mt-3" key={index}>
                       <Link
                         to={{
-                          pathname: `/services/${ele.subcategory
-                            .toLowerCase()
-                            .replace(/ /g, "-")}-in-${city
-                            .toLowerCase()
-                            .replace(/ /g, "-")}`,
-                          state: { data: ele },
+                          pathname: generatePathname(ele.subcategory, city),
                         }}
                         onClick={() => setCat(false)}
                         className="text-decoration-none text-black"
@@ -678,7 +699,7 @@ function Subcategory() {
                       <div className="d-flex" style={{ marginTop: "-50px" }}>
                         <div>
                           <a
-                            href="tel:9344533703"
+                            href="tel:8453748478"
                             style={{ textDecoration: "none", color: "inherit" }}
                           >
                             <div
@@ -709,7 +730,7 @@ function Subcategory() {
 
                         <div style={{ marginLeft: "40px" }}>
                           <a
-                            href="https://wa.me/919344533703" // Replace with the appropriate country code and number
+                            href="https://wa.me/9611600990" // Replace with the appropriate country code and number
                             style={{ textDecoration: "none", color: "inherit" }}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -939,7 +960,7 @@ function Subcategory() {
                               // Filtered prices
                               const filteredPrices =
                                 data?.morepriceData?.filter(
-                                  (ele) => ele.pricecity === localstoragecitys
+                                  (ele) => ele.pricecity === capitalizedCity
                                 );
 
                               console.log(
@@ -1192,7 +1213,7 @@ function Subcategory() {
                       // Filtered prices
                       const filteredPrices =
                         selectedData?.morepriceData?.filter(
-                          (ele) => ele.pricecity === localstoragecitys
+                          (ele) => ele.pricecity === capitalizedCity
                         );
 
                       return (

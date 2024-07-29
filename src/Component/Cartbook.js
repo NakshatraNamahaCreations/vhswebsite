@@ -41,6 +41,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import Header1 from "./Header1";
 import Cartnavbar from "./Cartnavbar";
+import Footer from "./Footer";
 
 function Cartbook() {
   const [addondata, setaddondata] = useState([]);
@@ -785,7 +786,7 @@ function Cartbook() {
 
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/payment/yogipayment",
+        "https://api.vijayhomeservicebengaluru.in/api/payment/yogipayment",
         updateddata
       );
       console.log("Response:", res.data);
@@ -2549,6 +2550,7 @@ function Cartbook() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

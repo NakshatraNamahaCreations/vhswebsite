@@ -39,6 +39,9 @@ import deal from "../../src/assests/deal.png";
 import moment from "moment";
 import Cartnavbar from "./Cartnavbar";
 import Homenavbar from "./Homenavbar";
+import call from "../assests/call.gif";
+import web from "../assests/web.gif";
+import callgif from "../assests/callgif.gif";
 
 // updated home
 export default function Homecity() {
@@ -1104,12 +1107,22 @@ export default function Homecity() {
                 className="poppins-semibold"
                 style={{ fontSize: "20px", textAlign: "left" }}
               >
-                Thoughtful Curations
+                Thoughtful Curations{" "}
+                <span>
+                  <a
+                    href="tel:+918453748478"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <img
+                      src={callgif}
+                      alt="call"
+                      style={{ width: "80px", height: "80px" }}
+                    />{" "}
+                  </a>
+                </span>
               </div>
-              <div
-                className="poppins-medium-italic mt-1 mb-4"
-                style={{ textAlign: "left" }}
-              >
+
+              <div className="poppins-medium-italic thoughttext mt-1 mb-4">
                 Of our finest experiences
               </div>
 

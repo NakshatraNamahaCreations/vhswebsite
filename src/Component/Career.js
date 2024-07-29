@@ -51,21 +51,26 @@ function Career() {
               positions in the given vacancies below.
             </div>
 
-            <div
-              onClick={handleShow}
-              className="poppins-black mt-3"
-              style={{
-                backgroundColor: "blue",
-                padding: "7px",
-                textAlign: "center",
-                width: "50%",
-                borderRadius: "5px",
-                color: "white",
-                fontSize: "14px",
-              }}
+            <a
+              href="https://www.linkedin.com/company/vijay-home-services/?viewAsMember=true"
+              style={{ textDecoration: "none" }}
             >
-              See all Opportunity
-            </div>
+              <div
+                // onClick={handleShow}
+                className="poppins-black mt-3"
+                style={{
+                  backgroundColor: "blue",
+                  padding: "7px",
+                  textAlign: "center",
+                  width: "50%",
+                  borderRadius: "5px",
+                  color: "white",
+                  fontSize: "14px",
+                }}
+              >
+                See all Opportunity
+              </div>
+            </a>
           </div>
           <div
             className="col-md-6"

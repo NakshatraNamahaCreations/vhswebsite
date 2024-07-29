@@ -17,6 +17,7 @@ import Calendar from "react-calendar";
 import { Button } from "react-bootstrap";
 import Header2 from "./Header2";
 import Homenavbar from "./Homenavbar";
+import Footer from "./Footer";
 
 function Espage() {
   const location = useLocation();
@@ -55,6 +56,7 @@ function Espage() {
   const handleClose3 = () => setpaymentModel(false);
   const [user, setUser] = useState(null);
   const [mainContact, setMainContact] = useState("");
+  const [name, setname] = useState("");
 
   // const user = JSON.parse(localStorage.getItem("user"));
 
@@ -212,7 +214,7 @@ function Espage() {
     try {
       const response = await axios.post(
         "https://api.vijayhomeservicebengaluru.in/api/sendotp/sendByCartBook",
-        { mainContact: mainContact }
+        { mainContact: mainContact, customerName: name }
       );
 
       if (response.status === 200) {
@@ -660,7 +662,6 @@ function Espage() {
         const response = await axios(config);
 
         if (response.status === 200) {
-          alert("added");
           addenquiryfollowup1(response.data.data);
         }
       } catch (error) {
@@ -701,7 +702,6 @@ function Espage() {
         const response = await axios(config);
 
         if (response.status === 200) {
-          alert("added");
           addenquiryfollowup1(response.data.data);
         }
       } catch (error) {
@@ -1152,7 +1152,7 @@ function Espage() {
             <div className="row">
               <div className="col-md-12">
                 <div
-                  className="row"
+                  className="row mb-5"
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
                   <div
@@ -1192,6 +1192,19 @@ function Espage() {
 
                       <input
                         type="text"
+                        value={name}
+                        onChange={(e) => setname(e.target.value)}
+                        placeholder="Enter Name"
+                        style={{
+                          border: "1px solid grey",
+                          height: "45px",
+                          width: "60%",
+                          marginTop: "15px",
+                        }}
+                      />
+
+                      <input
+                        type="text"
                         value={mainContact}
                         onChange={(e) => setMainContact(e.target.value)}
                         placeholder="Enter Mobile Number"
@@ -1199,7 +1212,6 @@ function Espage() {
                           border: "1px solid grey",
                           height: "45px",
                           width: "60%",
-                          marginTop: "15px",
                         }}
                       />
 
@@ -1643,6 +1655,7 @@ function Espage() {
           </Modal>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

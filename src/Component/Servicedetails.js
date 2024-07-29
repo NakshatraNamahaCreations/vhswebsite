@@ -624,7 +624,7 @@ function Servicedetails() {
                   <div className="d-flex" style={{ marginTop: "-50px" }}>
                     <div>
                       <a
-                        href="tel:9344533703"
+                        href="tel:+918453748478"
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
                         <div
@@ -655,7 +655,7 @@ function Servicedetails() {
 
                     <div style={{ marginLeft: "40px" }}>
                       <a
-                        href="https://wa.me/919344533703" // Replace with the appropriate country code and number
+                        href="https://wa.me/919611600990" // Replace with the appropriate country code and number
                         style={{ textDecoration: "none", color: "inherit" }}
                         target="_blank"
                         rel="noopener noreferrer"

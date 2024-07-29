@@ -17,6 +17,7 @@ import Calendar from "react-calendar";
 import { Button } from "react-bootstrap";
 import Header2 from "./Header2";
 import Homenavbar from "./Homenavbar";
+import Footer from "./Footer";
 
 function Summary() {
   const location = useLocation();
@@ -2020,6 +2021,7 @@ function Summary() {
           </Modal>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

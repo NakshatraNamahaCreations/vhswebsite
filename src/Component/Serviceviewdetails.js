@@ -51,8 +51,8 @@ function Serviceviewdetails() {
   const location = useLocation();
   const { sub } = location.state || {};
   // console.log("sub=====", sub);
-  const localstoragecitys = localStorage.getItem("city");
-  // console.log("localstoragecitys======", localstoragecitys);
+  const capitalizedCity = localStorage.getItem("city");
+  // console.log("capitalizedCity======", capitalizedCity);
   const MyCartItmes = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [Item, setItem] = useState([]);
@@ -105,6 +105,9 @@ function Serviceviewdetails() {
     }
   }, [ServiceName, allserviceName]);
 
+  // const capitalizedCity = capitalizeFirstLetter(city);
+  // console.log("city=====13", capitalizedCity);
+
   useEffect(() => {
     console.log("Updated ser:", ser);
   }, [ser]);
@@ -132,7 +135,7 @@ function Serviceviewdetails() {
             email: email,
             category: servicedata?.category,
             reference2: "website",
-            city: localstoragecitys,
+            city: capitalizedCity,
             comment: comment,
             // interestedFor: serviceName,
             // serviceID: serviceId,
@@ -537,7 +540,7 @@ function Serviceviewdetails() {
                 <div className="row mt-2">
                   {(() => {
                     const filteredPrices = servicedata?.morepriceData?.filter(
-                      (ele) => ele.pricecity === localstoragecitys
+                      (ele) => ele.pricecity === capitalizedCity
                     );
 
                     return (
