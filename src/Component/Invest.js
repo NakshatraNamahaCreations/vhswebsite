@@ -305,7 +305,11 @@ function Invest() {
               a pristine, livable home.
             </div>
           </div>
-          <img src={Carpet7} alt="Carpet cleaning Image" />
+          <img
+            src={Carpet7}
+            style={{ width: "100%" }}
+            alt="Carpet cleaning Image"
+          />
         </div>
       </div>
       <Footer />

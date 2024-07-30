@@ -202,6 +202,11 @@ function Espage() {
     setdatePicker(false);
   };
 
+  const userString = localStorage.getItem("user");
+  const value = JSON.parse(userString);
+
+  console.log("value=====data", value);
+
   const sendOTP = async () => {
     // Validate mobile number
     const isValidMobile = /^\d{10}$/.test(mainContact);
@@ -261,7 +266,7 @@ function Espage() {
   const localstoragecitys = localStorage.getItem("city");
 
   const [Service, setService] = useState([]);
-  const value = JSON.parse(localStorage.getItem("user"));
+
   const [customeraddress, setcustomerAddressdata] = useState([]);
 
   console.log("value====", value);
@@ -435,6 +440,10 @@ function Espage() {
   const [Voucher, setVoucher] = useState([]);
   console.log(Voucher, "Voucher============");
   const [slotId, setslotId] = useState("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // new
 
@@ -642,10 +651,11 @@ function Espage() {
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {
-            customerData: user,
+            customerData: value,
             date: moment().format("DD-MM-YYYY"),
-            userId: user?._id,
-            mobile: user?.mainContact,
+            userId: value?._id,
+            mobile: value?.mainContact,
+            name: value?.customerName,
             // email: user?.email ? user?.email : email,
             // name: user?.customerName ? user?.customerName : customerName,
             Time: moment().format("h:mm:ss a"),
@@ -671,6 +681,67 @@ function Espage() {
     }
   };
 
+  // const makeApiCall = async (selectedResponse, contactNumber) => {
+  //   const apiURL =
+  //     "https://wa.chatmybot.in/gateway/waunofficial/v1/api/v2/message";
+  //   const accessToken = "c7475f11-97cb-4d52-9500-f458c1a377f4";
+
+  //   const contentTemplate = selectedResponse?.template || "";
+
+  //   if (!contentTemplate) {
+  //     console.error("Content template is empty. Cannot proceed.");
+  //     return;
+  //   }
+
+  //   const content = contentTemplate.replace(
+  //     /\{Customer_name\}/g,
+  //     customerName ? customerName : user.customerName
+  //   );
+  //   // const contentWithNames = content.replace(
+  //   //   /\{Executive_name\}/g,
+
+  //   // );
+  //   // const contentWithMobile = contentWithNames.replace(
+  //   //   /\{Executive_contact\}/g,
+  //   //   admin?.contactno
+  //   // );
+
+  //   // Replace <p> with line breaks and remove HTML tags
+  //   const convertedText = content
+  //     .replace(/<p>/g, "\n")
+  //     .replace(/<\/p>/g, "")
+  //     .replace(/<br>/g, "\n")
+  //     .replace(/&nbsp;/g, "")
+  //     .replace(/<strong>(.*?)<\/strong>/g, "<b>$1</b>")
+  //     .replace(/<[^>]*>/g, "");
+
+  //   const requestData = [
+  //     {
+  //       dst: "91" + contactNumber,
+  //       messageType: "0",
+  //       textMessage: {
+  //         content: convertedText,
+  //       },
+  //     },
+  //   ];
+  //   try {
+  //     const response = await axios.post(apiURL, requestData, {
+  //       headers: {
+  //         "access-token": accessToken,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     if (response.status === 200) {
+  //       // setWhatsappTemplate(response.data);
+  //     } else {
+  //       console.error("API call unsuccessful. Status code:", response.status);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error making API call:", error);
+  //   }
+  // };
+
   const addenquiry = async (e) => {
     e.preventDefault();
     if (!selectedAddress || !selectedSlotText) {
@@ -682,10 +753,11 @@ function Espage() {
           method: "post",
           headers: { "Content-Type": "application/json" },
           data: {
-            customerData: user,
+            customerData: value,
             date: moment().format("DD-MM-YYYY"),
-            userId: user?._id,
-            mobile: user?.mainContact,
+            userId: value?._id,
+            mobile: value?.mainContact,
+            name: value?.customerName,
             // email: user?.email ? user?.email : email,
             // name: user?.customerName ? user?.customerName : customerName,
             Time: moment().format("h:mm:ss a"),
@@ -820,20 +892,20 @@ function Espage() {
 
   const updateddata = {
     customerData: {
-      _id: user?._id,
-      EnquiryId: user?.EnquiryId,
-      customerName: user?.customerName,
-      category: user?.category,
-      mainContact: user?.mainContact,
-      email: user?.email,
-      approach: user?.approach,
+      _id: value?._id,
+      EnquiryId: value?.EnquiryId,
+      customerName: value?.customerName,
+      category: value?.category,
+      mainContact: value?.mainContact,
+      email: value?.email,
+      approach: value?.approach,
     },
     dividedDates: dividedDates.length ? dividedDates : [selectedDate],
     // customerName: storedCustomerName,
     // email: storedEmail,
     dividedamtCharges: dividedamtCharges,
     dividedamtDates: dividedamtDates,
-    cardNo: user?.cardNo,
+    cardNo: value?.cardNo,
     category: MyCartItmes[0]?.service?.category,
     contractType: "One Time",
     service: MyCartItmes[0]?.service?.serviceName,
@@ -850,7 +922,7 @@ function Espage() {
     type: "website",
 
     city: localstoragecitys,
-    userId: user?._id,
+    userId: value?._id,
     discAmt: 0,
     GrandTotal: DiscountAmount,
     paymentMode: "cash",

@@ -810,6 +810,85 @@ function Cartbook() {
     }
   };
 
+  // const deleteAllCartaddonItems = () => {
+  //   MyCartaddonItmes.forEach((item) => {
+  //     dispatch(deleteMyCartItemaddon({ id: item.id }));
+  //   });
+  // };
+
+  // const makeApiCall = async (selectedResponse, contactNumber) => {
+  //   console.log("hello");
+  //   const apiURL =
+  //     "https://wa.chatmybot.in/gateway/waunofficial/v1/api/v2/message";
+  //   const accessToken = "c7475f11-97cb-4d52-9500-f458c1a377f4";
+
+  //   const contentTemplate = selectedResponse?.template || "";
+
+  //   if (!contentTemplate) {
+  //     console.error("Content template is empty. Cannot proceed.");
+  //     return;
+  //   }
+
+  //   const content = contentTemplate.replace(
+  //     /\{Customer_name\}/g,
+  //     customerName ? customerName : user.customerName
+  //   );
+  //   const serviceName = content.replace(
+  //     /\{Service_name\}/g,
+  //     MyCartItmes[0]?.service.serviceName
+  //   );
+  //   const slotTiming = serviceName.replace(
+  //     /\{Slot_timing\}/g,
+  //     selectedSlotText
+  //   );
+  //   const serivePrice = slotTiming.replace(
+  //     /\{Service_amount\}/g,
+  //     couponDiscount
+  //   );
+  //   const serviceDate = serivePrice.replace(/\{Service_date\}/g, selectedDate);
+  //   // const serviceVideoLink = serviceDate.replace(
+  //   //   /\{Video_link\}/g,
+  //   //   selectedVideoLink
+  //   // );
+
+  //   // // Replace <p> with line breaks and remove HTML tags
+  //   const convertedText = serviceDate
+  //     .replace(/<p>/g, "\n")
+  //     .replace(/<\/p>/g, "")
+  //     .replace(/<br>/g, "\n")
+  //     .replace(/&nbsp;/g, "")
+  //     .replace(/<strong>(.*?)<\/strong>/g, "<b>$1</b>")
+  //     .replace(/<[^>]*>/g, "");
+
+  //   const requestData = [
+  //     {
+  //       dst: "91" + contactNumber,
+  //       messageType: "0",
+  //       textMessage: {
+  //         content: convertedText,
+  //       },
+  //     },
+  //   ];
+  //   try {
+  //     const response = await axios.post(apiURL, requestData, {
+  //       headers: {
+  //         "access-token": accessToken,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     if (response.status === 200) {
+  //       // setWhatsappTemplate(response.data);
+  //       // alert("Sent");
+  //       deleteAllCartaddonItems();
+  //     } else {
+  //       console.error("API call unsuccessful. Status code:", response.status);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error making API call:", error);
+  //   }
+  // };
+
   const addtreatmentdetails = async (e) => {
     e.preventDefault();
     if (!selectedAddress || !selectedSlotText) {

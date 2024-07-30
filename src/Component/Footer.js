@@ -38,7 +38,7 @@ function Footer() {
 
             <div className="f-desc">
               <a
-                href="/about"
+                href="/about-us"
                 className="poppins-regular"
                 style={{ textDecoration: "none", color: "black" }}
               >
