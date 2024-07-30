@@ -68,7 +68,7 @@ function Summary() {
   const userString = localStorage.getItem("user");
   const user = JSON.parse(userString);
 
-  console.log("laksi", user?._id);
+  console.log("user", user);
 
   const [validationMessage, setValidationMessage] = useState("");
 

@@ -1,650 +1,443 @@
 import React from "react";
-import NabarCompo from "./navbar";
 import Footer from "./Footer";
-import picture from "../../src/assests/Picture.jpg";
-import picture1 from "../../src/assests/Picture2.jpg";
-import casestudy from "../../src/assests/casestudy.jpeg";
-import picture2 from "../../src/assests/Picture1.jpg";
-import picture6 from "../../src/assests/Picture6.jpg";
-import picture3 from "../../src/assests/Picture3.jpg";
 import Homenavbar from "./Homenavbar";
+import NavbarCompo from "./navbar";
+import interior from "../../src/assests/interior.png";
+import interior1 from "../../src/assests/interior1.png";
+import interiorpainting from "../../src/assests/interiorpainting.jpeg";
+import Social1 from "../../src/assests/socila1.webp";
+import Social from "../../src/assests/social.webp";
+import Carpet7 from "../../src/assests/carpet7.jpg";
 
 function Interiorcompany() {
   return (
     <div>
-      <NabarCompo />
+      <NavbarCompo />
       <Homenavbar />
       <div className="container">
-        <img
-          src={picture6}
-          alt="Responsive image"
-          className="img-fluid"
-          style={{ width: "100%" }}
-        />
-        <img
-          src={picture3}
-          alt="Responsive image"
-          className="img-fluid"
-          style={{ width: "100%" }}
-        />
-        <img
-          src={picture}
-          alt="Responsive image"
-          className="img-fluid"
-          style={{ width: "100%" }}
-        />
-        <img
-          src={picture1}
-          alt="Responsive image"
-          className="img-fluid"
-          style={{ width: "100%" }}
-        />
-        <div className="row mt-3">
-          <div
-            className="col-md-6"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
+        <div className="">
+          <img
+            src={interior}
+            alt="loading...."
+            style={{ width: "100%", height: "350px" }}
+          />
+
+          <div className="row mt-4">
+            <div className="col-md-6">
+              <img
+                src={interiorpainting}
+                alt="VHS"
+                style={{ width: "100%", height: "230px" }}
+              />
+            </div>
+            <div
+              className="col-md-6"
+              style={{ backgroundColor: "lightgrey", padding: "20px" }}
+            >
+              <div className="text-center poppins-black">Booking Now</div>
+              <div className="d-flex mt-3">
+                <div className="col-md-6">
+                  <div className="text-center poppins-black">Name</div>
+                </div>
+                <div className="col-md-6">
+                  <input type="text" className="i-input" />
+                </div>
+              </div>
+              <div className="d-flex mt-3">
+                <div className="col-md-6">
+                  <div className="text-center poppins-black">Contact No</div>
+                </div>
+                <div className="col-md-6">
+                  <input type="text" className="i-input" />
+                </div>
+              </div>
+
+              <div
+                className=""
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <div
+                  className="text-center poppins-regular p-2"
+                  style={{
+                    backgroundColor: "red",
+                    fontSize: "14px",
+                    color: "white",
+                    borderRadius: "5px",
+                    width: "40%",
+                  }}
+                >
+                  GET STARTED
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <div className="text-center poppins-black">
+              Collaborate with Us -{" "}
+              <span className="poppins-bold">100% Inhouse team</span>
+            </div>
+            <div className="poppins-regular text-center mt-1">
+              Partner with Vijay Home Services to enhance your interior projects
+              and provide your clients with an exceptional, turnkey experience.
+              Together, we can:
+            </div>
+
+            <div className="row">
+              <div className="col-md-6">
+                <ul className="mt-4">
+                  <li className="poppins-regular">
+                    <span className="poppins-black">
+                      Seamlessly Integrate Services :{" "}
+                    </span>
+                    Ensuring a smooth handover from renovation to final
+                    cleaning, eliminating any disruptions for your clients.
+                  </li>
+
+                  <li className="poppins-regular mt-3">
+                    <span className="poppins-black">Deliver Excellence : </span>
+                    Combining our expertise to turn beautiful designs into
+                    stunning, ready-to-live spaces.
+                  </li>
+
+                  <li className="poppins-regular mt-3">
+                    <span className="poppins-black">Improve Efficiency : </span>
+                    Streamline the post-renovation process by integrating
+                    cleaning services into your project timeline, reducing
+                    delays and ensuring timely project completion.
+                  </li>
+
+                  <li className="poppins-regular mt-3">
+                    <span className="poppins-black">Showcase Quality : </span>
+                    Present your completed projects in the best light with our
+                    meticulous cleaning, ensuring that your work is displayed at
+                    its highest quality.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="col-md-6">
+                <ul className="mt-4">
+                  <li className="poppins-regular">
+                    <span className="poppins-black">
+                      Customized Solutions :{" "}
+                    </span>
+                    Tailor our cleaning services to meet the specific needs of
+                    each project, offering flexible solutions that align with
+                    your design vision and client expectations.
+                  </li>
+
+                  <li className="poppins-regular mt-3">
+                    <span className="poppins-black">
+                      Strengthen Reputation :{" "}
+                    </span>
+                    Enhance your reputation by partnering with a trusted
+                    cleaning service, known for reliability and excellence,
+                    reflecting positively on your brand.
+                  </li>
+
+                  <li className="poppins-regular mt-3">
+                    <span className="poppins-black">Cost-Effective : </span>
+                    Offering competitive pricing and bundled service packages
+                    that provide value without compromising on quality.
+                  </li>
+
+                  <li className="poppins-regular mt-3">
+                    <span className="poppins-black">
+                      Eco-Friendly Options :{" "}
+                    </span>
+                    Incorporating environmentally friendly cleaning practices to
+                    meet the growing demand for sustainable solutions in home
+                    services.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <div className="text-center poppins-black">Why Choose Us?</div>
+              <ol className="mt-4">
+                <li className="poppins-regular">
+                  <span className="poppins-black">
+                    Comprehensive Cleaning Expertise :{" "}
+                  </span>
+                  Our specialized post-renovation cleaning services ensure every
+                  corner of your newly designed space is free from dust, debris,
+                  and any construction residues.
+                </li>
+
+                <li className="poppins-regular mt-3">
+                  <span className="poppins-black">
+                    Enhanced Client Satisfaction :{" "}
+                  </span>
+                  A spotless, well-maintained space not only highlights the
+                  beauty of your designs but also significantly boosts client
+                  satisfaction.
+                </li>
+
+                <li className="poppins-regular mt-3">
+                  <span className="poppins-black">
+                    Professional and Reliable Service :{" "}
+                  </span>
+                  Our team is known for reliability, attention to detail, and a
+                  commitment to delivering the highest standards of cleanliness.
+                </li>
+              </ol>
+            </div>
+
+            <div className="mt-4">
+              <div className="text-center poppins-black">Our Services</div>
+              <ul className="mt-4">
+                <li className="poppins-regular">
+                  <span className="poppins-black">
+                    Detailed Post-Renovation Cleaning :{" "}
+                  </span>
+                  We offer a thorough, multi-phase cleaning process to address
+                  any unfinished issues, making sure your space is immaculate
+                  and ready for occupancy.
+                </li>
+
+                <li className="poppins-regular mt-3">
+                  <span className="poppins-black">
+                    Custom Cleaning Plans :{" "}
+                  </span>
+                  Tailored to fit the specific needs of each project, our
+                  cleaning packages ensure optimal results for every space.
+                </li>
+
+                <li className="poppins-regular mt-3">
+                  <span className="poppins-black">Flexible Scheduling : </span>
+                  We coordinate with your project timelines to provide a
+                  hassle-free experience, stepping in as soon as the renovation
+                  work is complete.
+                </li>
+              </ul>
+            </div>
+
+            <div className="">
+              <div className="text-center poppins-black">How We Work</div>
+              <img
+                src={interior1}
+                alt="VHS"
+                style={{ width: "100%", height: "500px" }}
+              />
+              <div className="">
+                <div className="poppins-black">
+                  Book Post-Interior Cleaning in the App
+                </div>
+                <ul>
+                  <li className="poppins-regular mt-1">
+                    Simply open the app, select the post-interior cleaning
+                    service, and provide details about your project. Choose a
+                    date and time that works best for you, and confirm your
+                    booking with just a few taps.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="">
+                <div className="poppins-black">Place the Order with Date</div>
+                <ul>
+                  <li className="poppins-regular mt-1">
+                    Once you’ve selected your service, finalize your order by
+                    choosing a specific date for the cleaning. This ensures our
+                    team is scheduled to meet your needs exactly when you need
+                    us.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="">
+                <div className="poppins-black">
+                  Auto Confirmation with Message
+                </div>
+                <ul>
+                  <li className="poppins-regular mt-1">
+                    After placing your order, you will receive an automatic
+                    confirmation message. This will include all the details of
+                    your booking, ensuring you have everything you need for a
+                    smooth process.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="">
+                <div className="poppins-black">
+                  Personalized Project Management
+                </div>
+                <ul>
+                  <li className="poppins-regular mt-1">
+                    We will assign a dedicated Post-Interior Cleaning Team
+                    Manager to oversee your project. From start to finish, your
+                    manager will ensure that every aspect of the cleaning
+                    process is handled meticulously, keeping you updated and
+                    addressing any concerns promptly.
+                  </li>
+                </ul>
+              </div>
+              <div className="">
+                <div className="poppins-black">
+                  Job Start Update with Photos on WhatsApp
+                </div>
+                <ul>
+                  <li className="poppins-regular mt-1">
+                    On the day your project begins, our team will send you a job
+                    start update along with photos via WhatsApp. This keeps you
+                    informed and reassured that the work is progressing as
+                    planned.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="">
+                <div className="poppins-black">Job Completion with Photos</div>
+                <ul>
+                  <li className="poppins-regular mt-1">
+                    Upon completion of the cleaning, our team will send you a
+                    final update with photos, showcasing the immaculate
+                    condition of your space. This allows you to review the work
+                    done and confirm your satisfaction.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <div className="text-center poppins-black">
+                Experience the Vijay Home Services Difference
+              </div>
+              <ul className="mt-4">
+                <li className="poppins-regular">
+                  <span className="poppins-black">Seamless Integration : </span>
+                  Enjoy a smooth, hassle-free experience with our streamlined
+                  process and dedicated support.
+                </li>
+
+                <li className="poppins-regular mt-3">
+                  <span className="poppins-black">
+                    Custom Cleaning Plans :{" "}
+                  </span>
+                  Our professional cleaning team is trained to handle all
+                  post-renovation cleaning tasks, ensuring your space is
+                  immaculate.
+                </li>
+
+                <li className="poppins-regular mt-3">
+                  <span className="poppins-black">
+                    Customer Satisfaction :{" "}
+                  </span>
+                  We prioritize your satisfaction, providing high-quality
+                  service and attention to detail in every project.
+                </li>
+              </ul>
+            </div>
+
+            <div className="row">
+              <div className="poppins-semibold text-center">BOOK NOW</div>
+              <div className="row mt-3 p-4">
+                <div className="col-md-4">
+                  <div className="d-flex">
+                    <div
+                      className="col-md-6"
+                      style={{
+                        display: "flex",
+
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div className="poppins-black">Name</div>
+                    </div>
+                    <div className="col-md-6">
+                      <input type="text" className=" c-input" />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="d-flex">
+                    <div
+                      className="col-md-6"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div className="poppins-black">Contact No</div>
+                    </div>
+                    <div className="col-md-6">
+                      <input type="number" className=" c-input" />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="col-md-4"
+                  style={{ display: "flex", justifyContent: "end" }}
+                >
+                  <div
+                    className="text-center poppins-black p-2"
+                    style={{
+                      backgroundColor: "red",
+                      fontSize: "14px",
+                      color: "white",
+                      borderRadius: "5px",
+                      width: "70%",
+                      height: "40px",
+                    }}
+                  >
+                    GET STARTED
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row ">
+              <div className="poppins-semibold text-center">
+                Get Started Today!
+              </div>
+              <div
+                className="mt-3"
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  justifyContent: "center",
+                }}
+              >
+                <div
+                  className="col-md-6"
+                  style={{ display: "flex", justifyContent: "end" }}
+                >
+                  <a href="https://play.google.com/store/apps/details?id=com.vhs1">
+                    <img
+                      src={Social1}
+                      alt="vhs"
+                      style={{ width: "auto", height: "50px" }}
+                    />
+                  </a>
+                </div>
+                <div className="col-md-6" style={{}}>
+                  <img
+                    src={Social}
+                    alt="vhs"
+                    style={{ width: "auto", height: "50px" }}
+                  />
+                </div>
+              </div>
+              <div className="poppins-extralight-italic text-center mt-3 mb-3">
+                Download the Vijay Home Services app and book your post-interior
+                cleaning service now to transform your newly renovated space
+                into a pristine, livable home.
+              </div>
+            </div>
             <img
-              src={casestudy}
-              className="img-fluid"
-              alt="Responsive image"
-              style={{ width: "400px", height: "400px" }}
+              src={Carpet7}
+              alt="Carpet cleaning Image"
+              style={{ width: "100%" }}
             />
           </div>
-          <div className="col-md-6 mt-5">
-            <div
-              className="poppins-extrabold"
-              style={{
-                color: "red",
-                fontSize: "40px",
-                letterSpacing: "3px",
-                textAlign: "center",
-              }}
-            >
-              Vijay Home Service
-            </div>
-            <div
-              className="poppins-extrabold"
-              style={{
-                color: "red",
-                fontSize: "25px",
-                textAlign: "center",
-              }}
-            >
-              Partner Case Studies
-            </div>
-
-            <div className="poppins-black mt-4 text-center" style={{}}>
-              I N D I A <spna className="mx-2"> |</spna> U A E ( D U B A I )
-            </div>
-
-            <div className="poppins-semibold mt-4 text-center" style={{}}>
-              T R U S T E D B Y 4 0 M I L L I O N + C U S TO M E R S
-            </div>
-
-            <div
-              className="row mt-4"
-              style={{
-                border: "1px solid darkred",
-                padding: "5px",
-                borderRadius: "5px",
-              }}
-            >
-              <div className="">
-                <span>
-                  <i
-                    style={{ fontSize: "18px", color: "darkred" }}
-                    className="fa-solid fa-check"
-                  ></i>
-                </span>{" "}
-                <span
-                  className="poppins-regular"
-                  style={{ marginLeft: "5px", color: "darkred" }}
-                >
-                  Po w e r e d B y 1 0 0 0 + I n H o u s e T e a m !
-                </span>
-              </div>
-              <div className="">
-                <span>
-                  <i
-                    style={{ fontSize: "18px", color: "darkred" }}
-                    className="fa-solid fa-check"
-                  ></i>
-                </span>{" "}
-                <span
-                  className="poppins-regular"
-                  style={{ marginLeft: "5px", color: "darkred" }}
-                >
-                  2 0 0 + I n - H o u s e Ve h i c l e s f o r O n T i m e S e r
-                  v i c e !
-                </span>
-              </div>
-              <div className="">
-                <span>
-                  <i
-                    style={{ fontSize: "18px", color: "darkred" }}
-                    className="fa-solid fa-check"
-                  ></i>
-                </span>{" "}
-                <span
-                  className="poppins-regular"
-                  style={{ marginLeft: "5px", color: "darkred" }}
-                >
-                  S e r v i n g E xc e l l e n c e A c r o s s 1 0 + I n d i a n
-                  C i t i e s !
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
-        <div className="row mt-4 mb-4">
-          <div className="col-md-6">
-            <div className="poppins-semibold">Homz-Interio</div>
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "red" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Monthly 80+ jobs (Project completion cleaning).
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Servicing in Bangalore.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                No Sub Contracts.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Team.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Dedicated manager For Communication & Coordination.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Providing timely and high-quality service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Logistics to provide timely service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Billed after service.
-              </span>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="poppins-semibold">Decorpot</div>
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Monthly 150+ jobs (Project completion cleaning).
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                No Sub Contracts.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Team.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Servicing in Bangalore, Hyderabad, Chennai & Pune.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Dedicated manager with Commitment & Coordination.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Logistics to provide timely service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Providing timely and high-quality service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Billed after service.
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="row mt-3 mb-4">
-          <div className="col-md-6">
-            <div className="poppins-semibold">Homelot</div>
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Monthly 100+ jobs (Project completion cleaning).
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Servicing in Bangalore.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                No Sub Contracts.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Team.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Servicing in Bangalore, Hyderabad & Chennai.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Logistics to provide timely service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Providing timely and high-quality service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Billed after service.
-              </span>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="poppins-semibold">Furlenco</div>
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Monthly 3000+ jobs (Project completion cleaning).
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                No Sub Contracts.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Team.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Servicing 8 cities across India.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Logistics to provide timely service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Dedicated manager with Commitment & Coordination.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Providing timely and high-quality service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Billed after service.
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="row mt-3 mb-4">
-          <div className="col-md-6">
-            <div className="poppins-semibold">Homeline</div>
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Monthly 300+ jobs (Project completion cleaning).
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                No Sub Contracts.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Team.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Available 12 cities across India.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                In-House Logistics to provide timely service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Dedicated manager with Commitment & Coordination.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Providing timely and high-quality service.
-              </span>
-            </div>
-
-            <div className=" mt-2">
-              <span>
-                <i
-                  style={{ fontSize: "18px", color: "green" }}
-                  className="fa-solid fa-check"
-                ></i>
-              </span>{" "}
-              <span className="poppins-regular" style={{ marginLeft: "5px" }}>
-                Billed after service.
-              </span>
-            </div>
-          </div>
-          <div className="col-md-6"></div>
-        </div>
-        <img
-          src={picture2}
-          alt="Responsive image"
-          className="img-fluid"
-          style={{ width: "100%" }}
-        />
       </div>
       <Footer />
     </div>
   );
 }
+
 export default Interiorcompany;

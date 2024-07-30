@@ -27,7 +27,7 @@ function Invest() {
           <div
             className=""
             style={{
-              backgroundColor: "skyblue",
+              backgroundColor: "white",
               padding: "25px",
               borderBottom: "15px solid darkblue",
             }}
@@ -46,7 +46,7 @@ function Invest() {
           <div
             className=""
             style={{
-              backgroundColor: "skyblue",
+              backgroundColor: "white",
               padding: "25px",
               borderBottom: "15px solid darkblue",
             }}
@@ -119,7 +119,7 @@ function Invest() {
           <div
             className=""
             style={{
-              backgroundColor: "skyblue",
+              backgroundColor: "white",
               padding: "25px",
               borderBottom: "15px solid darkblue",
             }}
@@ -162,7 +162,7 @@ function Invest() {
           <div
             className=""
             style={{
-              backgroundColor: "skyblue",
+              backgroundColor: "white",
               padding: "25px",
               borderBottom: "15px solid darkblue",
             }}
@@ -202,7 +202,7 @@ function Invest() {
           <div
             className=""
             style={{
-              backgroundColor: "skyblue",
+              backgroundColor: "white",
               padding: "25px",
               borderBottom: "15px solid darkblue",
             }}
@@ -246,7 +246,7 @@ function Invest() {
           <div
             className=""
             style={{
-              backgroundColor: "skyblue",
+              backgroundColor: "white",
               padding: "25px",
               borderBottom: "15px solid darkblue",
             }}

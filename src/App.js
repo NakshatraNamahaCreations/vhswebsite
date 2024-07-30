@@ -44,6 +44,7 @@ import Interiorcompany from "./Component/Interiorcompany";
 import Categeries from "./Component/Categeries";
 import Cartpetcleaning from "./Component/Carpetcleaning";
 import Invest from "./Component/Invest";
+import Registerus from "./Component/Registerus";
 
 function App() {
   return (
@@ -92,6 +93,7 @@ function App() {
         <Route path="/categories" element={<Categeries />} />
         <Route path="/carpetcleaning" element={<Cartpetcleaning />} />
         <Route path="/invest" element={<Invest />} />
+        <Route path="/joinus" element={<Registerus />} />
 
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>

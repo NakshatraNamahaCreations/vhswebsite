@@ -127,7 +127,7 @@ function Footer() {
             <div className="f-desc">
               <a
                 className="poppins-regular"
-                href="/"
+                href="/joinus"
                 style={{ textDecoration: "none", color: "black" }}
               >
                 Register as a professional

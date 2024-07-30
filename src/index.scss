@@ -1399,6 +1399,8 @@ background: rgb(255, 68, 68) !important;
   }
   .Footermobile{
     display: flex !important;
+    position:fixed !important;
+    bottom: 0px !important;
   }
   .Footerweb{
     display: none !important;
@@ -1594,6 +1596,11 @@ background: rgb(255, 68, 68) !important;
   .imagebanner1{
     display: flex !important;
   }
+  .Footermobile{
+    display: flex !important;
+    position:fixed !important;
+    bottom: 0px !important;
+  }
 }
 
 
@@ -1612,4 +1619,22 @@ background: rgb(255, 68, 68) !important;
 .thoughttext{
   text-align: left !important;
   margin-top: -20px !important;
+}
+.i-input{
+  background-color: orange !important;
+  height: 30px !important;
+}
+.j-input{
+  border: 1px solid grey;
+  height: 35px;
+  margin-top: 8px;
+}
+.input-group-text {
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  height: 68%; 
+}
+.input-group-text input[type="checkbox"] {
+  margin: 0; 
 }
