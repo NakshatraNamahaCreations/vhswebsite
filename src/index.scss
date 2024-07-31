@@ -1125,6 +1125,7 @@ background: rgb(255, 68, 68) !important;
 .subcat-row{
   flex: 0 0 33.3333% !important;
   max-width: 33.3333% !important;
+  margin-top: 10px !important;
 }
 
 .viewetial-text{
@@ -1248,6 +1249,26 @@ background: rgb(255, 68, 68) !important;
 .renderslots{
    display: ruby !important;
    flex-wrap: wrap !important;
+}
+.s-heading{
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: left;
+  margin-top: 15px;
+}
+.v-text{
+  color: black;
+  font-size: 20px;
+  font-size: bold;
+  text-align: left;
+  margin-top: 0px;
+}
+.t-text{
+  margin-top: 15px !important;
+}
+.sv-text{
+  margin-top: 35px !important;
 }
 
 
@@ -1401,6 +1422,10 @@ background: rgb(255, 68, 68) !important;
     display: flex !important;
     position:fixed !important;
     bottom: 0px !important;
+    z-index: 10;
+    background-color: #eee !important;
+    width: -webkit-fill-available !important;
+    padding: 10px;
   }
   .Footerweb{
     display: none !important;
@@ -1434,6 +1459,26 @@ background: rgb(255, 68, 68) !important;
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 15px !important;
+  }
+  .s-heading{
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left;
+    margin-top: 0px !important;
+  }
+  .v-text{
+    color: black;
+    font-size: 20px;
+    font-size: bold;
+    text-align: left;
+    margin-top: -55px !important;
+  }
+  .t-text{
+    margin-top: -15px !important;
+  }
+  .sv-text{
+    margin-top: -15px !important;
   }
 }
 
@@ -1596,10 +1641,36 @@ background: rgb(255, 68, 68) !important;
   .imagebanner1{
     display: flex !important;
   }
-  .Footermobile{
-    display: flex !important;
-    position:fixed !important;
-    bottom: 0px !important;
+
+    .Footermobile{
+      display: flex !important;
+      position:fixed !important;
+      bottom: 0px !important;
+      z-index: 10 !important;
+      background-color: #eee !important;
+      width: -webkit-fill-available !important;
+      padding: 10px;
+    }
+
+  .s-heading{
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left;
+    margin-top: 0px !important;
+  }
+  .v-text{
+    color: black;
+    font-size: 20px;
+    font-size: bold;
+    text-align: left;
+    margin-top: -55px !important;
+  }
+  .t-text{
+    margin-top: -15px !important;
+  }
+  .sv-text{
+    margin-top: -15px !important;
   }
 }
 

@@ -59,7 +59,7 @@ function App() {
         <Route path="viewcart" element={<ViewCart />} />
         <Route path="booking" element={<Booking />} />
         <Route path="bookingdetails" element={<BookingDetails />} />
-        <Route path="servicedetails" element={<Servicedetails />} />
+        <Route path="service/:service" element={<Servicedetails />} />
         <Route path="viewdetails" element={<Viewdetails />} />
         <Route path="cart" element={<Cart />} />
         <Route path="Espage" element={<Espage />} />

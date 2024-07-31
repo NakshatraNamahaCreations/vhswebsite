@@ -22,6 +22,9 @@ import "swiper/css/navigation";
 import Social1 from "../../src/assests/socila1.webp";
 import Social from "../../src/assests/social.webp";
 import Carpet7 from "../../src/assests/carpet7.jpg";
+import theree from "../../src/assests/theree.jpg";
+import suman from "../../src/assests/suman.jpeg";
+import suman1 from "../../src/assests/suman1.jpeg";
 
 function Carpetcleaning() {
   const data = [
@@ -71,7 +74,7 @@ function Carpetcleaning() {
               <div className="col-md-8">
                 <div className="">
                   <img
-                    src={exprecln}
+                    src={theree}
                     alt="Carpet Cleaning Image"
                     style={{ height: "150px", width: "100%" }}
                   />
@@ -114,7 +117,10 @@ function Carpetcleaning() {
                   <img
                     src={deepcln}
                     alt="loading"
-                    style={{ width: "320px", height: "150px" }}
+                    style={{
+                      width: "320px",
+                      height: "150px",
+                    }}
                   />
                   <div className="p-2">
                     <div className="d-flex justify-content-center">
@@ -147,7 +153,7 @@ function Carpetcleaning() {
               <div className="col-md-4 d-flex justify-content-center">
                 <div style={{ backgroundColor: "darkred", width: "320px" }}>
                   <img
-                    src={deepcln}
+                    src={suman1}
                     alt="loading"
                     style={{ width: "320px", height: "150px" }}
                   />
@@ -180,9 +186,12 @@ function Carpetcleaning() {
               <div className="col-md-4 d-flex justify-content-center">
                 <div style={{ backgroundColor: "darkred", width: "320px" }}>
                   <img
-                    src={deepcln}
+                    src={suman1}
                     alt="loading"
-                    style={{ width: "320px", height: "150px" }}
+                    style={{
+                      width: "320px",
+                      height: "150px",
+                    }}
                   />
                   <div className="p-2 ">
                     <div className="d-flex justify-content-center">

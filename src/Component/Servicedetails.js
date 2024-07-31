@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import NabarCompo from "./navbar";
 import { Button, Modal } from "react-bootstrap";
@@ -26,29 +26,38 @@ import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Faq from "react-faq-component";
 import Cartnavbar from "./Cartnavbar";
 
+function capitalizeFirstLetter1(string) {
+  if (typeof string !== "string" || string.length === 0) {
+    return string; // Return the original string if it's not a valid string or is empty
+  }
+
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+const capitalizeWords = (str) => {
+  return str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 function Servicedetails() {
-  const location = useLocation();
-  const { subcategory, data } = location.state || {};
+  // const { subcategory, data } = location.state || {};
+  const { service } = useParams();
+  console.log("service", service);
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const [show, setShow] = useState(false);
   const MyCartItmes = useSelector((state) => state.cart);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   const [serviceData, setserviceData] = useState([]);
-  const [subModel, setsubModel] = useState(false);
-  // const [filtersub, setfiltersub] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [Item, setItem] = useState([]);
   const [City, setCity] = useState(null);
   const [OpenViewCartModal, setOpenViewCartModal] = useState(false);
-  const [Price, setPrices] = useState(null);
-  const [PriceId, setPriceId] = useState(null);
   const [DefaultPrice, setDefaultPrice] = useState(null);
   const [ServiceID, setServiceID] = useState(null);
-  const [ServiceIDD, setServiceIDD] = useState(null);
   const [subcategoryVideo, setsubcategoryVideo] = useState([]);
-  const [viewmoreCategory, setViewMoreCategory] = useState(false);
   const [ModalSubcategoryView, setModalSubcategoryView] = useState(false);
   const [SelectService, setSelectService] = useState(null);
   const [SelectedCategory, setSelectedCategory] = useState([]);
@@ -58,8 +67,6 @@ function Servicedetails() {
   const [offerBannerdata, setofferBannerdata] = useState([]);
   const [postsubdata, setpostsubdata] = useState([]);
   const [Servicedata, setServicedata] = useState([]);
-  const [pricesdata, setpricesdata] = useState([]);
-  const [ITEM_HEIGHT, setItemHeight] = useState(350);
   const [vshow, setvShow] = useState(false);
   const [modalbanner, setmodalbanner] = useState([]);
   const [allcategory, setallcategory] = useState([]);
@@ -68,6 +75,12 @@ function Servicedetails() {
   const [allcamparison, setallcamparison] = useState([]);
   const [faq, setfaq] = useState([]);
   const [review, setreview] = useState([]);
+  const [sub, setSub] = useState("");
+  const [allSubcat, setAllSubcat] = useState([]);
+  const [data, setData] = useState([]);
+  const [subcategoryData, setSubcategoryData] = useState([]);
+  const vhandleClose = () => setvShow(false);
+  const vhandleShow = () => setvShow(true);
 
   console.log("data---", data);
 
@@ -79,29 +92,38 @@ function Servicedetails() {
   };
 
   const styles = {
-    // bgColor: 'white',
     titleTextColor: "darkred",
     rowTitleColor: "darkred",
-    // rowContentColor: 'grey',
-    // arrowColor: "red",
   };
 
   console.log("data", data);
-
-  const vhandleClose = () => setvShow(false);
-  const vhandleShow = () => setvShow(true);
-
-  const scrollViewRef = useRef(null);
 
   const localstoragecitys = localStorage.getItem("city");
 
   const [Bannermidledata, setBannermidledata] = useState([]);
 
-  console.log("localstoragecitys===", localstoragecitys);
+  useEffect(() => {
+    getSubcategories();
+  }, [allSubcat]);
+
+  const getSubcategories = async () => {
+    try {
+      const res = await axios.get(
+        `https://api.vijayhomesuperadmin.in/api/userapp/getappsubcat`
+      );
+      if (res.status === 200) {
+        setAllSubcat(res.data.subcategory);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log("city", City);
 
   useEffect(() => {
     getbannerdatamiddle();
-  }, []);
+  }, [Bannermidledata]);
 
   const getbannerdatamiddle = async () => {
     let res = await axios.get(
@@ -109,14 +131,42 @@ function Servicedetails() {
     );
     if ((res.status = 200)) {
       setBannermidledata(
-        res.data?.SpotlightSP.filter((i) => i?.service === data?.subcategory)
+        res.data?.SpotlightSP.filter((i) => i?.service === sub)
       );
     }
   };
 
   useEffect(() => {
+    if (service && allSubcat.length > 0) {
+      const parts = service.split("-");
+      const category1 = capitalizeFirstLetter(parts[0]);
+
+      const fullServiceName = allSubcat?.find((service) =>
+        service?.subcategory.toLowerCase().includes(category1.toLowerCase())
+      );
+      console.log("fullServiceName", fullServiceName);
+      if (fullServiceName) {
+        const city = parts.slice(3).join("-");
+        setCity(city);
+        setSub(fullServiceName.subcategory);
+        getSubcategory(fullServiceName.subcategory);
+        setData(fullServiceName);
+      } else {
+        console.error("Service not found");
+      }
+    }
+  }, [service, allSubcat]);
+
+  const capitalizedCity = capitalizeFirstLetter1(City);
+  console.log("capitalizedCity", capitalizedCity);
+
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  useEffect(() => {
     getmodalbanner();
-  }, []);
+  }, [modalbanner]);
 
   const getmodalbanner = async () => {
     let res = await axios.get(
@@ -131,7 +181,7 @@ function Servicedetails() {
 
   useEffect(() => {
     getreview();
-  }, []);
+  }, [review]);
 
   const getreview = async () => {
     let res = await axios.get(
@@ -170,21 +220,6 @@ function Servicedetails() {
     }
   };
 
-  console.log("comparison", allcamparison);
-
-  useEffect(() => {
-    getallcategory();
-  }, []);
-
-  const getallcategory = async () => {
-    let res = await axios.get(
-      "https://api.vijayhomeservice.com/api/getcategory"
-    );
-    if ((res.status = 200)) {
-      setallcategory(res.data?.category);
-    }
-  };
-
   useEffect(() => {
     getallvhspromises();
   }, []);
@@ -198,40 +233,28 @@ function Servicedetails() {
     }
   };
 
-  console.log("modalbanner", modalbanner);
-
   useEffect(() => {
-    getAllServices();
     getsubcategoryVideo();
     getCity();
   }, []);
 
-  const getAllServices = async () => {
+  useEffect(() => {
+    getSubcategory();
+  }, [subcategoryData]);
+
+  const getSubcategory = async () => {
     try {
-      setIsLoading(true);
-
-      let res = await axios.get(
-        "https://api.vijayhomesuperadmin.in/api/userapp/getservices"
+      const res = await axios.post(
+        `https://api.vijayhomesuperadmin.in/api/userapp/postsubcatservice`,
+        { Subcategory: sub }
       );
-
       if (res.status === 200) {
-        let subcategories = subcategory?.toLowerCase();
-
-        setserviceData(
-          res.data.service?.filter((ele) => {
-            let category = ele?.Subcategory?.toLowerCase();
-            return subcategories?.includes(category);
-          })
-        );
+        setSubcategoryData(res.data.subcatdata);
       }
-    } catch (error) {
-      console.log(error, "error while fetching data");
-    } finally {
-      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
     }
   };
-
-  console.log("servicedata", serviceData);
 
   useEffect(() => {
     getallwhychooseus();
@@ -248,13 +271,13 @@ function Servicedetails() {
 
   useEffect(() => {
     getsubcategory();
-  }, []);
+  }, [postsubdata]);
 
   const getsubcategory = async () => {
     let res = await axios.post(
       `https://api.vijayhomesuperadmin.in/api/userapp/postappresubcat/`,
       {
-        subcategory: data?.subcategory,
+        subcategory: sub,
       }
     );
 
@@ -272,7 +295,7 @@ function Servicedetails() {
       const res = await axios.post(
         `https://api.vijayhomesuperadmin.in/api/userapp/postsubcatservice/`,
         {
-          Subcategory: data?.subcategory,
+          Subcategory: sub,
         }
       );
       if (res.status === 200) {
@@ -295,14 +318,13 @@ function Servicedetails() {
     );
     if ((res.status = 200)) {
       setofferBannerdata(
-        res.data?.offerbanner.filter((i) => i.subcategory === data?.subcategory)
+        res.data?.offerbanner.filter((i) => i.subcategory === sub)
       );
     }
   };
 
   const getCity = async () => {
     try {
-      setIsLoading(true);
       let res = await axios.get(
         "https://api.vijayhomesuperadmin.in/api/master/getcity"
       );
@@ -311,18 +333,7 @@ function Servicedetails() {
       }
     } catch (er) {
       console.log(er, "err while fetching data");
-    } finally {
-      setIsLoading(false);
     }
-  };
-
-  const handleHrSelect = (sersid, hr) => {
-    const filteredData = serviceData
-      .filter((ele) => ele._id === sersid)
-      .flatMap((ele) => ele.morepriceData.filter((item) => item?._id === hr));
-    setServiceIDD(sersid);
-    setPrices(filteredData);
-    setPriceId(hr);
   };
 
   useEffect(() => {
@@ -356,13 +367,13 @@ function Servicedetails() {
         "https://api.vijayhomesuperadmin.in/api/userapp/getappsubcat"
       );
       if ((res.status = 200)) {
-        let subcategorys = data?.subcategory?.toLowerCase();
+        let subcategorys = sub?.toLowerCase();
         let filteredData = res?.data?.subcategory?.filter((Ele) => {
           let videoLink = Ele?.subcategory?.toLowerCase();
 
           return subcategorys?.includes(videoLink);
         });
-        // console.log(res.data.subcategory);
+
         setsubcategoryVideo(filteredData);
       }
     } catch (err) {
@@ -372,16 +383,6 @@ function Servicedetails() {
     }
   };
 
-  const handleShowSelectCategory = (e, selectedsubcategory) => {
-    e.preventDefault();
-    setViewMoreCategory(false);
-    setModalSubcategoryView(true);
-    let filteredData = serviceData.filter(
-      (servie) => servie._id === selectedsubcategory
-    );
-
-    setSelectedCategory(filteredData);
-  };
   const handleCloseSubcategoryView = () => {
     setModalSubcategoryView(false);
   };
@@ -407,8 +408,6 @@ function Servicedetails() {
     )
     .flatMap((cart) => cart);
 
-  const citys = useSelector((state) => state.city);
-
   const [selectedData, setSelectedData] = useState([]);
 
   const handleBook = (data) => {
@@ -422,8 +421,6 @@ function Servicedetails() {
     (acc, cur) => acc + Number(cur.offerprice) * cur.qty, // Calculate total price considering quantity
     0
   );
-  const dispatchService = useDispatch();
-  const cartItems = useSelector((state) => state.viewCart);
 
   const navigate = useNavigate();
 
@@ -476,8 +473,6 @@ function Servicedetails() {
     }
   };
 
-  console.log("postsubdata", postsubdata, serviceData);
-
   return (
     <>
       {isLoading ? (
@@ -503,18 +498,10 @@ function Servicedetails() {
             <div className="row">
               <div className="col-md-6">
                 <div>
-                  <h2
-                    className="poppins-semibold"
-                    style={{
-                      color: "black",
-                      fontWeight: "bold",
-                      fontSize: "18px",
-                      marginTop: "25px",
-                      textAlign: "left",
-                    }}
-                  >
-                    {data?.subcategory}
-                  </h2>
+                  <h1 className="poppins-semibold s-heading">
+                    {" "}
+                    {capitalizeWords(service)}
+                  </h1>
                 </div>
                 <div className="row" style={{}}>
                   {postsubdata
@@ -551,7 +538,7 @@ function Servicedetails() {
                 </div>
               </div>
 
-              <div className="col-md-6 mt-5">
+              <div className="col-md-6 mt-1 sv-text">
                 {subcategoryVideo &&
                   subcategoryVideo.map((Ele) => {
                     return (
@@ -561,7 +548,7 @@ function Servicedetails() {
                         loop={true}
                         width={"100%"}
                         className="react-player-rounded"
-                        height="auto"
+                        height="250px"
                       />
                     );
                   })}
@@ -569,20 +556,9 @@ function Servicedetails() {
             </div>
           </div>
 
-          <div className="row"></div>
-          <div className="container">
-            <div
-              className="poppins-semibold"
-              style={{
-                color: "black",
-                fontSize: "20px",
-                fontWeight: "bold",
-                textAlign: "left",
-              }}
-            >
-              {data?.subcategory}
-            </div>
-            <div className="col-md-6 mt-4">
+          <div className="container mt-2">
+            <h1 className="poppins-semibold v-text">{data?.subcategory}</h1>
+            <div className="col-md-6 mt-3">
               <div className="d-flex">
                 <div className="col-md-8 d-flex">
                   <div
@@ -655,7 +631,7 @@ function Servicedetails() {
 
                     <div style={{ marginLeft: "40px" }}>
                       <a
-                        href="https://wa.me/919611600990" // Replace with the appropriate country code and number
+                        href="https://wa.me/919611600990?text=Hi%20I'm%20looking%20for%20the%20services%20from%20you,%20Please%20reach%20out%20to%20me%20soon"
                         style={{ textDecoration: "none", color: "inherit" }}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -689,7 +665,7 @@ function Servicedetails() {
               </div>
             </div>
 
-            <div className="row offerbannerdata_div mt-3">
+            <div className="row offerbannerdata_div mt-4">
               {offerBannerdata.map((data) => (
                 <div className="col-md-3 mt-3">
                   <div
@@ -742,7 +718,7 @@ function Servicedetails() {
                 </div>
               ))}
             </div>
-            <div className=" offerbannerdata_div1 mt-3">
+            <div className=" offerbannerdata_div1 mt-4">
               <Swiper
                 slidesPerView={1}
                 spaceBetween={30}
@@ -811,251 +787,256 @@ function Servicedetails() {
             </div>
 
             <div
-              className="row mt-5"
+              className="row mt-2"
               style={{ justifyContent: "space-between" }}
             >
-              {Servicedata.sort(
-                (a, b) => parseInt(a.order) - parseInt(b.order)
-              ).map((data, index) => (
-                <div className="d-flex">
-                  <div
-                    key={index}
-                    id={`service-${index}`}
-                    className="col-md-6 mt-4"
-                    style={{ borderBottom: "1px solid grey" }}
-                  >
+              {subcategoryData
+                .sort((a, b) => parseInt(a.order) - parseInt(b.order))
+                .map((data, index) => (
+                  <div className="d-flex">
                     <div
-                      className="poppins-regular"
-                      style={{
-                        backgroundColor: "#E6B45C",
-                        padding: "10px",
-                        color: "black",
-                        fontWeight: "bold",
-                        fontSize: "17px",
-                        borderTopRightRadius: "50px",
-                      }}
+                      key={index}
+                      id={`service-${index}`}
+                      className="col-md-6 mt-4"
+                      style={{ borderBottom: "1px solid grey" }}
                     >
-                      {data.servicetitle}
-                    </div>
-                    <div
-                      className="poppins-regular mt-2"
-                      style={{
-                        color: "black",
-                        fontSize: "15px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {data.serviceName}
-                    </div>
-                    <div
-                      className="poppins-regular"
-                      style={{
-                        color: "green",
-                        fontSize: "12px",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {data.servicebelow}
-                    </div>
-
-                    <div className="d-flex mt-2">
-                      <i class="fa-solid fa-star" style={{ color: "gold" }}></i>
                       <div
-                        className="poppins-regular mx-2"
-                        style={{ color: "black", fontSize: "14px" }}
+                        className="poppins-regular"
+                        style={{
+                          backgroundColor: "#E6B45C",
+                          padding: "10px",
+                          color: "black",
+                          fontWeight: "bold",
+                          fontSize: "17px",
+                          borderTopRightRadius: "50px",
+                        }}
                       >
-                        4.9
+                        {data.servicetitle}
+                      </div>
+                      <div
+                        className="poppins-regular mt-2"
+                        style={{
+                          color: "black",
+                          fontSize: "15px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {data.serviceName}
                       </div>
                       <div
                         className="poppins-regular"
-                        style={{ color: "black", fontSize: "14px" }}
+                        style={{
+                          color: "green",
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                        }}
                       >
-                        (328.8k)
+                        {data.servicebelow}
                       </div>
-                    </div>
 
-                    <div className="d-flex mt-2">
-                      {(() => {
-                        // Filtered prices
-                        const filteredPrices = data?.morepriceData?.filter(
-                          (ele) => ele.pricecity === localstoragecitys
-                        );
+                      <div className="d-flex mt-2">
+                        <i
+                          class="fa-solid fa-star"
+                          style={{ color: "gold" }}
+                        ></i>
+                        <div
+                          className="poppins-regular mx-2"
+                          style={{ color: "black", fontSize: "14px" }}
+                        >
+                          4.9
+                        </div>
+                        <div
+                          className="poppins-regular"
+                          style={{ color: "black", fontSize: "14px" }}
+                        >
+                          (328.8k)
+                        </div>
+                      </div>
 
-                        console.log("filteredPrices12334===", filteredPrices);
-
-                        // high price
-                        let highPrice = null;
-                        if (filteredPrices.length > 0) {
-                          highPrice = filteredPrices.reduce(
-                            (minPrice, ele) =>
-                              Math.min(minPrice, parseFloat(ele.pPrice)),
-                            parseFloat(filteredPrices[0].pPrice)
+                      <div className="d-flex mt-2">
+                        {(() => {
+                          // Filtered prices
+                          const filteredPrices = data?.morepriceData?.filter(
+                            (ele) => ele.pricecity === capitalizedCity
                           );
-                        }
 
-                        // Lowest price
-                        let lowestPrice = null;
-                        if (filteredPrices.length > 0) {
-                          lowestPrice = filteredPrices.reduce(
-                            (minPrice, ele) =>
-                              Math.min(minPrice, parseFloat(ele.pofferprice)),
-                            parseFloat(filteredPrices[0].pofferprice)
+                          console.log("filteredPrices12334===", filteredPrices);
+
+                          // high price
+                          let highPrice = null;
+                          if (filteredPrices.length > 0) {
+                            highPrice = filteredPrices.reduce(
+                              (minPrice, ele) =>
+                                Math.min(minPrice, parseFloat(ele.pPrice)),
+                              parseFloat(filteredPrices[0].pPrice)
+                            );
+                          }
+
+                          // Lowest price
+                          let lowestPrice = null;
+                          if (filteredPrices.length > 0) {
+                            lowestPrice = filteredPrices.reduce(
+                              (minPrice, ele) =>
+                                Math.min(minPrice, parseFloat(ele.pofferprice)),
+                              parseFloat(filteredPrices[0].pofferprice)
+                            );
+                          }
+
+                          // Render JSX
+                          return (
+                            <>
+                              <div
+                                className="poppins-regular"
+                                style={{
+                                  color: "black",
+                                  fontSize: "14px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Start Price
+                              </div>
+                              <div
+                                className="poppins-regular mx-2"
+                                style={{
+                                  color: "grey",
+                                  fontWeight: "bold",
+                                  fontSize: "14px",
+                                  textDecoration: "line-through",
+                                }}
+                              >
+                                {highPrice !== null && (
+                                  <p className="poppins-regular">
+                                    ₹{highPrice}
+                                  </p>
+                                )}
+                              </div>
+                              <div
+                                className="poppins-regular"
+                                style={{
+                                  color: "black",
+                                  fontWeight: "bold",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {lowestPrice !== null && (
+                                  <p className="poppins-regular">
+                                    ₹{lowestPrice}
+                                  </p>
+                                )}
+                                {filteredPrices.length === 0 && (
+                                  <p className="poppins-regular">
+                                    No prices available for this city
+                                  </p>
+                                )}
+                              </div>
+                            </>
                           );
-                        }
+                        })()}
+                      </div>
 
-                        // Render JSX
-                        return (
-                          <>
-                            <div
-                              className="poppins-regular"
-                              style={{
-                                color: "black",
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Start Price
-                            </div>
-                            <div
-                              className="poppins-regular mx-2"
-                              style={{
-                                color: "grey",
-                                fontWeight: "bold",
-                                fontSize: "14px",
-                                textDecoration: "line-through",
-                              }}
-                            >
-                              {highPrice !== null && (
-                                <p className="poppins-regular">₹{highPrice}</p>
-                              )}
-                            </div>
-                            <div
-                              className="poppins-regular"
-                              style={{
-                                color: "black",
-                                fontWeight: "bold",
-                                fontSize: "14px",
-                              }}
-                            >
-                              {lowestPrice !== null && (
-                                <p className="poppins-regular">
-                                  ₹{lowestPrice}
-                                </p>
-                              )}
-                              {filteredPrices.length === 0 && (
-                                <p className="poppins-regular">
-                                  No prices available for this city
-                                </p>
-                              )}
-                            </div>
-                          </>
-                        );
-                      })()}
-                    </div>
-
-                    <div className="row">
-                      {data.serviceDesc.slice(0, 3).map((desc, index) => (
-                        <div className="col-md-12" key={index}>
-                          <div className="d-flex mt-2">
-                            <div className="col-md-1">
-                              <i
-                                className="fa-solid fa-star"
-                                style={{ color: "green", fontSize: "14px" }}
-                              ></i>
-                            </div>
-                            <div className="col-md-11">
-                              <div className="poppins-regular mt-1 service-desc">
-                                {desc.text}
+                      <div className="row">
+                        {data.serviceDesc.slice(0, 3).map((desc, index) => (
+                          <div className="col-md-12" key={index}>
+                            <div className="d-flex mt-2">
+                              <div className="col-md-1">
+                                <i
+                                  className="fa-solid fa-star"
+                                  style={{ color: "green", fontSize: "14px" }}
+                                ></i>
+                              </div>
+                              <div className="col-md-11">
+                                <div className="poppins-regular mt-1 service-desc">
+                                  {desc.text}
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
 
-                    <div className="d-flex">
-                      <div className="col-md-3">
-                        <Link
-                          to="/viewdetails"
-                          state={{ subcategory: data }}
-                          style={{ textDecoration: "none" }}
-                        >
+                      <div className="d-flex">
+                        <div className="col-md-3">
+                          <Link
+                            to="/viewdetails"
+                            state={{ subcategory: data }}
+                            style={{ textDecoration: "none" }}
+                          >
+                            <div
+                              className="poppins-regular mt-4 mb-3"
+                              style={{
+                                color: "darkred",
+                                fontSize: "17px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              View details
+                            </div>
+                          </Link>
+                        </div>
+                        <div className="col-md-3 mt-4 mb-3 ">
                           <div
-                            className="poppins-regular mt-4 mb-3"
+                            onClick={vhandleShow}
+                            className="poppins-regular mx-2"
                             style={{
-                              color: "darkred",
+                              color: "blue",
                               fontSize: "17px",
                               fontWeight: "bold",
+                              cursor: "pointer",
                             }}
                           >
-                            View details
+                            Show more
                           </div>
-                        </Link>
+                        </div>
                       </div>
-                      <div className="col-md-3 mt-4 mb-3 ">
+                    </div>
+                    <div className="col-md-6 mt-4 mx-2 servicedata_row">
+                      <div className="">
+                        <img
+                          className="mb-2 servicedata_img"
+                          alt={`${data.category} images`}
+                          src={data.imglink}
+                        />
                         <div
-                          onClick={vhandleShow}
-                          className="poppins-regular mx-2"
+                          // onClick={handleShow}
+                          className=""
                           style={{
-                            color: "blue",
-                            fontSize: "17px",
-                            fontWeight: "bold",
-                            cursor: "pointer",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            // marginRight: "30px",
+                            // marginTop: "-20px",
                           }}
                         >
-                          Show more
+                          <div
+                            className="poppins-black"
+                            style={{
+                              color: "white",
+                              fontSize: "13px",
+                              backgroundColor: "darkred",
+                              textAlign: "center",
+                              // width: "80px",
+                              padding: "4px",
+                              borderRadius: "10px",
+                              width: "50%",
+                              marginTop: "-25px",
+                            }}
+                            // onClick={() => handleBook(data)}
+                            onClick={() => {
+                              if (data.morepriceData.length > 0) {
+                                handleBook(data);
+                              } else {
+                                // window.location.assign("/Espage");
+                                navigate("/ESpage", { state: { sdata: data } });
+                              }
+                            }}
+                          >
+                            Book
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-6 mt-4 mx-2 servicedata_row">
-                    <div className="">
-                      <img
-                        className="mb-2 servicedata_img"
-                        alt={`${data.category} images`}
-                        src={data.imglink}
-                      />
-                      <div
-                        // onClick={handleShow}
-                        className=""
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          // marginRight: "30px",
-                          // marginTop: "-20px",
-                        }}
-                      >
-                        <div
-                          className="poppins-black"
-                          style={{
-                            color: "white",
-                            fontSize: "13px",
-                            backgroundColor: "darkred",
-                            textAlign: "center",
-                            // width: "80px",
-                            padding: "4px",
-                            borderRadius: "10px",
-                            width: "50%",
-                            marginTop: "-25px",
-                          }}
-                          // onClick={() => handleBook(data)}
-                          onClick={() => {
-                            if (data.morepriceData.length > 0) {
-                              handleBook(data);
-                            } else {
-                              // window.location.assign("/Espage");
-                              navigate("/ESpage", { state: { sdata: data } });
-                            }
-                          }}
-                        >
-                          Book
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
 
             <div
@@ -1118,7 +1099,7 @@ function Servicedetails() {
             {(() => {
               // Filtered prices
               const filteredPrices = selectedData?.morepriceData?.filter(
-                (ele) => ele.pricecity === localstoragecitys
+                (ele) => ele.pricecity === capitalizedCity
               );
 
               return (

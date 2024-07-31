@@ -812,6 +812,14 @@ export default function Homecity() {
 
   console.log("FilterCleaningWithImages=====", FilterCleaningWithImages);
 
+  const generatePathname = (subcategory, city) => {
+    return `/service/${subcategory
+      .toLowerCase()
+      .replace(/ /g, "-")}-in-${localstoragecitys
+      ?.toLowerCase()
+      .replace(/ /g, "-")}`;
+  };
+
   return (
     <>
       {isLoading ? (
@@ -897,7 +905,11 @@ export default function Homecity() {
           </div>
 
           {/* <div className="imagebanner1">
-            <div id="carouselExample" className="carousel slide">
+            <div
+              id="carouselExample1"
+              className="carousel slide"
+              data-bs-ride="carousel"
+            >
               <div className="carousel-inner">
                 {bannerimagedata.map((data, index) => (
                   <div
@@ -906,9 +918,9 @@ export default function Homecity() {
                   >
                     <img
                       src={data.images}
-                      className="d-block w-100"
+                      className="d-block"
                       alt={`Banner ${index + 1}`}
-                      style={{ height: "250px", width: "350px" }}
+                      style={{ height: "250px", height: "350px" }}
                     />
                   </div>
                 ))}
@@ -916,7 +928,7 @@ export default function Homecity() {
               <button
                 className="carousel-control-prev"
                 type="button"
-                data-bs-target="#carouselExample"
+                data-bs-target="#carouselExample1"
                 data-bs-slide="prev"
               >
                 <span
@@ -928,7 +940,7 @@ export default function Homecity() {
               <button
                 className="carousel-control-next"
                 type="button"
-                data-bs-target="#carouselExample"
+                data-bs-target="#carouselExample1"
                 data-bs-slide="next"
               >
                 <span
@@ -1027,26 +1039,27 @@ export default function Homecity() {
                 }}
               >
                 {filteredResults.length > 0 ? (
-                  filteredResults.map((data) => (
+                  filteredResults.map((ele) => (
                     <div
                       className="row"
-                      key={data._id}
+                      key={ele._id}
                       style={{ justifyContent: "center", padding: "5px 5px" }}
                     >
                       <div className="col-md-12">
                         <Link
-                          to="/servicedetails"
-                          state={{ data: data }}
-                          style={{
-                            textDecoration: "none",
-                            backgroundColor: "white",
-                            // padding: "10px",
+                          to={{
+                            pathname: generatePathname(ele.subcategory, city),
                           }}
+                          // to="/servicedetails"
+                          state={
+                            ({ subcategory: ele.subcategory }, { data: ele })
+                          }
+                          style={{ textDecoration: "none" }}
                         >
                           <div className="row">
                             <div className="col-md-3">
                               <img
-                                src={data.imglink}
+                                src={ele.imglink}
                                 alt="Subcategory"
                                 style={{
                                   width: "80px",
@@ -1061,13 +1074,13 @@ export default function Homecity() {
                                 className="poppins-regular"
                                 style={{ color: "black" }}
                               >
-                                {data?.category}
+                                {ele?.category}
                               </div>
                               <div
                                 className="poppins-regular"
                                 style={{ color: "black" }}
                               >
-                                {data?.subcategory}
+                                {ele?.subcategory}
                               </div>
                             </div>
                           </div>
@@ -1100,7 +1113,7 @@ export default function Homecity() {
 
           <div className="container">
             <div
-              className="row mt-4"
+              className="row  t-text"
               style={{ justifyContent: "center", alignItems: "center" }}
             >
               <div
@@ -1271,7 +1284,10 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(ele.subcategory, city),
+                      }}
+                      // to="/servicedetails"
                       state={({ subcategory: ele.subcategory }, { data: ele })}
                       style={{ textDecoration: "none" }}
                     >
@@ -1370,11 +1386,12 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(ele.subcategory, city),
+                      }}
+                      // to="/servicedetails"
                       state={({ subcategory: ele.subcategory }, { data: ele })}
-                      key={ele.subcategory}
                       style={{ textDecoration: "none" }}
-                      className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
                         <div
@@ -1464,11 +1481,12 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(ele.subcategory, city),
+                      }}
+                      // to="/servicedetails"
                       state={({ subcategory: ele.subcategory }, { data: ele })}
-                      key={ele.subcategory}
                       style={{ textDecoration: "none" }}
-                      className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
                         <div
@@ -1610,11 +1628,12 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(ele.subcategory, city),
+                      }}
+                      // to="/servicedetails"
                       state={({ subcategory: ele.subcategory }, { data: ele })}
-                      key={ele.subcategory}
                       style={{ textDecoration: "none" }}
-                      className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
                         <div
@@ -1704,11 +1723,12 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(ele.subcategory, city),
+                      }}
+                      // to="/servicedetails"
                       state={({ subcategory: ele.subcategory }, { data: ele })}
-                      key={ele.subcategory}
                       style={{ textDecoration: "none" }}
-                      className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
                         <div
@@ -1798,11 +1818,12 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(ele.subcategory, city),
+                      }}
+                      // to="/servicedetails"
                       state={({ subcategory: ele.subcategory }, { data: ele })}
-                      key={ele.subcategory}
                       style={{ textDecoration: "none" }}
-                      className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
                         <div
@@ -1892,11 +1913,12 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(ele.subcategory, city),
+                      }}
+                      // to="/servicedetails"
                       state={({ subcategory: ele.subcategory }, { data: ele })}
-                      key={ele.subcategory}
                       style={{ textDecoration: "none" }}
-                      className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
                         <div
@@ -1975,11 +1997,12 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(ele.subcategory, city),
+                      }}
+                      // to="/servicedetails"
                       state={({ subcategory: ele.subcategory }, { data: ele })}
-                      key={ele.subcategory}
                       style={{ textDecoration: "none" }}
-                      className="text-decoration-none text-black"
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>
                         <div

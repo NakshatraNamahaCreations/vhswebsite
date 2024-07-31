@@ -36,6 +36,13 @@ function capitalizeFirstLetter1(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+const capitalizeWords = (str) => {
+  return str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 function Subcategory() {
   const [subcategoryData, setSubcategoryData] = useState([]);
   const { subcategory } = useParams();
@@ -531,7 +538,9 @@ function Subcategory() {
               <Homenavbar />
               <div className="container">
                 <div className="row mb-4 justify-content-center">
-                  <h1 className="poppins-semibold mt-4">{data}</h1>
+                  <h1 className="poppins-semibold mt-4">
+                    {capitalizeWords(data)}
+                  </h1>
                   {categorynewData.map((ele, index) => (
                     <div className="col-md-3 mt-3" key={index}>
                       <Link
@@ -577,7 +586,7 @@ function Subcategory() {
                 <div className="row">
                   <div className="col-md-6">
                     <div>
-                      <h2
+                      <h1
                         className="poppins-semibold"
                         style={{
                           color: "black",
@@ -587,8 +596,8 @@ function Subcategory() {
                         }}
                       >
                         {/* {sub} */}
-                        {subcategory}
-                      </h2>
+                        {capitalizeWords(subcategory)}
+                      </h1>
                     </div>
                     <div className="row" style={{}}>
                       {postsubdata
@@ -646,7 +655,7 @@ function Subcategory() {
               </div>
               <div className="row"></div>
               <div className="container">
-                <div
+                <h1
                   className="poppins-semibold mt-3"
                   style={{
                     color: "black",
@@ -656,7 +665,7 @@ function Subcategory() {
                   }}
                 >
                   {sub}
-                </div>
+                </h1>
                 <div className="col-md-6 mt-4">
                   <div className="d-flex">
                     <div className="col-md-8 d-flex">
@@ -730,7 +739,7 @@ function Subcategory() {
 
                         <div style={{ marginLeft: "40px" }}>
                           <a
-                            href="https://wa.me/9611600990" // Replace with the appropriate country code and number
+                            href="https://wa.me/919611600990?text=Hi%20I'm%20looking%20for%20the%20services%20from%20you,%20Please%20reach%20out%20to%20me%20soon"
                             style={{ textDecoration: "none", color: "inherit" }}
                             target="_blank"
                             rel="noopener noreferrer"
