@@ -1271,6 +1271,11 @@ background: rgb(255, 68, 68) !important;
   margin-top: 35px !important;
 }
 
+.view_image{
+  width: "100%" !important; 
+  height: 250px !important;
+}
+
 
 @media (max-width: 768px) {
   .container {
@@ -1480,6 +1485,12 @@ background: rgb(255, 68, 68) !important;
   .sv-text{
     margin-top: -15px !important;
   }
+  .view_image{
+    width: 100% !important; 
+    height: 150px !important;
+    object-fit: cover;
+   
+  }
 }
 
 @media (max-width: 576px) {
@@ -1671,6 +1682,11 @@ background: rgb(255, 68, 68) !important;
   }
   .sv-text{
     margin-top: -15px !important;
+  }
+  .view_image{
+    width: 100% !important; 
+    height: 150px !important;
+    object-fit: cover;
   }
 }
 

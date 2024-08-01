@@ -223,7 +223,6 @@ function Espage() {
       );
 
       if (response.status === 200) {
-        alert("Successful login");
         setUser(response.data.user);
         localStorage.setItem("user", JSON.stringify(response.data.user));
         // navigate("/cartbook");
@@ -526,6 +525,10 @@ function Espage() {
   });
 
   const renderSlots = () => {
+    if (!selectedDate) {
+      return null;
+    }
+
     const currentDate = new Date();
     const dateToCompare = new Date(selectedDate);
 
@@ -534,69 +537,113 @@ function Espage() {
     if (currentDate.toDateString() === dateToCompare.toDateString()) {
       slots = filteredData || [];
     } else if (currentDate > dateToCompare) {
-      console.log(`The current date is after ${selectedDate}.`);
       slots = filteredData1 || [];
     } else {
-      console.log("The current date is the same as 2023-09-29.");
       slots = filteredData || [];
     }
 
-    slots.sort((a, b) => {
+    // Remove duplicate slots based on startTime
+    const uniqueSlots = [];
+    const seenTimes = new Set();
+
+    for (const slot of slots) {
+      if (!seenTimes.has(slot.startTime)) {
+        uniqueSlots.push(slot);
+        seenTimes.add(slot.startTime);
+      }
+    }
+
+    uniqueSlots.sort((a, b) => {
       const startTimeA = moment(a.startTime, "hA");
       const startTimeB = moment(b.startTime, "hA");
       return startTimeA.diff(startTimeB);
     });
 
-    const groupedSlots = [];
+    return (
+      <div className="row">
+        {uniqueSlots.map((slot, index) => (
+          <div key={index} className="col-md-2">
+            <div
+              className="mt-3 poppins-light"
+              style={{
+                border: "1px solid grey",
+                fontSize: "14px",
+                textAlign: "center",
+                padding: "5px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                color: selectedSlotIndex === index ? "white" : "black",
+                backgroundColor: selectedSlotIndex === index ? "darkred" : "",
+              }}
+              onClick={() => handleSlotClick1(index, slot.startTime)}
+            >
+              {slot.startTime}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
-    for (let i = 0; i < slots.length; i += 3) {
-      groupedSlots.push(slots.slice(i, i + 3));
+  const renderSlots1 = () => {
+    if (!selectedDate) {
+      return null;
     }
 
-    return groupedSlots.map((slotGroup, groupIndex) => {
-      const emptyColumns = 6 - slotGroup.length * 2; // Calculate empty columns needed to fill the row
-      return (
-        <div className="row" style={{ marginBottom: 10 }} key={groupIndex}>
-          {slotGroup.map((slot, index) => (
-            <div key={index} className="col-md-2">
-              <div
-                className="mt-3 poppins-light"
-                style={{
-                  border: "1px solid grey",
-                  fontSize: "14px",
-                  textAlign: "center",
-                  padding: "5px",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  color:
-                    selectedSlotIndex === groupIndex * 3 + index
-                      ? "white"
-                      : "black",
-                  backgroundColor:
-                    selectedSlotIndex === groupIndex * 3 + index
-                      ? "darkred"
-                      : "",
-                }}
-                onClick={() =>
-                  handleSlotClick1(
-                    groupIndex * 3 + index,
-                    slot.startTime,
-                    slot.endTime,
-                    slot.id
-                  )
-                }
-              >
-                {slot.startTime}
-              </div>
-            </div>
-          ))}
-          {/* Fill the remaining columns with empty divs to ensure proper alignment */}
-          {Array.from({ length: emptyColumns }).map((_, emptyIndex) => (
-            <div key={emptyIndex} className="col-md-2"></div>
-          ))}
-        </div>
-      );
+    const currentDate = new Date();
+    const dateToCompare = new Date(selectedDate);
+
+    let slots;
+
+    if (currentDate.toDateString() === dateToCompare.toDateString()) {
+      slots = filteredData || [];
+    } else if (currentDate > dateToCompare) {
+      slots = filteredData1 || [];
+    } else {
+      slots = filteredData || [];
+    }
+
+    // Remove duplicate slots based on startTime
+    const uniqueSlots = [];
+    const seenTimes = new Set();
+
+    for (const slot of slots) {
+      if (!seenTimes.has(slot.startTime)) {
+        uniqueSlots.push(slot);
+        seenTimes.add(slot.startTime);
+      }
+    }
+
+    uniqueSlots.sort((a, b) => {
+      const startTimeA = moment(a.startTime, "hA");
+      const startTimeB = moment(b.startTime, "hA");
+      return startTimeA.diff(startTimeB);
     });
+
+    return (
+      <div className="renderslots" style={{}}>
+        {uniqueSlots.map((slot, index) => (
+          <div key={index} className="col-md-2">
+            <div
+              className="mt-3 poppins-light"
+              style={{
+                border: "1px solid grey",
+                fontSize: "14px",
+                textAlign: "center",
+                padding: "5px 5px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                color: selectedSlotIndex === index ? "white" : "black",
+                backgroundColor: selectedSlotIndex === index ? "darkred" : "",
+              }}
+              onClick={() => handleSlotClick1(index, slot.startTime)}
+            >
+              {slot.startTime}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   const handleSelectAddress = (selectedAddress) => {
@@ -1033,23 +1080,34 @@ function Espage() {
                     <div className="select_date">
                       <div className="text poppins-medium">Select the date</div>
 
-                      <div className="date_selection">
+                      <div className="date_grid_container">
                         {fourDates?.map((day, index) => {
                           const isDefaultChecked = isDateSelected(day);
 
                           return (
-                            <label htmlFor={index} key={index}>
-                              <input type="checkbox" name="" id={day?.day} />
-
-                              <span
-                                className={`inpt poppins-medium ${
-                                  isDefaultChecked ? "matching" : ""
-                                }`}
-                                onClick={() => handleCheckboxSelect(day)}
+                            <div className="date_label row col-md-2">
+                              <label
+                                htmlFor={index}
+                                key={index}
+                                // className="date_label"
                               >
-                                {day?.dayName}- {day?.day}
-                              </span>
-                            </label>
+                                <input
+                                  type="checkbox"
+                                  name=""
+                                  id={day?.day}
+                                  className="date_checkbox"
+                                />
+                                <span
+                                  className={`inpt poppins-medium ${
+                                    isDefaultChecked ? "matching" : ""
+                                  }`}
+                                  style={{}}
+                                  onClick={() => handleCheckboxSelect(day)}
+                                >
+                                  {day?.dayName} - {day?.day}
+                                </span>
+                              </label>
+                            </div>
                           );
                         })}
                       </div>
@@ -1103,9 +1161,24 @@ function Espage() {
                     </div>
 
                     <div className="select_date">
-                      <div className="text poppins-medium">Select the Slot</div>
+                      <div className="cartrenderslot">
+                        <div className="text poppins-medium">
+                          Select the Slot
+                        </div>
+                        {renderSlots()}
+                      </div>
+                    </div>
 
-                      {renderSlots()}
+                    <div className="select_date">
+                      <div className="cartrenderslot1">
+                        <div
+                          className="poppins-medium"
+                          style={{ fontSize: "18px" }}
+                        >
+                          Slots
+                        </div>
+                        <div className="mt-4 mb-3">{renderSlots1()}</div>
+                      </div>
                     </div>
                   </div>
 

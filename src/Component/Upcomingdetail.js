@@ -488,7 +488,9 @@ function Upcomingdetail() {
                   </div>
                   <div style={{ flexDirection: "row", marginTop: "7px" }}>
                     <div className="poppins-regular" style={{ color: "black" }}>
-                      {allorder.desc.replace(/,/g, "\n")}
+                      {allorder.desc
+                        ? allorder.desc.replace(/,/g, "\n")
+                        : "Description not available"}
                     </div>
                   </div>
                 </div>

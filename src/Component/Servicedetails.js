@@ -43,8 +43,8 @@ const capitalizeWords = (str) => {
 
 function Servicedetails() {
   // const { subcategory, data } = location.state || {};
-  const { service } = useParams();
-  console.log("service", service);
+  const { subcategory } = useParams();
+  console.log("service", subcategory);
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const [show, setShow] = useState(false);
   const MyCartItmes = useSelector((state) => state.cart);
@@ -137,8 +137,8 @@ function Servicedetails() {
   };
 
   useEffect(() => {
-    if (service && allSubcat.length > 0) {
-      const parts = service.split("-");
+    if (subcategory && allSubcat.length > 0) {
+      const parts = subcategory.split("-");
       const category1 = capitalizeFirstLetter(parts[0]);
 
       const fullServiceName = allSubcat?.find((service) =>
@@ -155,7 +155,7 @@ function Servicedetails() {
         console.error("Service not found");
       }
     }
-  }, [service, allSubcat]);
+  }, [subcategory, allSubcat]);
 
   const capitalizedCity = capitalizeFirstLetter1(City);
   console.log("capitalizedCity", capitalizedCity);
@@ -310,7 +310,7 @@ function Servicedetails() {
 
   useEffect(() => {
     getbannerimg();
-  }, []);
+  }, [offerBannerdata]);
 
   const getbannerimg = async () => {
     let res = await axios.get(
@@ -322,6 +322,8 @@ function Servicedetails() {
       );
     }
   };
+
+  console.log("offerbanner", offerBannerdata);
 
   const getCity = async () => {
     try {
@@ -500,7 +502,7 @@ function Servicedetails() {
                 <div>
                   <h1 className="poppins-semibold s-heading">
                     {" "}
-                    {capitalizeWords(service)}
+                    {capitalizeWords(subcategory)}
                   </h1>
                 </div>
                 <div className="row" style={{}}>
@@ -556,7 +558,7 @@ function Servicedetails() {
             </div>
           </div>
 
-          <div className="container mt-2">
+          <div className="container mt-3">
             <h1 className="poppins-semibold v-text">{data?.subcategory}</h1>
             <div className="col-md-6 mt-3">
               <div className="d-flex">

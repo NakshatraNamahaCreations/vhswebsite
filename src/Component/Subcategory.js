@@ -105,6 +105,17 @@ function Subcategory() {
     getSubcategories();
   }, []);
 
+  const user = localStorage.getItem("user");
+  console.log("user=====", user);
+
+  const handleChange = () => {
+    if (user) {
+      navigate("/cartbook");
+    } else {
+      navigate("/login");
+    }
+  };
+
   const transformedFaqData = {
     rows: faq.map((f) => ({
       title: <div className="poppins-black">{f.question}</div>,
@@ -360,6 +371,33 @@ function Subcategory() {
     }
   };
 
+  const CartSavedtotal = MyCartItmes?.reduce((accumulator, item) => {
+    const offerPrice = parseFloat(item?.offerprice);
+    const planPrice = parseFloat(item?.planPrice);
+    const quantity = parseInt(item?.qty);
+
+    if (!isNaN(offerPrice) && !isNaN(quantity)) {
+      const subtotal = planPrice * quantity;
+
+      return accumulator + subtotal;
+    } else {
+      return accumulator;
+    }
+  }, 0);
+
+  console.log("TotalPrice", CartSavedtotal, TotalPrice);
+
+  console.log("ooooo1", parseFloat(CartSavedtotal) - parseFloat(TotalPrice));
+  console.log("ooooo", (CartSavedtotal - TotalPrice) / CartSavedtotal);
+  console.log("ooooo", ((CartSavedtotal - TotalPrice) / CartSavedtotal) * 100);
+
+  const discountPercentages =
+    ((CartSavedtotal - TotalPrice) / CartSavedtotal) * 100;
+  console.log("discountPercentages", discountPercentages);
+  const formattedDiscount = discountPercentages.toFixed(2);
+
+  console.log("MyCartItmes", MyCartItmes);
+
   useEffect(() => {
     getreview();
   }, [subcategoryData[0]?.category]);
@@ -398,7 +436,7 @@ function Subcategory() {
   const vhandleShow = () => setvShow(true);
 
   const handleViewCartClick = () => {
-    navigate("/cart");
+    navigate("/cartbook");
   };
 
   const handleCloseSubcategoryView = () => {
@@ -587,7 +625,7 @@ function Subcategory() {
                   <div className="col-md-6">
                     <div>
                       <h1
-                        className="poppins-semibold"
+                        className="poppins-semibold s-heading"
                         style={{
                           color: "black",
                           fontWeight: "bold",
@@ -634,15 +672,16 @@ function Subcategory() {
                     </div>
                   </div>
 
-                  <div className="col-md-6 mt-5">
+                  <div className="col-md-6 mt-1 sv-text">
                     {subcategoryVideo &&
                       subcategoryVideo.map((Ele) => {
                         return (
                           <video
                             key={Ele.id} // Ensure each video has a unique key if iterating over an array
                             src={Ele.videolink}
-                            style={{ width: "250px", height: "250px" }} // Fixed width and height
-                            className="video-player"
+                            width={"100%"}
+                            height="250px" // Fixed width and height
+                            className="react-player-rounded"
                             autoPlay
                             muted
                             loop
@@ -653,20 +692,10 @@ function Subcategory() {
                   </div>
                 </div>
               </div>
-              <div className="row"></div>
-              <div className="container">
-                <h1
-                  className="poppins-semibold mt-3"
-                  style={{
-                    color: "black",
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                    textAlign: "left",
-                  }}
-                >
-                  {sub}
-                </h1>
-                <div className="col-md-6 mt-4">
+
+              <div className="container mt-2">
+                <h1 className="poppins-semibold  v-text">{sub}</h1>
+                <div className="col-md-6 mt-3">
                   <div className="d-flex">
                     <div className="col-md-8 d-flex">
                       <div
@@ -773,7 +802,7 @@ function Subcategory() {
                   </div>
                 </div>
 
-                <div className="row offerbannerdata_div mt-3">
+                <div className="row offerbannerdata_div mt-4">
                   {offerBannerdata.map((data) => (
                     <div className="col-md-3 mt-3">
                       <div
@@ -898,7 +927,7 @@ function Subcategory() {
                 </div>
 
                 <div
-                  className="row mt-5"
+                  className="row mt-2"
                   style={{ justifyContent: "space-between" }}
                 >
                   {subcategoryData
@@ -1311,8 +1340,7 @@ function Subcategory() {
                       marginTop: "40px",
                     }}
                   >
-                    Congratulations! ₹ {TotalPrice}
-                    Saved so far!
+                    Congratulations! ₹ {formattedDiscount} % Saved so far!
                   </div>
                   <div
                     className="d-flex"
@@ -1336,7 +1364,7 @@ function Subcategory() {
                         fontWeight: "bold",
                         textAlign: "end",
                       }}
-                      onClick={handleViewCartClick}
+                      onClick={handleChange}
                     >
                       View Cart
                     </div>

@@ -159,19 +159,19 @@ function Viewdetails() {
 
   console.log("whychooseus", whychooseus);
 
-  const CartSavedtotal = MyCartItmes.reduce((accumulator, item) => {
-    const offerPrice = parseFloat(item?.offerprice);
-    const planPrice = parseFloat(item?.planPrice);
-    const quantity = parseInt(item?.qty);
+  // const CartSavedtotal = MyCartItmes.reduce((accumulator, item) => {
+  //   const offerPrice = parseFloat(item?.offerprice);
+  //   const planPrice = parseFloat(item?.planPrice);
+  //   const quantity = parseInt(item?.qty);
 
-    if (!isNaN(offerPrice) && !isNaN(quantity)) {
-      const subtotal = planPrice * quantity - offerPrice * quantity;
+  //   if (!isNaN(offerPrice) && !isNaN(quantity)) {
+  //     const subtotal = planPrice * quantity - offerPrice * quantity;
 
-      return accumulator + subtotal;
-    } else {
-      return accumulator;
-    }
-  }, 0);
+  //     return accumulator + subtotal;
+  //   } else {
+  //     return accumulator;
+  //   }
+  // }, 0);
 
   const Carttotal = MyCartItmes.reduce((accumulator, item) => {
     const offerPrice = parseFloat(item?.offerprice);
@@ -350,6 +350,25 @@ function Viewdetails() {
     (ele) => ele.pricecity === localstoragecitys
   );
 
+  const CartSavedtotal = MyCartItmes?.reduce((accumulator, item) => {
+    const offerPrice = parseFloat(item?.offerprice);
+    const planPrice = parseFloat(item?.planPrice);
+    const quantity = parseInt(item?.qty);
+
+    if (!isNaN(offerPrice) && !isNaN(quantity)) {
+      const subtotal = planPrice * quantity;
+
+      return accumulator + subtotal;
+    } else {
+      return accumulator;
+    }
+  }, 0);
+
+  const discountPercentages =
+    ((CartSavedtotal - Carttotal) / CartSavedtotal) * 100;
+  console.log("discountPercentages", discountPercentages);
+  const formattedDiscount = discountPercentages.toFixed(2);
+
   console.log("selectedItem====12", selectedItem, Item);
 
   return (
@@ -359,9 +378,8 @@ function Viewdetails() {
       <div className="col-md-12">
         <div className="container">
           <img
-            className=""
+            className="view_image"
             src={subcategory.viewbanner}
-            style={{ width: "100%", height: "250px" }}
             alt=""
             // src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.serviceImg}`}
           />
@@ -904,7 +922,7 @@ function Viewdetails() {
                       className="poppins-medium"
                       style={{ color: "black", fontWeight: "bold" }}
                     >
-                      Congratulations! ₹{Carttotal}
+                      Congratulations! ₹{formattedDiscount} %
                     </span>
                   </div>
                   <span
@@ -942,7 +960,7 @@ function Viewdetails() {
                       border: "none",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate("/cart")}
+                    onClick={() => navigate("/cartbook")}
                   >
                     <div style={{ display: "flex", flexDirection: "row" }}>
                       <span

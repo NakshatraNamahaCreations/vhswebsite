@@ -802,18 +802,17 @@ export default function Homecity() {
   };
 
   const bannerimagedata = [
-    { images: "https://vijayahomeservices.b-cdn.net/2607.jpg" },
-    { images: "https://vijayahomeservices.b-cdn.net/2608.jpg" },
-    { images: "https://vijayahomeservices.b-cdn.net/2609.jpg" },
-    { images: "https://vijayahomeservices.b-cdn.net/2610.jpg" },
-    { images: "https://vijayahomeservices.b-cdn.net/2611.jpg" },
-    { images: "https://vijayahomeservices.b-cdn.net/2612.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/vhsmobilebanner1.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/vhsmobilebanner2.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/vhsmobilebanner3.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/vhsmobilebanner4.jpg" },
+    { images: "https://vijayahomeservices.b-cdn.net/vhsmobilebanner5.jpg" },
   ];
 
   console.log("FilterCleaningWithImages=====", FilterCleaningWithImages);
 
   const generatePathname = (subcategory, city) => {
-    return `/service/${subcategory
+    return `/services/${subcategory
       .toLowerCase()
       .replace(/ /g, "-")}-in-${localstoragecitys
       ?.toLowerCase()
@@ -860,7 +859,7 @@ export default function Homecity() {
           >
             Use My Current Location
           </button> */}
-          <div className="">
+          <div className="imagebanner">
             <div id="carouselExample" className="carousel slide">
               <div className="carousel-inner">
                 {bannerdata.map((data, index) => (
@@ -870,7 +869,7 @@ export default function Homecity() {
                   >
                     <img
                       src={data.webbanner}
-                      className="d-block w-100"
+                      className="d-block"
                       alt={`Banner ${index + 1}`}
                       style={{ height: "250px" }}
                     />
@@ -904,23 +903,25 @@ export default function Homecity() {
             </div>
           </div>
 
-          {/* <div className="imagebanner1">
+          <div className="imagebanner1" style={{ width: "100%" }}>
             <div
               id="carouselExample1"
               className="carousel slide"
               data-bs-ride="carousel"
+              style={{ width: "100%" }}
             >
               <div className="carousel-inner">
                 {bannerimagedata.map((data, index) => (
                   <div
                     key={index}
                     className={`carousel-item ${index === 0 ? "active" : ""}`}
+                    style={{ width: "100%" }}
                   >
                     <img
                       src={data.images}
-                      className="d-block"
+                      className="d-block w-100"
                       alt={`Banner ${index + 1}`}
-                      style={{ height: "250px", height: "350px" }}
+                      style={{ height: "250px", width: "100%" }}
                     />
                   </div>
                 ))}
@@ -950,7 +951,7 @@ export default function Homecity() {
                 <span className="visually-hidden">Next</span>
               </button>
             </div>
-          </div> */}
+          </div>
 
           <div
             className="row"
@@ -2140,7 +2141,9 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(i.subcategory, city),
+                      }}
                       state={({ subcategory: i?.subcategory }, { data: i })}
                       key={i.subcategory}
                       style={{ textDecoration: "none" }}
@@ -2205,7 +2208,9 @@ export default function Homecity() {
                     }}
                   >
                     <Link
-                      to="/servicedetails"
+                      to={{
+                        pathname: generatePathname(i.subcategory, city),
+                      }}
                       state={({ subcategory: i?.subcategory }, { data: i })}
                       key={i.subcategory}
                       style={{ textDecoration: "none" }}

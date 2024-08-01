@@ -158,7 +158,7 @@ function Footer() {
             <div className="f-desc">
               <a
                 className="poppins-regular"
-                href="/carpetcleaning"
+                href="/"
                 style={{ textDecoration: "none", color: "black" }}
               >
                 Commercial Carpet Cleaning
