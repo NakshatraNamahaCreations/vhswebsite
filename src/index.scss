@@ -1181,6 +1181,10 @@ background: rgb(255, 68, 68) !important;
 .cartrenderslot1{
   display: none !important;
 }
+
+.mobile-days{
+  display: none !important;
+}
 .service_gif{
   width: "50%" !important;
   height: 250px !important;
@@ -1204,7 +1208,6 @@ background: rgb(255, 68, 68) !important;
 .date_grid_container {
   display: flex;
   flex-wrap: wrap;
-
 }
 .date_label {
   flex: 1 1 calc(20.333% - 5px);
@@ -1417,6 +1420,12 @@ background: rgb(255, 68, 68) !important;
     height: 100px !important;
     border-radius: 10px !important;
   }
+  .web-days{
+    display: none !important;
+  }
+  .mobile-days{
+    display: flex !important;
+  }
   .imagebanner{
     display: none !important;
   }
@@ -1442,7 +1451,7 @@ background: rgb(255, 68, 68) !important;
     display: flex !important;
   }
   .cartrenderslot{
-    display: none !important;
+    display: none !important; 
   }
   .cartrenderslot1{
     display: flex !important;

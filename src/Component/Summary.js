@@ -175,7 +175,7 @@ function Summary() {
       const nextDays = [];
       const currentDate = new Date();
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 12; i++) {
         // Changed to 12 dates
         const date = new Date(currentDate);
         date.setDate(currentDate.getDate() + i);
@@ -467,7 +467,7 @@ function Summary() {
 
     let slots;
 
-    if (currentDate == dateToCompare) {
+    if (currentDate.toDateString() === dateToCompare.toDateString()) {
       slots = filteredData || [];
     } else if (currentDate > dateToCompare) {
       slots = filteredData1 || [];
@@ -475,32 +475,75 @@ function Summary() {
       slots = filteredData || [];
     }
 
-    slots.sort((a, b) => {
+    // Remove duplicate slots based on startTime
+    const uniqueSlots = [];
+    const seenTimes = new Set();
+
+    for (const slot of slots) {
+      if (!seenTimes.has(slot.startTime)) {
+        uniqueSlots.push(slot);
+        seenTimes.add(slot.startTime);
+      }
+    }
+
+    uniqueSlots.sort((a, b) => {
       const startTimeA = moment(a.startTime, "hA");
       const startTimeB = moment(b.startTime, "hA");
       return startTimeA.diff(startTimeB);
     });
 
+    // Split uniqueSlots into chunks of 3 for rendering in rows
+    const slotsChunks = [];
+    const chunkSize = 3;
+
+    for (let i = 0; i < uniqueSlots.length; i += chunkSize) {
+      slotsChunks.push(uniqueSlots.slice(i, i + chunkSize));
+    }
+
     return (
-      <div className="renderslots" style={{}}>
-        {slots.map((slot, index) => (
-          <div key={index} className="col-md-2">
-            <div
-              className="mt-3 poppins-light"
-              style={{
-                border: "1px solid grey",
-                fontSize: "14px",
-                textAlign: "center",
-                padding: "5px 5px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                color: selectedSlotIndex === index ? "white" : "black",
-                backgroundColor: selectedSlotIndex === index ? "darkred" : "",
-              }}
-              onClick={() => handleSlotClick1(index, slot.startTime)}
-            >
-              {slot.startTime}
-            </div>
+      <div className="d-flex flex-wrap justify-content-center">
+        {slotsChunks.map((chunk, rowIndex) => (
+          <div
+            key={rowIndex}
+            className="d-flex justify-content-center"
+            style={{ width: "100%" }} // Ensures full width row
+          >
+            {chunk.map((slot, columnIndex) => (
+              <div
+                key={columnIndex}
+                className="d-flex justify-content-center"
+                style={{ flex: "1 1 0", padding: "0 10px", maxWidth: "120px" }} // Ensures equal space and limits width
+              >
+                <div
+                  className="mt-4 poppins-light"
+                  style={{
+                    border: "1px solid grey",
+                    fontSize: "11px",
+                    textAlign: "center",
+                    padding: "7px 7px",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    width: "100%",
+                    color:
+                      selectedSlotIndex === rowIndex * chunkSize + columnIndex
+                        ? "white"
+                        : "black",
+                    backgroundColor:
+                      selectedSlotIndex === rowIndex * chunkSize + columnIndex
+                        ? "darkred"
+                        : "",
+                  }}
+                  onClick={() =>
+                    handleSlotClick1(
+                      rowIndex * chunkSize + columnIndex,
+                      slot.startTime
+                    )
+                  }
+                >
+                  {slot.startTime}
+                </div>
+              </div>
+            ))}
           </div>
         ))}
       </div>
@@ -826,7 +869,7 @@ function Summary() {
               {!show1 && (
                 <>
                   <div
-                    className="mb-3 mt-3 poppins-semibold"
+                    className="mb-3 mt-1 poppins-semibold"
                     style={{
                       color: "black",
                       fontSize: "20px",
@@ -911,7 +954,7 @@ function Summary() {
                     </div>
                   </div>
 
-                  <div className="scheduleservice mb-5">
+                  <div className="scheduleservice mb-4">
                     <div
                       className="title poppins-semibold"
                       style={{ textAlign: "left" }}
@@ -944,39 +987,66 @@ function Summary() {
           })}
         </div> */}
 
-                      <div className="date_grid_container">
+                      <div className="date_selection web-days">
                         {fourDates?.map((day, index) => {
                           const isDefaultChecked = isDateSelected(day);
 
                           return (
-                            <div className="date_label row col-md-2">
-                              <label
-                                htmlFor={index}
-                                key={index}
-                                // className="date_label"
+                            <label htmlFor={index} key={index}>
+                              <input type="checkbox" name="" id={day?.day} />
+
+                              <span
+                                className={`inpt poppins-medium ${
+                                  isDefaultChecked ? "matching" : ""
+                                }`}
+                                onClick={() => handleCheckboxSelect(day)}
                               >
-                                <input
-                                  type="checkbox"
-                                  name=""
-                                  id={day?.day}
-                                  className="date_checkbox"
-                                />
-                                <span
-                                  className={`inpt poppins-medium ${
-                                    isDefaultChecked ? "matching" : ""
-                                  }`}
-                                  style={{}}
-                                  onClick={() => handleCheckboxSelect(day)}
-                                >
-                                  {day?.dayName} - {day?.day}
-                                </span>
-                              </label>
+                                {day?.dayName}- {day?.day}
+                              </span>
+                            </label>
+                          );
+                        })}
+                      </div>
+
+                      <div
+                        className="date_grid_container mobile-days"
+                        style={{
+                          display: "flex",
+                          gap: "10px",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {fourDates?.slice(0, 3).map((day, index) => {
+                          const isDefaultChecked = isDateSelected(day);
+                          return (
+                            <div
+                              key={index}
+                              className={`inpt border poppins-medium ${
+                                isDefaultChecked ? "matching" : ""
+                              }`}
+                              style={{
+                                textAlign: "center",
+                                padding: "10px",
+                                flex: "1 1 0", // Flex grow and shrink, initial size is 0
+                                maxWidth: "100px", // Optional: Max width for each item
+                                cursor: "pointer", // Optional: Pointer cursor for interactive elements
+                              }}
+                              onClick={() => handleCheckboxSelect(day)}
+                            >
+                              {day?.day} <br />
+                              <span
+                                className={`  poppins-medium ${
+                                  isDefaultChecked ? "matching" : ""
+                                }`}
+                              >
+                                {day?.dayName}
+                              </span>
                             </div>
                           );
                         })}
                       </div>
 
-                      <div className="date">
+                      <div className="date mt-2">
                         <button
                           className="poppins-light"
                           onClick={DatePicker}
@@ -1030,22 +1100,27 @@ function Summary() {
       </div> */}
                     <div className="select_date">
                       <div className="cartrenderslot">
-                        <div className="text poppins-medium">
+                        <div className="text poppins-medium mt-1">
                           Select the Slot
                         </div>
+                      </div>
+                      <div
+                        className="cartrenderslot"
+                        style={{ marginTop: "-15px" }}
+                      >
                         {renderSlots()}
                       </div>
                     </div>
 
                     <div className="select_date">
                       <div className="cartrenderslot1">
-                        <div
-                          className="poppins-medium"
-                          style={{ fontSize: "18px" }}
-                        >
-                          Slots
-                        </div>
-                        <div className="mt-4 mb-3">{renderSlots1()}</div>
+                        <div className="text poppins-medium">Slots</div>
+                      </div>
+                      <div
+                        className="cartrenderslot1"
+                        style={{ marginTop: "-15px" }}
+                      >
+                        <div className="mb-3">{renderSlots1()}</div>
                       </div>
                     </div>
                   </div>
@@ -1084,7 +1159,7 @@ function Summary() {
                   {/* {voucherdata && ( */}
                   <>
                     <div
-                      className="mt-5 poppins-semibold"
+                      className="mt-3 poppins-semibold"
                       style={{
                         color: "black",
                         fontSize: "20px",

@@ -922,7 +922,7 @@ function Viewdetails() {
                       className="poppins-medium"
                       style={{ color: "black", fontWeight: "bold" }}
                     >
-                      Congratulations! ₹{formattedDiscount} %
+                      Congratulations!{formattedDiscount} %
                     </span>
                   </div>
                   <span

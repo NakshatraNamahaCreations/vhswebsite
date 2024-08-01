@@ -1340,11 +1340,15 @@ function Subcategory() {
                       marginTop: "40px",
                     }}
                   >
-                    Congratulations! ₹ {formattedDiscount} % Saved so far!
+                    Congratulations! {formattedDiscount} % Saved so far!
                   </div>
                   <div
                     className="d-flex"
-                    style={{ backgroundColor: "darkred", padding: "10px" }}
+                    style={{
+                      backgroundColor: "darkred",
+                      padding: "10px",
+                      justifyContent: "space-between",
+                    }}
                   >
                     <div
                       className="col-md-3 poppins-extrabold"
