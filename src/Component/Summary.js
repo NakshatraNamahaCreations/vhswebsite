@@ -520,7 +520,7 @@ function Summary() {
                     border: "1px solid grey",
                     fontSize: "11px",
                     textAlign: "center",
-                    padding: "7px 7px",
+                    padding: "5px",
                     borderRadius: "5px",
                     cursor: "pointer",
                     width: "100%",

@@ -8,6 +8,7 @@ import interiorpainting from "../../src/assests/interiorpainting.jpeg";
 import Social1 from "../../src/assests/socila1.webp";
 import Social from "../../src/assests/social.webp";
 import Carpet7 from "../../src/assests/carpet7.jpg";
+import cheading1 from "../../src/assests/cheading1.jpg";
 
 function Interiorcompany() {
   return (
@@ -25,7 +26,7 @@ function Interiorcompany() {
           <div className="row mt-4">
             <div className="col-md-6">
               <img
-                src={interiorpainting}
+                src={cheading1}
                 alt="VHS"
                 style={{ width: "100%", height: "230px" }}
               />

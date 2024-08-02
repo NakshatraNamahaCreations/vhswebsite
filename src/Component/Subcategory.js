@@ -182,9 +182,12 @@ function Subcategory() {
         // const subcategory = parts.slice(0, -1).join("-");
 
         // Take the last part for the city
-        const city = parts[parts.length - 1];
-
+        let city = parts[parts.length - 1];
+        if (city.startsWith("in-")) {
+          city = city.substring(3); // Remove the first three characters ("in-")
+        }
         console.log("c====", city);
+
         setCity(city);
         setCat(true);
         categoryData(categoryNamecheck);
@@ -193,7 +196,12 @@ function Subcategory() {
           service.subcategory.toLowerCase().includes(category1.toLowerCase())
         );
         if (fullServiceName) {
-          const city = parts.slice(3).join("-");
+          let city = parts[parts.length - 1];
+          if (city.startsWith("in-")) {
+            city = city.substring(3); // Remove the first three characters ("in-")
+          }
+          console.log("c====", city);
+
           setCity(city);
           setSub(fullServiceName.subcategory);
           getSubcategory(fullServiceName.subcategory);
@@ -453,8 +461,8 @@ function Subcategory() {
     setActiveIndex2(index);
   };
 
-  const capitalizedCity = capitalizeFirstLetter(city);
-  console.log("city=====13", capitalizedCity);
+  const capitalizedCity = capitalizeFirstLetter1(city);
+  console.log("city=====13", city);
 
   const handleCloseCart = () => {
     // e.preventDefault();

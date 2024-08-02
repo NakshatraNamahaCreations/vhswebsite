@@ -25,6 +25,11 @@ import Carpet7 from "../../src/assests/carpet7.jpg";
 import theree from "../../src/assests/theree.jpg";
 import suman from "../../src/assests/suman.jpeg";
 import suman1 from "../../src/assests/suman1.jpeg";
+import cheading from "../../src/assests/cheading.jpg";
+import cheading1 from "../../src/assests/cheading1.jpg";
+import cheading2 from "../../src/assests/cheading2.jpg";
+import cheading3 from "../../src/assests/cheading3.jpg";
+import cheading4 from "../../src/assests/cheading4.jpg";
 
 function Carpetcleaning() {
   const data = [
@@ -74,7 +79,7 @@ function Carpetcleaning() {
               <div className="col-md-8">
                 <div className="">
                   <img
-                    src={theree}
+                    src={cheading}
                     alt="Carpet Cleaning Image"
                     style={{ height: "150px", width: "100%" }}
                   />
@@ -86,7 +91,7 @@ function Carpetcleaning() {
                   <div className="col-md-5">
                     <div className="">
                       <img
-                        src={bathromcln}
+                        src={cheading1}
                         alt="Carpet Cleaning Image"
                         style={{ height: "150px", width: "100%" }}
                       />
@@ -96,7 +101,7 @@ function Carpetcleaning() {
                   <div className="col-md-6">
                     <div className="">
                       <img
-                        src={interiorimg}
+                        src={cheading2}
                         alt="Carpet Cleaning Image"
                         style={{ height: "150px", width: "100%" }}
                       />
@@ -115,7 +120,7 @@ function Carpetcleaning() {
               <div className="col-md-4 d-flex justify-content-center">
                 <div style={{ backgroundColor: "darkred", width: "320px" }}>
                   <img
-                    src={deepcln}
+                    src={cheading}
                     alt="loading"
                     style={{
                       width: "320px",
@@ -153,7 +158,7 @@ function Carpetcleaning() {
               <div className="col-md-4 d-flex justify-content-center">
                 <div style={{ backgroundColor: "darkred", width: "320px" }}>
                   <img
-                    src={suman1}
+                    src={cheading3}
                     alt="loading"
                     style={{ width: "320px", height: "150px" }}
                   />
@@ -186,7 +191,7 @@ function Carpetcleaning() {
               <div className="col-md-4 d-flex justify-content-center">
                 <div style={{ backgroundColor: "darkred", width: "320px" }}>
                   <img
-                    src={suman1}
+                    src={cheading4}
                     alt="loading"
                     style={{
                       width: "320px",
@@ -221,7 +226,7 @@ function Carpetcleaning() {
             </div>
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <div className="poppins-semibold text-center mt-1">
               INDUSTRIES WE SERVE
             </div>
@@ -308,7 +313,7 @@ function Carpetcleaning() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <div className="poppins-semibold text-center mt-1">

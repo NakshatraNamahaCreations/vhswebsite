@@ -869,9 +869,9 @@ export default function Homecity() {
                   >
                     <img
                       src={data.webbanner}
-                      className="d-block"
+                      className="d-block w-100"
                       alt={`Banner ${index + 1}`}
-                      style={{ height: "250px" }}
+                      style={{ height: "250px", width: "100%" }}
                     />
                   </div>
                 ))}
