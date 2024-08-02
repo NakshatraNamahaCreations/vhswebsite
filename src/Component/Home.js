@@ -31,7 +31,7 @@ import hbanner3 from "../assests/hbanner3.jpg";
 import hbanner4 from "../assests/hbanner4.jpg";
 import hbanner5 from "../assests/hbanner5.jpg";
 import hbanner6 from "../assests/hbanner6.jpg";
-import { setstoreCity } from "../dataStoreComponent/citySlice";
+
 import { useSelector, useDispatch } from "react-redux";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import { useLocation } from "react-router-dom";

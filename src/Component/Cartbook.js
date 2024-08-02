@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { addToCart1, removeMyCartItem, clearCart } from "../Redux1/MyCartSlice";
 import { deleteMyCartItem } from "../Redux1/MyCartSlice";
-import NabarCompo from "./navbar";
-
 import axios from "axios";
 import {
   addToCartaddon,
@@ -15,7 +12,6 @@ import {
 import { deleteMyCartItemaddon } from "../Redux/MyCartSlice";
 import moment from "moment";
 import Calendar from "react-calendar";
-import "../Pages/ViewCart/Components/CartDetails/cartdetails.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Swiper, SwiperSlide } from "swiper/react";

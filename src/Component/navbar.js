@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
+
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { setstoreCity } from "../dataStoreComponent/citySlice";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SearchIcon from "@mui/icons-material/Search";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import WifiCalling3Icon from "@mui/icons-material/WifiCalling3";
 import "../Component/layout.css";
-import img from "./img/Flag-India.webp";
-import Vhs from "../../src/assests/vhs.png";
 
 export default function NabarCompo() {
-  const cartItems = useSelector((state) => state.viewCart?.CartItemsQnty);
-  const distpatch = useDispatch();
-  const citys = useSelector((state) => state.city);
   const location = useLocation();
   const MyCartItmes = useSelector((state) => state.cart);
   console.log("MyCartItmes====234", MyCartItmes);
