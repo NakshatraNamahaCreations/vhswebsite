@@ -1468,10 +1468,10 @@ function Cartbook() {
                                 border: "1px solid grey",
                                 fontSize: "14px",
                                 textAlign: "center",
-                                padding: "5px",
+                                padding: "5px ",
                                 borderRadius: "5px",
                                 cursor: "pointer",
-                                width: "120px",
+                                width: "140px",
                                 backgroundColor: isDefaultChecked
                                   ? "darkred"
                                   : "", // Set background color conditionally

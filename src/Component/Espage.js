@@ -1135,7 +1135,7 @@ function Espage() {
                                   padding: "5px",
                                   borderRadius: "5px",
                                   cursor: "pointer",
-                                  width: "120px",
+                                  width: "140px",
                                   backgroundColor: isDefaultChecked
                                     ? "darkred"
                                     : "", // Set background color conditionally
@@ -1262,7 +1262,10 @@ function Espage() {
 
                     <div className="select_date">
                       <div className="cartrenderslot">
-                        <div className="text poppins-medium mt-1">
+                        <div
+                          className="text poppins-black mt-1"
+                          style={{ textAlign: "left" }}
+                        >
                           Select the Slot
                         </div>
                       </div>

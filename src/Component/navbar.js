@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import "../Component/layout.css";
+import { Dropdown } from "react-bootstrap";
 
 export default function NabarCompo() {
   const location = useLocation();
@@ -141,7 +142,7 @@ export default function NabarCompo() {
             {userData ? (
               <Nav className="fnt p-0 px-2">
                 <div className="btn-group">
-                  <button
+                  {/* <button
                     className="btn btn-secondary dropdown-toggle"
                     type="button"
                     data-bs-toggle="dropdown"
@@ -177,7 +178,42 @@ export default function NabarCompo() {
                         Logout
                       </a>
                     </li>
-                  </ul>
+                  </ul> */}
+
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      style={{
+                        backgroundColor: "darkred",
+                        borderRadius: "50px",
+                        border: "none",
+                      }}
+                      variant=""
+                      id="dropdown-basic"
+                    >
+                      <i
+                        className="fa-solid fa-user"
+                        style={{ fontSize: "15px", color: "white" }}
+                      ></i>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        className="dropdown-item poppins-regular"
+                        style={{ fontSize: "12px" }}
+                        href="/mybooking"
+                      >
+                        My Bookings
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={handleremove}
+                        className="poppins-regular dropdown-item"
+                        style={{ fontSize: "12px" }}
+                        href="#/action-3"
+                      >
+                        Logout
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </div>
                 <span
                   className="mx-2 poppins-medium"
@@ -189,7 +225,7 @@ export default function NabarCompo() {
             ) : (
               <Link
                 className="mx-2"
-                to="/login"
+                to="/homelogin"
                 style={{ textDecoration: "none" }}
               >
                 <div

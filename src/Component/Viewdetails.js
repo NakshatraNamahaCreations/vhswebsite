@@ -108,7 +108,7 @@ function Viewdetails() {
             email: email,
             category: subcategory?.category,
             reference2: "website",
-            city: localstoragecitys,
+            city: city,
             comment: comment,
             // interestedFor: serviceName,
             // serviceID: serviceId,
@@ -349,7 +349,7 @@ function Viewdetails() {
   };
 
   const filteredPrices = subcategory?.morepriceData?.filter(
-    (ele) => ele.pricecity === localstoragecitys
+    (ele) => ele.pricecity === city
   );
 
   const CartSavedtotal = MyCartItmes?.reduce((accumulator, item) => {
@@ -393,8 +393,10 @@ function Viewdetails() {
             className="view_image"
             src={subcategory.viewbanner}
             alt=""
+            style={{ width: "100%" }}
             // src={`https://api.vijayhomesuperadmin.in/service/${subcategory?.serviceImg}`}
           />
+
           <div className="mt-3">
             <div
               className="poppins-regular"
@@ -475,7 +477,7 @@ function Viewdetails() {
             <div className="row offerbannerdata_div mt-2">
               {(() => {
                 const filteredPrices = subcategory?.morepriceData?.filter(
-                  (ele) => ele.pricecity === localstoragecitys
+                  (ele) => ele.pricecity === city
                 );
 
                 return (
@@ -972,7 +974,7 @@ function Viewdetails() {
                       border: "none",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate("/cartbook")}
+                    onClick={handleChange}
                   >
                     <div style={{ display: "flex", flexDirection: "row" }}>
                       <span

@@ -36,6 +36,7 @@ import Invest from "./Component/Invest";
 import Registerus from "./Component/Registerus";
 import Pay from "./Component/Paymentgateway";
 import Paymentdemo from "./Component/Paymentdemo";
+import Homelogin from "./Homelogin";
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
         <Route path="/invest" element={<Invest />} />
         <Route path="/joinus" element={<Registerus />} />
         <Route path="/paymentdemo" element={<Paymentdemo />} />
+        <Route path="/homelogin" element={<Homelogin />} />
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>
       {/* <AppLink /> */}

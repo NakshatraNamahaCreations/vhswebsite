@@ -1004,7 +1004,7 @@ function Summary() {
                                   padding: "5px",
                                   borderRadius: "5px",
                                   cursor: "pointer",
-                                  width: "120px",
+                                  width: "140px",
                                   backgroundColor: isDefaultChecked
                                     ? "darkred"
                                     : "", // Set background color conditionally
