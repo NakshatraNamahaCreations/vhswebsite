@@ -954,7 +954,7 @@ function Summary() {
                     </div>
                   </div>
 
-                  <div className="scheduleservice mb-4 ">
+                  <div className="scheduleservice mb-4">
                     <div
                       className="title poppins-semibold"
                       style={{ textAlign: "left" }}
@@ -990,31 +990,20 @@ function Summary() {
                       <div className="date_selection web-days">
                         {fourDates?.map((day, index) => {
                           const isDefaultChecked = isDateSelected(day);
+
                           return (
-                            <div
-                              key={index}
-                              onClick={() => handleCheckboxSelect(day)}
-                            >
-                              <div
-                                className="mt-3 poppins-light"
-                                style={{
-                                  border: "1px solid grey",
-                                  fontSize: "14px",
-                                  textAlign: "center",
-                                  padding: "5px",
-                                  borderRadius: "5px",
-                                  cursor: "pointer",
-                                  width: "140px",
-                                  backgroundColor: isDefaultChecked
-                                    ? "darkred"
-                                    : "", // Set background color conditionally
-                                  color: isDefaultChecked ? "white" : "black",
-                                }}
-                                // onClick={() => handleCheckboxSelect(day)}
+                            <label htmlFor={index} key={index}>
+                              <input type="checkbox" name="" id={day?.day} />
+
+                              <span
+                                className={`inpt poppins-medium ${
+                                  isDefaultChecked ? "matching" : ""
+                                }`}
+                                onClick={() => handleCheckboxSelect(day)}
                               >
-                                {day?.dayName} - {day?.day}
-                              </div>
-                            </div>
+                                {day?.dayName}- {day?.day}
+                              </span>
+                            </label>
                           );
                         })}
                       </div>
@@ -1032,34 +1021,23 @@ function Summary() {
                           return (
                             <div
                               key={index}
-                              // className={`inpt border poppins-medium ${
-                              //   isDefaultChecked ? "matching" : ""
-                              // }`}
-                              className="poppins-regular mt-2"
+                              className={`inpt border poppins-medium ${
+                                isDefaultChecked ? "matching" : ""
+                              }`}
                               style={{
                                 textAlign: "center",
                                 padding: "10px",
-                                flex: "1 1 0",
-                                maxWidth: "100px",
-                                cursor: "pointer",
-                                backgroundColor: isDefaultChecked
-                                  ? "darkred"
-                                  : "", // Set background color conditionally
-                                color: isDefaultChecked ? "white" : "black",
-                                border: "1px solid grey",
-                                borderRadius: "5px",
+                                flex: "1 1 0", // Flex grow and shrink, initial size is 0
+                                maxWidth: "100px", // Optional: Max width for each item
+                                cursor: "pointer", // Optional: Pointer cursor for interactive elements
                               }}
                               onClick={() => handleCheckboxSelect(day)}
                             >
                               {day?.day} <br />
                               <span
-                                // className={`  poppins-medium ${
-                                //   isDefaultChecked ? "matching" : ""
-                                // }`}
-                                className="poppins-regular"
-                                style={{
-                                  color: isDefaultChecked ? "white" : "black",
-                                }}
+                                className={`  poppins-medium ${
+                                  isDefaultChecked ? "matching" : ""
+                                }`}
                               >
                                 {day?.dayName}
                               </span>
@@ -1068,20 +1046,11 @@ function Summary() {
                         })}
                       </div>
 
-                      <div className="date mt-4 mb-2">
-                        <div
-                          className="poppins-black d-flex"
+                      <div className="date mt-3">
+                        <button
+                          className="poppins-light"
                           onClick={DatePicker}
-                          style={{
-                            cursor: "pointer",
-                            fontWeight: "bold",
-                            textAlign: "center",
-                            justifyContent: "center",
-                            border: "1px solid grey",
-                            borderRadius: "5px",
-                            padding: "10px",
-                            borderColor: "grey",
-                          }}
+                          style={{ cursor: "pointer", fontWeight: "bold" }}
                         >
                           Pick Date{" "}
                           <span>
@@ -1098,7 +1067,7 @@ function Summary() {
                               </div>
                             )}
                           </span>
-                        </div>
+                        </button>
                         <div className="date_picker"></div>
                       </div>
                       {datepicker && (
@@ -1120,10 +1089,6 @@ function Summary() {
                               tileDisabled={tileDisabled}
                               tileClassName={tileClassName}
                             />
-                            {/* <Calendar
-                            onChange={(date) => handleCalendarSelect(date)}
-                            value={selectedDate}
-                          /> */}
                           </div>
                         </div>
                       )}
