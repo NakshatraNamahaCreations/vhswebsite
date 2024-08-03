@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../Component/layout.css";
+import { Dropdown } from "react-bootstrap";
 
 function Cartnavbar() {
   const location = useLocation();
@@ -49,7 +50,7 @@ function Cartnavbar() {
             textAlign: "left",
           }}
         >
-          Vijay Home Services
+          VHS
         </span>
       </div>
       <div
@@ -57,63 +58,51 @@ function Cartnavbar() {
         style={{ justifyContent: "center", alignItems: "center" }}
       >
         {userData !== null && userData !== undefined ? (
-          <div className="">
-            <div
-              className="dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              data-bs-auto-close="true"
-              aria-expanded="false"
-              style={{
-                // backgroundColor: "white",
-                borderRadius: "50px",
-                border: "white",
-                display: "flex",
-              }}
-            >
-              <i
-                className="fa-solid fa-user-large"
+          <div className="d-flex">
+            <Dropdown>
+              <Dropdown.Toggle
                 style={{
-                  fontSize: "16px",
-                  //   backgroundColor: "darkred",
-                  //   padding: "9px",
-                  color: "black",
-                  //   borderRadius: "100%",
+                  display: "flex",
+                  justifyContent: "end",
+                  padding: "0px",
+                  border: "none",
                 }}
-              ></i>
-              <span
-                className="mx-1 poppins-medium"
-                style={{ fontSize: "12px" }}
+                variant=""
+                id="dropdown-basic"
               >
-                {userData?.customerName}
-              </span>
-            </div>
-            <ul className="dropdown-menu">
-              <li>
-                <a
+                <i
+                  className="fa-solid fa-user mt-1"
+                  style={{ fontSize: "15px", color: "black" }}
+                ></i>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item
                   className="dropdown-item poppins-regular"
                   style={{ fontSize: "12px" }}
                   href="/mybooking"
                 >
                   My Bookings
-                </a>
-              </li>
-              <li onClick={handleremove}>
-                <a
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={handleremove}
                   className="poppins-regular dropdown-item"
                   style={{ fontSize: "12px" }}
-                  href="#"
+                  href="#/action-3"
                 >
                   Logout
-                </a>
-              </li>
-            </ul>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <span className="poppins-black mx-1" style={{ fontSize: "12px" }}>
+              {userData?.customerName}
+            </span>
           </div>
         ) : (
           <>
             <Link
               className="mx-2"
-              to="/login"
+              to="/homelogin"
               style={{ textDecoration: "none" }}
             >
               <div

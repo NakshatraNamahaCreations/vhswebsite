@@ -398,7 +398,7 @@ function Viewdetails() {
           />
 
           <div className="mt-3">
-            <div
+            <h1
               className="poppins-regular"
               style={{
                 color: "green",
@@ -406,10 +406,10 @@ function Viewdetails() {
               }}
             >
               {subcategory?.servicetitle}
-            </div>
-            <div className="poppins-semibold" style={{ textAlign: "left" }}>
+            </h1>
+            <h1 className="poppins-semibold" style={{ textAlign: "left" }}>
               {subcategory?.serviceName}
-            </div>
+            </h1>
             <div
               className="poppins-regular"
               style={{

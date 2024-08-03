@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { addToCart1, removeMyCartItem, clearCart } from "../Redux1/MyCartSlice";
 import { deleteMyCartItem } from "../Redux1/MyCartSlice";
-import NabarCompo from "./navbar";
-
 import axios from "axios";
 import {
   addToCartaddon,
@@ -38,7 +35,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import { useLocation, useNavigate } from "react-router-dom";
-
 import Header1 from "./Header1";
 import Cartnavbar from "./Cartnavbar";
 import Footer from "./Footer";

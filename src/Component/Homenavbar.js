@@ -1,16 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import "../Component/layout.css";
 
 function Homenavbar() {
   const userDataString = localStorage.getItem("user");
   const userData = JSON.parse(userDataString);
+  const navigate = useNavigate();
 
   const handleremove = () => {
     alert("Account deleted");
     localStorage.removeItem("user");
-    window.location.assign("/");
+    navigate("/");
   };
+
   return (
     <div
       className="d-flex navbar-cart"
@@ -20,7 +23,7 @@ function Homenavbar() {
         justifyContent: "space-between",
       }}
     >
-      <div className="col-md-10 ">
+      <div className="col-md-10">
         <img
           src="https://vijayahomeservices.b-cdn.net/vhs-lgo.png"
           alt=""
@@ -28,15 +31,15 @@ function Homenavbar() {
           height={25}
         />
         <span
-          className="poppins-medium mx-2"
+          className="poppins-black mx-2"
           style={{
             color: "black",
-            fontSize: "13px",
+            fontSize: "12px",
             fontWeight: "bold",
             textAlign: "left",
           }}
         >
-          Vijay Home Services
+          VHS
         </span>
       </div>
       <div
@@ -44,76 +47,59 @@ function Homenavbar() {
         style={{ justifyContent: "center", alignItems: "center" }}
       >
         {userData !== null && userData !== undefined ? (
-          <div className="">
-            <div
-              className="dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              data-bs-auto-close="true"
-              aria-expanded="false"
-              style={{
-                // backgroundColor: "white",
-                borderRadius: "50px",
-                border: "white",
-                display: "flex",
-              }}
-            >
-              <i
-                className="fa-solid fa-user-large"
+          <div className="d-flex">
+            <Dropdown>
+              <Dropdown.Toggle
                 style={{
-                  fontSize: "16px",
-                  //   backgroundColor: "darkred",
-                  //   padding: "9px",
-                  color: "black",
-                  //   borderRadius: "100%",
+                  display: "flex",
+                  justifyContent: "end",
+                  padding: "0px",
+                  border: "none",
                 }}
-              ></i>
-              <span
-                className="mx-1 poppins-medium"
-                style={{ fontSize: "12px" }}
+                variant=""
+                id="dropdown-basic"
               >
-                {userData?.customerName}
-              </span>
-            </div>
-            <ul className="dropdown-menu">
-              <li>
-                <a
+                <i
+                  className="fa-solid fa-user mt-1"
+                  style={{ fontSize: "15px", color: "black" }}
+                ></i>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item
                   className="dropdown-item poppins-regular"
                   style={{ fontSize: "12px" }}
                   href="/mybooking"
                 >
                   My Bookings
-                </a>
-              </li>
-              <li onClick={handleremove}>
-                <a
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={handleremove}
                   className="poppins-regular dropdown-item"
                   style={{ fontSize: "12px" }}
-                  href="#"
+                  href="#/action-3"
                 >
                   Logout
-                </a>
-              </li>
-            </ul>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <span className="poppins-black mx-1" style={{ fontSize: "12px" }}>
+              {userData?.customerName}
+            </span>
           </div>
         ) : (
-          <>
-            <Link
-              className="mx-2"
-              to="/login"
-              style={{ textDecoration: "none" }}
+          <Link className="mx-2" to="/login" style={{ textDecoration: "none" }}>
+            <div
+              className="poppins-black mx-1"
+              style={{ color: "darkred", fontSize: "12px" }}
             >
-              <div
-                className="poppins-black mx-1"
-                style={{ color: "darkred", fontSize: "15px" }}
-              >
-                Login / Signup
-              </div>
-            </Link>
-          </>
+              Login / Signup
+            </div>
+          </Link>
         )}
       </div>
     </div>
   );
 }
+
 export default Homenavbar;

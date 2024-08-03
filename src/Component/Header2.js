@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../Component/layout.css";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Dropdown } from "react-bootstrap";
 
 export default function NavbarCompo() {
   //   const location = useLocation();
@@ -124,45 +125,80 @@ export default function NavbarCompo() {
           </Nav>
 
           {userData !== null && userData !== undefined ? (
-            <Nav className=" fnt p-0 px-2">
+            <Nav className="fnt p-0 px-2">
               <div className="btn-group">
-                <button
-                  className="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  data-bs-auto-close="true"
-                  aria-expanded="false"
-                  style={{
-                    backgroundColor: "darkred",
-                    borderRadius: "50px",
-                    border: "white",
-                  }}
-                >
-                  <i
-                    className="fa-solid fa-user"
-                    style={{ fontSize: "15px" }}
-                  ></i>
-                </button>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a
+                {/* <button
+               className="btn btn-secondary dropdown-toggle"
+               type="button"
+               data-bs-toggle="dropdown"
+               data-bs-auto-close="true"
+               aria-expanded="false"
+               style={{
+                 backgroundColor: "darkred",
+                 borderRadius: "50px",
+                 border: "none",
+               }}
+             >
+               <i
+                 className="fa-solid fa-user"
+                 style={{ fontSize: "15px" }}
+               ></i>
+             </button>
+             <ul className="dropdown-menu">
+               <li>
+                 <a
+                   className="dropdown-item poppins-regular"
+                   style={{ fontSize: "12px" }}
+                   href="/mybooking"
+                 >
+                   My Bookings
+                 </a>
+               </li>
+               <li onClick={handleremove}>
+                 <a
+                   className="poppins-regular dropdown-item"
+                   style={{ fontSize: "12px" }}
+                   href="#"
+                 >
+                   Logout
+                 </a>
+               </li>
+             </ul> */}
+
+                <Dropdown>
+                  <Dropdown.Toggle
+                    style={{
+                      backgroundColor: "darkred",
+                      borderRadius: "50px",
+                      border: "none",
+                    }}
+                    variant=""
+                    id="dropdown-basic"
+                  >
+                    <i
+                      className="fa-solid fa-user"
+                      style={{ fontSize: "15px", color: "white" }}
+                    ></i>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item
                       className="dropdown-item poppins-regular"
                       style={{ fontSize: "12px" }}
                       href="/mybooking"
                     >
                       My Bookings
-                    </a>
-                  </li>
-                  <li onClick={handleremove}>
-                    <a
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={handleremove}
                       className="poppins-regular dropdown-item"
                       style={{ fontSize: "12px" }}
-                      href="#"
+                      href="#/action-3"
                     >
                       Logout
-                    </a>
-                  </li>
-                </ul>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
               <span
                 className="mx-2 poppins-medium"
@@ -175,7 +211,7 @@ export default function NavbarCompo() {
             <>
               <Link
                 className="mx-2"
-                to="/login"
+                to="/homelogin"
                 style={{ textDecoration: "none" }}
               >
                 <div

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import NabarCompo from "./navbar";
 import { Button, Modal } from "react-bootstrap";
 import "../Component/Servicedetails.css";
 import CheckIcon from "@mui/icons-material/Check";
@@ -25,7 +24,7 @@ import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Faq from "react-faq-component";
 import Cartnavbar from "./Cartnavbar";
-import NavbarCompo from "./Header1";
+import NavbarCompo from "./navbar";
 import Homenavbar from "./Homenavbar";
 
 function capitalizeFirstLetter1(string) {
@@ -552,6 +551,13 @@ function Subcategory() {
     );
   };
 
+  const scrollToService = (index) => {
+    const section = document.getElementById(`service-${index}`);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const generatePathname = (subcategory, city) => {
     return `/services/${subcategory.toLowerCase().replace(/ /g, "-")}-in-${city
       .toLowerCase()
@@ -596,6 +602,7 @@ function Subcategory() {
                         }}
                         onClick={() => setCat(false)}
                         className="text-decoration-none text-black"
+                        style={{ cursor: "pointer" }}
                       >
                         <div
                           style={{
@@ -627,7 +634,7 @@ function Subcategory() {
             </div>
           ) : (
             <div>
-              <Header1 />
+              <NavbarCompo />
               <Cartnavbar />
               <div className="container">
                 <div className="row">
@@ -653,7 +660,8 @@ function Subcategory() {
                           <div
                             key={index}
                             className="col-md-4 mt-4 subcat-row text-center"
-                            // onClick={() => scrollToService(index + 1)}
+                            onClick={() => scrollToService(index + 1)}
+                            style={{ cursor: "pointer" }}
                           >
                             <img
                               style={{
@@ -703,7 +711,7 @@ function Subcategory() {
               </div>
 
               <div className="container mt-2">
-                <h1 className="poppins-semibold  v-text">{sub}</h1>
+                <h2 className="poppins-semibold  v-text">{sub}</h2>
                 <div className="col-md-6 mt-3">
                   <div className="d-flex">
                     <div className="col-md-8 d-flex">
@@ -1181,6 +1189,7 @@ function Subcategory() {
                                   borderRadius: "10px",
                                   width: "50%",
                                   marginTop: "-25px",
+                                  cursor: "pointer",
                                 }}
                                 // onClick={() => handleBook(data)}
                                 onClick={() => {
