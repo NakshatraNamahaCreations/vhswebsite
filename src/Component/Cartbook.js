@@ -652,37 +652,58 @@ function Cartbook() {
       return startTimeA.diff(startTimeB);
     });
 
+    // Split uniqueSlots into chunks of 3 for rendering in rows
+    const slotsChunks = [];
+    const chunkSize = 3;
+
+    for (let i = 0; i < uniqueSlots.length; i += chunkSize) {
+      slotsChunks.push(uniqueSlots.slice(i, i + chunkSize));
+    }
+
     return (
       <div className="d-flex flex-wrap justify-content-center">
-        {uniqueSlots.map((slot, index) => (
+        {slotsChunks.map((chunk, rowIndex) => (
           <div
-            key={index}
+            key={rowIndex}
             className="d-flex justify-content-center"
             style={{ width: "100%" }} // Ensures full width row
           >
-            <div
-              key={index}
-              className="d-flex justify-content-center"
-              style={{ flex: "1 1 0", padding: "0 10px", maxWidth: "120px" }} // Ensures equal space and limits width
-            >
+            {chunk.map((slot, columnIndex) => (
               <div
-                className="mt-4 poppins-light"
-                style={{
-                  border: "1px solid grey",
-                  fontSize: "11px",
-                  textAlign: "center",
-                  padding: "4px",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  width: "100%",
-                  color: selectedSlotIndex === index ? "white" : "black",
-                  backgroundColor: selectedSlotIndex === index ? "darkred" : "",
-                }}
-                onClick={() => handleSlotClick1(index, slot.startTime)}
+                key={columnIndex}
+                className="d-flex justify-content-center"
+                style={{ flex: "1 1 0", padding: "0 10px", maxWidth: "120px" }} // Ensures equal space and limits width
               >
-                {slot.startTime}
+                <div
+                  className="mt-4 poppins-light"
+                  style={{
+                    border: "1px solid grey",
+                    fontSize: "11px",
+                    textAlign: "center",
+                    padding: "5px",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    width: "100%",
+                    color:
+                      selectedSlotIndex === rowIndex * chunkSize + columnIndex
+                        ? "white"
+                        : "black",
+                    backgroundColor:
+                      selectedSlotIndex === rowIndex * chunkSize + columnIndex
+                        ? "darkred"
+                        : "",
+                  }}
+                  onClick={() =>
+                    handleSlotClick1(
+                      rowIndex * chunkSize + columnIndex,
+                      slot.startTime
+                    )
+                  }
+                >
+                  {slot.startTime}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         ))}
       </div>
@@ -1418,7 +1439,7 @@ function Cartbook() {
                   </Swiper>
                 </div>
 
-                <div className="scheduleservice mb-4 p-3">
+                <div className="scheduleservice mb-4 mt-3">
                   <div
                     className="title poppins-semibold"
                     style={{ textAlign: "left" }}

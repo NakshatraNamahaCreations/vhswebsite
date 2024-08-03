@@ -954,7 +954,7 @@ function Summary() {
                     </div>
                   </div>
 
-                  <div className="scheduleservice mb-4">
+                  <div className="scheduleservice mb-4 ">
                     <div
                       className="title poppins-semibold"
                       style={{ textAlign: "left" }}
