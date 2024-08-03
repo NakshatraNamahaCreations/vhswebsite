@@ -290,7 +290,7 @@ export default function Home() {
     setOpenResetModal(false);
     setActiveCity(city.city);
     setSelectedCity(city.city);
-    localStorage.setItem("city", city.city);
+    // localStorage.setItem("city", city.city);
     navigate(`/${city.city}`);
   };
 

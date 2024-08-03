@@ -282,9 +282,10 @@ function Subcategory() {
     }
   };
 
-  const capitalizeFirstLetter = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
+  function capitalizeFirstLetter(string) {
+    if (!string) return string; // Check if the string is empty or undefined
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
 
   const [selectedData, setSelectedData] = useState([]);
 
@@ -461,7 +462,7 @@ function Subcategory() {
     setActiveIndex2(index);
   };
 
-  const capitalizedCity = capitalizeFirstLetter1(city);
+  const capitalizedCity = capitalizeFirstLetter(city);
   console.log("city=====13", city);
 
   const handleCloseCart = () => {
@@ -1116,7 +1117,10 @@ function Subcategory() {
                             <div className="col-md-3">
                               <Link
                                 to="/viewdetails"
-                                state={{ subcategory: data }}
+                                state={{
+                                  subcategory: data,
+                                  city: capitalizedCity,
+                                }}
                                 style={{ textDecoration: "none" }}
                               >
                                 <div

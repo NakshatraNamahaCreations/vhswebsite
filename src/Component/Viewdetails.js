@@ -34,7 +34,7 @@ function Viewdetails() {
   const [feqdata, setfeqdata] = useState([]);
   const [whychooseus, setwhychooseus] = useState([]);
   const location = useLocation();
-  const { subcategory } = location.state || {};
+  const { subcategory, city } = location.state || {};
   const localstoragecitys = localStorage.getItem("city");
   console.log("localstoragecitys======", localstoragecitys);
   const MyCartItmes = useSelector((state) => state.cart);
@@ -55,6 +55,8 @@ function Viewdetails() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  console.log("city====y", city);
 
   useEffect(() => {
     const handlebanner = () => {
@@ -363,6 +365,16 @@ function Viewdetails() {
       return accumulator;
     }
   }, 0);
+  const user = localStorage.getItem("user");
+  console.log("user=====", user);
+
+  const handleChange = () => {
+    if (user) {
+      navigate("/cartbook");
+    } else {
+      navigate("/login");
+    }
+  };
 
   const discountPercentages =
     ((CartSavedtotal - Carttotal) / CartSavedtotal) * 100;
@@ -981,6 +993,7 @@ function Viewdetails() {
                       </span>
                     </div>
                     <span
+                      onClick={handleChange}
                       className="poppins-extrabold"
                       style={{ color: "white", fontWeight: "bold" }}
                     >

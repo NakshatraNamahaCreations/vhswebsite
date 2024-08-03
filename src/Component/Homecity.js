@@ -41,6 +41,7 @@ import Homenavbar from "./Homenavbar";
 import call from "../assests/call.gif";
 import web from "../assests/web.gif";
 import callgif from "../assests/callgif.gif";
+import { Carousel } from "bootstrap";
 
 // updated home
 export default function Homecity() {
@@ -322,22 +323,25 @@ export default function Homecity() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const savedCity = localStorage.getItem("selectedCity");
-    if (savedCity) {
-      setActiveCity(savedCity);
-      navigate(`/${savedCity.toLowerCase()}`);
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const savedCity = localStorage.getItem("selectedCity");
+  //   if (savedCity) {
+  //     setActiveCity(savedCity);
+  //     navigate(`/${savedCity.toLowerCase()}`);
+  //   }
+  // }, [navigate]);
 
   const handleChange = (selectedCity) => {
     const cityName = selectedCity.city;
+    console.log("cityName", cityName, selectedCity);
     setActiveCity(cityName);
     setOpenResetModal(false);
-    localStorage.setItem("selectedCity", cityName);
+    // localStorage.setItem("selectedCity", cityName);
     navigate(`/${cityName.toLowerCase()}`);
     window.location.reload();
   };
+
+  console.log("activecity", activeCity);
 
   // TestiMonial
 
@@ -813,10 +817,16 @@ export default function Homecity() {
   const generatePathname = (subcategory, city) => {
     return `/services/${subcategory
       .toLowerCase()
-      .replace(/ /g, "-")}-in-${localstoragecitys
-      ?.toLowerCase()
-      .replace(/ /g, "-")}`;
+      .replace(/ /g, "-")}-in-${cityName?.toLowerCase().replace(/ /g, "-")}`;
   };
+
+  useEffect(() => {
+    const carouselElement = document.getElementById("carouselExample");
+    const carousel = new Carousel(carouselElement, {
+      interval: 3000, // 3 seconds
+      ride: "carousel",
+    });
+  }, []);
 
   return (
     <>
@@ -859,7 +869,12 @@ export default function Homecity() {
             Use My Current Location
           </button> */}
           <div className="imagebanner">
-            <div id="carouselExample" className="carousel slide">
+            <div
+              id="carouselExample"
+              className="carousel slide"
+              data-bs-ride="carousel"
+              data-bs-interval="3000"
+            >
               <div className="carousel-inner">
                 {bannerdata.map((data, index) => (
                   <div
@@ -907,6 +922,7 @@ export default function Homecity() {
               id="carouselExample1"
               className="carousel slide"
               data-bs-ride="carousel"
+              data-bs-interval="3000"
               style={{ width: "100%" }}
             >
               <div className="carousel-inner">
@@ -1006,7 +1022,7 @@ export default function Homecity() {
                   className="poppins-regular mx-2"
                   style={{ fontSize: "16px", marginTop: "2px" }}
                 >
-                  {selectedCity ? selectedCity : "Select City"}
+                  {cityName ? cityName : "Select City"}
                 </div>
               </div>
               <i
@@ -2422,13 +2438,13 @@ export default function Homecity() {
                 <div className="city-item" key={city._id}>
                   <div
                     className={`city-name ${
-                      activeCity === city.city ? "active" : ""
+                      cityName === city.city ? "active" : ""
                     }`}
                     onClick={() => handleChange(city)}
                   >
                     <i
                       className={`fa-solid fa-location-dot ${
-                        activeCity === city.city ? "active-icon" : ""
+                        cityName === city.city ? "active-icon" : ""
                       }`}
                       style={{
                         color: "darkred",

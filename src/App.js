@@ -34,6 +34,8 @@ import Categeries from "./Component/Categeries";
 import Cartpetcleaning from "./Component/Carpetcleaning";
 import Invest from "./Component/Invest";
 import Registerus from "./Component/Registerus";
+import Pay from "./Component/Paymentgateway";
+import Paymentdemo from "./Component/Paymentdemo";
 
 function App() {
   return (
@@ -62,7 +64,6 @@ function App() {
         <Route path="/upcomingdetail" element={<Upcomingdetail />} />
         <Route path="/enquirydetails" element={<Enquirydetails />} />
         <Route path="/completeddetails" element={<Completeddetails />} />
-
         <Route path="/services/:subcategory" element={<Subcategory />} />
         <Route
           path="/serviceview/:ServiceName"
@@ -77,7 +78,7 @@ function App() {
         <Route path="/carpetcleaning" element={<Cartpetcleaning />} />
         <Route path="/invest" element={<Invest />} />
         <Route path="/joinus" element={<Registerus />} />
-
+        <Route path="/paymentdemo" element={<Paymentdemo />} />
         {/* <Route path="/" element={<Header1 />} /> */}
       </Routes>
       {/* <AppLink /> */}

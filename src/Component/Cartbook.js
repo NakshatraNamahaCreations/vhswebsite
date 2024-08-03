@@ -22,6 +22,7 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Modal from "react-bootstrap/Modal";
+import "react-calendar/dist/Calendar.css";
 
 import {
   GoogleMap,
@@ -1424,26 +1425,42 @@ function Cartbook() {
                   >
                     Schedule Service
                   </div>
-                  <div className="select_date">
-                    <div className="text poppins-medium">Select the date</div>
+                  <div className="">
+                    <div
+                      className="text poppins-black mt-2"
+                      style={{ textAlign: "left" }}
+                    >
+                      Select the date
+                    </div>
 
                     <div className="date_selection web-days">
                       {fourDates?.map((day, index) => {
                         const isDefaultChecked = isDateSelected(day);
-
                         return (
-                          <label htmlFor={index} key={index}>
-                            <input type="checkbox" name="" id={day?.day} />
-
-                            <span
-                              className={`inpt poppins-medium ${
-                                isDefaultChecked ? "matching" : ""
-                              }`}
-                              onClick={() => handleCheckboxSelect(day)}
+                          <div
+                            key={index}
+                            onClick={() => handleCheckboxSelect(day)}
+                          >
+                            <div
+                              className="mt-3 poppins-light"
+                              style={{
+                                border: "1px solid grey",
+                                fontSize: "14px",
+                                textAlign: "center",
+                                padding: "5px",
+                                borderRadius: "5px",
+                                cursor: "pointer",
+                                width: "120px",
+                                backgroundColor: isDefaultChecked
+                                  ? "darkred"
+                                  : "", // Set background color conditionally
+                                color: isDefaultChecked ? "white" : "black",
+                              }}
+                              // onClick={() => handleCheckboxSelect(day)}
                             >
-                              {day?.dayName}- {day?.day}
-                            </span>
-                          </label>
+                              {day?.dayName} - {day?.day}
+                            </div>
+                          </div>
                         );
                       })}
                     </div>
@@ -1461,23 +1478,34 @@ function Cartbook() {
                         return (
                           <div
                             key={index}
-                            className={`inpt border poppins-medium ${
-                              isDefaultChecked ? "matching" : ""
-                            }`}
+                            // className={`inpt border poppins-medium ${
+                            //   isDefaultChecked ? "matching" : ""
+                            // }`}
+                            className="poppins-regular mt-2"
                             style={{
                               textAlign: "center",
                               padding: "10px",
-                              flex: "1 1 0", // Flex grow and shrink, initial size is 0
-                              maxWidth: "100px", // Optional: Max width for each item
-                              cursor: "pointer", // Optional: Pointer cursor for interactive elements
+                              flex: "1 1 0",
+                              maxWidth: "100px",
+                              cursor: "pointer",
+                              backgroundColor: isDefaultChecked
+                                ? "darkred"
+                                : "", // Set background color conditionally
+                              color: isDefaultChecked ? "white" : "black",
+                              border: "1px solid grey",
+                              borderRadius: "5px",
                             }}
                             onClick={() => handleCheckboxSelect(day)}
                           >
                             {day?.day} <br />
                             <span
-                              className={`  poppins-medium ${
-                                isDefaultChecked ? "matching" : ""
-                              }`}
+                              // className={`  poppins-medium ${
+                              //   isDefaultChecked ? "matching" : ""
+                              // }`}
+                              className="poppins-regular"
+                              style={{
+                                color: isDefaultChecked ? "white" : "black",
+                              }}
                             >
                               {day?.dayName}
                             </span>
@@ -1486,11 +1514,20 @@ function Cartbook() {
                       })}
                     </div>
 
-                    <div className="date mt-3">
-                      <button
-                        className="poppins-light"
+                    <div className="date mt-4 mb-2">
+                      <div
+                        className="poppins-black d-flex"
                         onClick={DatePicker}
-                        style={{ cursor: "pointer", fontWeight: "bold" }}
+                        style={{
+                          cursor: "pointer",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                          justifyContent: "center",
+                          border: "1px solid grey",
+                          borderRadius: "5px",
+                          padding: "10px",
+                          borderColor: "grey",
+                        }}
                       >
                         Pick Date{" "}
                         <span>
@@ -1507,7 +1544,7 @@ function Cartbook() {
                             </div>
                           )}
                         </span>
-                      </button>
+                      </div>
                       <div className="date_picker"></div>
                     </div>
                     {datepicker && (
@@ -1529,6 +1566,10 @@ function Cartbook() {
                             tileDisabled={tileDisabled}
                             tileClassName={tileClassName}
                           />
+                          {/* <Calendar
+                            onChange={(date) => handleCalendarSelect(date)}
+                            value={selectedDate}
+                          /> */}
                         </div>
                       </div>
                     )}
@@ -1536,21 +1577,18 @@ function Cartbook() {
 
                   <div className="select_date">
                     <div className="cartrenderslot">
-                      <div className="text poppins-medium mt-1">
+                      <div className="text poppins-black mt-2">
                         Select the Slot
                       </div>
                     </div>
-                    <div
-                      className="cartrenderslot"
-                      style={{ marginTop: "-15px" }}
-                    >
+                    <div className="cartrenderslot" style={{}}>
                       {renderSlots()}
                     </div>
                   </div>
 
                   <div className="select_date">
                     <div className="cartrenderslot1">
-                      <div className="text poppins-medium">Slots</div>
+                      <div className="text poppins-black">Slots</div>
                     </div>
                     <div
                       className="cartrenderslot1"
