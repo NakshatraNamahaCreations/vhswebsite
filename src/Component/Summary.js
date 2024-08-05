@@ -21,7 +21,10 @@ import Footer from "./Footer";
 
 function Summary() {
   const location = useLocation();
-  const { plan, sdata } = location.state || {};
+  const { plan, sdata, city } = location.state || {};
+
+  const capscity = city.charAt(0).toUpperCase() + city.slice(1);
+  console.log("city===su", capscity);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -362,8 +365,7 @@ function Summary() {
   };
 
   const filteredData =
-    sdata?.store_slots?.filter((item) => item.slotCity === localstoragecitys) ||
-    [];
+    sdata?.store_slots?.filter((item) => item.slotCity === capscity) || [];
 
   const now = new Date();
 
@@ -654,7 +656,7 @@ function Summary() {
             date: moment().format("YYYY-MM-DD"),
             time: moment().format("LT"),
             type: "website",
-            city: localstoragecitys,
+            city: capscity,
             userId: user?._id,
             discAmt: 0,
             GrandTotal: a,
@@ -817,7 +819,7 @@ function Summary() {
     time: moment().format("LT"),
     type: "website",
 
-    city: localstoragecitys,
+    city: capscity,
     userId: user?._id,
     discAmt: 0,
     GrandTotal: DiscountAmount,

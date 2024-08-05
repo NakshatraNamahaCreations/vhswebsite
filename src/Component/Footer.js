@@ -51,7 +51,7 @@ function Footer() {
 
             <div className="f-desc poppins-regular">
               <a
-                href="/terms"
+                href="/terms-and-condition"
                 className="poppins-regular"
                 style={{ textDecoration: "none", color: "black" }}
               >
@@ -60,7 +60,7 @@ function Footer() {
             </div>
             <div className="f-desc poppins-regular">
               <a
-                href="/privacy"
+                href="/privacy-policy"
                 className="poppins-regular"
                 style={{ textDecoration: "none", color: "black" }}
               >
@@ -71,7 +71,7 @@ function Footer() {
             <div className="f-desc poppins-regular">
               {" "}
               <a
-                href="/cancellation"
+                href="/refund-and-cancellation"
                 className="poppins-regular"
                 style={{ textDecoration: "none", color: "black" }}
               >

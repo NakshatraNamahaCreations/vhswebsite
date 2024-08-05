@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Signup() {
   const [mainContact, setMainContact] = useState("");
@@ -12,6 +12,9 @@ function Signup() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const [name, setname] = useState("");
+  const location = useLocation();
+  const { city } = location.state || {};
+  console.log("city===21", city);
 
   useEffect(() => {
     if (timer > 0) {
@@ -39,7 +42,10 @@ function Signup() {
         alert("Successful login");
         setUser(response.data.user);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        navigate("/cartbook");
+
+        navigate("/cartbook", {
+          state: { city: city },
+        });
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {

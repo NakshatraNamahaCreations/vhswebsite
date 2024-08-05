@@ -21,10 +21,12 @@ import Footer from "./Footer";
 
 function Espage() {
   const location = useLocation();
-  const { sdata } = location.state || {};
+  const { sdata, city } = location.state || {};
   const navigate = useNavigate();
 
-  console.log("sdata=======", sdata);
+  console.log("sdata=======", city);
+  const capscity = city.charAt(0).toUpperCase() + city.slice(1);
+  console.log("city===su", capscity);
 
   const [addondata, setaddondata] = useState([]);
   const dispatch = useDispatch();
@@ -339,8 +341,7 @@ function Espage() {
   };
 
   const filteredData =
-    sdata?.store_slots?.filter((item) => item.slotCity === localstoragecitys) ||
-    [];
+    sdata?.store_slots?.filter((item) => item.slotCity === capscity) || [];
 
   const now = new Date();
 
@@ -742,7 +743,7 @@ function Espage() {
             deliveryAddress: selectedAddress,
             category: sdata?.category,
             reference1: "website",
-            city: localstoragecitys,
+            city: capscity,
             comment: sdata?.pName,
             intrestedfor: sdata?.serviceName,
           },
@@ -844,7 +845,7 @@ function Espage() {
             deliveryAddress: selectedAddress,
             category: sdata?.category,
             reference1: "website",
-            city: localstoragecitys,
+            city: capscity,
             comment: sdata?.pName,
             intrestedfor: sdata?.serviceName,
           },
@@ -1000,7 +1001,7 @@ function Espage() {
     time: moment().format("LT"),
     type: "website",
 
-    city: localstoragecitys,
+    city: capscity,
     userId: value?._id,
     discAmt: 0,
     GrandTotal: DiscountAmount,

@@ -26,6 +26,7 @@ import Faq from "react-faq-component";
 import Cartnavbar from "./Cartnavbar";
 import NavbarCompo from "./navbar";
 import Homenavbar from "./Homenavbar";
+import ReactHlsPlayer from "react-hls-player";
 
 function capitalizeFirstLetter1(string) {
   if (typeof string !== "string" || string.length === 0) {
@@ -107,11 +108,23 @@ function Subcategory() {
   const user = localStorage.getItem("user");
   console.log("user=====", user);
 
+  console.log("subcategoryData======", subcategoryData);
+
+  // const handleChange = () => {
+  //   if (user) {
+  //     navigate("/cartbook");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
+
   const handleChange = () => {
+    const City = capitalizeFirstLetter(city);
+    console.log("city=====13", city);
     if (user) {
-      navigate("/cartbook");
+      navigate("/cartbook", { state: { city: City } });
     } else {
-      navigate("/login");
+      navigate("/login", { state: { city: City } });
     }
   };
 
@@ -128,16 +141,13 @@ function Subcategory() {
   };
 
   const styles = {
-    // bgColor: 'white',
     titleTextColor: "darkred",
     rowTitleColor: "darkred",
-    // rowContentColor: 'grey',
-    // arrowColor: "red",
   };
 
   useEffect(() => {
     getallfaq();
-  }, [subcategoryData[0]?.category]);
+  }, []);
 
   const getallfaq = async () => {
     let res = await axios.get(
@@ -158,6 +168,11 @@ function Subcategory() {
   useEffect(() => {
     if (subcategory && allSubcat.length > 0) {
       const parts = subcategory.split("-");
+      const newcat = parts
+        .slice(0, 2) // Exclude the last part if it's not needed
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+        .join(" ");
+
       const category1 = capitalizeFirstLetter(parts[0]);
 
       const services = [
@@ -192,8 +207,11 @@ function Subcategory() {
         categoryData(categoryNamecheck);
       } else {
         const fullServiceName = allSubcat.find((service) =>
-          service.subcategory.toLowerCase().includes(category1.toLowerCase())
+          service.subcategory.toLowerCase().includes(newcat.toLowerCase())
         );
+
+        console.log("fullServiceName", fullServiceName);
+        console.log("newcat====", newcat);
         if (fullServiceName) {
           let city = parts[parts.length - 1];
           if (city.startsWith("in-")) {
@@ -267,6 +285,7 @@ function Subcategory() {
   };
 
   const getSubcategory = async (category) => {
+    console.log("category====", category);
     try {
       const res = await axios.post(
         `https://api.vijayhomesuperadmin.in/api/userapp/postsubcatservice`,
@@ -309,39 +328,28 @@ function Subcategory() {
   };
 
   useEffect(() => {
-    getsubcategory();
-  }, [postsubdata]);
-
-  const getsubcategory = async () => {
-    let res = await axios.post(
-      `https://api.vijayhomesuperadmin.in/api/userapp/postappresubcat/`,
-      {
-        subcategory: sub,
-      }
-    );
-
-    if ((res.status = 200)) {
-      setpostsubdata(res.data?.subcategory);
+    if (sub) {
+      getsubcategory();
     }
-  };
+  }, [sub]);
 
   useEffect(() => {
-    getsubcategoryVideo();
-  }, [subcategoryVideo]);
+    if (postsubdata.length > 0) {
+      getsubcategoryVideo();
+    }
+  }, [postsubdata]);
 
   const getsubcategoryVideo = async () => {
     try {
       let res = await axios.get(
         "https://api.vijayhomesuperadmin.in/api/userapp/getappsubcat"
       );
-      if ((res.status = 200)) {
+      if (res.status === 200) {
         let subcategorys = sub?.toLowerCase();
-        let filteredData = res?.data?.subcategory?.filter((Ele) => {
+        let filteredData = res.data?.subcategory?.filter((Ele) => {
           let videoLink = Ele?.subcategory?.toLowerCase();
-
           return subcategorys?.includes(videoLink);
         });
-        // console.log(res.data.subcategory);
         setsubcategoryVideo(filteredData);
       }
     } catch (err) {
@@ -349,9 +357,27 @@ function Subcategory() {
     }
   };
 
+  const getsubcategory = async () => {
+    try {
+      let res = await axios.post(
+        `https://api.vijayhomesuperadmin.in/api/userapp/postappresubcat/`,
+        {
+          subcategory: sub,
+        }
+      );
+      if (res.status === 200) {
+        setpostsubdata(res.data?.subcategory);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log("setsubcategoryVideo", subcategoryVideo);
+
   useEffect(() => {
     getmodalbanner();
-  }, [subcategoryData[0]?.category]);
+  }, []);
 
   const getmodalbanner = async () => {
     let res = await axios.get(
@@ -365,6 +391,8 @@ function Subcategory() {
       );
     }
   };
+
+  console.log("sub=====", sub);
 
   useEffect(() => {
     getallvhspromises();
@@ -408,7 +436,7 @@ function Subcategory() {
 
   useEffect(() => {
     getreview();
-  }, [subcategoryData[0]?.category]);
+  }, []);
 
   const getreview = async () => {
     let res = await axios.get(
@@ -425,7 +453,7 @@ function Subcategory() {
 
   useEffect(() => {
     getallcomparison();
-  }, [subcategoryData[0]?.category]);
+  }, []);
 
   const getallcomparison = async () => {
     let res = await axios.get(
@@ -496,7 +524,9 @@ function Subcategory() {
       }
     } else {
       // alert("This is AMC services ")
-      navigate("/summary", { state: { plan: item, sdata: selectedData } });
+      navigate("/summary", {
+        state: { plan: item, sdata: selectedData, city: city },
+      });
       console.log("amc service", selectedData);
     }
 
@@ -563,6 +593,8 @@ function Subcategory() {
       .toLowerCase()
       .replace(/ /g, "-")}`;
   };
+
+  console.log("subcategoryVideo", subcategoryVideo);
 
   return (
     <div>
@@ -693,13 +725,12 @@ function Subcategory() {
                     {subcategoryVideo &&
                       subcategoryVideo.map((Ele) => {
                         return (
-                          <video
-                            key={Ele.id} // Ensure each video has a unique key if iterating over an array
+                          <ReactHlsPlayer
                             src={Ele.videolink}
-                            width={"100%"}
-                            height="250px" // Fixed width and height
-                            className="react-player-rounded"
-                            autoPlay
+                            autoPlay={true}
+                            controls={false} // Changed to true for better UX
+                            width="100%"
+                            height="250px"
                             muted
                             loop
                             playsInline
@@ -810,7 +841,7 @@ function Subcategory() {
                                 fontSize: "6px",
                               }}
                             >
-                              Wtsup us
+                              Whatsapp us
                             </div>
                           </a>
                         </div>
@@ -1198,7 +1229,7 @@ function Subcategory() {
                                   } else {
                                     // window.location.assign("/Espage");
                                     navigate("/ESpage", {
-                                      state: { sdata: data },
+                                      state: { sdata: data, city: city },
                                     });
                                   }
                                 }}
@@ -1231,12 +1262,10 @@ function Subcategory() {
                     >
                       <img
                         className="service_gif mb-2"
-                        style={
-                          {
-                            // width: "50%",
-                            // height: "250px",
-                          }
-                        }
+                        style={{
+                          width: "50%",
+                          height: "250px",
+                        }}
                         alt=""
                         src={`https://api.vijayhomesuperadmin.in/spotlightSP/${data.img}`}
                       />

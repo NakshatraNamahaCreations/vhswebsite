@@ -1403,10 +1403,10 @@ export default function Homecity() {
                   >
                     <Link
                       to={{
-                        pathname: generatePathname(ele.subcategory, city),
+                        pathname: generatePathname(ele?.subcategory, city),
                       }}
                       // to="/servicedetails"
-                      state={({ subcategory: ele.subcategory }, { data: ele })}
+                      // state={({ subcategory: ele.subcategory }, { data: ele })}
                       style={{ textDecoration: "none" }}
                     >
                       <div className="col-md-4" style={{ width: "100%" }}>

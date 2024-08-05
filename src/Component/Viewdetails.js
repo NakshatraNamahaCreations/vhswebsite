@@ -370,9 +370,9 @@ function Viewdetails() {
 
   const handleChange = () => {
     if (user) {
-      navigate("/cartbook");
+      navigate("/cartbook", { state: { city: city } });
     } else {
-      navigate("/login");
+      navigate("/login", { state: { city: city } });
     }
   };
 

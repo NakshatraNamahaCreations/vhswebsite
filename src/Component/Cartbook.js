@@ -41,6 +41,9 @@ import Footer from "./Footer";
 
 function Cartbook() {
   const [addondata, setaddondata] = useState([]);
+  const location = useLocation();
+  const { city } = location.state || {};
+  console.log("city=====suman", city);
   const dispatch = useDispatch();
   const MyCartItmes = useSelector((state) => state.cart);
   const MyCartaddonItmes = useSelector((state) => state.addon);
@@ -464,7 +467,7 @@ function Cartbook() {
 
   const filteredData =
     MyCartItmes[0]?.service?.store_slots?.filter(
-      (item) => item.slotCity === localstoragecitys
+      (item) => item.slotCity === city
     ) || [];
 
   const now = new Date();
@@ -793,7 +796,7 @@ function Cartbook() {
     time: moment().format("LT"),
     type: "website",
     desc: joinedPlanNames + joinedPlanaddonNames,
-    city: localstoragecitys,
+    city: city,
     userId: user?._id,
     discAmt: 0,
     GrandTotal: DiscountAmount,
@@ -880,7 +883,7 @@ function Cartbook() {
             time: moment().format("LT"),
             type: "website",
             desc: joinedPlanNames + joinedPlanaddonNames,
-            city: localstoragecitys,
+            city: city,
             userId: user?._id,
             discAmt: 0,
             GrandTotal: DiscountAmount,
