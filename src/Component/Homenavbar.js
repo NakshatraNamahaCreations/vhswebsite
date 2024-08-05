@@ -24,23 +24,25 @@ function Homenavbar() {
       }}
     >
       <div className="col-md-10">
-        <img
-          src="https://vijayahomeservices.b-cdn.net/vhs-lgo.png"
-          alt=""
-          width={25}
-          height={25}
-        />
-        <span
-          className="poppins-black mx-2"
-          style={{
-            color: "black",
-            fontSize: "12px",
-            fontWeight: "bold",
-            textAlign: "left",
-          }}
-        >
-          VHS
-        </span>
+        <a href="/" style={{ textDecoration: "none" }}>
+          <img
+            src="https://vijayahomeservices.b-cdn.net/vhs-lgo.png"
+            alt=""
+            width={25}
+            height={25}
+          />
+          <span
+            className="poppins-medium mx-2"
+            style={{
+              color: "black",
+              fontSize: "13px",
+              fontWeight: "bold",
+              textAlign: "left",
+            }}
+          >
+            VHS
+          </span>
+        </a>
       </div>
       <div
         className="col-md-2 d-flex"

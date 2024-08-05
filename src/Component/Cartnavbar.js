@@ -35,23 +35,25 @@ function Cartnavbar() {
       }}
     >
       <div className="col-md-10 ">
-        <img
-          src="https://vijayahomeservices.b-cdn.net/vhs-lgo.png"
-          alt=""
-          width={25}
-          height={25}
-        />
-        <span
-          className="poppins-medium mx-2"
-          style={{
-            color: "black",
-            fontSize: "13px",
-            fontWeight: "bold",
-            textAlign: "left",
-          }}
-        >
-          VHS
-        </span>
+        <a href="/" style={{ textDecoration: "none" }}>
+          <img
+            src="https://vijayahomeservices.b-cdn.net/vhs-lgo.png"
+            alt=""
+            width={25}
+            height={25}
+          />
+          <span
+            className="poppins-medium mx-2"
+            style={{
+              color: "black",
+              fontSize: "13px",
+              fontWeight: "bold",
+              textAlign: "left",
+            }}
+          >
+            VHS
+          </span>
+        </a>
       </div>
       <div
         className="col-md-2 d-flex"
@@ -117,10 +119,13 @@ function Cartnavbar() {
 
         {cartShow && (
           <div className="mx-2">
-            <i
-              className="fa-solid fa-cart-shopping"
-              style={{ fontSize: "18px" }}
-            ></i>
+            <Link to="/cartbook" style={{ textDecoration: "none" }}>
+              <i
+                className="fa-solid fa-cart-shopping"
+                style={{ fontSize: "18px", color: "black" }}
+              ></i>
+            </Link>
+
             <div
               className="text-center"
               style={{

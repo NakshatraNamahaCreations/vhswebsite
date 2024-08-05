@@ -539,7 +539,7 @@ function Subcategory() {
 
   useEffect(() => {
     getbannerimg();
-  }, []);
+  }, [offerBannerdata]);
 
   const getbannerimg = async () => {
     let res = await axios.get(

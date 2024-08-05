@@ -207,7 +207,7 @@ export default function NabarCompo() {
                         onClick={handleremove}
                         className="poppins-regular dropdown-item"
                         style={{ fontSize: "12px" }}
-                        href="#/action-3"
+                        href="/"
                       >
                         Logout
                       </Dropdown.Item>

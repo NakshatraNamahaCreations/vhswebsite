@@ -53,6 +53,8 @@ function Viewdetails() {
   const [show, setShow] = useState(false);
   const [slidesbanner, setslidesbanner] = useState(4);
 
+  console.log("subcategory", subcategory);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
